@@ -117,31 +117,44 @@ design-system/
 └── styles.css
 ```
 
-### 2.2 当前个人网站落地层
+### 2.2 当前站点页面层
 
-这一层不是“设计系统本体”，而是“使用设计系统搭出来的当前页面”。
+这一层不是“设计系统本体”，而是当前站点自己的页面、布局、数据和样式。
 
 ```text
-src/personal-site/
+src/site/
 ├── components/
-│   └── SectionHeader.jsx
-├── sections/
-│   ├── AvatarHero.jsx
-│   ├── BioHeader.jsx
-│   ├── SocialStrip.jsx
-│   ├── ResumeTimeline.jsx
-│   ├── PortfolioGallery.jsx
-│   ├── ContactSection.jsx
-│   └── GlobalFooter.jsx
-├── PersonalWebsite.jsx
-├── personal-site.css
-└── site-data.js
+│   ├── SiteHeader.jsx
+│   ├── SiteLayout.jsx
+│   └── home/
+│       ├── HomeSkillsSection.jsx
+│       └── HomeWorksSection.jsx
+├── data/
+│   ├── home-content.js
+│   ├── navigation.js
+│   └── work-items.js
+├── fonts/
+│   ├── files/
+│   └── site-fonts.js
+├── lib/
+│   └── get-work-by-slug.js
+├── pages/
+│   ├── AboutPage.jsx
+│   ├── BlogPage.jsx
+│   ├── HomePage.jsx
+│   ├── WorkDetailPage.jsx
+│   └── WorkIndexPage.jsx
+└── styles/
+    ├── home-page.module.css
+    └── site-shell.module.css
 ```
 
 ### 2.3 入口关系
 
-- `App.jsx`
-  - 只负责挂载 `PersonalWebsite`
+- `app/page.jsx`
+  - 负责装配首页 `HomePage`
+- `app/(site)/layout.jsx`
+  - 负责为 `/about`、`/blog`、`/work` 等站点路由挂载统一 `SiteLayout`
 - `app/layout.jsx`
   - 负责引入全局样式和设计系统 CSS Variables
 - `design-system/index.js`
@@ -482,33 +495,33 @@ src/personal-site/
 当前首页装配关系：
 
 ```text
-App.jsx
-  └── PersonalWebsite.jsx
-        ├── AvatarHero
-        ├── BioHeader
-        ├── SocialStrip
-        ├── ResumeTimeline
-        ├── PortfolioGallery
-        ├── ContactSection
-        └── GlobalFooter
+app/page.jsx
+  └── SiteLayout
+        └── HomePage
+              ├── home-content.js
+              ├── HomeSkillsSection
+              └── HomeWorksSection
 ```
 
 ### 这层结构的意义
 
-- `App.jsx` 保持极简
-- 页面按照 section 组合
-- 以后你改任何一个模块，都不用碰整个页面
+- 路由入口和页面实现已经分离
+- 首页与其他站点页面共用同一套站点外壳
+- 首页模块已经拆到独立 section 组件，后续继续扩展时改动范围更可控
 
 ## 7.2 当前数据层
 
-文件：`src/personal-site/site-data.js`
+文件：
+
+- `src/site/data/home-content.js`
+- `src/site/data/navigation.js`
+- `src/site/data/work-items.js`
 
 这里集中存放：
 
-- `profile`
-- `socialLinks`
-- `timelineItems`
-- `portfolioItems`
+- 首页 Hero 和 Skills 内容
+- 站点导航
+- 首页和 `/work` 复用的作品列表
 
 这是后续你替换真实信息时最值得优先调整的文件。
 
@@ -516,25 +529,25 @@ App.jsx
 
 因为它把“内容”和“结构”分开了：
 
-- 想换名字、简介、邮箱，不用去翻 JSX 结构
-- 想换项目标题、年份、标签，也不用直接改组件
+- 想换首页文案、技能亮点，不用去翻 JSX 结构
+- 想换导航或作品条目，也不用直接改页面组件
 
 ## 7.3 当前页面专用样式
 
-文件：`src/personal-site/personal-site.css`
+文件：
+
+- `src/site/styles/home-page.module.css`
+- `src/site/styles/site-shell.module.css`
 
 它主要负责：
 
-- section 间距
-- 头像区布局
-- 时间线布局
-- 作品网格布局
-- 联系区布局
-- 页脚布局
+- 首页 Hero 和内容 section 的版式
+- Works 卡片布局
+- 站点头部、页脚和通用页面壳层
 
 注意：
 
-- 这个文件是“页面落地样式”
+- 这两个文件是“站点页面落地样式”
 - `design-system/styles.css` 是“基础组件样式”
 
 这两个层级要分开理解。
@@ -671,7 +684,8 @@ App.jsx
 
 - `design-system/components/Card.jsx`
 - `design-system/styles.css`
-- `src/personal-site/sections/PortfolioGallery.jsx`
+- `src/site/components/home/HomeWorksSection.jsx`
+- `src/site/styles/home-page.module.css`
 
 适合调整的内容：
 
@@ -683,28 +697,29 @@ App.jsx
 
 优先改：
 
-- `src/personal-site/site-data.js`
+- `src/site/data/home-content.js`
+- `src/site/data/navigation.js`
+- `src/site/data/work-items.js`
 
 适合调整的内容：
 
 - 姓名
 - 一句话简介
-- 详细介绍
-- 社媒链接
-- 履历
+- 导航项
 - 项目列表
 
 ### 8.5 想改页面顺序或新增模块
 
 优先改：
 
-- `src/personal-site/PersonalWebsite.jsx`
+- `src/site/pages/HomePage.jsx`
+- `src/site/components/SiteLayout.jsx`
 
 适合调整的内容：
 
-- 调整 section 顺序
-- 新增新的模块
-- 暂时隐藏某个模块
+- 调整首页 section 顺序
+- 新增新的首页模块
+- 调整站点通用壳层
 
 ## 9. 当前系统已经具备的优点
 

@@ -1,11 +1,10 @@
 import "../design-system/styles.css";
-import "../src/personal-site/personal-site.css";
 import { rootCssVariables } from "../design-system/tokens";
 import "./globals.css";
 
 export const metadata = {
   title: "Zhaozirui Personal Website",
-  description: "A minimal personal website built on top of the local design system.",
+  description: "A portfolio website built with a local design system and site-specific pages.",
 };
 
 export default function RootLayout({ children }) {

@@ -38,9 +38,9 @@ export default function SiteHeader() {
         // 这里刻意做一层缓动追赶，去模拟参考站点平滑滚动容器带来的“慢一点”的感觉。
         const nextProgress =
           currentState.scrollProgress +
-          (targetState.scrollProgress - currentState.scrollProgress) * 0.14;
+          (targetState.scrollProgress - currentState.scrollProgress) * 0.11;
         const nextWidth =
-          currentState.width + (targetState.width - currentState.width) * 0.14;
+          currentState.width + (targetState.width - currentState.width) * 0.11;
         const widthChanged = Math.abs(targetState.width - nextWidth) >= 0.8;
         const progressChanged =
           Math.abs(targetState.scrollProgress - nextProgress) >= 0.003;
@@ -84,7 +84,10 @@ export default function SiteHeader() {
   }, []);
 
   const headerStyle = /** @type {any} */ ({
-    "--site-header-progress": headerState.scrollProgress,
+    "--site-header-shadow-progress": Math.max(
+      0,
+      Math.min((headerState.scrollProgress - 0.22) / 0.78, 1),
+    ),
     "--site-header-width": `${headerState.width}px`,
   });
 

@@ -25,23 +25,15 @@
   width: min(100%, var(--site-header-width, 1920px));
 }
 
-.siteHeaderFrameExpanded {
-  max-width: none;
-}
-
-.siteHeaderFrameCompact {
-  max-width: none;
-}
-
 .siteHeaderInner {
   align-items: center;
   background: #fff;
   border: 1px solid rgba(9, 10, 12, 0.04);
   border-radius: var(--portfolio-radius-md);
   box-shadow:
-    0 calc(2px * var(--site-header-progress, 0))
-    calc(8px * var(--site-header-progress, 0))
-    rgb(0 0 0 / calc(0.06 * var(--site-header-progress, 0)));
+    0 calc(2px * var(--site-header-shadow-progress, 0))
+    calc(8px * var(--site-header-shadow-progress, 0))
+    rgb(0 0 0 / calc(0.06 * var(--site-header-shadow-progress, 0)));
   display: flex;
   justify-content: space-between;
   min-height: 3.75rem;
