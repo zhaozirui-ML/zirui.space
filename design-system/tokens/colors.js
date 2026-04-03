@@ -1,0 +1,18 @@
+export const colors = Object.freeze({
+  canvas: "#fcfcfb",
+  surface: "#ffffff",
+  surfaceSoft: "#f9fafa",
+  surfaceMuted: "#f4f5f6",
+  ink: "#14181b",
+  inkSoft: "#22262a",
+  text: "#22262a",
+  textSupport: "#4c5257",
+  textMuted: "#6d7378",
+  textSubtle: "#9fa3a7",
+  border: "#e3e5e8",
+  borderSoft: "#eeeff1",
+  borderMuted: "#e5e5e5",
+  accentSky: "#dff1f3",
+  accentBlush: "#fdecea",
+  accentSand: "#efe9e0",
+});
