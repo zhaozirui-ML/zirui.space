@@ -1,0 +1,399 @@
+.homePage {
+  --home-editorial-title-font:
+    var(--font-ivy-presto),
+    "Iowan Old Style",
+    "Times New Roman",
+    serif;
+  display: grid;
+  gap: 6rem;
+  margin: 0 auto;
+  max-width: 52rem;
+  position: relative;
+}
+
+.homeBackground {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(252, 251, 248, 0) 0%,
+      rgba(252, 251, 248, 0.72) 58%,
+      rgba(252, 251, 248, 1) 100%
+    ),
+    url("/site/home/home-background.png") center top / cover no-repeat;
+  height: 35.0625rem;
+  left: 50%;
+  mix-blend-mode: multiply;
+  opacity: 0.9;
+  pointer-events: none;
+  position: absolute;
+  top: -7rem;
+  transform: translateX(-50%);
+  width: min(120rem, 100vw);
+  z-index: 0;
+}
+
+.heroSection,
+.section {
+  position: relative;
+  z-index: 1;
+}
+
+.heroSection {
+  display: grid;
+  gap: 1.25rem;
+  padding: 0 1.5rem;
+}
+
+.heroAvatar {
+  border-radius: 0.375rem;
+  box-shadow: 0 10px 20px rgba(25, 34, 44, 0.08);
+}
+
+.heroTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--home-editorial-title-font);
+  font-size: clamp(1.875rem, 1.72rem + 0.7vw, 2rem);
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  line-height: 1.2;
+  margin: 0;
+  max-width: 49rem;
+  text-wrap: balance;
+}
+
+.section {
+  display: grid;
+  gap: 3rem;
+}
+
+.sectionHeader {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0 1.5rem;
+}
+
+.sectionTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--home-editorial-title-font);
+  font-size: 2rem;
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.sectionSubtitle {
+  color: var(--portfolio-color-text-muted);
+  font-size: 0.875rem;
+  line-height: 1.4286;
+  margin: 0;
+}
+
+.skillsLayout {
+  align-items: start;
+  display: grid;
+  gap: 4rem;
+  grid-template-columns: 11.5625rem 15rem;
+  padding: 0 1.5rem;
+}
+
+.skillList {
+  display: grid;
+  gap: 1.375rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.skillItem {
+  align-items: center;
+  border-radius: 1rem;
+  color: var(--portfolio-color-text-muted);
+  display: inline-flex;
+  font-family: var(--portfolio-font-label);
+  font-size: 0.875rem;
+  font-weight: 700;
+  gap: 0.375rem;
+  line-height: 1.4286;
+  min-height: 2.375rem;
+  padding: 0.5625rem 0.8125rem;
+  width: 100%;
+}
+
+.skillItemActive {
+  background: rgba(249, 250, 250, 0.92);
+  border: 1px solid #e5e5e5;
+  color: var(--portfolio-color-text-title);
+}
+
+.skillItemMuted {
+  border: 1px dashed #e5e5e5;
+}
+
+.skillIconWrap {
+  align-items: center;
+  border-radius: 999px;
+  display: inline-flex;
+  flex: 0 0 auto;
+  height: 1.625rem;
+  justify-content: center;
+  width: 1.625rem;
+}
+
+.skillIconWrapActive {
+  background: rgba(179, 106, 94, 0.12);
+  color: var(--portfolio-color-accent-brand);
+}
+
+.skillIconWrapMuted {
+  background: rgba(240, 237, 232, 0.74);
+  color: rgba(74, 77, 78, 0.84);
+}
+
+.skillIcon {
+  color: currentColor;
+  flex: 0 0 auto;
+}
+
+.skillHighlight {
+  display: grid;
+  gap: 1rem;
+  justify-items: center;
+}
+
+.skillHighlightFrame {
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 22px rgba(34, 40, 58, 0.1);
+  height: 15rem;
+  overflow: hidden;
+  position: relative;
+  width: 15rem;
+}
+
+.skillHighlightImage {
+  object-fit: cover;
+}
+
+.skillHighlightBadge {
+  align-items: center;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(214, 220, 231, 0.84) 100%);
+  border-radius: 0.5rem;
+  box-shadow: 0 9px 14px rgba(4, 11, 24, 0.14);
+  display: inline-flex;
+  justify-content: center;
+  left: 50%;
+  padding: 0.625rem;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.skillHighlightGlyph {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.74);
+  border-radius: 999px;
+  color: var(--portfolio-color-accent-brand);
+  display: inline-flex;
+  height: 2rem;
+  justify-content: center;
+  width: 2rem;
+}
+
+.skillHighlightCaption {
+  color: rgba(46, 46, 46, 0.72);
+  font-size: 0.82rem;
+  line-height: 1.7;
+  margin: 0;
+  text-align: center;
+}
+
+.workList {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.workCard {
+  background: var(--portfolio-color-surface);
+  border: 1px solid #e3e5e8;
+  border-radius: 1.5rem;
+  display: grid;
+  gap: 3rem;
+  overflow: hidden;
+  padding: 1.5625rem;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+.workCard:hover {
+  border-color: rgba(45, 47, 48, 0.12);
+  box-shadow: 0 24px 48px rgba(28, 33, 39, 0.08);
+  transform: translateY(-2px);
+}
+
+.workCardFeatured {
+  grid-template-columns: 17.625rem minmax(0, 1fr);
+  min-height: 29.375rem;
+}
+
+.workCardStandard {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  min-height: 24.375rem;
+}
+
+.workCardMediaStart .workCardContent {
+  order: 2;
+}
+
+.workCardMediaStart .workCardMedia {
+  order: 1;
+}
+
+.workCardContent {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 1.75rem;
+}
+
+.workCategoryRow {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.5rem;
+  min-height: 1rem;
+}
+
+.workCategoryLabel {
+  color: rgba(109, 115, 120, 0.8);
+  font-family: var(--portfolio-font-label);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5em;
+  line-height: 1rem;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.workCopyStack {
+  display: grid;
+  gap: 1.5rem;
+  align-content: start;
+}
+
+.workCardTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-body);
+  font-size: clamp(2.5rem, 2vw + 1.4rem, 3.5rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.workCardSummary {
+  color: #6d7378;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 22rem;
+}
+
+.workCardButton {
+  align-items: center;
+  background: var(--portfolio-semantic-title-color);
+  border-radius: 0.75rem;
+  color: var(--portfolio-color-surface);
+  display: inline-flex;
+  font-family: var(--portfolio-font-label);
+  font-size: 0.875rem;
+  font-weight: 500;
+  justify-content: center;
+  min-height: 2.25rem;
+  padding: 0 0.75rem;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.workCardButton:hover {
+  opacity: 0.92;
+}
+
+.workCardMedia {
+  border-radius: 1.5rem;
+  min-height: 21.25rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.workCardFeatured .workCardMedia {
+  border-radius: 0.75rem;
+  min-height: 26.25rem;
+}
+
+.workCardImage {
+  object-fit: cover;
+}
+
+@media (max-width: 900px) {
+  .homePage {
+    gap: 4.5rem;
+  }
+
+  .skillsLayout,
+  .workCard,
+  .workCardFeatured,
+  .workCardStandard {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .workCardMediaStart .workCardContent,
+  .workCardMediaStart .workCardMedia {
+    order: initial;
+  }
+
+  .workCardContent {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .homePage {
+    gap: 4rem;
+  }
+
+  .homeBackground {
+    height: 28rem;
+    top: -6rem;
+  }
+
+  .heroSection,
+  .sectionHeader,
+  .skillsLayout {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .heroTitle,
+  .sectionTitle {
+    text-wrap: balance;
+  }
+
+  .skillItem {
+    min-height: 2.5rem;
+  }
+
+  .workCard {
+    padding: 1rem;
+  }
+
+  .workCardTitle {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+
+  .workCardMedia,
+  .workCardFeatured .workCardMedia {
+    min-height: 15rem;
+  }
+}

@@ -5,6 +5,72 @@ import { typography } from "./typography";
 
 export { colors, portfolio, spacing, typography };
 
+// 作品集主题只在站点层按需接入，不直接污染 design-system 预览页。
+export const portfolioCssVariables = {
+  "--portfolio-color-canvas": portfolio.colors.canvas,
+  "--portfolio-color-surface": portfolio.colors.surface,
+  "--portfolio-color-surface-warm": portfolio.colors.surfaceWarm,
+  "--portfolio-color-text-title": portfolio.colors.textTitle,
+  "--portfolio-color-text-body": portfolio.colors.textBody,
+  "--portfolio-color-text-muted": portfolio.colors.textMuted,
+  "--portfolio-color-border-light": portfolio.colors.borderLight,
+  "--portfolio-color-border-strong": portfolio.colors.borderStrong,
+  "--portfolio-color-accent-brand": portfolio.colors.accentBrand,
+  "--portfolio-font-title": portfolio.typography.families.title,
+  "--portfolio-font-body": portfolio.typography.families.body,
+  "--portfolio-font-label": portfolio.typography.families.label,
+  "--portfolio-type-hero-size": portfolio.typography.scales.hero.size,
+  "--portfolio-type-hero-line": portfolio.typography.scales.hero.lineHeight,
+  "--portfolio-type-hero-weight": portfolio.typography.scales.hero.weight,
+  "--portfolio-type-section-title-size":
+    portfolio.typography.scales.sectionTitle.size,
+  "--portfolio-type-section-title-line":
+    portfolio.typography.scales.sectionTitle.lineHeight,
+  "--portfolio-type-section-title-weight":
+    portfolio.typography.scales.sectionTitle.weight,
+  "--portfolio-type-body-size": portfolio.typography.scales.body.size,
+  "--portfolio-type-body-line": portfolio.typography.scales.body.lineHeight,
+  "--portfolio-type-body-weight": portfolio.typography.scales.body.weight,
+  "--portfolio-type-label-size": portfolio.typography.scales.label.size,
+  "--portfolio-type-label-line": portfolio.typography.scales.label.lineHeight,
+  "--portfolio-type-label-weight":
+    portfolio.typography.scales.label.weight,
+  "--portfolio-type-body-sm-size": portfolio.typography.scales.bodySm.size,
+  "--portfolio-type-body-sm-line":
+    portfolio.typography.scales.bodySm.lineHeight,
+  "--portfolio-type-body-sm-weight":
+    portfolio.typography.scales.bodySm.weight,
+  "--portfolio-type-caption-size": portfolio.typography.scales.caption.size,
+  "--portfolio-type-caption-line":
+    portfolio.typography.scales.caption.lineHeight,
+  "--portfolio-type-caption-weight":
+    portfolio.typography.scales.caption.weight,
+  "--portfolio-space-2xs": portfolio.spacing["2xs"],
+  "--portfolio-space-xs": portfolio.spacing.xs,
+  "--portfolio-space-sm": portfolio.spacing.sm,
+  "--portfolio-space-md": portfolio.spacing.md,
+  "--portfolio-space-lg": portfolio.spacing.lg,
+  "--portfolio-space-section-y": portfolio.spacing.sectionPaddingY,
+  "--portfolio-radius-sm": portfolio.radius.sm,
+  "--portfolio-radius-md": portfolio.radius.md,
+  "--portfolio-radius-lg": portfolio.radius.lg,
+  "--portfolio-radius-hero": portfolio.radius.hero,
+  "--portfolio-shadow-card": portfolio.shadows.card,
+  "--portfolio-layout-page-gutter": portfolio.layout.pageGutter,
+  "--portfolio-layout-content-width": portfolio.layout.contentWidth,
+  "--portfolio-layout-hero-width": portfolio.layout.heroWidth,
+  "--portfolio-semantic-section-background":
+    portfolio.semantics.sectionBackground,
+  "--portfolio-semantic-media-frame-background":
+    portfolio.semantics.mediaFrameBackground,
+  "--portfolio-semantic-media-frame-border":
+    portfolio.semantics.mediaFrameBorder,
+  "--portfolio-semantic-eyebrow-color": portfolio.semantics.eyebrowColor,
+  "--portfolio-semantic-caption-color": portfolio.semantics.captionColor,
+  "--portfolio-semantic-body-color": portfolio.semantics.bodyColor,
+  "--portfolio-semantic-title-color": portfolio.semantics.titleColor,
+};
+
 // 把 token 同步成全局 CSS 变量，这样组件样式和预览页面都能共用同一份设计值。
 export const rootCssVariables = {
   "--ds-color-canvas": colors.canvas,

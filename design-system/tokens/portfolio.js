@@ -14,9 +14,12 @@ export const portfolio = Object.freeze({
   }),
   typography: Object.freeze({
     families: Object.freeze({
-      title: '"FZQingKeBenYueSongS-R-GB", serif',
-      body: '"Inter", "Noto Sans SC", "Noto Sans JP", sans-serif',
-      label: '"Inter", "Noto Sans SC", "Noto Sans JP", sans-serif',
+      // 字体文件现在已经进入项目，站点层通过 next/font/local 提供稳定变量。
+      title: 'var(--font-ivy-presto), "Times New Roman", serif',
+      body:
+        'var(--font-satoshi), "Inter", "Noto Sans SC", "Noto Sans JP", sans-serif',
+      label:
+        'var(--font-satoshi), "Inter", "Noto Sans SC", "Noto Sans JP", sans-serif',
     }),
     scales: Object.freeze({
       hero: Object.freeze({

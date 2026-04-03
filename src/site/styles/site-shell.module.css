@@ -1,0 +1,322 @@
+.siteRoot {
+  background: var(--portfolio-color-canvas);
+  color: var(--portfolio-semantic-body-color);
+  font-family: var(--portfolio-font-body);
+  min-height: 100dvh;
+}
+
+.siteShell {
+  margin: 0 auto;
+  width: min(1200px, calc(100% - 2rem));
+}
+
+.siteHeader {
+  left: 0;
+  padding: 0.5rem 0 0;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.siteHeaderFrame {
+  box-sizing: border-box;
+  margin: 0 auto;
+  pointer-events: none;
+  width: min(100%, var(--site-header-width, 1920px));
+}
+
+.siteHeaderFrameExpanded {
+  max-width: none;
+}
+
+.siteHeaderFrameCompact {
+  max-width: none;
+}
+
+.siteHeaderInner {
+  align-items: center;
+  background: #fff;
+  border: 1px solid rgba(9, 10, 12, 0.04);
+  border-radius: var(--portfolio-radius-md);
+  box-shadow:
+    0 calc(2px * var(--site-header-progress, 0))
+    calc(8px * var(--site-header-progress, 0))
+    rgb(0 0 0 / calc(0.06 * var(--site-header-progress, 0)));
+  display: flex;
+  justify-content: space-between;
+  min-height: 3.75rem;
+  pointer-events: auto;
+  padding: 0.75rem;
+  transition:
+    box-shadow 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 360ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.brandLink {
+  align-items: center;
+  color: var(--portfolio-semantic-title-color);
+  display: inline-flex;
+  font-family: var(--portfolio-font-label);
+  font-size: 0.875rem;
+  font-weight: 700;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.brandMark {
+  border-radius: 0.375rem;
+  display: block;
+  height: 1.25rem;
+  object-fit: cover;
+  width: 1.25rem;
+}
+
+.navigation {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.navigationLink {
+  border-radius: 0.75rem;
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-label);
+  font-size: 0.78125rem;
+  font-weight: 700;
+  line-height: 1.25rem;
+  padding: 0.5rem 0.75rem;
+  text-decoration: none;
+}
+
+.navigationLink:hover {
+  background: rgba(45, 47, 48, 0.04);
+}
+
+.siteMain {
+  padding: 4.5rem 0 7.5rem;
+}
+
+.pageStack {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.pageIntro {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 48rem;
+  padding: 0 1.5rem;
+}
+
+.pageEyebrow {
+  color: var(--portfolio-semantic-eyebrow-color);
+  font-family: var(--portfolio-font-label);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.pageTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-title);
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.pageDescription {
+  color: var(--portfolio-semantic-body-color);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin: 0;
+  max-width: 52rem;
+}
+
+.cardGrid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.workCard {
+  background: var(--portfolio-color-surface);
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: var(--portfolio-radius-lg);
+  color: inherit;
+  display: grid;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  text-decoration: none;
+}
+
+.workCard:hover {
+  box-shadow: var(--portfolio-shadow-card);
+  transform: translateY(-1px);
+  transition:
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.workCardMeta {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.workCardMetaLabel {
+  color: var(--portfolio-color-text-muted);
+  font-family: var(--portfolio-font-label);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.workCardMetaYear {
+  color: rgba(45, 47, 48, 0.56);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.workCardTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-title);
+  font-size: clamp(1.75rem, 2.4vw, 2.75rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0;
+}
+
+.workCardSummary {
+  color: var(--portfolio-semantic-body-color);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  margin: 0;
+  max-width: 40rem;
+}
+
+.workCardFooter {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.workCardPath {
+  color: var(--portfolio-color-text-muted);
+  font-family: var(--portfolio-font-label);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.workCardCta {
+  align-items: center;
+  background: var(--portfolio-semantic-title-color);
+  border-radius: 0.75rem;
+  color: #fff;
+  display: inline-flex;
+  font-family: var(--portfolio-font-label);
+  font-size: 0.875rem;
+  font-weight: 600;
+  min-height: 2.25rem;
+  padding: 0 0.75rem;
+}
+
+.placeholderPanel {
+  background: var(--portfolio-color-surface);
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: var(--portfolio-radius-lg);
+  display: grid;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.placeholderTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-title);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.placeholderList {
+  color: var(--portfolio-semantic-body-color);
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.placeholderList li {
+  line-height: 1.7;
+}
+
+.inlineLink {
+  color: var(--portfolio-semantic-title-color);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.siteFooter {
+  border-top: 1px solid rgba(24, 24, 24, 0.09);
+  padding: 3rem 0;
+}
+
+.siteFooterInner {
+  align-items: center;
+  color: rgba(46, 46, 46, 0.68);
+  display: flex;
+  font-size: 0.875rem;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.footerText {
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .siteHeaderInner,
+  .siteFooterInner,
+  .workCardFooter {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .siteMain {
+    padding-top: 3rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .siteHeaderFrame {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .siteShell {
+    width: min(100%, calc(100% - 1rem));
+  }
+
+  .pageIntro,
+  .workCard,
+  .placeholderPanel {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .siteHeaderInner {
+    transition: none;
+  }
+}
