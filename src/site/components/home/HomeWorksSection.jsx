@@ -54,10 +54,17 @@ export default function HomeWorksSection() {
             <div className={styles.workCardMedia}>
               <Image
                 alt={item.homeImageAlt}
-                className={styles.workCardImage}
+                className={[
+                  styles.workCardImage,
+                  item.slug === "drawing-ledger-2-0" ? styles.workCardImageContain : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
                 fill
                 sizes="(max-width: 900px) 100vw, 460px"
                 src={item.homeImageSrc}
+                // Supabase 测试图先跳过 Next 图片代理，避免本地开发环境误判上游地址。
+                unoptimized
               />
             </div>
           </article>

@@ -1,3 +1,5 @@
+import { getStorageAssetUrl } from "../lib/get-storage-asset-url";
+
 // 作品数据先集中在这里，首页和 /work 后续都复用这一份内容源。
 export const workItems = [
   {
@@ -11,7 +13,8 @@ export const workItems = [
       "详情页骨架已预留，后续会在这里继续接入 Figma 长页内容、案例叙事和本地静态资产。",
     homeCardVariant: "featured",
     homeMediaPosition: "end",
-    homeImageSrc: "/site/home/work-drawing-ledger.png",
+    // 先用一张公开测试图验证 Supabase Storage 接入，确认链路通了再逐步迁移正式资源。
+    homeImageSrc: getStorageAssetUrl("home/images/storage-test.png"),
     homeImageAlt: "图纸台账 2.0 项目预览图",
   },
   {
