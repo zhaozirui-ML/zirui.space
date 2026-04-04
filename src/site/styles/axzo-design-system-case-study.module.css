@@ -1,0 +1,454 @@
+.caseStudy {
+  /* Figma 用的是中文宋体标题，但当前项目还没正式接入对应字体。
+   * 先用系统衬线栈做接近版，等你确认后再决定是否正式引入新字体文件。 */
+  --axzo-accent-moss: #647654;
+  --axzo-heading-font: "Noto Serif SC", "Source Han Serif SC", "Songti SC",
+    "STSong", serif;
+  display: grid;
+  gap: clamp(4.5rem, 7vw, 8.25rem);
+}
+
+.hero {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-left: calc(50% - 50vw);
+  min-height: clamp(22rem, 56vw, 42rem);
+  overflow: clip;
+  position: relative;
+  width: 100vw;
+}
+
+.heroBackdrop {
+  inset: 0;
+  position: absolute;
+}
+
+.heroBackdropImage,
+.heroPanelImage,
+.mediaImage,
+.roleImage {
+  object-fit: cover;
+}
+
+.heroPanel {
+  padding: clamp(1rem, 4vw, 2rem);
+  position: relative;
+  width: min(92vw, 90rem);
+  z-index: 1;
+}
+
+.heroPanelFrame {
+  border-radius: 1rem;
+  box-shadow: 0 32px 80px rgba(53, 65, 71, 0.12);
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.heroPanelFrame::before {
+  content: "";
+  display: block;
+  padding-top: calc(880 / 1440 * 100%);
+}
+
+.contentStack {
+  display: grid;
+  gap: clamp(4rem, 6vw, 6rem);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  width: min(100%, 55rem);
+}
+
+.section {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.sectionHeader,
+.storyHeader,
+.reflectionStack {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.sectionTitle {
+  color: var(--portfolio-color-text-title);
+  font-family: var(--axzo-heading-font);
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.sectionDescription,
+.storyParagraph,
+.decisionItem,
+.problemText,
+.roleDescription,
+.quote {
+  color: var(--portfolio-semantic-body-color);
+  font-family: var(--portfolio-font-body);
+  font-size: var(--portfolio-type-body-size);
+  font-weight: var(--portfolio-type-body-weight);
+  letter-spacing: -0.011rem;
+  line-height: var(--portfolio-type-body-line);
+  margin: 0;
+}
+
+.mediaFigure {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.mediaFrame {
+  background: var(--portfolio-color-surface);
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: 1rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.mediaFrameSoft {
+  background: #faf9f6;
+}
+
+.mediaInset {
+  inset: 1.5rem;
+  position: absolute;
+}
+
+.mediaFill {
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.mediaCaption {
+  color: var(--portfolio-color-text-muted);
+  font-family: var(--portfolio-font-body);
+  font-size: var(--portfolio-type-caption-size);
+  line-height: var(--portfolio-type-caption-line);
+  margin: 0;
+  text-align: center;
+}
+
+.problemGrid,
+.roleGrid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.problemCard {
+  align-items: center;
+  background: var(--portfolio-color-surface);
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: 0.75rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  min-height: 3.625rem;
+  padding: 0.8125rem;
+}
+
+.problemIcon {
+  height: 2rem;
+  width: 2rem;
+}
+
+.insightPanel {
+  align-items: center;
+  background: var(--portfolio-color-surface);
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: 1rem;
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem) 1.5rem;
+}
+
+.insightTop {
+  align-items: start;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  width: 100%;
+}
+
+.insightArrowHorizontal,
+.insightArrowSplit,
+.insightArrowVertical {
+  color: var(--portfolio-color-border-strong);
+  font-family: var(--axzo-heading-font);
+}
+
+.insightArrowHorizontal,
+.insightArrowVertical {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  line-height: 1;
+}
+
+.insightArrowHorizontal {
+  align-self: center;
+}
+
+.insightArrowSplit {
+  display: flex;
+  font-size: 2rem;
+  justify-content: center;
+  line-height: 1;
+  width: min(100%, 27rem);
+}
+
+.insightArrowSplit span:first-child {
+  margin-right: auto;
+}
+
+.insightMessage,
+.insightConclusion {
+  background: #faf9f6;
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: 0.75rem;
+  max-width: 21.5625rem;
+  padding: 0.75rem 1.25rem;
+  text-align: center;
+}
+
+.insightMessage {
+  color: var(--portfolio-semantic-body-color);
+  font-family: var(--portfolio-font-body);
+  font-size: 0.875rem;
+  line-height: 1.4286;
+}
+
+.insightConclusion {
+  color: var(--axzo-accent-moss);
+  font-family: var(--portfolio-font-body);
+  font-size: 0.875rem;
+  line-height: 1.4286;
+}
+
+.orbitCard {
+  display: grid;
+  gap: 1rem;
+  justify-items: center;
+}
+
+.orbitDiagram {
+  min-height: 14rem;
+  position: relative;
+  width: min(100%, 18.5625rem);
+}
+
+.orbitRing {
+  border: 1px dashed var(--portfolio-color-border-strong);
+  border-radius: 999px;
+  height: 13.125rem;
+  left: 50%;
+  opacity: 0.9;
+  position: absolute;
+  top: 0.4375rem;
+  transform: translateX(-50%);
+  width: 13.125rem;
+}
+
+.orbitCenter {
+  align-items: center;
+  background: #faf9f6;
+  border-radius: 999px;
+  display: grid;
+  height: 6.25rem;
+  justify-items: center;
+  left: 50%;
+  padding: 1rem;
+  position: absolute;
+  text-align: center;
+  top: 3.875rem;
+  transform: translateX(-50%);
+  width: 6.25rem;
+}
+
+.orbitCenterText {
+  color: var(--portfolio-color-text-body);
+  display: grid;
+  font-family: var(--portfolio-font-label);
+  font-size: 1rem;
+  font-weight: 500;
+  gap: 0;
+  letter-spacing: -0.011rem;
+  line-height: 1.5rem;
+}
+
+.orbitTag {
+  background: #faf9f6;
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: 0.25rem;
+  color: var(--portfolio-color-text-body);
+  font-family: var(--portfolio-font-body);
+  font-size: var(--portfolio-type-caption-size);
+  line-height: var(--portfolio-type-caption-line);
+  padding: 0.25rem 0.375rem;
+  position: absolute;
+}
+
+.orbitTagTop {
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.orbitTagLeft {
+  left: 0;
+  top: 6.25rem;
+}
+
+.orbitTagRight {
+  right: 0;
+  top: 6.25rem;
+}
+
+.orbitTagBottom {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.orbitCaption {
+  color: var(--portfolio-semantic-body-color);
+  font-family: var(--portfolio-font-body);
+  font-size: var(--portfolio-type-body-sm-size);
+  line-height: var(--portfolio-type-body-sm-line);
+  margin: 0;
+  max-width: 12rem;
+  text-align: center;
+}
+
+.roleCard {
+  background: var(--portfolio-color-surface);
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: 0.75rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 7.5rem;
+  overflow: hidden;
+}
+
+.roleBody {
+  align-content: center;
+  display: grid;
+  gap: 0.25rem;
+  padding: 1rem;
+}
+
+.roleTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-label);
+  font-size: var(--portfolio-type-label-size);
+  font-weight: var(--portfolio-type-label-weight);
+  letter-spacing: -0.011rem;
+  line-height: var(--portfolio-type-label-line);
+  margin: 0;
+}
+
+.roleMedia {
+  min-height: 6.25rem;
+  position: relative;
+}
+
+.themeLabel {
+  color: var(--axzo-accent-moss);
+  font-family: var(--portfolio-font-label);
+  font-size: var(--portfolio-type-label-size);
+  font-weight: var(--portfolio-type-label-weight);
+  letter-spacing: -0.011rem;
+  line-height: var(--portfolio-type-label-line);
+  margin: 0;
+}
+
+.storyCopy {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.storyBlock,
+.practiceStack,
+.practiceBlock {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.decisionList {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.resultPanel {
+  background: var(--portfolio-color-canvas);
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: 1rem;
+  padding: 1.5rem 1rem;
+}
+
+.resultList {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.resultItem {
+  color: var(--portfolio-semantic-body-color);
+  font-family: var(--portfolio-font-body);
+  font-size: var(--portfolio-type-body-size);
+  line-height: var(--portfolio-type-body-line);
+}
+
+.quote {
+  color: var(--axzo-accent-moss);
+}
+
+@media (max-width: 56rem) {
+  .contentStack {
+    padding: 0 1rem;
+  }
+
+  .problemGrid,
+  .roleGrid,
+  .insightTop {
+    grid-template-columns: 1fr;
+  }
+
+  .insightArrowHorizontal {
+    justify-self: center;
+    transform: rotate(90deg);
+  }
+
+  .insightArrowSplit {
+    width: min(100%, 12rem);
+  }
+
+  .roleCard {
+    grid-template-columns: minmax(0, 1fr) 6rem;
+  }
+}
+
+@media (max-width: 40rem) {
+  .heroPanel {
+    width: 100%;
+  }
+
+  .sectionTitle {
+    font-size: 1.375rem;
+  }
+
+  .problemCard,
+  .roleCard {
+    border-radius: 0.875rem;
+  }
+
+  .mediaInset {
+    inset: 1rem;
+  }
+}

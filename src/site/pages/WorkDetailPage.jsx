@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import AxzoDesignSystemCaseStudyPage from "./AxzoDesignSystemCaseStudyPage";
 import { getWorkBySlug } from "../lib/get-work-by-slug";
 import styles from "../styles/site-shell.module.css";
 
@@ -8,6 +9,11 @@ export default function WorkDetailPage({ slug }) {
 
   if (!work) {
     return null;
+  }
+
+  // 先把 Figma 已经确认过的案例独立接进来，其他项目继续保留占位骨架。
+  if (slug === "axzo-design-system") {
+    return <AxzoDesignSystemCaseStudyPage work={work} />;
   }
 
   return (
