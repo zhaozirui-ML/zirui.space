@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import DrawingLedgerCaseStudy from "../components/work/DrawingLedgerCaseStudy";
 import { getWorkBySlug } from "../lib/get-work-by-slug";
 import styles from "../styles/site-shell.module.css";
 
@@ -8,6 +9,10 @@ export default function WorkDetailPage({ slug }) {
 
   if (!work) {
     return null;
+  }
+
+  if (work.slug === "drawing-ledger-2-0") {
+    return <DrawingLedgerCaseStudy />;
   }
 
   return (

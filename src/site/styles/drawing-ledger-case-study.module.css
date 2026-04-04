@@ -1,0 +1,939 @@
+.caseStudy {
+  display: grid;
+}
+
+.fullBleedSection,
+.heroSection {
+  margin-left: calc(50% - 50vw);
+  width: 100vw;
+}
+
+.heroSection {
+  background: var(--portfolio-color-canvas);
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.heroBackdrop {
+  border-bottom-left-radius: var(--portfolio-radius-hero);
+  border-bottom-right-radius: var(--portfolio-radius-hero);
+  inset: 0 0 auto;
+  min-height: 100%;
+  overflow: hidden;
+  position: absolute;
+}
+
+.heroBackdropImage {
+  mix-blend-mode: multiply;
+  object-fit: cover;
+}
+
+.heroInner {
+  display: grid;
+  gap: var(--portfolio-space-md);
+  margin: 0 auto;
+  max-width: calc(90rem + 3rem);
+  padding: 7.75rem 1.5rem 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+.heroHeader {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: center;
+  margin: 0 auto;
+  max-width: 44rem;
+  text-align: center;
+}
+
+.heroTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-title);
+  font-size: clamp(2.75rem, 4vw, 3rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1;
+  margin: 0;
+}
+
+.heroSubtitle {
+  color: var(--portfolio-semantic-body-color);
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.heroMedia {
+  aspect-ratio: 1440 / 900;
+  position: relative;
+}
+
+.heroMediaImage {
+  object-fit: cover;
+}
+
+.sectionSurface {
+  background: var(--portfolio-semantic-section-background);
+}
+
+.tocWrap {
+  position: relative;
+  z-index: 18;
+}
+
+.tocContent {
+  margin: 0 auto;
+  max-width: calc(52rem + 3rem);
+  width: 100%;
+}
+
+.tocDesktopNav {
+  display: none;
+}
+
+.tocDesktopInner {
+  display: grid;
+  gap: 0.625rem;
+  left: max(1.5rem, calc(50vw - 41.5rem));
+  position: fixed;
+  top: 8.75rem;
+  width: 12rem;
+}
+
+.tocMobileNav {
+  box-sizing: border-box;
+  padding: 1.25rem 1.5rem 0;
+}
+
+.tocMobileCard {
+  backdrop-filter: blur(18px);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.72)),
+    rgba(252, 251, 248, 0.76);
+  border: 1px solid rgba(236, 233, 228, 0.92);
+  border-radius: 1.25rem;
+  box-shadow:
+    0 18px 42px -30px rgba(21, 24, 31, 0.28),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.32);
+  display: grid;
+  gap: 0.625rem;
+  padding: 0.875rem;
+}
+
+.tocEyebrow {
+  color: var(--portfolio-color-text-muted);
+  font-family:
+    ui-monospace,
+    "SFMono-Regular",
+    "SF Mono",
+    Menlo,
+    Monaco,
+    Consolas,
+    "Liberation Mono",
+    monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.125rem;
+  margin: 0;
+}
+
+.tocList {
+  display: grid;
+  gap: 0.125rem;
+}
+
+.tocDocumentTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family:
+    ui-monospace,
+    "SFMono-Regular",
+    "SF Mono",
+    Menlo,
+    Monaco,
+    Consolas,
+    "Liberation Mono",
+    monospace;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.25rem;
+  margin: 0 0 0.25rem;
+  text-wrap: balance;
+}
+
+.tocLink {
+  --toc-cursor-origin: 0.75rem 50%;
+  align-items: center;
+  border-radius: 0.875rem;
+  color: rgba(122, 126, 128, 0.92);
+  display: grid;
+  font-family:
+    ui-monospace,
+    "SFMono-Regular",
+    "SF Mono",
+    Menlo,
+    Monaco,
+    Consolas,
+    "Liberation Mono",
+    monospace;
+  font-size: 0.875rem;
+  font-weight: 500;
+  gap: 0.625rem;
+  grid-template-columns: 0.5rem minmax(0, 1fr);
+  line-height: 1.35;
+  min-height: 2.25rem;
+  padding: 0.375rem 0.75rem 0.375rem 0.625rem;
+  position: relative;
+  text-decoration: none;
+  transition:
+    color 180ms cubic-bezier(0.2, 0, 0, 1),
+    transform 180ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.tocLink::before {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.72)),
+    rgba(252, 251, 248, 0.84);
+  border: 1px solid rgba(236, 233, 228, 0.84);
+  border-radius: inherit;
+  box-shadow:
+    0 12px 26px -24px rgba(14, 18, 27, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.32);
+  content: "";
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: scale(0.42);
+  transform-origin: var(--toc-cursor-origin);
+  transition:
+    opacity 180ms cubic-bezier(0.2, 0, 0, 1),
+    transform 220ms cubic-bezier(0.2, 0, 0, 1),
+    background-color 180ms cubic-bezier(0.2, 0, 0, 1),
+    border-color 180ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.tocLinkText,
+.tocLinkMarker {
+  position: relative;
+  z-index: 1;
+}
+
+.tocLinkText {
+  text-wrap: pretty;
+}
+
+.tocLinkMarker {
+  background: rgba(179, 106, 94, 0.2);
+  border-radius: 999px;
+  height: 0.375rem;
+  opacity: 0;
+  transform: scale(0.42);
+  transition:
+    opacity 180ms cubic-bezier(0.2, 0, 0, 1),
+    transform 180ms cubic-bezier(0.2, 0, 0, 1),
+    background-color 180ms cubic-bezier(0.2, 0, 0, 1);
+  width: 0.375rem;
+}
+
+.tocLink[data-level="1"] {
+  font-size: 0.8125rem;
+  font-weight: 450;
+}
+
+.tocLink:hover,
+.tocLink:focus-visible {
+  color: var(--portfolio-semantic-title-color);
+  transform: translateX(2px);
+}
+
+.tocLink:hover::before,
+.tocLink:focus-visible::before,
+.tocLinkActive::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.tocLink:hover .tocLinkMarker,
+.tocLink:focus-visible .tocLinkMarker {
+  background: rgba(179, 106, 94, 0.45);
+  opacity: 0.66;
+  transform: scale(1);
+}
+
+.tocLinkActive {
+  color: var(--portfolio-color-accent-brand);
+}
+
+.tocLinkActive .tocLinkMarker {
+  background: var(--portfolio-color-accent-brand);
+  opacity: 1;
+  transform: scale(1);
+}
+
+.sectionContent {
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: calc(52rem + 3rem);
+  padding: var(--portfolio-space-lg) 1.5rem;
+  width: 100%;
+}
+
+.blockStack,
+.footerStack {
+  display: grid;
+  gap: var(--portfolio-space-lg);
+}
+
+.titleHeader,
+.accentHeader {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.anchoredHeader {
+  scroll-margin-top: 6.5rem;
+}
+
+.eyebrow,
+.accentLabel {
+  color: var(--portfolio-color-accent-brand);
+  font-family: var(--portfolio-font-label);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.011rem;
+  line-height: 1.5rem;
+  margin: 0;
+}
+
+.sectionTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-title);
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.richText {
+  color: var(--portfolio-semantic-body-color);
+  display: grid;
+  gap: 0.75rem;
+  font-size: 1rem;
+  letter-spacing: -0.011rem;
+  line-height: 1.5rem;
+}
+
+.richText p,
+.richText ul {
+  margin: 0;
+}
+
+.richText ul {
+  padding-left: 1.25rem;
+}
+
+.richText li + li {
+  margin-top: 0.375rem;
+}
+
+.richText strong {
+  color: var(--portfolio-semantic-title-color);
+  font-weight: 600;
+}
+
+.chartCard,
+.summaryCard,
+.feedbackCard,
+.taskPanel {
+  background: var(--portfolio-color-canvas);
+  border-radius: var(--portfolio-radius-md);
+  display: grid;
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+.chartCard {
+  background: var(--portfolio-color-canvas);
+}
+
+.chartTitle,
+.taskPanelTitle,
+.feedbackTitle,
+.summaryTitle {
+  color: var(--portfolio-semantic-body-color);
+  font-family: var(--portfolio-font-label);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.011rem;
+  line-height: 1.5rem;
+  margin: 0;
+}
+
+.lifecycleFlow {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.lifecycleItem {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.75rem;
+}
+
+.lifecycleChip {
+  align-items: center;
+  border: 1px solid var(--portfolio-color-border-strong);
+  border-radius: var(--portfolio-radius-md);
+  color: var(--portfolio-semantic-body-color);
+  display: inline-flex;
+  font-size: 0.875rem;
+  justify-content: center;
+  line-height: 1.25rem;
+  min-height: 2.375rem;
+  padding: 0.5625rem 0.8125rem;
+  white-space: nowrap;
+}
+
+.lifecycleConnector {
+  background: linear-gradient(
+    90deg,
+    rgba(220, 217, 209, 0.2),
+    rgba(220, 217, 209, 0.95),
+    rgba(220, 217, 209, 0.2)
+  );
+  display: block;
+  height: 1px;
+  width: 3rem;
+}
+
+.chartLegend,
+.caption,
+.iterationCaption,
+.mobileLandingLabel {
+  color: var(--portfolio-semantic-caption-color);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  margin: 0;
+}
+
+.chartLegend {
+  justify-self: center;
+}
+
+.figure {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.caption {
+  justify-self: center;
+  text-align: center;
+}
+
+.mediaFrame {
+  aspect-ratio: 832 / 468;
+  border: 1px solid var(--portfolio-semantic-media-frame-border);
+  border-radius: var(--portfolio-radius-md);
+  min-height: 18rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.mediaFrameWarm {
+  background: var(--portfolio-semantic-media-frame-background);
+}
+
+.mediaFrameSurface {
+  background: var(--portfolio-color-surface);
+}
+
+.mediaBackground {
+  object-fit: cover;
+}
+
+.mediaInner,
+.shortInnerMedia,
+.shadowedInnerMedia {
+  border-radius: var(--portfolio-radius-sm);
+  inset: 2.1875rem;
+  overflow: hidden;
+  position: absolute;
+}
+
+.shortInnerMedia {
+  inset: 3.5rem 2.5rem;
+}
+
+.shadowedInnerMedia {
+  box-shadow: var(--portfolio-shadow-card);
+}
+
+.mediaImageCover,
+.roleCardImage,
+.phoneImage {
+  object-fit: cover;
+}
+
+.mediaImageContain {
+  object-fit: contain;
+}
+
+.mediaPlaceholder {
+  align-items: center;
+  display: flex;
+  inset: 2.5rem;
+  justify-content: center;
+  position: absolute;
+}
+
+.taskPanel {
+  aspect-ratio: auto;
+  background: var(--portfolio-color-surface-warm);
+  padding-top: 3rem;
+}
+
+.taskTableWrap {
+  background: var(--portfolio-color-surface);
+  border-radius: var(--portfolio-radius-sm);
+  overflow-x: auto;
+  padding: 1.25rem;
+}
+
+.taskTable {
+  border-collapse: collapse;
+  min-width: 36rem;
+  width: 100%;
+}
+
+.taskTable th,
+.taskTable td {
+  border-bottom: 1px solid var(--portfolio-color-border-light);
+  padding: 1rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.taskTable th {
+  color: var(--portfolio-color-text-muted);
+  font-family: var(--portfolio-font-label);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.taskTable td {
+  color: var(--portfolio-semantic-body-color);
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+}
+
+.compactList {
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.compactList li + li {
+  margin-top: 0.25rem;
+}
+
+.summaryCard {
+  background: var(--portfolio-color-canvas);
+}
+
+.summaryGroup {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.summaryLabel,
+.feedbackLabel {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-label);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  margin: 0;
+}
+
+.summaryList {
+  color: var(--portfolio-semantic-body-color);
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.summaryList li + li {
+  margin-top: 0.5rem;
+}
+
+.feedbackCard {
+  background: var(--portfolio-color-canvas);
+  gap: 0.5rem;
+}
+
+.emphasisList {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.emphasisList li + li {
+  margin-top: 0.5rem;
+}
+
+.roleScrollerSection {
+  overflow: hidden;
+}
+
+.roleScrollerFrame {
+  background: var(--portfolio-color-surface);
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: var(--portfolio-radius-md);
+  min-height: 26.25rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.roleScrollerBackground {
+  filter: blur(2.5px);
+  object-fit: cover;
+  transform: scale(1.04);
+}
+
+.roleScroller {
+  display: grid;
+  gap: 1.25rem;
+  grid-auto-columns: minmax(min(100%, 44rem), 44rem);
+  grid-auto-flow: column;
+  overflow-x: auto;
+  padding: 5.1875rem 2.1875rem 2.1875rem;
+  position: relative;
+  scroll-snap-type: x proximity;
+  z-index: 1;
+}
+
+.roleCard {
+  display: grid;
+  gap: 0.75rem;
+  scroll-snap-align: start;
+}
+
+.roleCardTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-size: 1rem;
+  letter-spacing: -0.011rem;
+  line-height: 1.5rem;
+  margin: 0;
+}
+
+.roleCardMedia {
+  border-radius: 0.75rem;
+  box-shadow: var(--portfolio-shadow-card);
+  height: 13.5rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.pendingAssetNotice {
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(236, 233, 228, 0.92);
+  border-radius: 1rem;
+  box-shadow: 0 20px 40px rgba(14, 18, 27, 0.08);
+  display: grid;
+  gap: 0.5rem;
+  max-width: 30rem;
+  padding: 1.25rem;
+}
+
+.pendingAssetEyebrow {
+  color: var(--portfolio-color-accent-brand);
+  font-family: var(--portfolio-font-label);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.pendingAssetTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-title);
+  font-size: 1.5rem;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.pendingAssetBody {
+  color: var(--portfolio-semantic-body-color);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.mobileCompareFrame {
+  align-items: flex-end;
+  display: flex;
+  gap: clamp(1rem, 5vw, 5rem);
+  justify-content: center;
+  padding: 5.75rem 2rem 2rem;
+}
+
+.mobileComparePhoneBefore,
+.mobileComparePhoneAfter,
+.mobileLandingPhone {
+  border: 0.375rem solid rgba(157, 173, 172, 0.52);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.mobileComparePhoneBefore,
+.mobileComparePhoneAfter {
+  aspect-ratio: 245 / 530;
+  width: min(15.3125rem, 34vw);
+  z-index: 1;
+}
+
+.beforeAfterLabelLeft,
+.beforeAfterLabelRight {
+  color: var(--portfolio-semantic-title-color);
+  font-size: 0.875rem;
+  left: 50%;
+  line-height: 1.25rem;
+  margin: 0;
+  position: absolute;
+  top: 3rem;
+}
+
+.beforeAfterLabelLeft {
+  transform: translateX(calc(-50% - min(10rem, 18vw)));
+}
+
+.beforeAfterLabelRight {
+  transform: translateX(calc(-50% + min(10rem, 18vw)));
+}
+
+.shortFigure .mediaFrame {
+  aspect-ratio: 832 / 360;
+}
+
+.explorationGridFrame,
+.iterationFrame,
+.mobileLandingFrame {
+  background: var(--portfolio-semantic-media-frame-background);
+  border: 1px solid var(--portfolio-semantic-media-frame-border);
+  border-radius: var(--portfolio-radius-md);
+  display: grid;
+  gap: 0.75rem;
+  padding: 2.25rem;
+}
+
+.explorationGrid,
+.iterationGrid {
+  display: grid;
+  gap: 2.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.explorationCell,
+.iterationImageWrap {
+  aspect-ratio: 240 / 122;
+  border-radius: var(--portfolio-radius-sm);
+  overflow: hidden;
+  position: relative;
+}
+
+.iterationCard {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.mobileLandingGrid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.mobileLandingCard {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: center;
+}
+
+.mobileLandingPhone {
+  aspect-ratio: 160 / 346;
+  width: min(10rem, 100%);
+}
+
+.footerStack {
+  gap: var(--portfolio-space-lg);
+}
+
+@media (min-width: 1400px) {
+  .tocDesktopNav {
+    display: block;
+  }
+
+  .tocMobileNav {
+    display: none;
+  }
+}
+
+@media (max-width: 1100px) {
+  .heroInner {
+    padding-top: 6.5rem;
+  }
+
+  .sectionContent {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+
+  .mobileLandingGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .tocList {
+    gap: 0.0625rem;
+  }
+
+  .heroSection {
+    min-height: auto;
+  }
+
+  .heroBackdrop {
+    height: 100%;
+  }
+
+  .heroInner {
+    gap: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .heroHeader {
+    justify-items: start;
+    text-align: left;
+  }
+
+  .lifecycleFlow {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .lifecycleItem {
+    justify-content: flex-start;
+  }
+
+  .lifecycleConnector {
+    width: 2rem;
+  }
+
+  .mediaInner,
+  .shortInnerMedia,
+  .shadowedInnerMedia {
+    inset: 1.25rem;
+  }
+
+  .roleScroller {
+    grid-auto-columns: minmax(100%, 100%);
+    padding: 1.5rem;
+  }
+
+  .roleCardMedia {
+    height: 11rem;
+  }
+
+  .explorationGrid,
+  .iterationGrid {
+    gap: 1rem;
+  }
+
+  .mobileCompareFrame {
+    gap: 1rem;
+    padding: 4.5rem 1rem 1rem;
+  }
+
+  .beforeAfterLabelLeft {
+    transform: translateX(calc(-50% - min(7rem, 15vw)));
+  }
+
+  .beforeAfterLabelRight {
+    transform: translateX(calc(-50% + min(7rem, 15vw)));
+  }
+}
+
+@media (max-width: 680px) {
+  .tocMobileNav {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .tocMobileCard {
+    padding: 0.75rem;
+  }
+
+  .tocLink {
+    min-height: 2.125rem;
+  }
+
+  .heroTitle {
+    font-size: 2.25rem;
+    line-height: 1.05;
+  }
+
+  .sectionContent {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .chartCard,
+  .summaryCard,
+  .feedbackCard,
+  .taskPanel,
+  .explorationGridFrame,
+  .iterationFrame,
+  .mobileLandingFrame {
+    padding: 1rem;
+  }
+
+  .mediaFrame {
+    min-height: 14rem;
+  }
+
+  .taskTable {
+    min-width: 30rem;
+  }
+
+  .mobileComparePhoneBefore,
+  .mobileComparePhoneAfter {
+    width: 42vw;
+  }
+
+  .beforeAfterLabelLeft,
+  .beforeAfterLabelRight {
+    top: 1.5rem;
+  }
+
+  .beforeAfterLabelLeft {
+    transform: translateX(calc(-50% - min(5rem, 12vw)));
+  }
+
+  .beforeAfterLabelRight {
+    transform: translateX(calc(-50% + min(5rem, 12vw)));
+  }
+
+  .explorationGrid,
+  .iterationGrid,
+  .mobileLandingGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .mobileLandingPhone {
+    width: min(10rem, 60vw);
+  }
+}
