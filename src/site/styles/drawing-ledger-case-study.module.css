@@ -2,6 +2,10 @@
   display: grid;
 }
 
+.caseBody {
+  position: relative;
+}
+
 .fullBleedSection,
 .heroSection {
   margin-left: calc(50% - 50vw);
@@ -78,14 +82,20 @@
   background: var(--portfolio-semantic-section-background);
 }
 
+.canvasSurface {
+  background: var(--portfolio-color-canvas);
+}
+
 .tocWrap {
   position: relative;
   z-index: 18;
 }
 
 .tocContent {
+  height: 100%;
   margin: 0 auto;
   max-width: calc(52rem + 3rem);
+  position: relative;
   width: 100%;
 }
 
@@ -95,10 +105,7 @@
 
 .tocDesktopInner {
   display: grid;
-  gap: 0.625rem;
-  left: max(1.5rem, calc(50vw - 41.5rem));
-  position: fixed;
-  top: 8.75rem;
+  gap: 0.25rem;
   width: 12rem;
 }
 
@@ -120,21 +127,14 @@
   display: grid;
   gap: 0.625rem;
   padding: 0.875rem;
+  width: 12rem;
 }
 
 .tocEyebrow {
   color: var(--portfolio-color-text-muted);
-  font-family:
-    ui-monospace,
-    "SFMono-Regular",
-    "SF Mono",
-    Menlo,
-    Monaco,
-    Consolas,
-    "Liberation Mono",
-    monospace;
+  font-family: var(--portfolio-font-label);
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: 425;
   letter-spacing: 0.02em;
   line-height: 1.125rem;
   margin: 0;
@@ -142,26 +142,54 @@
 
 .tocList {
   display: grid;
-  gap: 0.125rem;
+  gap: 0;
 }
 
 .tocDocumentTitle {
   color: var(--portfolio-semantic-title-color);
-  font-family:
-    ui-monospace,
-    "SFMono-Regular",
-    "SF Mono",
-    Menlo,
-    Monaco,
-    Consolas,
-    "Liberation Mono",
-    monospace;
+  font-family: var(--portfolio-font-label);
   font-size: 0.9375rem;
-  font-weight: 500;
+  font-weight: 425;
   letter-spacing: -0.015em;
   line-height: 1.25rem;
   margin: 0 0 0.25rem;
   text-wrap: balance;
+}
+
+.tocBackLink {
+  appearance: none;
+  align-items: center;
+  background: none;
+  border: 0;
+  color: var(--portfolio-semantic-title-color);
+  cursor: pointer;
+  display: grid;
+  font-family: var(--portfolio-font-label);
+  font-size: 0.9375rem;
+  font-weight: 425;
+  gap: 0.625rem;
+  letter-spacing: -0.015em;
+  line-height: 1.25rem;
+  margin: 0 0 0.25rem;
+  padding: 0 0 0 0.625rem;
+  grid-template-columns: 0.5rem max-content;
+  justify-content: start;
+  text-align: left;
+  transition: color 180ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.tocBackIcon {
+  flex: none;
+  height: 0.875rem;
+  stroke-width: 2.1;
+  justify-self: center;
+  transform: translateY(-0.25em);
+  width: 0.875rem;
+}
+
+.tocBackLink:hover,
+.tocBackLink:focus-visible {
+  color: var(--portfolio-color-accent-brand);
 }
 
 .tocLink {
@@ -170,22 +198,14 @@
   border-radius: 0.875rem;
   color: rgba(122, 126, 128, 0.92);
   display: grid;
-  font-family:
-    ui-monospace,
-    "SFMono-Regular",
-    "SF Mono",
-    Menlo,
-    Monaco,
-    Consolas,
-    "Liberation Mono",
-    monospace;
-  font-size: 0.875rem;
-  font-weight: 500;
-  gap: 0.625rem;
+  font-family: var(--portfolio-font-label);
+  font-size: 0.8125rem;
+  font-weight: 425;
+  gap: 0.5rem;
   grid-template-columns: 0.5rem minmax(0, 1fr);
   line-height: 1.35;
-  min-height: 2.25rem;
-  padding: 0.375rem 0.75rem 0.375rem 0.625rem;
+  min-height: 1.875rem;
+  padding: 0.1875rem 0.75rem 0.1875rem 0.625rem;
   position: relative;
   text-decoration: none;
   transition:
@@ -194,26 +214,7 @@
 }
 
 .tocLink::before {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.72)),
-    rgba(252, 251, 248, 0.84);
-  border: 1px solid rgba(236, 233, 228, 0.84);
-  border-radius: inherit;
-  box-shadow:
-    0 12px 26px -24px rgba(14, 18, 27, 0.4),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.32);
-  content: "";
-  inset: 0;
-  opacity: 0;
-  pointer-events: none;
-  position: absolute;
-  transform: scale(0.42);
-  transform-origin: var(--toc-cursor-origin);
-  transition:
-    opacity 180ms cubic-bezier(0.2, 0, 0, 1),
-    transform 220ms cubic-bezier(0.2, 0, 0, 1),
-    background-color 180ms cubic-bezier(0.2, 0, 0, 1),
-    border-color 180ms cubic-bezier(0.2, 0, 0, 1);
+  content: none;
 }
 
 .tocLinkText,
@@ -230,7 +231,9 @@
   background: rgba(179, 106, 94, 0.2);
   border-radius: 999px;
   height: 0.375rem;
+  justify-self: center;
   opacity: 0;
+  align-self: center;
   transform: scale(0.42);
   transition:
     opacity 180ms cubic-bezier(0.2, 0, 0, 1),
@@ -239,22 +242,10 @@
   width: 0.375rem;
 }
 
-.tocLink[data-level="1"] {
-  font-size: 0.8125rem;
-  font-weight: 450;
-}
-
 .tocLink:hover,
 .tocLink:focus-visible {
   color: var(--portfolio-semantic-title-color);
   transform: translateX(2px);
-}
-
-.tocLink:hover::before,
-.tocLink:focus-visible::before,
-.tocLinkActive::before {
-  opacity: 1;
-  transform: scale(1);
 }
 
 .tocLink:hover .tocLinkMarker,
@@ -429,6 +420,8 @@
 .figure {
   display: grid;
   gap: 0.75rem;
+  margin: 0;
+  width: 100%;
 }
 
 .caption {
@@ -443,6 +436,7 @@
   min-height: 18rem;
   overflow: hidden;
   position: relative;
+  width: 100%;
 }
 
 .mediaFrameWarm {
@@ -461,13 +455,13 @@
 .shortInnerMedia,
 .shadowedInnerMedia {
   border-radius: var(--portfolio-radius-sm);
-  inset: 2.1875rem;
+  inset: 1rem;
   overflow: hidden;
   position: absolute;
 }
 
 .shortInnerMedia {
-  inset: 3.5rem 2.5rem;
+  inset: 2rem 1.5rem;
 }
 
 .shadowedInnerMedia {
@@ -772,9 +766,31 @@
   gap: var(--portfolio-space-lg);
 }
 
-@media (min-width: 1400px) {
+@media (min-width: 1200px) {
+  .tocWrap {
+    bottom: 0;
+    left: 50%;
+    position: absolute;
+    top: 6rem;
+    width: 0;
+  }
+
+  .tocContent {
+    height: 100%;
+    margin: 0;
+    max-width: none;
+    width: 0;
+  }
+
   .tocDesktopNav {
     display: block;
+    position: sticky;
+    top: 6rem;
+    width: 0;
+  }
+
+  .tocDesktopInner {
+    transform: translateX(calc(-100% - 33.5rem));
   }
 
   .tocMobileNav {

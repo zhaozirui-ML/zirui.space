@@ -88,6 +88,10 @@
   padding: 4.5rem 0 7.5rem;
 }
 
+.siteMainImmersive {
+  padding-top: 0;
+}
+
 .pageStack {
   display: grid;
   gap: 1.5rem;

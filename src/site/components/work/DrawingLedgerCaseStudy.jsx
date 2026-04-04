@@ -128,18 +128,23 @@ const mobileIterationAssets = [
 
 const mobileLandingAssets = [
   {
+    // 用稳定 id 作为 React key，避免展示文案重复时触发重复 key 报错。
+    id: "project-drawings",
     asset: assets.mobileLanded1,
     label: "项目图纸",
   },
   {
+    id: "ledger-home",
     asset: assets.mobileLanded2,
     label: "台账首页",
   },
   {
+    id: "ledger-detail-1",
     asset: assets.mobileLanded3,
     label: "台账详情",
   },
   {
+    id: "ledger-detail-2",
     asset: assets.mobileLanded4,
     label: "台账详情",
   },
@@ -313,7 +318,7 @@ function MediaFigure({
               }
               fill
               priority={priority}
-              sizes="(max-width: 900px) calc(100vw - 3rem), 760px"
+              sizes="(max-width: 900px) calc(100vw - 2rem), 832px"
               src={asset.src}
             />
           </div>
@@ -365,7 +370,7 @@ function PendingAssetNotice({ body, title }) {
 export default function DrawingLedgerCaseStudy() {
   return (
     <article className={styles.caseStudy}>
-      <section className={styles.heroSection}>
+      <section className={styles.heroSection} id="case-hero">
         <div className={styles.heroBackdrop}>
           <Image
             alt=""
@@ -396,16 +401,17 @@ export default function DrawingLedgerCaseStudy() {
         </div>
       </section>
 
-      <div className={styles.tocWrap}>
-        <div className={styles.tocContent}>
-          <WorkCaseStudyToc items={tocItems} />
+      <div className={styles.caseBody}>
+        <div className={styles.tocWrap}>
+          <div className={styles.tocContent}>
+            <WorkCaseStudyToc items={tocItems} />
+          </div>
         </div>
-      </div>
 
-      <section className={joinClassNames(styles.fullBleedSection, styles.sectionSurface)}>
-        <div className={styles.sectionContent}>
-          <div className={styles.blockStack}>
-            <TitleHeader sectionId="case-overview" title="业务背景">
+        <section className={joinClassNames(styles.fullBleedSection, styles.sectionSurface)}>
+          <div className={styles.sectionContent}>
+            <div className={styles.blockStack}>
+              <TitleHeader sectionId="case-overview" title="业务背景">
               <p>
                 图纸台账是图纸管理功能模块中，记录图纸从上传到废弃整个生命周期状态流转的空间。
                 台账系统主要涉及上传人、确认人、下发人及多权限管理员 4 类用户角色。
@@ -446,17 +452,17 @@ export default function DrawingLedgerCaseStudy() {
               caption="旧版图纸台账页"
             />
 
-            <TitleHeader sectionId="case-goal" title="设计目标">
-              <p>此次设计的核心目标，是把台账系统从「以数据为中心」转变为「以角色和任务为中心」。</p>
-            </TitleHeader>
+              <TitleHeader sectionId="case-goal" title="设计目标">
+                <p>此次设计的核心目标，是把台账系统从「以数据为中心」转变为「以角色和任务为中心」。</p>
+              </TitleHeader>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className={joinClassNames(styles.fullBleedSection, styles.sectionSurface)}>
-        <div className={styles.sectionContent}>
-          <div className={styles.blockStack}>
-            <TitleHeader sectionId="case-practice" title="设计实践">
+        <section className={joinClassNames(styles.fullBleedSection, styles.sectionSurface)}>
+          <div className={styles.sectionContent}>
+            <div className={styles.blockStack}>
+              <TitleHeader sectionId="case-practice" title="设计实践">
               <p>
                 在早期明确了图纸台账 2.0 改版要围绕细分用户角色和权限来重构体验之后，
                 我在项目启动前就开始提前探索设计方案。
@@ -587,14 +593,14 @@ export default function DrawingLedgerCaseStudy() {
               frameTone="surface"
               imageClassName={styles.shadowedInnerMedia}
             />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className={joinClassNames(styles.fullBleedSection, styles.sectionSurface)}>
-        <div className={styles.sectionContent}>
-          <div className={styles.blockStack}>
-            <TitleHeader eyebrow="Design is all about detail" sectionId="case-detail" title="细节展开">
+        <section className={joinClassNames(styles.fullBleedSection, styles.sectionSurface)}>
+          <div className={styles.sectionContent}>
+            <div className={styles.blockStack}>
+              <TitleHeader eyebrow="Design is all about detail" sectionId="case-detail" title="细节展开">
               <p>第二轮方向稳定后，重点就变成了把关键交互和视觉层级打磨得足够自然。</p>
             </TitleHeader>
 
@@ -675,14 +681,14 @@ export default function DrawingLedgerCaseStudy() {
                 />
               }
             />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className={joinClassNames(styles.fullBleedSection, styles.sectionSurface)}>
-        <div className={styles.sectionContent}>
-          <div className={styles.blockStack}>
-            <TitleHeader sectionId="case-mobile" title="移动端设计">
+        <section className={joinClassNames(styles.fullBleedSection, styles.canvasSurface)}>
+          <div className={styles.sectionContent}>
+            <div className={styles.blockStack}>
+              <TitleHeader sectionId="case-mobile" title="移动端设计">
               <p>
                 与 Web 端不同，移动端图纸台账系统几乎是从 0 到 1 搭建的。
                 这个项目的另一个目标，是补齐移动端能力，实现双端对齐。
@@ -821,7 +827,7 @@ export default function DrawingLedgerCaseStudy() {
             <div className={styles.mobileLandingFrame}>
               <div className={styles.mobileLandingGrid}>
                 {mobileLandingAssets.map((item) => (
-                  <article className={styles.mobileLandingCard} key={item.label}>
+                  <article className={styles.mobileLandingCard} key={item.id}>
                     <div className={styles.mobileLandingPhone}>
                       <Image
                         alt={item.asset.alt}
@@ -837,14 +843,14 @@ export default function DrawingLedgerCaseStudy() {
               </div>
               <p className={styles.caption}>全部核心页面</p>
             </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className={joinClassNames(styles.fullBleedSection, styles.sectionSurface)}>
-        <div className={styles.sectionContent}>
-          <div className={styles.footerStack}>
-            <TitleHeader sectionId="case-results" title="落地成果">
+        <section className={joinClassNames(styles.fullBleedSection, styles.canvasSurface)}>
+          <div className={styles.sectionContent}>
+            <div className={styles.footerStack}>
+              <TitleHeader sectionId="case-results" title="落地成果">
               <p>本次改版上线后，移动端图纸模块的用户活跃度提升 20%，Web 端图纸上传后的流转效率提升 35%。</p>
             </TitleHeader>
 
@@ -855,9 +861,10 @@ export default function DrawingLedgerCaseStudy() {
                 用更克制、更聪明的方式解决复杂痛点，并同时为研发团队节省资源。
               </p>
             </TitleHeader>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </article>
   );
 }

@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ArrowUpLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 import styles from "../../styles/drawing-ledger-case-study.module.css";
 
@@ -27,7 +29,7 @@ function setCenteredOrigin(target) {
 }
 
 function TocLink({ activeId, item }) {
-  const paddingInlineStart = `calc(0.625rem + ${(item.level ?? 0) * 1.125}rem)`;
+  const paddingInlineStart = `calc(0.625rem + ${(item.level ?? 0) * 0.875}rem)`;
 
   return (
     <a
@@ -38,6 +40,9 @@ function TocLink({ activeId, item }) {
       key={item.id}
       onFocus={(event) => setCenteredOrigin(event.currentTarget)}
       onPointerEnter={(event) =>
+        setPointerOrigin(event.currentTarget, event.clientX, event.clientY)
+      }
+      onPointerMove={(event) =>
         setPointerOrigin(event.currentTarget, event.clientX, event.clientY)
       }
       onPointerLeave={(event) =>
@@ -51,8 +56,18 @@ function TocLink({ activeId, item }) {
   );
 }
 
-export default function WorkCaseStudyToc({ items, title = "图纸台账 2.0" }) {
+export default function WorkCaseStudyToc({ items }) {
   const [activeId, setActiveId] = useState(items[0]?.id ?? null);
+  const router = useRouter();
+
+  function handleBack() {
+    if (window.history.length > 1) {
+      router.back();
+      return;
+    }
+
+    router.push("/work");
+  }
 
   useEffect(() => {
     const headings = items
@@ -92,8 +107,10 @@ export default function WorkCaseStudyToc({ items, title = "图纸台账 2.0" }) 
     <>
       <nav aria-label="页面目录" className={styles.tocDesktopNav}>
         <div className={styles.tocDesktopInner}>
-          <p className={styles.tocEyebrow}>Case Study</p>
-          <p className={styles.tocDocumentTitle}>{title}</p>
+          <button className={styles.tocBackLink} onClick={handleBack} type="button">
+            <ArrowUpLeft aria-hidden="true" className={styles.tocBackIcon} />
+            <span>返回</span>
+          </button>
           <div className={styles.tocList}>
             {items.map((item) => (
               <TocLink activeId={activeId} item={item} key={item.id} />
@@ -105,7 +122,10 @@ export default function WorkCaseStudyToc({ items, title = "图纸台账 2.0" }) 
       <nav aria-label="页面目录" className={styles.tocMobileNav}>
         <div className={styles.tocMobileCard}>
           <p className={styles.tocEyebrow}>目录</p>
-          <p className={styles.tocDocumentTitle}>{title}</p>
+          <button className={styles.tocBackLink} onClick={handleBack} type="button">
+            <ArrowUpLeft aria-hidden="true" className={styles.tocBackIcon} />
+            <span>返回</span>
+          </button>
           <div className={styles.tocList}>
             {items.map((item) => (
               <TocLink activeId={activeId} item={item} key={item.id} />
