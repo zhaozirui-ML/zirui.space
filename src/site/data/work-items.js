@@ -39,7 +39,7 @@ export const workItems = [
     summary:
       "为大屏展示场景建立更稳定的信息层级、图表节奏与阅读顺序，提升可理解性。",
     detailSummary:
-      "详情页骨架已预留，后续会继续补充图表策略、布局推导和展示资产。",
+      "将省、市、区三级建筑大屏设计整合为统一视觉语言，并把图表探索扩展到更复杂的大屏场景。",
     homeCardVariant: "standard",
     homeMediaPosition: "end",
     homeImageSrc: "/site/home/work-data-viz.png",

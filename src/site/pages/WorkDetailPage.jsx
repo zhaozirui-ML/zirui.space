@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import DataVisualizationScreenDetail from "../components/work-detail/DataVisualizationScreenDetail";
 import { getWorkBySlug } from "../lib/get-work-by-slug";
 import styles from "../styles/site-shell.module.css";
 
@@ -8,6 +9,11 @@ export default function WorkDetailPage({ slug }) {
 
   if (!work) {
     return null;
+  }
+
+  // 先只把已经进入 Figma 对照实现的案例切到专用长页，其他案例继续保留通用骨架。
+  if (work.slug === "data-visualization-screen") {
+    return <DataVisualizationScreenDetail />;
   }
 
   return (
