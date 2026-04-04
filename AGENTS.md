@@ -79,6 +79,26 @@
   - 如果有分支或 commit，回报当前分支和最新 commit
   - 如果有阶段 MD，说明已更新哪个文件
 
+### 1.6 Figma 文案实现规则
+- 展示文案的实现遵循 `GUIDELINES.md` 中的内容保真规则。
+
+### 1.7 Figma 实现默认 Skills 组合
+- 如果任务是“通过 Figma MCP 读取设计稿并实现为代码”，默认优先使用这组 Skills：
+  - `figma`
+  - `figma-implement-design`
+  - `Portfolio Design`
+- 这组组合的分工默认理解为：
+  - `figma`：负责正确读取 Figma 结构、截图、节点和资源
+  - `figma-implement-design`：负责按设计稿高保真实现
+  - `Portfolio Design`：负责把实现结果拉回作品集项目自己的页面语言、叙事和版式规则
+- 如果当前会话里 `Portfolio Design` 不可用，默认退回：
+  - `figma`
+  - `figma-implement-design`
+  - 同时继续遵循 `GUIDELINES.md` 和 `DESIGN_SYSTEM.md`
+- 用户如果想直接调用，默认可用这类表达：
+  - “请用 figma + figma-implement-design + Portfolio Design 来实现这个设计稿”
+  - “这次按 Figma MCP + Portfolio Design 的方式来做”
+
 ---
 
 ## 2. 代码与实现偏好
@@ -103,9 +123,9 @@
 ### 2.4 字体接入规则
 - 后续如果确定要使用新字体，默认把字体正式接入项目，而不是依赖本机已安装字体、临时 `font-family` 占位，或只停留在设计说明里。
 - 字体应优先通过项目级统一方式接入和管理，例如全局字体入口、layout、字体变量或 design token，不要在页面或组件里分散重复声明字体来源。
-- 非展示性文本默认统一使用 Satoshi，不要引入 `SF Mono`、系统 monospace 或其他临时功能字体。
-- 这里的“非展示性文本”包括但不限于：导航、目录、按钮、标签、说明文字、表单文本、图注、辅助信息、数据说明。
-- 展示性文本（如案例页主标题、章节标题、叙事型大标题）可以继续按页面规则使用展示字体，但功能性和信息性文字默认回到 Satoshi 体系。
+- 字体选择遵循 `DESIGN_SYSTEM.md` 中的字体规则。
+- 不要引入 `SF Mono`、系统 monospace 或其他临时功能字体。
+- 展示性文本（如案例页主标题、章节标题、叙事型大标题）可以继续按页面规则使用展示字体，不要因为正文切换而一起改掉。
 - 接入字体时，需要同时说明：
   - 字体来源
   - 主要用途

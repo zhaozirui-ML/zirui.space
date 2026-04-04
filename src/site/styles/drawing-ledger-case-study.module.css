@@ -86,272 +86,28 @@
   background: var(--portfolio-color-canvas);
 }
 
-.tocWrap {
-  position: relative;
-  z-index: 18;
-}
-
-.tocContent {
-  height: 100%;
-  margin: 0 auto;
-  max-width: calc(52rem + 3rem);
-  position: relative;
-  width: 100%;
-}
-
-.tocDesktopNav {
-  display: none;
-}
-
-.tocDesktopInner {
-  display: grid;
-  gap: 0.25rem;
-  width: 12rem;
-}
-
-.tocMobileNav {
-  box-sizing: border-box;
-  padding: 1.25rem 1.5rem 0;
-}
-
-.tocMobileCard {
-  backdrop-filter: blur(18px);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.72)),
-    rgba(252, 251, 248, 0.76);
-  border: 1px solid rgba(236, 233, 228, 0.92);
-  border-radius: 1.25rem;
-  box-shadow:
-    0 18px 42px -30px rgba(21, 24, 31, 0.28),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.32);
-  display: grid;
-  gap: 0.625rem;
-  padding: 0.875rem;
-  width: 12rem;
-}
-
-.tocEyebrow {
-  color: var(--portfolio-color-text-muted);
-  font-family: var(--portfolio-font-label);
-  font-size: 0.75rem;
-  font-weight: 425;
-  letter-spacing: 0.02em;
-  line-height: 1.125rem;
-  margin: 0;
-}
-
-.tocList {
-  display: grid;
-  gap: 0;
-}
-
-.tocDocumentTitle {
-  color: var(--portfolio-semantic-title-color);
-  font-family: var(--portfolio-font-label);
-  font-size: 0.9375rem;
-  font-weight: 425;
-  letter-spacing: -0.015em;
-  line-height: 1.25rem;
-  margin: 0 0 0.25rem;
-  text-wrap: balance;
-}
-
-.tocBackLink {
-  appearance: none;
-  align-items: center;
-  background: none;
-  border: 0;
-  color: var(--portfolio-semantic-title-color);
-  cursor: pointer;
-  display: grid;
-  font-family: var(--portfolio-font-label);
-  font-size: 0.9375rem;
-  font-weight: 425;
-  gap: 0.625rem;
-  isolation: isolate;
-  letter-spacing: -0.015em;
-  line-height: 1.25rem;
-  margin: 0 0 0.25rem;
-  padding: 0 0 0 0.625rem;
-  grid-template-columns: 0.5rem max-content;
-  justify-content: start;
-  position: relative;
-  text-align: left;
-  transition: color 180ms cubic-bezier(0.2, 0, 0, 1);
-}
-
-.tocBackIcon {
-  flex: none;
-  height: 0.875rem;
-  opacity: 0.72;
-  filter: blur(0.8px);
-  stroke-width: 2.1;
-  justify-self: center;
-  transform: translate3d(0, -0.25em, 0) scale(0.94);
-  transition:
-    opacity 220ms cubic-bezier(0.2, 0, 0, 1),
-    filter 220ms cubic-bezier(0.2, 0, 0, 1),
-    transform 220ms cubic-bezier(0.2, 0, 0, 1);
-  width: 0.875rem;
-}
-
-.tocBackLink:hover,
-.tocBackLink:focus-visible {
-  color: var(--portfolio-color-accent-brand);
-}
-
-.tocBackLink:hover .tocBackIcon,
-.tocBackLink:focus-visible .tocBackIcon {
-  filter: blur(0);
-  opacity: 1;
-  transform: translate3d(1px, -0.25em, 0) scale(1);
-}
-
-.tocBackLink:active .tocBackIcon {
-  transform: translate3d(0.5px, -0.25em, 0) scale(0.96);
-}
-
-.tocLink {
-  /* 默认先关掉扩散背景，后面如果想恢复，只需要把这两个值调高。 */
-  --toc-hover-wash-opacity: 0;
-  --toc-active-wash-opacity: 0;
-  --toc-cursor-origin: 0.75rem 50%;
-  align-items: center;
-  border-radius: 0.875rem;
-  color: rgba(122, 126, 128, 0.92);
-  display: grid;
-  font-family: var(--portfolio-font-label);
-  font-size: 0.8125rem;
-  font-weight: 425;
-  gap: 0.5rem;
-  grid-template-columns: 0.5rem minmax(0, 1fr);
-  isolation: isolate;
-  line-height: 1.35;
-  min-height: 1.875rem;
-  overflow: hidden;
-  padding: 0.1875rem 0.75rem 0.1875rem 0.625rem;
-  position: relative;
-  text-decoration: none;
-  transition:
-    color 180ms cubic-bezier(0.2, 0, 0, 1),
-    transform 180ms cubic-bezier(0.2, 0, 0, 1);
-}
-
-.tocLink::before {
-  background:
-    radial-gradient(
-      5.5rem circle at var(--toc-cursor-origin),
-      rgba(179, 106, 94, 0.12),
-      rgba(179, 106, 94, 0.06) 35%,
-      transparent 72%
-    );
-  border-radius: inherit;
-  content: "";
-  inset: 0;
-  opacity: 0;
-  pointer-events: none;
-  position: absolute;
-  transform: scale(0.96);
-  transform-origin: var(--toc-cursor-origin);
-  transition:
-    opacity 220ms cubic-bezier(0.2, 0, 0, 1),
-    transform 220ms cubic-bezier(0.2, 0, 0, 1);
-}
-
-.tocLinkText,
-.tocLinkMarker {
-  position: relative;
-  z-index: 1;
-}
-
-.tocLinkText {
-  text-wrap: pretty;
-}
-
-.tocLinkMarker {
-  background: rgba(179, 106, 94, 0.2);
-  border-radius: 999px;
-  filter: blur(4px);
-  height: 0.375rem;
-  justify-self: center;
-  opacity: 0;
-  align-self: center;
-  transform: scale(0.25);
-  transition:
-    opacity 180ms cubic-bezier(0.2, 0, 0, 1),
-    filter 180ms cubic-bezier(0.2, 0, 0, 1),
-    transform 180ms cubic-bezier(0.2, 0, 0, 1),
-    background-color 180ms cubic-bezier(0.2, 0, 0, 1);
-  will-change: opacity, transform, filter;
-  width: 0.375rem;
-}
-
-.tocLink:hover,
-.tocLink:focus-visible {
-  color: var(--portfolio-semantic-title-color);
-  transform: translateX(2px);
-}
-
-.tocLink:hover::before,
-.tocLink:focus-visible::before {
-  opacity: var(--toc-hover-wash-opacity);
-  transform: scale(1);
-}
-
-.tocLink:hover .tocLinkMarker,
-.tocLink:focus-visible .tocLinkMarker {
-  background: rgba(179, 106, 94, 0.45);
-  filter: blur(0);
-  opacity: 0.66;
-  transform: scale(1);
-}
-
-.tocLinkActive {
-  color: var(--portfolio-color-accent-brand);
-}
-
-.tocLinkActive::before {
-  opacity: var(--toc-active-wash-opacity);
-  transform: scale(1);
-}
-
-.tocLinkActive .tocLinkMarker {
-  background: var(--portfolio-color-accent-brand);
-  filter: blur(0);
-  opacity: 1;
-  transform: scale(1);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .tocBackLink,
-  .tocBackIcon,
-  .tocLink,
-  .tocLink::before,
-  .tocLinkMarker {
-    transition-duration: 0ms;
-  }
-
-  .tocBackIcon,
-  .tocLink,
-  .tocLink::before,
-  .tocLinkMarker {
-    filter: none;
-    transform: none;
-  }
-}
-
 .sectionContent {
   box-sizing: border-box;
   margin: 0 auto;
   max-width: calc(52rem + 3rem);
-  padding: var(--portfolio-space-lg) 1.5rem;
+  padding: var(--portfolio-space-section-y) 1.5rem;
   width: 100%;
 }
 
-.blockStack,
-.footerStack {
+.blockStack {
   display: grid;
   gap: var(--portfolio-space-lg);
+}
+
+.sectionFlow,
+.footerStack {
+  display: grid;
+  gap: var(--portfolio-space-md);
+}
+
+.sectionCluster {
+  display: grid;
+  gap: var(--portfolio-space-sm);
 }
 
 .titleHeader,
@@ -505,9 +261,9 @@
 }
 
 .mediaFrame {
-  aspect-ratio: 832 / 468;
   border: 1px solid var(--portfolio-semantic-media-frame-border);
   border-radius: var(--portfolio-radius-md);
+  height: var(--case-media-frame-height, 29.25rem);
   min-height: 18rem;
   overflow: hidden;
   position: relative;
@@ -530,9 +286,20 @@
 .shortInnerMedia,
 .shadowedInnerMedia {
   border-radius: var(--portfolio-radius-sm);
-  inset: 1rem;
   overflow: hidden;
   position: absolute;
+}
+
+.mediaInner,
+.shadowedInnerMedia {
+  /* 对齐 Figma 当前这类媒体卡片：
+   * 外框 832×468，前景图 760×475，距离左/右/上约 36px。
+   * 之前统一用 inset 会把前景图压成错误比例，导致截图被额外裁切。
+   */
+  height: var(--case-media-inner-height, 29.6875rem);
+  left: var(--case-media-inner-inset-x, 2.25rem);
+  right: var(--case-media-inner-inset-x, 2.25rem);
+  top: var(--case-media-inner-inset-top, 2.25rem);
 }
 
 .shortInnerMedia {
@@ -837,40 +604,7 @@
   width: min(10rem, 100%);
 }
 
-.footerStack {
-  gap: var(--portfolio-space-lg);
-}
-
 @media (min-width: 1200px) {
-  .tocWrap {
-    bottom: 0;
-    left: 50%;
-    position: absolute;
-    top: 6rem;
-    width: 0;
-  }
-
-  .tocContent {
-    height: 100%;
-    margin: 0;
-    max-width: none;
-    width: 0;
-  }
-
-  .tocDesktopNav {
-    display: block;
-    position: sticky;
-    top: 6rem;
-    width: 0;
-  }
-
-  .tocDesktopInner {
-    transform: translateX(calc(-100% - 33.5rem));
-  }
-
-  .tocMobileNav {
-    display: none;
-  }
 }
 
 @media (max-width: 1100px) {
@@ -889,10 +623,6 @@
 }
 
 @media (max-width: 900px) {
-  .tocList {
-    gap: 0.0625rem;
-  }
-
   .heroSection {
     min-height: auto;
   }
@@ -928,6 +658,10 @@
   .shortInnerMedia,
   .shadowedInnerMedia {
     inset: 1.25rem;
+    height: auto;
+    left: auto;
+    right: auto;
+    top: auto;
   }
 
   .roleScroller {
@@ -959,19 +693,6 @@
 }
 
 @media (max-width: 680px) {
-  .tocMobileNav {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-
-  .tocMobileCard {
-    padding: 0.75rem;
-  }
-
-  .tocLink {
-    min-height: 2.125rem;
-  }
-
   .heroTitle {
     font-size: 2.25rem;
     line-height: 1.05;

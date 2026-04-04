@@ -3,7 +3,16 @@ import { getStorageAssetUrl } from "../../lib/get-storage-asset-url";
 // 这里先默认走本地静态图，方便当前开发和视觉对齐。
 // 等这些资源正式上传到 Supabase 后，只需要把这个开关切成 true，
 // 或者把这里改成更细粒度的逐张切换逻辑，页面组件本身不用重写。
-const preferSupabaseAssets = false;
+const preferSupabaseAssets = true;
+
+// 这几个资源目前还没在 Supabase 上就位，所以测试阶段继续回退到本地或占位。
+// 这样可以先验证大部分链路，不会因为少数缺图直接把整页切坏。
+const pendingSupabaseAssetPaths = new Set([
+  "work/drawing-ledger-2-0/workflow-demo.png",
+  "work/drawing-ledger-2-0/responsive-demo.png",
+  "work/drawing-ledger-2-0/mobile-tab-interaction.png",
+  "work/drawing-ledger-2-0/mobile-landed-1.png",
+]);
 
 const assetDefinitions = {
   coverBackground: {
@@ -204,19 +213,28 @@ const assetDefinitions = {
 };
 
 function resolveAssetSource(asset) {
-  if (preferSupabaseAssets) {
+  if (preferSupabaseAssets && !pendingSupabaseAssetPaths.has(asset.storagePath)) {
     return getStorageAssetUrl(asset.storagePath);
   }
 
   return asset.localSrc;
 }
 
+function shouldBypassNextImageOptimizer(source) {
+  return typeof source === "string" && source.startsWith("http");
+}
+
 export const drawingLedgerAssets = Object.fromEntries(
   Object.entries(assetDefinitions).map(([key, asset]) => [
     key,
-    {
-      ...asset,
-      src: resolveAssetSource(asset),
-    },
+    (() => {
+      const src = resolveAssetSource(asset);
+
+      return {
+        ...asset,
+        src,
+        unoptimized: shouldBypassNextImageOptimizer(src),
+      };
+    })(),
   ])
 );

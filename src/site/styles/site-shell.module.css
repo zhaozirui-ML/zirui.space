@@ -5,6 +5,11 @@
   min-height: 100dvh;
 }
 
+.siteRootModuleHome {
+  /* 模块首页正文保留 Satoshi，和详情页正文的 Inter 规则拆开。 */
+  font-family: var(--portfolio-font-label);
+}
+
 .siteShell {
   margin: 0 auto;
   width: min(1200px, calc(100% - 2rem));
@@ -95,6 +100,11 @@
 .pageStack {
   display: grid;
   gap: 1.5rem;
+}
+
+.detailPage {
+  /* 详情页正文统一走 Inter，后续新案例页接进来时可以直接复用这个页面级入口。 */
+  font-family: var(--portfolio-font-body);
 }
 
 .pageIntro {

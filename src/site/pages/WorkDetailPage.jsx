@@ -12,11 +12,15 @@ export default function WorkDetailPage({ slug }) {
   }
 
   if (work.slug === "drawing-ledger-2-0") {
-    return <DrawingLedgerCaseStudy />;
+    return (
+      <div className={styles.detailPage}>
+        <DrawingLedgerCaseStudy />
+      </div>
+    );
   }
 
   return (
-    <div className={styles.pageStack}>
+    <div className={[styles.pageStack, styles.detailPage].join(" ")}>
       <section className={styles.pageIntro}>
         <p className={styles.pageEyebrow}>{work.category}</p>
         <h1 className={styles.pageTitle}>{work.title}</h1>

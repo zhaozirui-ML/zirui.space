@@ -1,4 +1,5 @@
 import localFont from "next/font/local";
+import { Inter } from "next/font/google";
 
 // 站点正式使用项目内托管字体，避免继续依赖“本机刚好装了这个字体”。
 export const satoshi = localFont({
@@ -43,4 +44,12 @@ export const ivyPresto = localFont({
     },
   ],
   variable: "--font-ivy-presto",
+});
+
+// 详情页正文统一走 Inter，这里正式接入项目，避免继续依赖“系统刚好装了 Inter”。
+export const inter = Inter({
+  display: "swap",
+  subsets: ["latin"],
+  variable: "--font-inter",
+  weight: ["400", "500", "600", "700"],
 });
