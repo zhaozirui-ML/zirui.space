@@ -44,3 +44,15 @@ export const ivyPresto = localFont({
   ],
   variable: "--font-ivy-presto",
 });
+
+export const fzQingKeBenYueSong = localFont({
+  display: "swap",
+  src: [
+    {
+      path: "./files/FZQKBYSJW.ttf",
+      style: "normal",
+      weight: "400",
+    },
+  ],
+  variable: "--font-fz-qingke-benyuesong",
+});

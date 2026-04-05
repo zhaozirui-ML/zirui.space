@@ -20,22 +20,22 @@ export const axzoDesignSystemCaseStudy = {
     items: [
       {
         title: "设计资产有沉淀，但入口分散",
-        imageSrc: "/site/work/axzo-design-system/problem-entry.png",
+        imageSrc: "/site/work/axzo-design-system/problem-entry.svg",
         imageAlt: "统一入口问题图标",
       },
       {
         title: "数据可视化规范建设不足",
-        imageSrc: "/site/work/axzo-design-system/problem-dataviz.png",
+        imageSrc: "/site/work/axzo-design-system/problem-dataviz.svg",
         imageAlt: "数据可视化问题图标",
       },
       {
         title: "UI 实现存在局部不一致",
-        imageSrc: "/site/work/axzo-design-system/problem-ui.png",
+        imageSrc: "/site/work/axzo-design-system/problem-ui.svg",
         imageAlt: "界面不一致问题图标",
       },
       {
         title: "设计开发协作效率低",
-        imageSrc: "/site/work/axzo-design-system/problem-collab.png",
+        imageSrc: "/site/work/axzo-design-system/problem-collab.svg",
         imageAlt: "协作效率问题图标",
       },
     ],

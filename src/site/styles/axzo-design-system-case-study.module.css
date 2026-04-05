@@ -1,9 +1,6 @@
 .caseStudy {
-  /* Figma 用的是中文宋体标题，但当前项目还没正式接入对应字体。
-   * 先用系统衬线栈做接近版，等你确认后再决定是否正式引入新字体文件。 */
   --axzo-accent-moss: #647654;
-  --axzo-heading-font: "Noto Serif SC", "Source Han Serif SC", "Songti SC",
-    "STSong", serif;
+  --axzo-heading-font: var(--portfolio-font-title);
   display: grid;
   gap: clamp(4.5rem, 7vw, 8.25rem);
 }

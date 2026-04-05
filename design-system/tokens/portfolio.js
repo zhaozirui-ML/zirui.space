@@ -14,8 +14,9 @@ export const portfolio = Object.freeze({
   }),
   typography: Object.freeze({
     families: Object.freeze({
-      // 字体文件现在已经进入项目，站点层通过 next/font/local 提供稳定变量。
-      title: 'var(--font-ivy-presto), "Times New Roman", serif',
+      // 一级标题统一切到项目内托管的“方正清刻本悦宋”，避免继续依赖本机字体。
+      title:
+        'var(--font-fz-qingke-benyuesong), "Songti SC", "STSong", serif',
       body:
         'var(--font-satoshi), "Inter", "Noto Sans SC", "Noto Sans JP", sans-serif',
       label:
