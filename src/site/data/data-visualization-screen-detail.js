@@ -69,4 +69,102 @@ export const dataVisualizationScreenDetail = Object.freeze({
       },
     ]),
   }),
+  practice: Object.freeze({
+    title: "设计实践",
+    subtitle: "From visual exploration to scalable application",
+    visualLanguage: Object.freeze({
+      eyebrow: "定义新的图表视觉语言",
+      paragraphs: Object.freeze([
+        "这套项目中图表的「果冻效果」，来自我在 CMS 首页工作台视觉优化项目中的探索。当时老板认为原有图表样式过于扁平，视觉存在感不足，难以在首页形成足够突出的数据焦点，希望团队尝试一种更有张力、视觉效果更强烈的表达方向。",
+        "围绕这个目标，我负责了图表视觉方案的探索与打磨，尝试从体积感、光泽感、色彩层次与重点数据强调方式入手，最终形成了后来被持续沿用的果冻视觉效果。该方案经 Leader 确认并向上汇报后获得认可，随后被推行到后续项目中，逐渐成为团队可视化设计中的核心视觉语言之一。",
+      ]),
+      gallery: Object.freeze({
+        caption: "CMS Dashboard Charts",
+        mainImageSrc: "/site/work/data-visualization-screen/practice-main-chart.png",
+        mainImageAlt: "CMS Dashboard Charts 主图",
+        thumbnails: Object.freeze([
+          {
+            imageSrc:
+              "/site/work/data-visualization-screen/practice-thumb-1.png",
+            imageAlt: "CMS Dashboard Charts 缩略图 1",
+          },
+          {
+            imageSrc:
+              "/site/work/data-visualization-screen/practice-thumb-2.png",
+            imageAlt: "CMS Dashboard Charts 缩略图 2",
+          },
+          {
+            imageSrc:
+              "/site/work/data-visualization-screen/practice-thumb-3.png",
+            imageAlt: "CMS Dashboard Charts 缩略图 3",
+          },
+          {
+            imageSrc:
+              "/site/work/data-visualization-screen/practice-thumb-4.png",
+            imageAlt: "CMS Dashboard Charts 缩略图 4",
+          },
+        ]),
+      }),
+    }),
+    systemization: Object.freeze({
+      eyebrow: "将视觉风格转化为可复用组件能力",
+      paragraphs: Object.freeze([
+        "如果一套视觉风格只能停留在单个页面里，它的价值其实很有限。进入多人协作和多场景应用后，真正关键的是，它是否能被稳定复用。",
+        "因此，在负责部分模块设计之外，我也协助推动这套视觉语言的组件化沉淀，例如异形数据指标卡、响应式图表等组件样式。",
+      ]),
+      demos: Object.freeze([
+        {
+          type: "indicator-card",
+          caption: "异形数据指标卡",
+        },
+        {
+          type: "responsive-chart",
+          caption: "响应式图表",
+        },
+      ]),
+    }),
+  }),
+  outcomes: Object.freeze({
+    title: "设计成果",
+    intro: "下面汇总了我负责的项目首页与质安监管模块的完整页面设计。",
+    imageSrc: "/site/work/data-visualization-screen/outcomes-overview.png",
+    imageAlt: "大屏数据可视化项目全部页面概览",
+    caption: "全部页面概览",
+  }),
+  retrospective: Object.freeze({
+    title: "项目复盘",
+    intro: "除了完成署名模块的具体设计，我在这个项目里的价值主要体现在四个方面：",
+    cards: Object.freeze([
+      {
+        title: "延续视觉语言",
+        description: "将先前定义的图表风格扩展到本次三级大屏项目中",
+        imageSrc: "/site/work/data-visualization-screen/retrospective-1.png",
+        imageAlt: "延续视觉语言缩略图",
+      },
+      {
+        title: "协助组件沉淀",
+        description: "把高频图表和指标模块沉淀为可复用设计资产",
+        imageSrc: "/site/work/data-visualization-screen/retrospective-2.png",
+        imageAlt: "协助组件沉淀缩略图",
+      },
+      {
+        title: "推动整体统一",
+        description: "帮助三级页面在更大范围内形成一致的视觉表达",
+        imageSrc: "/site/work/data-visualization-screen/retrospective-3.png",
+        imageAlt: "推动整体统一缩略图",
+      },
+      {
+        title: "支持多人协作",
+        description: "通过规则和复用降低样式偏差，提升团队推进效率",
+        imageSrc: "/site/work/data-visualization-screen/retrospective-4.png",
+        imageAlt: "支持多人协作缩略图",
+      },
+    ]),
+    summary:
+      "这个项目让我意识到，数据可视化设计的价值，不只在于单页是否足够吸引人，更在于是否能建立一套稳定、可延续的视觉表达方式。对我来说，最重要的成长有两点：",
+    bullets: Object.freeze([
+      "从图表优化走向视觉语言定义",
+      "从页面交付转向系统化落地",
+    ]),
+  }),
 });
