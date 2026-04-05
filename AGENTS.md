@@ -86,18 +86,18 @@
 - 如果任务是“通过 Figma MCP 读取设计稿并实现为代码”，默认优先使用这组 Skills：
   - `figma`
   - `figma-implement-design`
-  - `Portfolio Design`
+  - `portfolio-design`
 - 这组组合的分工默认理解为：
   - `figma`：负责正确读取 Figma 结构、截图、节点和资源
   - `figma-implement-design`：负责按设计稿高保真实现
-  - `Portfolio Design`：负责把实现结果拉回作品集项目自己的页面语言、叙事和版式规则
-- 如果当前会话里 `Portfolio Design` 不可用，默认退回：
+  - `portfolio-design`：负责把实现结果拉回作品集项目自己的页面语言、叙事和版式规则
+- 如果当前会话里 `portfolio-design` 不可用，默认退回：
   - `figma`
   - `figma-implement-design`
   - 同时继续遵循 `GUIDELINES.md` 和 `DESIGN_SYSTEM.md`
 - 用户如果想直接调用，默认可用这类表达：
-  - “请用 figma + figma-implement-design + Portfolio Design 来实现这个设计稿”
-  - “这次按 Figma MCP + Portfolio Design 的方式来做”
+  - “请用 figma + figma-implement-design + portfolio-design 来实现这个设计稿”
+  - “这次按 Figma MCP + portfolio-design 的方式来做”
 
 ---
 
