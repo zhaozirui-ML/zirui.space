@@ -104,8 +104,15 @@
 .pageIntro {
   display: grid;
   gap: 0.75rem;
-  max-width: 48rem;
+  max-width: var(--portfolio-layout-content-width);
   padding: 0 1.5rem;
+}
+
+.pageIntroHeading,
+.placeholderHeading {
+  justify-self: stretch;
+  margin: 0;
+  max-width: none;
 }
 
 .pageEyebrow {

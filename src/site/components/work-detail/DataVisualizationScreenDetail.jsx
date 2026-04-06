@@ -1,5 +1,10 @@
 import Image from "next/image";
 
+import {
+  CaseStudyHeadingOne,
+  CaseStudyHeadingTwo,
+} from "../case-study/CaseStudyHeading";
+import CaseStudyToc from "../case-study/CaseStudyToc";
 import { dataVisualizationScreenDetail } from "../../data/data-visualization-screen-detail";
 import styles from "../../styles/data-visualization-screen-detail.module.css";
 
@@ -58,43 +63,32 @@ const yearlyComparison = [
 ];
 
 const caseStudySections = [
-  { id: "project-background", label: "项目背景" },
-  { id: "problem-definition", label: "问题定义" },
-  { id: "design-goals", label: "设计目标" },
-  { id: "design-practice", label: "设计实践" },
-  { id: "design-outcomes", label: "设计成果" },
-  { id: "project-retrospective", label: "项目复盘" },
+  { hierarchy: "primary", id: "project-background", label: "项目背景" },
+  { hierarchy: "primary", id: "problem-definition", label: "问题定义" },
+  { hierarchy: "primary", id: "design-goals", label: "设计目标" },
+  { hierarchy: "primary", id: "design-practice", label: "设计实践" },
+  {
+    hierarchy: "secondary",
+    id: "practice-visual-language",
+    label: "图表视觉语言",
+  },
+  {
+    hierarchy: "secondary",
+    id: "practice-systemization",
+    label: "组件化沉淀",
+  },
+  { hierarchy: "primary", id: "design-outcomes", label: "设计成果" },
+  { hierarchy: "primary", id: "project-retrospective", label: "项目复盘" },
 ];
 
-function DetailSection({ id = null, subtitle = null, title, children = null }) {
-  return (
-    <section
-      className={`${styles.sectionBlock} ${styles.textRail}`}
-      id={id}
-    >
-      <h2 className={styles.sectionTitle}>{title}</h2>
-      {subtitle ? <p className={styles.sectionSubtitle}>{subtitle}</p> : null}
-      {children}
-    </section>
-  );
-}
-
-function CaseStudyToc() {
-  return (
-    <aside className={styles.tocSection}>
-      <div className={styles.tocInner}>
-        <p className={styles.tocLabel}>目录</p>
-        <nav aria-label="案例目录" className={styles.tocNav}>
-          {caseStudySections.map((item) => (
-            <a className={styles.tocLink} href={`#${item.id}`} key={item.id}>
-              {item.label}
-            </a>
-          ))}
-        </nav>
-      </div>
-    </aside>
-  );
-}
+const tocTheme = {
+  accentColor: "var(--data-vis-case-accent)",
+  backHref: "/work",
+  backLabel: "返回",
+  desktopShiftX: "29rem",
+  desktopStartOffset: "clamp(4.5rem, 8vw, 8.25rem)",
+  desktopStickyTop: "2rem",
+};
 
 function RecreatedIndicatorDemo() {
   return (
@@ -213,7 +207,9 @@ function RecreatedResponsiveChartDemo() {
   );
 }
 
-export default function DataVisualizationScreenDetail() {
+export default function DataVisualizationScreenDetail({
+  headingAccentColor = "var(--portfolio-semantic-eyebrow-color)",
+}) {
   const {
     background,
     goals,
@@ -223,9 +219,13 @@ export default function DataVisualizationScreenDetail() {
     problems,
     retrospective,
   } = dataVisualizationScreenDetail;
+  /** @type {import("react").CSSProperties & Record<string, string>} */
+  const pageThemeStyles = {
+    "--data-vis-case-accent": headingAccentColor,
+  };
 
   return (
-    <article className={styles.page}>
+    <article className={styles.page} style={pageThemeStyles}>
       <section className={styles.heroFullBleed}>
         <div
           className={styles.hero}
@@ -253,227 +253,223 @@ export default function DataVisualizationScreenDetail() {
         </div>
       </section>
 
-      <CaseStudyToc />
+      <div className={styles.caseBody}>
+        <CaseStudyToc items={caseStudySections} {...tocTheme} />
 
-      <div className={styles.contentStack}>
-        <DetailSection id="project-background" title={background.title}>
-          {background.paragraphs.map((paragraph) => (
-            <p className={styles.bodyText} key={paragraph}>
-              {paragraph}
-            </p>
-          ))}
-
-          <div className={styles.bodyGroup}>
-            <p className={styles.bodyText}>{background.leadIn}</p>
-            <ul className={styles.bulletList}>
-              {background.bullets.map((bullet) => (
-                <li key={bullet}>{bullet}</li>
-              ))}
-            </ul>
-          </div>
-        </DetailSection>
-
-        <section className={styles.sectionGroup}>
-          <DetailSection id="problem-definition" title={problems.title}>
-            <p className={styles.bodyText}>{problems.intro}</p>
-          </DetailSection>
-
-          <div className={styles.problemGrid}>
-            {problems.items.map((item) => (
-              <article className={styles.problemCard} key={item.label}>
-                <div className={styles.problemIcon}>
-                  <Image
-                    alt={item.iconAlt}
-                    className={styles.problemIconImage}
-                    height={32}
-                    sizes="32px"
-                    src={item.iconSrc}
-                    width={32}
-                  />
-                </div>
-                <p className={styles.problemLabel}>{item.label}</p>
-              </article>
-            ))}
-          </div>
-
-          <p className={`${styles.bodyText} ${styles.textRail}`}>
-            {problems.summary}
-          </p>
-        </section>
-
-        <section className={styles.sectionGroup}>
-          <DetailSection id="design-goals" title={goals.title}>
-            <p className={styles.bodyText}>{goals.intro}</p>
-          </DetailSection>
-
-          <div className={styles.goalGrid}>
-            {goals.items.map((item) => (
-              <article className={styles.goalCard} key={item.title}>
-                <h3 className={styles.goalTitle}>{item.title}</h3>
-                <p className={styles.goalDescription}>{item.description}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className={styles.sectionGroup}>
-          <DetailSection
-            id="design-practice"
-            subtitle={practice.subtitle}
-            title={practice.title}
-          />
-
-          <section className={styles.practiceSection}>
-            <div className={`${styles.sectionBlock} ${styles.textRail}`}>
-              <p className={styles.sectionEyebrow}>
-                {practice.visualLanguage.eyebrow}
-              </p>
-              <div className={styles.paragraphStack}>
-                {practice.visualLanguage.paragraphs.map((paragraph) => (
-                  <p className={styles.bodyText} key={paragraph}>
-                    {paragraph}
-                  </p>
+        <div className={styles.contentStack}>
+          <CaseStudyHeadingOne
+            id="project-background"
+            title={background.title}
+            descriptions={background.paragraphs}
+          >
+            <div className={styles.bodyGroup}>
+              <p className={styles.bodyText}>{background.leadIn}</p>
+              <ul className={styles.bulletList}>
+                {background.bullets.map((bullet) => (
+                  <li key={bullet}>{bullet}</li>
                 ))}
-              </div>
+              </ul>
             </div>
+          </CaseStudyHeadingOne>
 
-            <figure className={styles.figureBlock}>
-              <div className={styles.practiceGalleryFrame}>
-                <div className={styles.practiceGalleryMain}>
-                  <Image
-                    alt={practice.visualLanguage.gallery.mainImageAlt}
-                    className={styles.figureImageStatic}
-                    height={563}
-                    sizes="(max-width: 900px) 100vw, 900px"
-                    src={practice.visualLanguage.gallery.mainImageSrc}
-                    style={{ height: "auto", width: "100%" }}
-                    width={900}
-                  />
-                </div>
+          <section className={styles.sectionGroup}>
+            <CaseStudyHeadingOne
+              id="problem-definition"
+              title={problems.title}
+              descriptions={problems.intro}
+            />
 
-                {practice.visualLanguage.gallery.thumbnails.map((thumbnail, index) => (
-                  <div
-                    className={`${styles.practiceGalleryThumb} ${styles[`practiceGalleryThumb${index + 1}`]}`}
-                    key={thumbnail.imageSrc}
-                  >
+            <div className={styles.problemGrid}>
+              {problems.items.map((item) => (
+                <article className={styles.problemCard} key={item.label}>
+                  <div className={styles.problemIcon}>
                     <Image
-                      alt={thumbnail.imageAlt}
-                      className={styles.figureImage}
-                      fill
-                      sizes="(max-width: 900px) 45vw, 420px"
-                      src={thumbnail.imageSrc}
+                      alt={item.iconAlt}
+                      className={styles.problemIconImage}
+                      height={32}
+                      sizes="32px"
+                      src={item.iconSrc}
+                      width={32}
                     />
                   </div>
-                ))}
+                  <p className={styles.problemLabel}>{item.label}</p>
+                </article>
+              ))}
+            </div>
+
+            <p className={`${styles.bodyText} ${styles.textRail}`}>
+              {problems.summary}
+            </p>
+          </section>
+
+          <section className={styles.sectionGroup}>
+            <CaseStudyHeadingOne
+              id="design-goals"
+              title={goals.title}
+              descriptions={goals.intro}
+            />
+
+            <div className={styles.goalGrid}>
+              {goals.items.map((item) => (
+                <article className={styles.goalCard} key={item.title}>
+                  <h3 className={styles.goalTitle}>{item.title}</h3>
+                  <p className={styles.goalDescription}>{item.description}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className={styles.sectionGroup}>
+            <CaseStudyHeadingOne
+              id="design-practice"
+              title={practice.title}
+              descriptions={practice.subtitle}
+            />
+
+            <section className={styles.practiceSection}>
+              <CaseStudyHeadingTwo
+                accentColor="var(--data-vis-case-accent)"
+                descriptions={practice.visualLanguage.paragraphs}
+                id="practice-visual-language"
+                title={practice.visualLanguage.eyebrow}
+              />
+
+              <figure className={styles.figureBlock}>
+                <div className={styles.practiceGalleryFrame}>
+                  <div className={styles.practiceGalleryMain}>
+                    <Image
+                      alt={practice.visualLanguage.gallery.mainImageAlt}
+                      className={styles.figureImageStatic}
+                      height={563}
+                      sizes="(max-width: 900px) 100vw, 900px"
+                      src={practice.visualLanguage.gallery.mainImageSrc}
+                      style={{ height: "auto", width: "100%" }}
+                      width={900}
+                    />
+                  </div>
+
+                  {practice.visualLanguage.gallery.thumbnails.map((thumbnail, index) => (
+                    <div
+                      className={`${styles.practiceGalleryThumb} ${styles[`practiceGalleryThumb${index + 1}`]}`}
+                      key={thumbnail.imageSrc}
+                    >
+                      <Image
+                        alt={thumbnail.imageAlt}
+                        className={styles.figureImage}
+                        fill
+                        sizes="(max-width: 900px) 45vw, 420px"
+                        src={thumbnail.imageSrc}
+                      />
+                    </div>
+                  ))}
+                </div>
+                <figcaption className={styles.figureCaption}>
+                  {practice.visualLanguage.gallery.caption}
+                </figcaption>
+              </figure>
+            </section>
+
+            <section className={styles.practiceSection}>
+              <CaseStudyHeadingTwo
+                accentColor="var(--data-vis-case-accent)"
+                descriptions={practice.systemization.paragraphs}
+                id="practice-systemization"
+                title={practice.systemization.eyebrow}
+              />
+
+              <div className={styles.demoStack}>
+                <figure className={styles.figureBlock}>
+                  <div className={styles.demoFrame}>
+                    {/* Figma 这里没有吐出可下载素材，所以这一块按截图结构做了可维护的前端重建。 */}
+                    <RecreatedIndicatorDemo />
+                  </div>
+                  <figcaption className={styles.figureCaption}>
+                    {practice.systemization.demos[0].caption}
+                  </figcaption>
+                </figure>
+
+                <figure className={styles.figureBlock}>
+                  <div className={styles.demoFrame}>
+                    {/* 这一块同样基于 Figma 截图重建，优先保留整体层级、配色和信息节奏。 */}
+                    <RecreatedResponsiveChartDemo />
+                  </div>
+                  <figcaption className={styles.figureCaption}>
+                    {practice.systemization.demos[1].caption}
+                  </figcaption>
+                </figure>
+              </div>
+            </section>
+          </section>
+
+          <section className={styles.sectionGroup}>
+            <CaseStudyHeadingOne
+              id="design-outcomes"
+              title={outcomes.title}
+              descriptions={outcomes.intro}
+            />
+
+            <figure className={styles.figureBlock}>
+              <div className={styles.outcomesFrame}>
+                <div className={styles.outcomesInner}>
+                  <Image
+                    alt={outcomes.imageAlt}
+                    className={styles.figureImageStatic}
+                    height={541}
+                    sizes="(max-width: 900px) 100vw, 942px"
+                    src={outcomes.imageSrc}
+                    style={{ height: "auto", width: "100%" }}
+                    width={942}
+                  />
+                </div>
               </div>
               <figcaption className={styles.figureCaption}>
-                {practice.visualLanguage.gallery.caption}
+                {outcomes.caption}
               </figcaption>
             </figure>
           </section>
 
-          <section className={styles.practiceSection}>
-            <div className={`${styles.sectionBlock} ${styles.textRail}`}>
-              <p className={styles.sectionEyebrow}>
-                {practice.systemization.eyebrow}
-              </p>
-              <div className={styles.paragraphStack}>
-                {practice.systemization.paragraphs.map((paragraph) => (
-                  <p className={styles.bodyText} key={paragraph}>
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
+          <section className={styles.sectionGroup}>
+            <CaseStudyHeadingOne
+              id="project-retrospective"
+              title={retrospective.title}
+              descriptions={retrospective.intro}
+            />
+
+            <div className={styles.retrospectiveGrid}>
+              {retrospective.cards.map((card) => (
+                <article className={styles.retrospectiveCard} key={card.title}>
+                  <div className={styles.retrospectiveCardBody}>
+                    <h3 className={styles.retrospectiveCardTitle}>{card.title}</h3>
+                    <p className={styles.retrospectiveCardDescription}>
+                      {card.description}
+                    </p>
+                  </div>
+                  <div className={styles.retrospectiveCardMedia}>
+                    <Image
+                      alt={card.imageAlt}
+                      className={styles.figureImage}
+                      fill
+                      sizes="120px"
+                      src={card.imageSrc}
+                    />
+                  </div>
+                </article>
+              ))}
             </div>
 
-            <div className={styles.demoStack}>
-              <figure className={styles.figureBlock}>
-                <div className={styles.demoFrame}>
-                  {/* Figma 这里没有吐出可下载素材，所以这一块按截图结构做了可维护的前端重建。 */}
-                  <RecreatedIndicatorDemo />
-                </div>
-                <figcaption className={styles.figureCaption}>
-                  {practice.systemization.demos[0].caption}
-                </figcaption>
-              </figure>
+            <p className={`${styles.bodyText} ${styles.textRail}`}>
+              {retrospective.summary}
+            </p>
 
-              <figure className={styles.figureBlock}>
-                <div className={styles.demoFrame}>
-                  {/* 这一块同样基于 Figma 截图重建，优先保留整体层级、配色和信息节奏。 */}
-                  <RecreatedResponsiveChartDemo />
-                </div>
-                <figcaption className={styles.figureCaption}>
-                  {practice.systemization.demos[1].caption}
-                </figcaption>
-              </figure>
+            <div className={styles.summaryPanel}>
+              <ul className={styles.bulletList}>
+                {retrospective.bullets.map((bullet) => (
+                  <li key={bullet}>{bullet}</li>
+                ))}
+              </ul>
             </div>
           </section>
-        </section>
-
-        <section className={styles.sectionGroup}>
-          <DetailSection id="design-outcomes" title={outcomes.title}>
-            <p className={styles.bodyText}>{outcomes.intro}</p>
-          </DetailSection>
-
-          <figure className={styles.figureBlock}>
-            <div className={styles.outcomesFrame}>
-              <div className={styles.outcomesInner}>
-                <Image
-                  alt={outcomes.imageAlt}
-                  className={styles.figureImageStatic}
-                  height={541}
-                  sizes="(max-width: 900px) 100vw, 942px"
-                  src={outcomes.imageSrc}
-                  style={{ height: "auto", width: "100%" }}
-                  width={942}
-                />
-              </div>
-            </div>
-            <figcaption className={styles.figureCaption}>
-              {outcomes.caption}
-            </figcaption>
-          </figure>
-        </section>
-
-        <section className={styles.sectionGroup}>
-          <DetailSection id="project-retrospective" title={retrospective.title}>
-            <p className={styles.bodyText}>{retrospective.intro}</p>
-          </DetailSection>
-
-          <div className={styles.retrospectiveGrid}>
-            {retrospective.cards.map((card) => (
-              <article className={styles.retrospectiveCard} key={card.title}>
-                <div className={styles.retrospectiveCardBody}>
-                  <h3 className={styles.retrospectiveCardTitle}>{card.title}</h3>
-                  <p className={styles.retrospectiveCardDescription}>
-                    {card.description}
-                  </p>
-                </div>
-                <div className={styles.retrospectiveCardMedia}>
-                  <Image
-                    alt={card.imageAlt}
-                    className={styles.figureImage}
-                    fill
-                    sizes="120px"
-                    src={card.imageSrc}
-                  />
-                </div>
-              </article>
-            ))}
-          </div>
-
-          <p className={`${styles.bodyText} ${styles.textRail}`}>
-            {retrospective.summary}
-          </p>
-
-          <div className={styles.summaryPanel}>
-            <ul className={styles.bulletList}>
-              {retrospective.bullets.map((bullet) => (
-                <li key={bullet}>{bullet}</li>
-              ))}
-            </ul>
-          </div>
-        </section>
+        </div>
       </div>
     </article>
   );
