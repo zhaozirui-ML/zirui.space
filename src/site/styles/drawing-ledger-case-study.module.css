@@ -94,6 +94,10 @@
   width: 100%;
 }
 
+.sectionContentTightBottom {
+  padding-bottom: 0;
+}
+
 .blockStack {
   display: grid;
   gap: var(--portfolio-space-lg);
@@ -195,17 +199,33 @@
   margin: 0;
 }
 
-.lifecycleFlow {
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
+.chartTitle,
+.taskPanelTitle {
+  font-family: var(--portfolio-font-body);
 }
 
-.lifecycleItem {
+.taskPanelTitle {
+  justify-self: center;
+}
+
+.chartTitle {
+  justify-self: start;
+}
+
+.lifecycleFigure {
+  height: 8.625rem;
+  overflow-x: auto;
+  position: relative;
+  width: 100%;
+}
+
+.lifecycleFlow {
   align-items: center;
-  display: inline-flex;
-  gap: 0.75rem;
+  left: 0;
+  display: flex;
+  position: absolute;
+  top: 0;
+  width: 49rem;
 }
 
 .lifecycleChip {
@@ -214,24 +234,87 @@
   border-radius: var(--portfolio-radius-md);
   color: var(--portfolio-semantic-body-color);
   display: inline-flex;
+  flex: 0 0 auto;
+  font-family: var(--portfolio-font-body);
   font-size: 0.875rem;
+  font-weight: 400;
   justify-content: center;
   line-height: 1.25rem;
   min-height: 2.375rem;
-  padding: 0.5625rem 0.8125rem;
+  padding: 0 0.8125rem;
+  width: var(--case-lifecycle-chip-width);
   white-space: nowrap;
 }
 
+.lifecycleChipDashed {
+  border-style: dashed;
+}
+
 .lifecycleConnector {
-  background: linear-gradient(
-    90deg,
-    rgba(220, 217, 209, 0.2),
-    rgba(220, 217, 209, 0.95),
-    rgba(220, 217, 209, 0.2)
-  );
+  background: rgba(220, 217, 209, 0.95);
   display: block;
+  flex: 0 0 auto;
   height: 1px;
-  width: 3rem;
+  width: 3.0625rem;
+}
+
+.lifecycleLegendFigure {
+  left: 11.75rem;
+  position: absolute;
+  top: 2.5rem;
+  width: 36.75rem;
+}
+
+.lifecycleLegendTrack {
+  height: 4.625rem;
+  position: relative;
+  width: 100%;
+}
+
+.lifecycleLegendStart,
+.lifecycleLegendEnd,
+.lifecycleLegendHorizontal,
+.lifecycleLegendStem {
+  background: var(--portfolio-color-border-strong);
+  position: absolute;
+}
+
+.lifecycleLegendStart {
+  height: 2.25rem;
+  left: 0;
+  top: 0;
+  width: 1px;
+}
+
+.lifecycleLegendEnd {
+  height: 2.25rem;
+  right: 0;
+  top: 0;
+  width: 1px;
+}
+
+.lifecycleLegendHorizontal {
+  height: 1px;
+  left: 0;
+  right: 0;
+  top: 2.25rem;
+}
+
+.lifecycleLegendStem {
+  height: 2.375rem;
+  left: calc(50% - 0.5px);
+  top: 2.25rem;
+  width: 1px;
+}
+
+.lifecycleLegendDot {
+  background: var(--portfolio-color-border-strong);
+  border-radius: 999px;
+  height: 0.375rem;
+  left: calc(50% - 0.1875rem);
+  position: absolute;
+  top: calc(2.25rem + 2.375rem - 0.1875rem);
+  width: 0.375rem;
 }
 
 .chartLegend,
@@ -246,6 +329,9 @@
 
 .chartLegend {
   justify-self: center;
+  margin-top: 0.5rem;
+  text-align: center;
+  width: 100%;
 }
 
 .figure {
@@ -283,7 +369,6 @@
 }
 
 .mediaInner,
-.shortInnerMedia,
 .shadowedInnerMedia {
   border-radius: var(--portfolio-radius-sm);
   overflow: hidden;
@@ -302,22 +387,26 @@
   top: var(--case-media-inner-inset-top, 2.25rem);
 }
 
-.shortInnerMedia {
-  inset: 2rem 1.5rem;
-}
-
 .shadowedInnerMedia {
   box-shadow: var(--portfolio-shadow-card);
 }
 
 .mediaImageCover,
+.mediaVideoCover,
 .roleCardImage,
 .phoneImage {
   object-fit: cover;
 }
 
-.mediaImageContain {
+.mediaImageContain,
+.mediaVideoContain {
   object-fit: contain;
+}
+
+.mediaVideoCover,
+.mediaVideoContain {
+  height: 100%;
+  width: 100%;
 }
 
 .mediaPlaceholder {
@@ -331,50 +420,105 @@
 .taskPanel {
   aspect-ratio: auto;
   background: var(--portfolio-color-surface-warm);
-  padding-top: 3rem;
+  border-radius: var(--portfolio-radius-md);
+  display: grid;
+  gap: 0.75rem;
+  justify-items: center;
+  padding: 3rem 1.5rem;
 }
 
 .taskTableWrap {
   background: var(--portfolio-color-surface);
   border-radius: var(--portfolio-radius-sm);
-  overflow-x: auto;
+  overflow: hidden;
   padding: 1.25rem;
+  width: 41.875rem;
 }
 
 .taskTable {
   border-collapse: collapse;
-  min-width: 36rem;
-  width: 100%;
+  min-width: 0;
+  table-layout: fixed;
+  width: 39.375rem;
+}
+
+.taskColumnUser {
+  width: 8.1875rem;
+}
+
+.taskColumnScenario {
+  width: 11.0625rem;
+}
+
+.taskColumnTasks {
+  width: 20.125rem;
 }
 
 .taskTable th,
 .taskTable td {
   border-bottom: 1px solid var(--portfolio-color-border-light);
-  padding: 1rem 0.75rem;
   text-align: left;
+}
+
+.taskTable th:not(:last-child),
+.taskTable td:not(:last-child) {
+  border-right: 1px solid var(--portfolio-color-border-light);
+}
+
+.taskTable tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.taskCellHead {
+  color: var(--portfolio-color-text-muted);
+  font-family: var(--portfolio-font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  height: 3rem;
+  padding-top: 0.8125rem;
   vertical-align: top;
 }
 
-.taskTable th {
-  color: var(--portfolio-color-text-muted);
-  font-family: var(--portfolio-font-label);
-  font-size: 1rem;
-  font-weight: 500;
+.taskCellBody,
+.taskCellTasksBody {
+  color: var(--portfolio-semantic-body-color);
+  font-family: var(--portfolio-font-body);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.25rem;
 }
 
-.taskTable td {
-  color: var(--portfolio-semantic-body-color);
-  font-size: 0.875rem;
-  line-height: 1.5rem;
+.taskCellBody {
+  padding-bottom: 0;
+  padding-top: 0;
+  vertical-align: middle;
+}
+
+.taskCellTasksBody {
+  padding-bottom: 0;
+  padding-top: 0.625rem;
+  vertical-align: top;
+}
+
+.taskCellUser {
+  padding-left: 1.875rem;
+}
+
+.taskCellScenario {
+  padding-left: 2.8125rem;
+}
+
+.taskCellTasks {
+  padding-left: 1.4375rem;
 }
 
 .compactList {
   margin: 0;
-  padding-left: 1rem;
+  padding-left: 1.3125rem;
 }
 
 .compactList li + li {
-  margin-top: 0.25rem;
+  margin-top: 0;
 }
 
 .summaryCard {
@@ -428,49 +572,62 @@
   background: var(--portfolio-color-surface);
   border: 1px solid var(--portfolio-color-border-light);
   border-radius: var(--portfolio-radius-md);
-  min-height: 26.25rem;
+  height: 26.25rem;
   overflow: hidden;
   position: relative;
 }
 
 .roleScrollerBackground {
   filter: blur(2.5px);
+  height: 32.1875rem;
+  left: 50%;
   object-fit: cover;
-  transform: scale(1.04);
+  top: -0.0625rem;
+  transform: translateX(-50%);
+  width: 57.25rem;
 }
 
 .roleScroller {
   display: grid;
   gap: 1.25rem;
-  grid-auto-columns: minmax(min(100%, 44rem), 44rem);
+  grid-auto-columns: 46rem;
   grid-auto-flow: column;
+  -ms-overflow-style: none;
   overflow-x: auto;
   padding: 5.1875rem 2.1875rem 2.1875rem;
   position: relative;
+  scrollbar-width: none;
+  scroll-padding-left: 2.1875rem;
   scroll-snap-type: x proximity;
   z-index: 1;
+}
+
+.roleScroller::-webkit-scrollbar {
+  display: none;
 }
 
 .roleCard {
   display: grid;
   gap: 0.75rem;
   scroll-snap-align: start;
+  width: 46rem;
 }
 
 .roleCardTitle {
   color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-body);
   font-size: 1rem;
   letter-spacing: -0.011rem;
   line-height: 1.5rem;
   margin: 0;
+  width: 100%;
 }
 
 .roleCardMedia {
-  border-radius: 0.75rem;
-  box-shadow: var(--portfolio-shadow-card);
   height: 13.5rem;
   overflow: hidden;
   position: relative;
+  width: 46rem;
 }
 
 .pendingAssetNotice {
@@ -510,50 +667,59 @@
 }
 
 .mobileCompareFrame {
-  align-items: flex-end;
-  display: flex;
-  gap: clamp(1rem, 5vw, 5rem);
-  justify-content: center;
-  padding: 5.75rem 2rem 2rem;
+  display: block;
+  padding: 0;
 }
 
 .mobileComparePhoneBefore,
-.mobileComparePhoneAfter,
-.mobileLandingPhone {
-  border: 0.375rem solid rgba(157, 173, 172, 0.52);
+.mobileComparePhoneAfter {
+  border: 0.5rem solid rgba(157, 173, 172, 0.52);
   border-radius: 1.5rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.mobileLandingPhone {
   overflow: hidden;
   position: relative;
 }
 
 .mobileComparePhoneBefore,
 .mobileComparePhoneAfter {
-  aspect-ratio: 245 / 530;
-  width: min(15.3125rem, 34vw);
+  aspect-ratio: auto;
+  height: 33.125rem;
+  position: absolute;
+  top: 5.5625rem;
+  width: 15.3125rem;
   z-index: 1;
+}
+
+.mobileComparePhoneBefore {
+  left: 8.0625rem;
+}
+
+.mobileComparePhoneAfter {
+  left: 28.5rem;
 }
 
 .beforeAfterLabelLeft,
 .beforeAfterLabelRight {
   color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-body);
   font-size: 0.875rem;
-  left: 50%;
   line-height: 1.25rem;
   margin: 0;
   position: absolute;
   top: 3rem;
+  z-index: 1;
 }
 
 .beforeAfterLabelLeft {
-  transform: translateX(calc(-50% - min(10rem, 18vw)));
+  left: 14.3125rem;
 }
 
 .beforeAfterLabelRight {
-  transform: translateX(calc(-50% + min(10rem, 18vw)));
-}
-
-.shortFigure .mediaFrame {
-  aspect-ratio: 832 / 360;
+  left: 35.125rem;
 }
 
 .explorationGridFrame,
@@ -564,7 +730,9 @@
   border-radius: var(--portfolio-radius-md);
   display: grid;
   gap: 0.75rem;
+  overflow: hidden;
   padding: 2.25rem;
+  position: relative;
 }
 
 .explorationGrid,
@@ -572,6 +740,22 @@
   display: grid;
   gap: 2.5rem;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.explorationGridFrame {
+  height: 26.25rem;
+  padding: 0;
+  position: relative;
+}
+
+.explorationGrid {
+  gap: 3.75rem 2.5rem;
+  grid-template-columns: repeat(2, 15rem);
+  left: 50%;
+  position: absolute;
+  top: 3.625rem;
+  transform: translateX(-50%);
+  width: 32.5rem;
 }
 
 .explorationCell,
@@ -587,21 +771,91 @@
   gap: 0.75rem;
 }
 
+.iterationFrame {
+  height: 29.25rem;
+  padding: 0;
+  position: relative;
+}
+
+.iterationLayout {
+  display: grid;
+  gap: 3.75rem;
+  left: 50%;
+  position: absolute;
+  top: 4.53125rem;
+  transform: translateX(-50%);
+  width: 42.625rem;
+}
+
+.iterationRow {
+  align-items: center;
+  column-gap: 1.3125rem;
+  display: grid;
+  grid-template-columns: 3.75rem 32.5rem;
+}
+
+.iterationRowLabel {
+  color: var(--portfolio-semantic-caption-color);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  margin: 0;
+}
+
+.iterationRowImages {
+  display: grid;
+  gap: 2.5rem;
+  grid-template-columns: repeat(2, 15rem);
+}
+
+.iterationImageWrap {
+  aspect-ratio: auto;
+  box-shadow: 0 1rem 2rem -0.75rem rgba(14, 18, 27, 0.1);
+  height: 8.1875rem;
+  width: 15rem;
+}
+
 .mobileLandingGrid {
   display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.875rem;
+  grid-template-columns: repeat(4, 10rem);
+  margin: 0 auto;
+  position: relative;
+  width: 45.625rem;
+  z-index: 1;
 }
 
 .mobileLandingCard {
   display: grid;
-  gap: 0.75rem;
+  gap: 1.25rem;
   justify-items: center;
+  width: 10rem;
 }
 
 .mobileLandingPhone {
   aspect-ratio: 160 / 346;
+  position: relative;
   width: min(10rem, 100%);
+}
+
+.mobileLandingBackground {
+  object-fit: cover;
+  transform: scale(1.02);
+}
+
+.mobileLandingImage {
+  object-fit: cover;
+}
+
+.mobileLandingFrame {
+  height: 29.3125rem;
+  padding: 3.25rem 3.1875rem 2.1875rem;
+  position: relative;
+}
+
+.mobileInteractionPhone {
+  border: 0.5rem solid rgba(157, 173, 172, 0.52);
+  border-radius: 1.5rem;
+  overflow: hidden;
 }
 
 @media (min-width: 1200px) {
@@ -643,19 +897,22 @@
 
   .lifecycleFlow {
     display: grid;
-    gap: 0.75rem;
-  }
-
-  .lifecycleItem {
-    justify-content: flex-start;
+    min-width: 49rem;
   }
 
   .lifecycleConnector {
     width: 2rem;
   }
 
+  .lifecycleLegendFigure {
+    left: 11.75rem;
+  }
+
+  .lifecycleFigure {
+    min-width: 49rem;
+  }
+
   .mediaInner,
-  .shortInnerMedia,
   .shadowedInnerMedia {
     inset: 1.25rem;
     height: auto;
@@ -673,22 +930,37 @@
     height: 11rem;
   }
 
-  .explorationGrid,
-  .iterationGrid {
+  .explorationGrid {
     gap: 1rem;
   }
 
   .mobileCompareFrame {
-    gap: 1rem;
     padding: 4.5rem 1rem 1rem;
   }
 
+  .mobileComparePhoneBefore,
+  .mobileComparePhoneAfter {
+    height: auto;
+    top: auto;
+    width: min(15.3125rem, 34vw);
+  }
+
+  .mobileComparePhoneBefore {
+    left: 8%;
+  }
+
+  .mobileComparePhoneAfter {
+    left: auto;
+    right: 8%;
+  }
+
   .beforeAfterLabelLeft {
-    transform: translateX(calc(-50% - min(7rem, 15vw)));
+    left: 24%;
   }
 
   .beforeAfterLabelRight {
-    transform: translateX(calc(-50% + min(7rem, 15vw)));
+    left: auto;
+    right: 24%;
   }
 }
 
@@ -718,7 +990,7 @@
   }
 
   .taskTable {
-    min-width: 30rem;
+    min-width: 39.375rem;
   }
 
   .mobileComparePhoneBefore,
@@ -732,20 +1004,71 @@
   }
 
   .beforeAfterLabelLeft {
-    transform: translateX(calc(-50% - min(5rem, 12vw)));
+    left: 18%;
   }
 
   .beforeAfterLabelRight {
-    transform: translateX(calc(-50% + min(5rem, 12vw)));
+    right: 18%;
   }
 
   .explorationGrid,
-  .iterationGrid,
   .mobileLandingGrid {
     grid-template-columns: 1fr;
   }
 
+  .iterationFrame {
+    height: auto;
+    padding: 1.5rem;
+  }
+
+  .iterationLayout {
+    gap: 1.5rem;
+    left: auto;
+    position: relative;
+    top: auto;
+    transform: none;
+    width: 100%;
+  }
+
+  .iterationRow {
+    gap: 0.75rem;
+    grid-template-columns: 1fr;
+  }
+
+  .iterationRowImages {
+    gap: 1rem;
+    grid-template-columns: 1fr;
+  }
+
+  .iterationImageWrap {
+    height: auto;
+    width: 100%;
+  }
+
+  .explorationGridFrame {
+    height: auto;
+    padding: 1.5rem 1.5rem 3rem;
+  }
+
+  .explorationGrid {
+    gap: 1rem;
+    left: auto;
+    position: relative;
+    top: auto;
+    transform: none;
+    width: 100%;
+  }
+
   .mobileLandingPhone {
     width: min(10rem, 60vw);
+  }
+
+  .mobileLandingFrame {
+    height: auto;
+    padding: 1.5rem;
+  }
+
+  .mobileLandingGrid {
+    width: 100%;
   }
 }

@@ -5,32 +5,36 @@ import { drawingLedgerAssets as assets } from "../../data/work-details/drawing-l
 import styles from "../../styles/drawing-ledger-case-study.module.css";
 
 const lifecycleStates = [
-  "上传完成",
-  "解析中",
-  "待确认",
-  "待下发",
-  "可使用",
-  "已过期",
-  "已废弃",
+  { dashed: true, label: "上传完成", width: 82 },
+  { label: "解析中", width: 68 },
+  { label: "待确认", width: 68 },
+  { label: "待下发", width: 68 },
+  { label: "可使用", width: 68 },
+  { label: "已过期", width: 68 },
+  { label: "已废弃", width: 68 },
 ];
 
 const taskAnalysisRows = [
   {
+    height: 84,
     scenario: "上传图纸后",
     tasks: ["查看刚上传的图纸", "查看历史上传记录", "了解图纸审批情况"],
     user: "上传人",
   },
   {
+    height: 66,
     scenario: "被推送确认待办",
     tasks: ["对待确认的图纸进行查看和确认操作", "查看历史确认记录"],
     user: "确认人",
   },
   {
+    height: 73,
     scenario: "被推送下发待办",
     tasks: ["对待下发的图纸进行查看和下发操作", "查看历史下发记录"],
     user: "下发人",
   },
   {
+    height: 66,
     scenario: "随时查看操作",
     tasks: ["承担以上所有任务"],
     user: "多权限管理员",
@@ -107,22 +111,14 @@ const mobileExplorationAssets = [
   assets.mobileExplore4,
 ];
 
-const mobileIterationAssets = [
+const mobileIterationRows = [
   {
-    asset: assets.mobileIteration1,
-    caption: "上线第一版",
+    label: "上线第一版",
+    assets: [assets.mobileIteration1, assets.mobileIteration2],
   },
   {
-    asset: assets.mobileIteration2,
-    caption: "上线第一版",
-  },
-  {
-    asset: assets.mobileIteration3,
-    caption: "上线第二版",
-  },
-  {
-    asset: assets.mobileIteration4,
-    caption: "上线第二版",
+    label: "上线第二版",
+    assets: [assets.mobileIteration3, assets.mobileIteration4],
   },
 ];
 
@@ -317,6 +313,11 @@ function MediaFigure({
     frameStyles["--case-media-inner-inset-x"] = imageInsetX;
   }
 
+  const imageClassNameForMedia =
+    imageFit === "contain" ? styles.mediaImageContain : styles.mediaImageCover;
+  const videoClassNameForMedia =
+    imageFit === "contain" ? styles.mediaVideoContain : styles.mediaVideoCover;
+
   return (
     <figure className={joinClassNames(styles.figure, className)}>
       <div
@@ -340,17 +341,28 @@ function MediaFigure({
 
         {asset?.src ? (
           <div className={joinClassNames(styles.mediaInner, imageClassName)}>
-            <Image
-              alt={asset.alt}
-              className={
-                imageFit === "contain" ? styles.mediaImageContain : styles.mediaImageCover
-              }
-              fill
-              priority={priority}
-              sizes="(max-width: 900px) calc(100vw - 2rem), 832px"
-              src={asset.src}
-              unoptimized={asset.unoptimized}
-            />
+            {asset.mediaType === "video" ? (
+              <video
+                aria-label={asset.alt}
+                autoPlay
+                className={videoClassNameForMedia}
+                loop
+                muted
+                playsInline
+                preload="metadata"
+                src={asset.src}
+              />
+            ) : (
+              <Image
+                alt={asset.alt}
+                className={imageClassNameForMedia}
+                fill
+                priority={priority}
+                sizes="(max-width: 900px) calc(100vw - 2rem), 832px"
+                src={asset.src}
+                unoptimized={asset.unoptimized}
+              />
+            )}
           </div>
         ) : null}
 
@@ -437,7 +449,7 @@ export default function DrawingLedgerCaseStudy() {
         <CaseStudyToc items={tocItems} {...tocTheme} />
 
         <section className={joinClassNames(styles.fullBleedSection, styles.sectionSurface)}>
-          <div className={styles.sectionContent}>
+          <div className={joinClassNames(styles.sectionContent, styles.sectionContentTightBottom)}>
             <div className={styles.blockStack}>
               <div className={styles.blockStack}>
                 <div className={styles.sectionCluster}>
@@ -454,17 +466,47 @@ export default function DrawingLedgerCaseStudy() {
 
                   <section className={styles.chartCard}>
                     <h3 className={styles.chartTitle}>图纸生命周期状态流转关系图</h3>
-                    <div className={styles.lifecycleFlow} aria-label="图纸状态流转图">
-                      {lifecycleStates.map((state, index) => (
-                        <div className={styles.lifecycleItem} key={state}>
-                          <span className={styles.lifecycleChip}>{state}</span>
-                          {index < lifecycleStates.length - 1 ? (
-                            <span aria-hidden="true" className={styles.lifecycleConnector} />
-                          ) : null}
+                    <div className={styles.lifecycleFigure} aria-label="图纸状态流转图">
+                      <div className={styles.lifecycleFlow}>
+                        {lifecycleStates.flatMap((state, index) => {
+                          const items = [
+                            <span
+                              className={joinClassNames(
+                                styles.lifecycleChip,
+                                state.dashed ? styles.lifecycleChipDashed : null
+                              )}
+                              key={`${state.label}-chip`}
+                              style={{ width: `${state.width}px` }}
+                            >
+                              {state.label}
+                            </span>,
+                          ];
+
+                          if (index < lifecycleStates.length - 1) {
+                            items.push(
+                              <span
+                                aria-hidden="true"
+                                className={styles.lifecycleConnector}
+                                key={`${state.label}-connector`}
+                              />
+                            );
+                          }
+
+                          return items;
+                        })}
+                      </div>
+
+                      <div className={styles.lifecycleLegendFigure}>
+                        <div aria-hidden="true" className={styles.lifecycleLegendTrack}>
+                          <span className={styles.lifecycleLegendStart} />
+                          <span className={styles.lifecycleLegendHorizontal} />
+                          <span className={styles.lifecycleLegendEnd} />
+                          <span className={styles.lifecycleLegendStem} />
+                          <span className={styles.lifecycleLegendDot} />
                         </div>
-                      ))}
+                        <p className={styles.chartLegend}>图纸台账中涉及的状态</p>
+                      </div>
                     </div>
-                    <p className={styles.chartLegend}>图纸台账中涉及的状态</p>
                   </section>
                 </div>
 
@@ -506,23 +548,32 @@ export default function DrawingLedgerCaseStudy() {
                   </AccentHeader>
 
                   <figure className={styles.figure}>
-                    <div className={joinClassNames(styles.mediaFrame, styles.mediaFrameWarm, styles.taskPanel)}>
+                    <div className={styles.taskPanel}>
                       <p className={styles.taskPanelTitle}>User Task Analysis</p>
                       <div className={styles.taskTableWrap}>
                         <table className={styles.taskTable}>
+                          <colgroup>
+                            <col className={styles.taskColumnUser} />
+                            <col className={styles.taskColumnScenario} />
+                            <col className={styles.taskColumnTasks} />
+                          </colgroup>
                           <thead>
                             <tr>
-                              <th>核心用户</th>
-                              <th>主要场景</th>
-                              <th>用户任务</th>
+                              <th className={joinClassNames(styles.taskCellHead, styles.taskCellUser)}>核心用户</th>
+                              <th className={joinClassNames(styles.taskCellHead, styles.taskCellScenario)}>主要场景</th>
+                              <th className={joinClassNames(styles.taskCellHead, styles.taskCellTasks)}>用户任务</th>
                             </tr>
                           </thead>
                           <tbody>
                             {taskAnalysisRows.map((row) => (
-                              <tr key={row.user}>
-                                <td>{row.user}</td>
-                                <td>{row.scenario}</td>
-                                <td>
+                              <tr key={row.user} style={{ height: `${row.height}px` }}>
+                                <td className={joinClassNames(styles.taskCellBody, styles.taskCellUser)}>
+                                  {row.user}
+                                </td>
+                                <td className={joinClassNames(styles.taskCellBody, styles.taskCellScenario)}>
+                                  {row.scenario}
+                                </td>
+                                <td className={joinClassNames(styles.taskCellTasksBody, styles.taskCellTasks)}>
                                   <ul className={styles.compactList}>
                                     {row.tasks.map((task) => (
                                       <li key={task}>{task}</li>
@@ -535,7 +586,7 @@ export default function DrawingLedgerCaseStudy() {
                         </table>
                       </div>
                     </div>
-                    <figcaption className={styles.caption}>Fig2. 用户任务梳理</figcaption>
+                    <figcaption className={styles.caption}>用户任务梳理</figcaption>
                   </figure>
                 </div>
 
@@ -572,6 +623,10 @@ export default function DrawingLedgerCaseStudy() {
                     asset={assets.round1Overview}
                     backgroundAsset={assets.round1OverviewBackground}
                     caption="探索方案概览 · Round 1"
+                    frameHeight="29.25rem"
+                    imageHeight="34.9375rem"
+                    imageInsetTop="2.1875rem"
+                    imageInsetX="2.1875rem"
                   />
 
                   <article className={styles.feedbackCard}>
@@ -635,7 +690,7 @@ export default function DrawingLedgerCaseStudy() {
         </section>
 
         <section className={joinClassNames(styles.fullBleedSection, styles.sectionSurface)}>
-          <div className={styles.sectionContent}>
+          <div className={joinClassNames(styles.sectionContent, styles.sectionContentTightBottom)}>
             <div className={styles.sectionFlow}>
               <TitleHeader sectionId="case-detail" title="细节展开">
                 <p>Design is all about detail</p>
@@ -693,7 +748,11 @@ export default function DrawingLedgerCaseStudy() {
                   asset={assets.workflowDemo}
                   backgroundAsset={assets.detailsAssignmentsBackground}
                   caption="图纸下发流程联动示意"
+                  frameHeight="29.25rem"
                   frameTone="surface"
+                  imageHeight="21.5rem"
+                  imageInsetTop="3.875rem"
+                  imageInsetX="2.5rem"
                   placeholder={
                     <PendingAssetNotice
                       body="这里已经预留好正式容器。后续你把流程演示图上传到 Supabase 后，只需要补资源映射，不用动布局。"
@@ -717,7 +776,11 @@ export default function DrawingLedgerCaseStudy() {
                   asset={assets.responsiveDemo}
                   backgroundAsset={assets.detailsResponsiveBackground}
                   caption="待办区响应式展示示意"
+                  frameHeight="29.25rem"
                   frameTone="surface"
+                  imageHeight="21.5rem"
+                  imageInsetTop="3.875rem"
+                  imageInsetX="2.5rem"
                   placeholder={
                     <PendingAssetNotice
                       body="目前先保留外层媒体结构和说明文案。等你把响应式演示图上传后，这里会自动长成完整视觉。"
@@ -761,22 +824,22 @@ export default function DrawingLedgerCaseStudy() {
                       />
                       <div className={styles.mobileComparePhoneBefore}>
                         <Image
-                          alt={assets.mobileBefore.alt}
-                          className={styles.phoneImage}
-                          fill
-                          sizes="245px"
-                          src={assets.mobileBefore.src}
-                          unoptimized={assets.mobileBefore.unoptimized}
-                        />
-                      </div>
-                      <div className={styles.mobileComparePhoneAfter}>
-                        <Image
                           alt={assets.mobileAfter.alt}
                           className={styles.phoneImage}
                           fill
                           sizes="245px"
                           src={assets.mobileAfter.src}
                           unoptimized={assets.mobileAfter.unoptimized}
+                        />
+                      </div>
+                      <div className={styles.mobileComparePhoneAfter}>
+                        <Image
+                          alt={assets.mobileBefore.alt}
+                          className={styles.phoneImage}
+                          fill
+                          sizes="245px"
+                          src={assets.mobileBefore.src}
+                          unoptimized={assets.mobileBefore.unoptimized}
                         />
                       </div>
                       <p className={styles.beforeAfterLabelLeft}>Before</p>
@@ -804,28 +867,32 @@ export default function DrawingLedgerCaseStudy() {
                   <MediaFigure
                     asset={assets.mobileReference}
                     caption="产品收集参考"
-                    className={styles.shortFigure}
                     frameTone="warm"
-                    imageClassName={styles.shortInnerMedia}
+                    frameHeight="22.5rem"
+                    imageHeight="15.5rem"
+                    imageInsetTop="3.53125rem"
+                    imageInsetX="2.5rem"
                   />
 
-                  <div className={styles.explorationGridFrame}>
-                    <div className={styles.explorationGrid}>
-                      {mobileExplorationAssets.map((asset) => (
-                        <div className={styles.explorationCell} key={asset.alt}>
-                          <Image
-                            alt={asset.alt}
-                            className={styles.mediaImageCover}
-                            fill
-                            sizes="(max-width: 900px) calc(50vw - 2rem), 240px"
-                            src={asset.src}
-                            unoptimized={asset.unoptimized}
-                          />
-                        </div>
-                      ))}
+                  <figure className={styles.figure}>
+                    <div className={styles.explorationGridFrame}>
+                      <div className={styles.explorationGrid}>
+                        {mobileExplorationAssets.map((asset) => (
+                          <div className={styles.explorationCell} key={asset.alt}>
+                            <Image
+                              alt={asset.alt}
+                              className={styles.mediaImageCover}
+                              fill
+                              sizes="(max-width: 900px) calc(50vw - 2rem), 240px"
+                              src={asset.src}
+                              unoptimized={asset.unoptimized}
+                            />
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                    <p className={styles.caption}>初版方案探索</p>
-                  </div>
+                    <figcaption className={styles.caption}>初版方案探索</figcaption>
+                  </figure>
                 </div>
 
                 <div className={styles.sectionCluster}>
@@ -837,25 +904,29 @@ export default function DrawingLedgerCaseStudy() {
                   </AccentHeader>
 
                   <div className={styles.iterationFrame}>
-                    <div className={styles.iterationGrid}>
-                      {mobileIterationAssets.map((item) => (
-                        <article className={styles.iterationCard} key={`${item.caption}-${item.asset.alt}`}>
-                          <div className={styles.iterationImageWrap}>
-                            <Image
-                              alt={item.asset.alt}
-                              className={styles.mediaImageCover}
-                              fill
-                              sizes="(max-width: 900px) calc(50vw - 2rem), 240px"
-                              src={item.asset.src}
-                              unoptimized={item.asset.unoptimized}
-                            />
+                    <div className={styles.iterationLayout}>
+                      {mobileIterationRows.map((row) => (
+                        <div className={styles.iterationRow} key={row.label}>
+                          <p className={styles.iterationRowLabel}>{row.label}</p>
+                          <div className={styles.iterationRowImages}>
+                            {row.assets.map((asset) => (
+                              <div className={styles.iterationImageWrap} key={asset.alt}>
+                                <Image
+                                  alt={asset.alt}
+                                  className={styles.mediaImageCover}
+                                  fill
+                                  sizes="240px"
+                                  src={asset.src}
+                                  unoptimized={asset.unoptimized}
+                                />
+                              </div>
+                            ))}
                           </div>
-                          <p className={styles.iterationCaption}>{item.caption}</p>
-                        </article>
+                        </div>
                       ))}
                     </div>
-                    <p className={styles.caption}>视觉设计迭代</p>
                   </div>
+                  <p className={styles.caption}>视觉设计迭代</p>
                 </div>
 
                 <div className={styles.sectionCluster}>
@@ -866,12 +937,17 @@ export default function DrawingLedgerCaseStudy() {
                     </p>
                   </AccentHeader>
 
-                  <MediaFigure
-                    asset={assets.mobileTabInteraction}
-                    backgroundAsset={assets.problemBackground}
-                    caption="Tab Bar 展开收起交互"
-                    placeholder={
-                      <PendingAssetNotice
+                <MediaFigure
+                  asset={assets.mobileTabInteraction}
+                  backgroundAsset={assets.mobileComparisonBackground}
+                  caption="Tab Bar 展开收起交互"
+                  frameHeight="29.25rem"
+                  imageClassName={styles.mobileInteractionPhone}
+                  imageHeight="33.3125rem"
+                  imageInsetTop="5rem"
+                  imageInsetX="18.3125rem"
+                  placeholder={
+                    <PendingAssetNotice
                         body="交互演示图后续可以直接上传到 Supabase，并接到这个已经预留好的手机展示位里。"
                         title="移动端交互演示待接入"
                       />
@@ -884,26 +960,36 @@ export default function DrawingLedgerCaseStudy() {
                     <p>图纸模块 App 端核心页面如下。</p>
                   </AccentHeader>
 
-                  <div className={styles.mobileLandingFrame}>
-                    <div className={styles.mobileLandingGrid}>
-                      {mobileLandingAssets.map((item) => (
-                        <article className={styles.mobileLandingCard} key={item.id}>
-                          <div className={styles.mobileLandingPhone}>
-                            <Image
-                              alt={item.asset.alt}
-                              className={styles.phoneImage}
-                              fill
-                              sizes="(max-width: 900px) calc(50vw - 2rem), 160px"
-                              src={item.asset.src}
-                              unoptimized={item.asset.unoptimized}
-                            />
-                          </div>
-                          <p className={styles.mobileLandingLabel}>{item.label}</p>
-                        </article>
-                      ))}
+                  <figure className={styles.figure}>
+                    <div className={styles.mobileLandingFrame}>
+                      <Image
+                        alt=""
+                        className={styles.mobileLandingBackground}
+                        fill
+                        sizes="100vw"
+                        src={assets.mobileComparisonBackground.src}
+                        unoptimized={assets.mobileComparisonBackground.unoptimized}
+                      />
+                      <div className={styles.mobileLandingGrid}>
+                        {mobileLandingAssets.map((item) => (
+                          <article className={styles.mobileLandingCard} key={item.id}>
+                            <div className={styles.mobileLandingPhone}>
+                              <Image
+                                alt={item.asset.alt}
+                                className={joinClassNames(styles.phoneImage, styles.mobileLandingImage)}
+                                fill
+                                sizes="(max-width: 900px) calc(50vw - 2rem), 160px"
+                                src={item.asset.src}
+                                unoptimized={item.asset.unoptimized}
+                              />
+                            </div>
+                            <p className={styles.mobileLandingLabel}>{item.label}</p>
+                          </article>
+                        ))}
+                      </div>
                     </div>
-                    <p className={styles.caption}>全部核心页面</p>
-                  </div>
+                    <figcaption className={styles.caption}>全部核心页面</figcaption>
+                  </figure>
                 </div>
               </div>
 
