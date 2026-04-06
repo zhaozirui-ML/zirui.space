@@ -1,6 +1,6 @@
 import { portfolioCssVariables } from "../../../design-system/tokens";
 
-import { ivyPresto, satoshi } from "../fonts/site-fonts";
+import { fzQingKeBenYueSong, satoshi } from "../fonts/site-fonts";
 import SiteHeader from "./SiteHeader";
 import styles from "../styles/site-shell.module.css";
 
@@ -9,7 +9,7 @@ export default function SiteLayout({ children }) {
   const rootClassName = [
     styles.siteRoot,
     satoshi.variable,
-    ivyPresto.variable,
+    fzQingKeBenYueSong.variable,
   ].join(" ");
 
   return (

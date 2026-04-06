@@ -88,6 +88,14 @@
   padding: 4.5rem 0 7.5rem;
 }
 
+.siteRoot:has(:global(.case-study-headerless)) .siteHeader {
+  display: none;
+}
+
+.siteRoot:has(:global(.case-study-headerless)) .siteMain {
+  padding-top: 0;
+}
+
 .pageStack {
   display: grid;
   gap: 1.5rem;
