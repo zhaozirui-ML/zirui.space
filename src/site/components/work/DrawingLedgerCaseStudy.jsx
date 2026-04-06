@@ -1,5 +1,10 @@
 import Image from "next/image";
 
+import {
+  CaseStudyHeadingOne,
+  CaseStudyHeadingThree,
+  CaseStudyHeadingTwo,
+} from "../case-study/CaseStudyHeading";
 import CaseStudyToc from "../case-study/CaseStudyToc";
 import { drawingLedgerAssets as assets } from "../../data/work-details/drawing-ledger-2-0";
 import styles from "../../styles/drawing-ledger-case-study.module.css";
@@ -257,28 +262,6 @@ function joinClassNames(...values) {
   return values.filter(Boolean).join(" ");
 }
 
-function AccentHeader({ children, label, sectionId = null }) {
-  return (
-    <header
-      className={joinClassNames(styles.accentHeader, sectionId ? styles.anchoredHeader : "")}
-      id={sectionId}
-    >
-      <p className={styles.accentLabel}>{label}</p>
-      <div className={styles.richText}>{children}</div>
-    </header>
-  );
-}
-
-function TitleHeader({ children, eyebrow = null, sectionId = null, title }) {
-  return (
-    <header className={joinClassNames(styles.titleHeader, sectionId ? styles.anchoredHeader : "")} id={sectionId}>
-      {eyebrow ? <p className={styles.eyebrow}>{eyebrow}</p> : null}
-      <h2 className={styles.sectionTitle}>{title}</h2>
-      <div className={styles.richText}>{children}</div>
-    </header>
-  );
-}
-
 function MediaFigure({
   asset,
   backgroundAsset = null,
@@ -453,16 +436,22 @@ export default function DrawingLedgerCaseStudy() {
             <div className={styles.blockStack}>
               <div className={styles.blockStack}>
                 <div className={styles.sectionCluster}>
-                  <TitleHeader sectionId="case-overview" title="业务背景">
-                    <p>
+                  <CaseStudyHeadingOne
+                    className={styles.anchoredHeader}
+                    id="case-overview"
+                    title="业务背景"
+                  >
+                    <div className={styles.richText}>
+                      <p>
                       图纸台账是图纸管理功能模块中，记录图纸从上传到废弃整个生命周期状态流转的空间。
                       台账系统主要涉及上传人、确认人、下发人及多权限管理员 4 类用户角色。
-                    </p>
-                    <p>
+                      </p>
+                      <p>
                       图纸台账 1.0 版本在我加入团队前已经完成。因为当时的核心目标是快速搭建核心功能并上线，
                       所以没有针对不同角色做差异化设计，导致理解成本高、操作路径冗长，严重影响了图纸流转效率。
-                    </p>
-                  </TitleHeader>
+                      </p>
+                    </div>
+                  </CaseStudyHeadingOne>
 
                   <section className={styles.chartCard}>
                     <h3 className={styles.chartTitle}>图纸生命周期状态流转关系图</h3>
@@ -511,13 +500,19 @@ export default function DrawingLedgerCaseStudy() {
                 </div>
 
                 <div className={styles.sectionCluster}>
-                  <TitleHeader sectionId="case-problem" title="问题定位">
-                    <p>旧版台账是一个死的数据容器，主要存在以下 3 大问题：</p>
-                    <ul>
-                      <li>所有用户看到相同的数据，所以也会看到与自己不相关的专业、版本的图纸，给自己带来视觉干扰</li>
-                      <li>面对大量的图纸数据，各角色在查找关注的数据时，仿佛在一片数据海中捞针，效率低下</li>
-                    </ul>
-                  </TitleHeader>
+                  <CaseStudyHeadingOne
+                    className={styles.anchoredHeader}
+                    id="case-problem"
+                    title="问题定位"
+                  >
+                    <div className={styles.richText}>
+                      <p>旧版台账是一个死的数据容器，主要存在以下 3 大问题：</p>
+                      <ul>
+                        <li>所有用户看到相同的数据，所以也会看到与自己不相关的专业、版本的图纸，给自己带来视觉干扰</li>
+                        <li>面对大量的图纸数据，各角色在查找关注的数据时，仿佛在一片数据海中捞针，效率低下</li>
+                      </ul>
+                    </div>
+                  </CaseStudyHeadingOne>
 
                   <MediaFigure
                     asset={assets.problemLedgerV1}
@@ -526,26 +521,45 @@ export default function DrawingLedgerCaseStudy() {
                   />
                 </div>
 
-                <TitleHeader sectionId="case-goal" title="设计目标">
-                  <p>此次设计的核心目标，是把台账系统从「以数据为中心」转变为「以角色和任务为中心」。</p>
-                </TitleHeader>
+                <CaseStudyHeadingOne
+                  className={styles.anchoredHeader}
+                  id="case-goal"
+                  title="设计目标"
+                >
+                  <div className={styles.richText}>
+                    <p>此次设计的核心目标，是把台账系统从「以数据为中心」转变为「以角色和任务为中心」。</p>
+                  </div>
+                </CaseStudyHeadingOne>
               </div>
 
               <div className={styles.sectionFlow}>
-                <TitleHeader sectionId="case-practice" title="设计实践">
-                  <p>
-                    在早期明确了图纸台账 2.0 改版要围绕细分用户角色和权限来重构体验之后，
-                    我在项目启动前就开始提前探索设计方案。
-                  </p>
-                </TitleHeader>
+                <CaseStudyHeadingOne
+                  className={styles.anchoredHeader}
+                  id="case-practice"
+                  title="设计实践"
+                >
+                  <div className={styles.richText}>
+                    <p>
+                      在早期明确了图纸台账 2.0 改版要围绕细分用户角色和权限来重构体验之后，
+                      我在项目启动前就开始提前探索设计方案。
+                    </p>
+                  </div>
+                </CaseStudyHeadingOne>
 
                 <div className={styles.sectionCluster}>
-                  <AccentHeader label="设计分析" sectionId="case-analysis">
-                    <p>
+                  <CaseStudyHeadingTwo
+                    accentColor="var(--portfolio-color-accent-brand)"
+                    className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                    id="case-analysis"
+                    title="设计分析"
+                  >
+                    <div className={styles.richText}>
+                      <p>
                       根据 JTBD 理论，用户不是在购买产品本身，而是在“雇佣”产品帮他们完成某项任务。
                       那图纸台账模块本质上是在帮助哪些用户完成哪些任务？
-                    </p>
-                  </AccentHeader>
+                      </p>
+                    </div>
+                  </CaseStudyHeadingTwo>
 
                   <figure className={styles.figure}>
                     <div className={styles.taskPanel}>
@@ -591,17 +605,24 @@ export default function DrawingLedgerCaseStudy() {
                 </div>
 
                 <div className={styles.sectionCluster}>
-                  <AccentHeader label="Round 1: 激进重构与现实阻力" sectionId="case-round-one">
-                    <p>
+                  <CaseStudyHeadingTwo
+                    accentColor="var(--portfolio-color-accent-brand)"
+                    className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                    id="case-round-one"
+                    title="Round 1: 激进重构与现实阻力"
+                  >
+                    <div className={styles.richText}>
+                      <p>
                       明确了用户想完成的功能任务后，我最开始尝试引入“任务管理”范式，
                       想把问题拆成「未处理 / 已处理」两种状态来重塑台账体验。
-                    </p>
-                    <ul>
+                      </p>
+                      <ul>
                       <li>未处理的任务：承接用户当前最关心的事项</li>
                       <li>已处理的任务：承接用户次一级关注的历史内容</li>
-                    </ul>
-                    <p>下面以“上传人”角色为例，展示第一轮探索。</p>
-                  </AccentHeader>
+                      </ul>
+                      <p>下面以“上传人”角色为例，展示第一轮探索。</p>
+                    </div>
+                  </CaseStudyHeadingTwo>
 
                   <MediaFigure
                     asset={assets.round1OptionA}
@@ -615,6 +636,7 @@ export default function DrawingLedgerCaseStudy() {
                     asset={assets.round1OptionB}
                     backgroundAsset={assets.round1OptionBBackground}
                     caption="Option B：待处理和已处理模块左右布局，用 Tab 组件区分"
+                    className={styles.figureSectionBreak}
                   />
 
                   <OptionSummary cons={optionBCons} pros={optionBPros} title="Option B" />
@@ -623,6 +645,7 @@ export default function DrawingLedgerCaseStudy() {
                     asset={assets.round1Overview}
                     backgroundAsset={assets.round1OverviewBackground}
                     caption="探索方案概览 · Round 1"
+                    className={styles.figureSectionBreak}
                     frameHeight="29.25rem"
                     imageHeight="34.9375rem"
                     imageInsetTop="2.1875rem"
@@ -647,19 +670,26 @@ export default function DrawingLedgerCaseStudy() {
                 </div>
 
                 <div className={styles.sectionCluster}>
-                  <AccentHeader label="Round 2: 务实的敏捷设计" sectionId="case-round-two">
-                    <p>
+                  <CaseStudyHeadingTwo
+                    accentColor="var(--portfolio-color-accent-brand)"
+                    className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                    id="case-round-two"
+                    title="Round 2: 务实的敏捷设计"
+                  >
+                    <div className={styles.richText}>
+                      <p>
                       基于第一轮反馈，我放弃“全盘推翻”，改成“渐进式增强”。
                       通过“待办区 + 表格”的融合视图，在保留高密度表格的同时，把不同角色当前最重要的任务抬到顶部。
-                    </p>
-                    <ul className={styles.emphasisList}>
+                      </p>
+                      <ul className={styles.emphasisList}>
                       {roundTwoBenefits.map((item) => (
                         <li key={item.title}>
                           <strong>{item.title}</strong>：{item.body}
                         </li>
                       ))}
-                    </ul>
-                  </AccentHeader>
+                      </ul>
+                    </div>
+                  </CaseStudyHeadingTwo>
 
                   <MediaFigure
                     asset={assets.round2OptionC}
@@ -669,12 +699,19 @@ export default function DrawingLedgerCaseStudy() {
                 </div>
 
                 <div className={styles.sectionCluster}>
-                  <AccentHeader label="Design Polish" sectionId="case-polish">
-                    <p>
+                  <CaseStudyHeadingTwo
+                    accentColor="var(--portfolio-color-accent-brand)"
+                    className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                    id="case-polish"
+                    title="Design Polish"
+                  >
+                    <div className={styles.richText}>
+                      <p>
                       第二轮方案与团队同步时非常顺利地通过了内部评审。
                       在这个基础上，我继续对页面的视觉层级、字段展示与操作项进行精细化打磨。
-                    </p>
-                  </AccentHeader>
+                      </p>
+                    </div>
+                  </CaseStudyHeadingTwo>
 
                   <MediaFigure
                     asset={assets.round2FinalVisual}
@@ -692,17 +729,30 @@ export default function DrawingLedgerCaseStudy() {
         <section className={joinClassNames(styles.fullBleedSection, styles.sectionSurface)}>
           <div className={joinClassNames(styles.sectionContent, styles.sectionContentTightBottom)}>
             <div className={styles.sectionFlow}>
-              <TitleHeader sectionId="case-detail" title="细节展开">
-                <p>Design is all about detail</p>
-              </TitleHeader>
+              <CaseStudyHeadingOne
+                className={styles.anchoredHeader}
+                id="case-detail"
+                title="细节展开"
+              >
+                <div className={styles.richText}>
+                  <p>Design is all about detail</p>
+                </div>
+              </CaseStudyHeadingOne>
 
               <div className={styles.sectionCluster}>
-                <AccentHeader label="代办区展示逻辑" sectionId="case-assignment-logic">
-                  <p>
+                <CaseStudyHeadingTwo
+                  accentColor="var(--portfolio-color-accent-brand)"
+                  className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                  id="case-assignment-logic"
+                  title="代办区展示逻辑"
+                >
+                  <div className={styles.richText}>
+                    <p>
                     <strong>基于用户角色的注意力管理</strong>：不同权限的角色只需要关注自己要处理的任务，
                     从而减少决策成本，提高操作效率。
-                  </p>
-                </AccentHeader>
+                    </p>
+                  </div>
+                </CaseStudyHeadingTwo>
 
                 <section className={styles.roleScrollerSection}>
                   <div className={styles.roleScrollerFrame}>
@@ -737,12 +787,19 @@ export default function DrawingLedgerCaseStudy() {
               </div>
 
               <div className={styles.sectionCluster}>
-                <AccentHeader label="代办区与表格的联动" sectionId="case-workflow">
-                  <p>
+                <CaseStudyHeadingTwo
+                  accentColor="var(--portfolio-color-accent-brand)"
+                  className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                  id="case-workflow"
+                  title="代办区与表格的联动"
+                >
+                  <div className={styles.richText}>
+                    <p>
                     <strong>支持动态布局</strong>：代办区的版本图纸被下发后，会自动从代办区流入下方表格，
                     并展示在表格顶部，整体逻辑更接近 transfer 组件的心智模型。
-                  </p>
-                </AccentHeader>
+                    </p>
+                  </div>
+                </CaseStudyHeadingTwo>
 
                 <MediaFigure
                   asset={assets.workflowDemo}
@@ -763,14 +820,21 @@ export default function DrawingLedgerCaseStudy() {
               </div>
 
               <div className={styles.sectionCluster}>
-                <AccentHeader label="响应式设计" sectionId="case-responsive">
-                  <p>为了营造更流畅的使用体验，我定义了代办区在不同屏幕宽度下的展示规则。</p>
-                  <ul>
-                    {responsiveRules.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </AccentHeader>
+                <CaseStudyHeadingTwo
+                  accentColor="var(--portfolio-color-accent-brand)"
+                  className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                  id="case-responsive"
+                  title="响应式设计"
+                >
+                  <div className={styles.richText}>
+                    <p>为了营造更流畅的使用体验，我定义了代办区在不同屏幕宽度下的展示规则。</p>
+                    <ul>
+                      {responsiveRules.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </CaseStudyHeadingTwo>
 
                 <MediaFigure
                   asset={assets.responsiveDemo}
@@ -797,20 +861,33 @@ export default function DrawingLedgerCaseStudy() {
           <div className={styles.sectionContent}>
             <div className={styles.footerStack}>
               <div className={styles.sectionFlow}>
-                <TitleHeader sectionId="case-mobile" title="移动端设计">
-                <p>
-                  与 Web 端不同，移动端图纸台账系统几乎是从 0 到 1 搭建的。
-                  这个项目的另一个目标，是补齐移动端能力，实现双端对齐。
-                </p>
-              </TitleHeader>
+                <CaseStudyHeadingOne
+                  className={styles.anchoredHeader}
+                  id="case-mobile"
+                  title="移动端设计"
+                >
+                  <div className={styles.richText}>
+                    <p>
+                      与 Web 端不同，移动端图纸台账系统几乎是从 0 到 1 搭建的。
+                      这个项目的另一个目标，是补齐移动端能力，实现双端对齐。
+                    </p>
+                  </div>
+                </CaseStudyHeadingOne>
 
                 <div className={styles.sectionCluster}>
-                  <AccentHeader label="视觉化改版 Revamping mobile app" sectionId="case-mobile-revamp">
-                    <p>
+                  <CaseStudyHeadingTwo
+                    accentColor="var(--portfolio-color-accent-brand)"
+                    className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                    id="case-mobile-revamp"
+                    title="视觉化改版 Revamping mobile app"
+                  >
+                    <div className={styles.richText}>
+                      <p>
                       在前期沟通里，PM 提出借这次补齐产品能力的机会，
                       把图纸模块整体从“毛坯房”升级到“精装修”，提升视觉品质感。
-                    </p>
-                  </AccentHeader>
+                      </p>
+                    </div>
+                  </CaseStudyHeadingTwo>
 
                   <figure className={styles.figure}>
                     <div className={joinClassNames(styles.mediaFrame, styles.mediaFrameWarm, styles.mobileCompareFrame)}>
@@ -850,19 +927,32 @@ export default function DrawingLedgerCaseStudy() {
                 </div>
 
                 <div className={styles.sectionCluster}>
-                  <AccentHeader label="Exploration">
-                    <p>图纸模块包含项目图纸、图纸台账、批注评论和设计变更 4 个子模块，核心任务是明确每个模块的视觉入口方案。</p>
-                  </AccentHeader>
+                  <CaseStudyHeadingThree
+                    className={styles.caseSubheading}
+                    descriptions={[
+                      "根据图纸工具类的业务属性，快速排除商品内容型入口，从线性图标和轻拟物风格开始做探索。",
+                      "探索轻拟物图标入口时，恰逢 OpenAI 刚推出了 GTP4o 的模型，吉普力风格刷屏社交网络。结合 4o 的生图能力，参考夸克入口的现代轻拟物图标设计，我快速完成了轻拟物风格入口的视觉探索。",
+                    ]}
+                    hideLabel
+                    label="Exploration"
+                  />
 
-                  <AccentHeader label="AI 辅助设计" sectionId="case-mobile-ai">
-                    <p>概念设计前，我先收集了主流 App 的功能入口设计，发现主要有 3 类典型表达：</p>
-                    <ul>
-                      <li>简约现代的线性图标</li>
-                      <li>现代轻拟物风格图标</li>
-                      <li>以产品图或实物图为核心识别元素的商品内容型入口</li>
-                    </ul>
-                    <p>结合图纸业务属性，我快速排除了商品内容型入口，转而从线性图标和轻拟物风格开始探索。</p>
-                  </AccentHeader>
+                  <CaseStudyHeadingThree
+                    className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                    id="case-mobile-ai"
+                    label="AI 辅助设计"
+                    labelAs="h4"
+                  >
+                    <div className={styles.richText}>
+                      <p>概念设计前，我先收集了主流 App 的功能入口设计，发现主要有 3 类典型表达：</p>
+                      <ul>
+                        <li>简约现代的线性图标</li>
+                        <li>现代轻拟物风格图标</li>
+                        <li>以产品图或实物图为核心识别元素的商品内容型入口</li>
+                      </ul>
+                      <p>结合图纸业务属性，我快速排除了商品内容型入口，转而从线性图标和轻拟物风格开始探索。</p>
+                    </div>
+                  </CaseStudyHeadingThree>
 
                   <MediaFigure
                     asset={assets.mobileReference}
@@ -896,12 +986,19 @@ export default function DrawingLedgerCaseStudy() {
                 </div>
 
                 <div className={styles.sectionCluster}>
-                  <AccentHeader label="同步、反馈与迭代" sectionId="case-mobile-iteration">
-                    <p>
+                  <CaseStudyHeadingThree
+                    className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                    id="case-mobile-iteration"
+                    label="同步、反馈与迭代"
+                    labelAs="h4"
+                  >
+                    <div className={styles.richText}>
+                      <p>
                       第一版视觉上线后，有用户反馈选中效果在室外强光环境下不够清晰，
                       因此我继续迭代了第二版视觉方案。
-                    </p>
-                  </AccentHeader>
+                      </p>
+                    </div>
+                  </CaseStudyHeadingThree>
 
                   <div className={styles.iterationFrame}>
                     <div className={styles.iterationLayout}>
@@ -930,12 +1027,19 @@ export default function DrawingLedgerCaseStudy() {
                 </div>
 
                 <div className={styles.sectionCluster}>
-                  <AccentHeader label="上滑交互" sectionId="case-mobile-interaction">
-                    <p>
+                  <CaseStudyHeadingThree
+                    className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                    id="case-mobile-interaction"
+                    label="上滑交互"
+                    labelAs="h4"
+                  >
+                    <div className={styles.richText}>
+                      <p>
                       默认情况下，视觉化 Tab 会占用较高屏效，因此我设计了顶部 Tab 与代办区的展开收起交互：
                       列表上滑时收起，向下滑动时再次展开。
-                    </p>
-                  </AccentHeader>
+                      </p>
+                    </div>
+                  </CaseStudyHeadingThree>
 
                 <MediaFigure
                   asset={assets.mobileTabInteraction}
@@ -956,9 +1060,16 @@ export default function DrawingLedgerCaseStudy() {
                 </div>
 
                 <div className={styles.sectionCluster}>
-                  <AccentHeader label="落地效果" sectionId="case-mobile-landed">
-                    <p>图纸模块 App 端核心页面如下。</p>
-                  </AccentHeader>
+                  <CaseStudyHeadingTwo
+                    accentColor="var(--portfolio-color-accent-brand)"
+                    className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                    id="case-mobile-landed"
+                    title="落地效果"
+                  >
+                    <div className={styles.richText}>
+                      <p>图纸模块 App 端核心页面如下。</p>
+                    </div>
+                  </CaseStudyHeadingTwo>
 
                   <figure className={styles.figure}>
                     <div className={styles.mobileLandingFrame}>
@@ -993,13 +1104,19 @@ export default function DrawingLedgerCaseStudy() {
                 </div>
               </div>
 
-              <TitleHeader sectionId="case-reflection" title="复盘与反思">
-                <p>
+              <CaseStudyHeadingOne
+                className={joinClassNames(styles.anchoredHeader, styles.reflectionHeader)}
+                id="case-reflection"
+                title="复盘与反思"
+              >
+                <div className={styles.richText}>
+                  <p>
                   好的 B 端设计不一定是颠覆性的重构。这个项目让我更确定，
                   真正有效的设计往往是在不打破原有心智模型的前提下，
                   用更克制、更聪明的方式解决复杂痛点，并同时为研发团队节省资源。
-                </p>
-              </TitleHeader>
+                  </p>
+                </div>
+              </CaseStudyHeadingOne>
             </div>
           </div>
         </section>
