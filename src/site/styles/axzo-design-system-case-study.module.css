@@ -1,8 +1,13 @@
 .caseStudy {
   --axzo-accent-moss: #647654;
   --axzo-heading-font: var(--portfolio-font-title);
+  --axzo-insight-arrow-size: 1.5rem;
   display: grid;
-  gap: clamp(4.5rem, 7vw, 8.25rem);
+  gap: clamp(6rem, 8.25vw, 8.25rem);
+}
+
+.caseBody {
+  position: relative;
 }
 
 .hero {
@@ -10,7 +15,8 @@
   display: flex;
   justify-content: center;
   margin-left: calc(50% - 50vw);
-  min-height: clamp(22rem, 56vw, 42rem);
+  /* 这里按 Figma 的 1920×1080 封面关系控制外层高度，避免封面被主卡片内容反向撑高。 */
+  min-height: clamp(24rem, 56.25vw, 67.5rem);
   overflow: clip;
   position: relative;
   width: 100vw;
@@ -29,9 +35,10 @@
 }
 
 .heroPanel {
-  padding: clamp(1rem, 4vw, 2rem);
+  max-width: calc(100vw - 2rem);
+  padding: 0;
   position: relative;
-  width: min(92vw, 90rem);
+  width: min(75vw, 90rem);
   z-index: 1;
 }
 
@@ -51,7 +58,7 @@
 
 .contentStack {
   display: grid;
-  gap: clamp(4rem, 6vw, 6rem);
+  gap: clamp(4.5rem, 6vw, 6rem);
   margin: 0 auto;
   padding: 0 1.5rem;
   width: min(100%, 55rem);
@@ -60,13 +67,22 @@
 .section {
   display: grid;
   gap: 1.5rem;
+  scroll-margin-top: 1.5rem;
+}
+
+.sectionLoose {
+  gap: 3rem;
 }
 
 .sectionHeader,
-.storyHeader,
-.reflectionStack {
+.storyHeader {
   display: grid;
   gap: 0.75rem;
+}
+
+.reflectionStack {
+  display: grid;
+  gap: 1.5rem;
 }
 
 .sectionTitle {
@@ -162,54 +178,97 @@
   border-radius: 1rem;
   display: grid;
   gap: 1rem;
-  padding: clamp(1.5rem, 3vw, 2.25rem) 1.5rem;
+  padding: 2.25rem 1.5rem;
 }
 
 .insightTop {
-  align-items: start;
+  align-items: center;
   display: grid;
-  gap: 1rem;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  width: 100%;
+  column-gap: 3.4375rem;
+  grid-template-columns: 18.5625rem 1.5rem 20.25rem;
+  justify-content: center;
+  width: min(100%, 47.1875rem);
+}
+
+.insightCaptionRow {
+  align-items: start;
+  column-gap: 3.4375rem;
+  display: grid;
+  grid-template-columns: 18.5625rem 1.5rem 20.25rem;
+  justify-content: center;
+  width: min(100%, 47.1875rem);
+}
+
+.insightCaptionSpacer {
+  width: 1.5rem;
 }
 
 .insightArrowHorizontal,
 .insightArrowSplit,
 .insightArrowVertical {
   color: var(--portfolio-color-border-strong);
-  font-family: var(--axzo-heading-font);
+  display: flex;
+  justify-content: center;
 }
 
-.insightArrowHorizontal,
-.insightArrowVertical {
-  font-size: clamp(1.75rem, 4vw, 2.25rem);
-  line-height: 1;
+.insightArrowIcon {
+  height: var(--axzo-insight-arrow-size);
+  stroke-width: 1.75;
+  width: var(--axzo-insight-arrow-size);
 }
 
 .insightArrowHorizontal {
   align-self: center;
 }
 
-.insightArrowSplit {
-  display: flex;
-  font-size: 2rem;
-  justify-content: center;
-  line-height: 1;
-  width: min(100%, 27rem);
+.insightBottomArea {
+  display: grid;
+  gap: 1rem;
+  justify-items: center;
+  width: min(100%, 47.1875rem);
 }
 
-.insightArrowSplit span:first-child {
-  margin-right: auto;
+.insightBottomFlow {
+  display: grid;
+  gap: 0.9375rem;
+  justify-items: center;
+  width: min(100%, 21.5625rem);
+}
+
+.insightArrowSplit {
+  align-items: center;
+  height: var(--axzo-insight-arrow-size);
+  justify-content: space-between;
+  width: 16.424rem;
+}
+
+.insightArrowDiagonalLeft {
+  transform: rotate(58deg);
+}
+
+.insightArrowDiagonalRight {
+  transform: scaleY(-1) rotate(58deg);
+}
+
+.insightArrowVertical {
+  align-items: center;
+  height: var(--axzo-insight-arrow-size);
+  justify-content: center;
+  transform: rotate(90deg);
+  width: var(--axzo-insight-arrow-size);
 }
 
 .insightMessage,
 .insightConclusion {
+  align-items: center;
   background: #faf9f6;
   border: 1px solid var(--portfolio-color-border-light);
   border-radius: 0.75rem;
-  max-width: 21.5625rem;
+  display: flex;
+  justify-content: center;
   padding: 0.75rem 1.25rem;
   text-align: center;
+  width: min(100%, 21.5625rem);
 }
 
 .insightMessage {
@@ -217,6 +276,7 @@
   font-family: var(--portfolio-font-body);
   font-size: 0.875rem;
   line-height: 1.4286;
+  min-height: 3.875rem;
 }
 
 .insightConclusion {
@@ -224,29 +284,29 @@
   font-family: var(--portfolio-font-body);
   font-size: 0.875rem;
   line-height: 1.4286;
+  min-height: 2.625rem;
 }
 
 .orbitCard {
   display: grid;
-  gap: 1rem;
   justify-items: center;
 }
 
 .orbitDiagram {
   min-height: 14rem;
   position: relative;
-  width: min(100%, 18.5625rem);
+  width: 100%;
 }
 
 .orbitRing {
   border: 1px dashed var(--portfolio-color-border-strong);
   border-radius: 999px;
   height: 13.125rem;
-  left: 50%;
+  left: 3.125rem;
   opacity: 0.9;
   position: absolute;
   top: 0.4375rem;
-  transform: translateX(-50%);
+  transform: none;
   width: 13.125rem;
 }
 
@@ -257,12 +317,12 @@
   display: grid;
   height: 6.25rem;
   justify-items: center;
-  left: 50%;
+  left: 6.5625rem;
   padding: 1rem;
   position: absolute;
   text-align: center;
   top: 3.875rem;
-  transform: translateX(-50%);
+  transform: none;
   width: 6.25rem;
 }
 
@@ -317,8 +377,24 @@
   font-size: var(--portfolio-type-body-sm-size);
   line-height: var(--portfolio-type-body-sm-line);
   margin: 0;
-  max-width: 12rem;
+  justify-self: center;
   text-align: center;
+}
+
+.insightTop > .orbitCard:last-child .orbitRing {
+  left: 3.8125rem;
+}
+
+.insightTop > .orbitCard:last-child .orbitCenter {
+  left: 7.25rem;
+}
+
+.insightCaptionRow > .orbitCaption:first-child {
+  max-width: 11.8125rem;
+}
+
+.insightCaptionRow > .orbitCaption:last-child {
+  max-width: 11.625rem;
 }
 
 .roleCard {
@@ -368,10 +444,19 @@
 }
 
 .storyBlock,
-.practiceStack,
 .practiceBlock {
   display: grid;
   gap: 1.5rem;
+}
+
+.practiceStack {
+  display: grid;
+  gap: clamp(3rem, 4vw, 4rem);
+}
+
+.storyBlock,
+.practiceBlock {
+  scroll-margin-top: 1.5rem;
 }
 
 .decisionList {
@@ -404,6 +489,7 @@
 
 .quote {
   color: var(--axzo-accent-moss);
+  margin-top: 1.5rem;
 }
 
 @media (max-width: 56rem) {
@@ -422,6 +508,16 @@
     transform: rotate(90deg);
   }
 
+  .insightCaptionRow {
+    gap: 0.75rem;
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .insightCaptionSpacer {
+    display: none;
+  }
+
   .insightArrowSplit {
     width: min(100%, 12rem);
   }
@@ -433,7 +529,7 @@
 
 @media (max-width: 40rem) {
   .heroPanel {
-    width: 100%;
+    width: calc(100vw - 2rem);
   }
 
   .sectionTitle {
