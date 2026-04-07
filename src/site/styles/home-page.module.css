@@ -1,18 +1,51 @@
 .homePage {
-  /* 这里需要把背景拉到首页整页最顶端，所以要覆盖 header 占位和 main 顶部留白。 */
   --home-background-offset-top: 10.25rem;
+  --home-sunny-ease: cubic-bezier(0.22, 1, 0.36, 1);
   display: grid;
-  gap: 6rem;
+  gap: 5rem;
   margin: 0 auto;
   max-width: 52rem;
   position: relative;
 }
 
-.homeBackground {
-  height: 35.0625rem;
+.homeTopMode {
+  display: grid;
+  gap: 6rem;
+  isolation: isolate;
+  position: relative;
+}
+
+.homeTopMode::before,
+.homeTopMode::after {
+  content: "";
   left: 50%;
-  /* Figma 里是同一个背景对象整体设为 Multiply，而不是只让图片层单独混合。 */
-  mix-blend-mode: multiply;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-50%);
+  width: min(120rem, 100vw);
+  z-index: 0;
+}
+
+.homeTopMode::before {
+  display: none;
+}
+
+.homeTopMode::after {
+  background: linear-gradient(
+    180deg,
+    rgba(252, 251, 248, 0) 0%,
+    rgba(252, 249, 243, 0.54) 42%,
+    rgba(252, 251, 248, 1) 100%
+  );
+  bottom: -3.75rem;
+  height: 11rem;
+}
+
+.homeBackground {
+  bottom: -1.25rem;
+  left: 50%;
+  opacity: 1;
+  overflow: hidden;
   pointer-events: none;
   position: absolute;
   top: calc(-1 * var(--home-background-offset-top));
@@ -22,29 +55,91 @@
 }
 
 .homeBackground::before {
-  /* 底层是图片 fill。 */
-  background: url("/site/home/home-background.png") center top / cover no-repeat;
+  background: linear-gradient(180deg, rgba(252, 251, 248, 0.02) 0%, rgba(252, 251, 248, 0.92) 100%);
   content: "";
   inset: 0;
   position: absolute;
 }
 
-.homeBackground::after {
-  /* 严格按 Figma 当前参数：
-   * 这一层要直接盖在图片 fill 上面
-   * 中心点在 50% / 50%
-   * 横向半径 960px
-   * 纵向半径 280.5px
-   * 颜色从白色 0% 透明度过渡到白色 100% 不透明
-   */
-  background: radial-gradient(
-    ellipse 960px 280.5px at 50% 50%,
-    rgba(255, 255, 255, 0) 0%,
-    #ffffff 100%
-  );
-  content: "";
+.sunnyLeafField {
+  /* 把真实树影收成一个更局部的顶部窗口，避免整块顶部都被视频占满。 */
   inset: 0;
+  opacity: 1;
+  -webkit-mask-image:
+    linear-gradient(
+      112deg,
+      rgba(0, 0, 0, 0) 14%,
+      rgba(0, 0, 0, 0.18) 36%,
+      rgba(0, 0, 0, 0.84) 66%,
+      rgba(0, 0, 0, 1) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.06) 22%,
+      rgba(0, 0, 0, 0.44) 54%,
+      rgba(0, 0, 0, 0.9) 82%,
+      rgba(0, 0, 0, 1) 100%
+    ),
+    radial-gradient(
+      ellipse 92% 82% at 26% 84%,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.82) 42%,
+      rgba(0, 0, 0, 0.3) 72%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  mask-image:
+    linear-gradient(
+      112deg,
+      rgba(0, 0, 0, 0) 14%,
+      rgba(0, 0, 0, 0.18) 36%,
+      rgba(0, 0, 0, 0.84) 66%,
+      rgba(0, 0, 0, 1) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.06) 22%,
+      rgba(0, 0, 0, 0.44) 54%,
+      rgba(0, 0, 0, 0.9) 82%,
+      rgba(0, 0, 0, 1) 100%
+    ),
+    radial-gradient(
+      ellipse 92% 82% at 26% 84%,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.82) 42%,
+      rgba(0, 0, 0, 0.3) 72%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  overflow: hidden;
+  pointer-events: none;
   position: absolute;
+  z-index: 1;
+}
+
+.sunnyLeafVideo {
+  filter: saturate(0.68) brightness(1.02);
+  height: 100%;
+  left: 0;
+  mix-blend-mode: multiply;
+  object-fit: cover;
+  object-position: 50% 42%;
+  opacity: 0.52;
+  position: absolute;
+  top: 0;
+  transform: scale(1.04) translate3d(4%, -18%, 0) rotate(-12deg);
+  transform-origin: 50%;
+  user-select: none;
+  will-change: transform, opacity;
+  width: 100%;
+}
+
+.sunnyLeafVideo::-webkit-media-controls {
+  display: none !important;
 }
 
 .heroSection,
@@ -59,9 +154,13 @@
   padding: 0 1.5rem;
 }
 
+.heroSection::before {
+  content: none;
+}
+
 .heroAvatar {
   border-radius: 0.375rem;
-  box-shadow: 0 10px 20px rgba(25, 34, 44, 0.08);
+  box-shadow: 0 12px 24px rgba(132, 97, 48, 0.08);
 }
 
 .heroTitle {
@@ -125,6 +224,7 @@
   --skill-tone: 1;
   align-items: center;
   border-radius: 1rem;
+  box-shadow: 0 10px 24px rgba(114, 84, 38, 0);
   color: var(--portfolio-color-text-muted);
   display: inline-flex;
   font-family: var(--portfolio-font-label);
@@ -137,11 +237,12 @@
   padding: 0.5625rem 0.8125rem;
   transform: translateX(calc(var(--skill-push) * 1px));
   transition:
-    transform 120ms linear,
-    opacity 120ms linear,
-    border-color 120ms ease,
-    background-color 120ms ease,
-    color 120ms ease;
+    transform 220ms var(--home-sunny-ease),
+    opacity 220ms var(--home-sunny-ease),
+    border-color 220ms var(--home-sunny-ease),
+    background-color 220ms var(--home-sunny-ease),
+    color 220ms var(--home-sunny-ease),
+    box-shadow 260ms var(--home-sunny-ease);
   width: 100%;
 }
 
@@ -150,13 +251,15 @@
 }
 
 .skillItemActive {
-  background: rgba(249, 250, 250, 0.92);
-  border: 1px solid #e5e5e5;
+  background: rgba(255, 252, 246, 0.82);
+  border: 1px solid rgba(229, 219, 198, 0.84);
+  box-shadow: 0 14px 30px rgba(160, 117, 58, 0.08);
   color: var(--portfolio-color-text-title);
 }
 
 .skillItemMuted {
-  border: 1px dashed #e5e5e5;
+  background: rgba(255, 251, 244, 0.28);
+  border: 1px dashed rgba(224, 214, 195, 0.92);
 }
 
 .skillIconWrap {
@@ -170,13 +273,13 @@
 }
 
 .skillIconWrapActive {
-  background: rgba(179, 106, 94, 0.12);
+  background: rgba(219, 162, 91, 0.16);
   color: var(--portfolio-color-accent-brand);
 }
 
 .skillIconWrapMuted {
-  background: rgba(240, 237, 232, 0.74);
-  color: rgba(74, 77, 78, 0.84);
+  background: rgba(246, 239, 227, 0.82);
+  color: rgba(96, 88, 75, 0.86);
 }
 
 .skillIcon {
@@ -200,7 +303,38 @@
 }
 
 .skillHighlightFrameInteractive {
-  background: linear-gradient(130deg, #2f5497, #1f355f);
+  background:
+    linear-gradient(155deg, rgba(255, 229, 165, 0.9) 0%, rgba(171, 209, 241, 0.94) 100%);
+}
+
+.skillHighlightFrameInteractive::before,
+.skillHighlightFrameInteractive::after {
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.skillHighlightFrameInteractive::before {
+  background:
+    radial-gradient(
+      ellipse 8rem 6rem at 28% 24%,
+      rgba(255, 247, 221, 0.62) 0%,
+      rgba(255, 247, 221, 0.18) 52%,
+      rgba(255, 247, 221, 0) 100%
+    ),
+    linear-gradient(180deg, rgba(255, 244, 216, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+  mix-blend-mode: screen;
+}
+
+.skillHighlightFrameInteractive::after {
+  background: radial-gradient(
+    ellipse 11rem 8rem at 72% 78%,
+    rgba(174, 209, 238, 0.32) 0%,
+    rgba(174, 209, 238, 0.06) 54%,
+    rgba(174, 209, 238, 0) 100%
+  );
+  animation: sunnySurfaceBreath 12s var(--home-sunny-ease) infinite alternate;
 }
 
 .skillHighlightImage {
@@ -211,6 +345,7 @@
   display: block;
   height: 100%;
   inset: 0;
+  opacity: 0.95;
   position: absolute;
   width: 100%;
 }
@@ -218,9 +353,9 @@
 .skillHighlightBadge {
   align-items: center;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(214, 220, 231, 0.84) 100%);
+    linear-gradient(180deg, rgba(255, 252, 245, 0.98) 0%, rgba(244, 234, 216, 0.86) 100%);
   border-radius: 0.5rem;
-  box-shadow: 0 9px 14px rgba(4, 11, 24, 0.14);
+  box-shadow: 0 12px 22px rgba(143, 104, 46, 0.18);
   display: inline-flex;
   justify-content: center;
   left: 50%;
@@ -229,18 +364,19 @@
   top: 50%;
   transform: translate(-50%, -50%);
   transition:
-    transform 200ms cubic-bezier(0.22, 0.86, 0.26, 1),
-    opacity 120ms ease;
+    transform 260ms var(--home-sunny-ease),
+    opacity 160ms var(--home-sunny-ease),
+    box-shadow 260ms var(--home-sunny-ease);
 }
 
 .skillHighlightBadgeFading {
   opacity: 0;
-  transform: translate(-50%, -50%) scale(0.84);
+  transform: translate(-50%, -50%) scale(0.88);
 }
 
 .skillHighlightGlyph {
   align-items: center;
-  background: rgba(255, 255, 255, 0.74);
+  background: rgba(255, 250, 241, 0.78);
   border-radius: 999px;
   color: var(--portfolio-color-accent-brand);
   display: inline-flex;
@@ -250,7 +386,7 @@
 }
 
 .skillHighlightCaption {
-  color: rgba(46, 46, 46, 0.72);
+  color: rgba(88, 79, 69, 0.82);
   font-size: 0.82rem;
   line-height: 1.7;
   margin: 0;
@@ -260,6 +396,8 @@
 .workList {
   display: grid;
   gap: 1.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 .workCard {
@@ -391,6 +529,15 @@
     gap: 4.5rem;
   }
 
+  .homeTopMode {
+    gap: 5rem;
+  }
+
+  .homeTopMode::before {
+    height: 34rem;
+    top: calc(-1 * var(--home-background-offset-top) + 1.5rem);
+  }
+
   .skillsLayout,
   .workCard,
   .workCardFeatured,
@@ -414,8 +561,28 @@
     gap: 4rem;
   }
 
+  .homeTopMode {
+    gap: 4rem;
+  }
+
+  .homeTopMode::after {
+    bottom: -3rem;
+    height: 8rem;
+  }
+
   .homeBackground {
-    height: 28rem;
+    bottom: -0.5rem;
+    top: calc(-1 * var(--home-background-offset-top) + 1.5rem);
+  }
+
+  .sunnyLeafField {
+    opacity: 1;
+  }
+
+  .sunnyLeafVideo {
+    object-position: 50% 42%;
+    transform: scale(1.04) translate3d(4%, -18%, 0) rotate(-12deg);
+    transform-origin: 50%;
   }
 
   .heroSection,
@@ -434,6 +601,12 @@
     min-height: 2.5rem;
   }
 
+  .heroSection::before {
+    left: -5rem;
+    top: -5rem;
+    width: 20rem;
+  }
+
   .workCard {
     padding: 1rem;
   }
@@ -445,5 +618,29 @@
   .workCardMedia,
   .workCardFeatured .workCardMedia {
     min-height: 15rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sunnyLeafField,
+  .skillHighlightFrameInteractive::after {
+    display: none;
+  }
+
+  .skillItem,
+  .skillHighlightBadge {
+    transition-duration: 0.01ms;
+  }
+}
+
+@keyframes sunnySurfaceBreath {
+  from {
+    opacity: 0.58;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  to {
+    opacity: 0.84;
+    transform: translate3d(0, -1.5%, 0) scale(1.03);
   }
 }

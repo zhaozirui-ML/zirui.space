@@ -50,28 +50,31 @@ export function createProgram(gl) {
       vec2 p = (uv - 0.5) * vec2(ar, 1.0);
       vec2 cursor = (u_pointer - 0.5) * vec2(ar, 1.0);
 
-      float t = u_time * 0.42;
-      float cursorMask = exp(-length(p - cursor) * 4.5);
-      float field = fbm(p * 2.8 + vec2(t * 1.2, -t * 0.85));
-      float flow = fbm(p * 4.0 - vec2(t * 0.9, t * 0.34));
+      float t = u_time * 0.24;
+      float cursorMask = exp(-length(p - cursor) * 3.2);
+      float field = fbm(p * 2.2 + vec2(t * 0.62, -t * 0.44));
+      float flow = fbm(p * 3.0 - vec2(t * 0.58, t * 0.18));
       vec2 warp = vec2(
-        sin(p.y * 7.0 + flow * 3.4 - t * 2.4),
-        cos(p.x * 6.2 + field * 3.0 + t * 2.1)
-      ) * (0.05 + u_disturbance * 0.26 + cursorMask * 0.18);
+        sin(p.y * 5.4 + flow * 2.3 - t * 1.4),
+        cos(p.x * 4.9 + field * 2.1 + t * 1.2)
+      ) * (0.028 + u_disturbance * 0.12 + cursorMask * 0.075);
 
-      float swath = fbm((p + warp) * 4.2 + vec2(-t * 1.35, t * 0.82));
-      float ridge = sin((p.x + p.y * 0.46 + swath * 0.55) * 11.0 - t * 4.4) * 0.5 + 0.5;
-      float pocket = fbm((p - warp * 0.85) * 3.6 - vec2(t * 0.74, -t * 0.56));
-      float highlight = clamp(cursorMask * (0.12 + u_disturbance * 0.52), 0.0, 1.0);
+      float swath = fbm((p + warp) * 3.25 + vec2(-t * 0.82, t * 0.4));
+      float ridge = sin((p.x + p.y * 0.32 + swath * 0.48) * 7.6 - t * 2.2) * 0.5 + 0.5;
+      float pocket = fbm((p - warp * 0.72) * 2.8 - vec2(t * 0.42, -t * 0.28));
+      float highlight = clamp(cursorMask * (0.06 + u_disturbance * 0.22), 0.0, 1.0);
+      float horizonGlow = smoothstep(1.08, -0.08, p.y + 0.22);
+      float sunlight = smoothstep(0.58, -0.15, length(p - vec2(0.2 * ar, 0.36)));
 
       vec3 color = mix(u_colorA, u_colorB, ridge);
-      color = mix(color, u_colorC, pocket * 0.66 + highlight);
+      color = mix(color, u_colorC, pocket * 0.38 + highlight * 0.48);
+      color = mix(color, vec3(0.992, 0.956, 0.862), sunlight * 0.22 + horizonGlow * 0.12);
 
-      float vignette = smoothstep(1.16, 0.14, length(p));
-      float lift = 0.81 + vignette * 0.27;
+      float vignette = smoothstep(1.2, 0.12, length(p));
+      float lift = 0.88 + vignette * 0.16;
       color *= lift;
-      color += vec3(0.02, 0.03, 0.06) * highlight;
-      color *= mix(0.92, 1.0, u_focus);
+      color += vec3(0.08, 0.05, 0.02) * highlight;
+      color *= mix(0.97, 1.0, u_focus);
 
       gl_FragColor = vec4(color, 1.0);
     }

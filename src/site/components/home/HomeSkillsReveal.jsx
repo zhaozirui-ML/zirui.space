@@ -24,17 +24,17 @@ const skillIcons = {
 };
 
 const TIMING = {
-  iconSwap: 110,
-  idleStop: 420,
+  iconSwap: 140,
+  idleStop: 520,
 };
 
 const MOTION = {
-  focusEase: 0.14,
-  rowEase: 0.19,
-  pointerEase: 0.15,
-  paletteEase: 0.072,
-  intensityEase: 0.12,
-  speedToDisturbance: 2.5,
+  focusEase: 0.11,
+  rowEase: 0.16,
+  pointerEase: 0.11,
+  paletteEase: 0.056,
+  intensityEase: 0.085,
+  speedToDisturbance: 1.18,
 };
 
 const LOOP_EPSILON = {
@@ -75,6 +75,7 @@ export default function HomeSkillsReveal({
       return undefined;
     }
 
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const pointer = { x: 0.5, y: 0.5 };
     const smoothPointer = { x: 0.5, y: 0.5 };
     const pointerVelocity = { x: 0, y: 0 };
@@ -133,8 +134,8 @@ export default function HomeSkillsReveal({
         const diff = Math.abs(rowIndex - activeFloat);
         const base = clamp(1 - diff * 1.3, 0, 1);
         const eased = base * base * (3 - 2 * base);
-        const push = interactionValue * eased * 9;
-        const tone = 0.64 + eased * 0.36;
+        const push = interactionValue * eased * 5.4;
+        const tone = 0.72 + eased * 0.28;
 
         row.style.setProperty("--skill-push", push.toFixed(3));
         row.style.setProperty("--skill-tone", tone.toFixed(3));
@@ -199,6 +200,10 @@ export default function HomeSkillsReveal({
 
     function shouldAnimate() {
       if (!isInView) {
+        return false;
+      }
+
+      if (prefersReducedMotion) {
         return false;
       }
 
@@ -299,12 +304,20 @@ export default function HomeSkillsReveal({
     }
 
     function onPointerEnter() {
+      if (prefersReducedMotion) {
+        return;
+      }
+
       isInside = true;
       interactionTarget = 1;
       startLoop();
     }
 
     function onPointerLeave() {
+      if (prefersReducedMotion) {
+        return;
+      }
+
       isInside = false;
       interactionTarget = 0;
       disturbance.target = 0;
@@ -323,6 +336,10 @@ export default function HomeSkillsReveal({
     }
 
     function onPointerMove(event) {
+      if (prefersReducedMotion) {
+        return;
+      }
+
       const interactionRect = rootEl.getBoundingClientRect();
       pointer.x = clamp((event.clientX - interactionRect.left) / interactionRect.width, 0, 1);
       pointer.y = 1 - clamp((event.clientY - interactionRect.top) / interactionRect.height, 0, 1);
