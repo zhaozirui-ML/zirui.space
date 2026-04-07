@@ -8,6 +8,9 @@ export const homeIntro = {
 export const homeSkills = [
   {
     label: "Systematic Thinking",
+    accentBorder: "rgba(100, 118, 84, 0.22)",
+    accentColor: "#647654",
+    accentSoft: "rgba(100, 118, 84, 0.14)",
     iconName: "network",
     iconAlt: "Systematic Thinking icon",
     caption: "I turn complex business structures into coherent systems.",
@@ -20,6 +23,9 @@ export const homeSkills = [
   },
   {
     label: "Prototype Logic",
+    accentBorder: "rgba(111, 125, 149, 0.22)",
+    accentColor: "#6f7d95",
+    accentSoft: "rgba(111, 125, 149, 0.14)",
     iconName: "blocks",
     iconAlt: "Prototype Logic icon",
     caption: "I validate key interaction decisions through prototypes.",
@@ -32,6 +38,9 @@ export const homeSkills = [
   },
   {
     label: "Interaction Design",
+    accentBorder: "rgba(179, 106, 94, 0.24)",
+    accentColor: "#b36a5e",
+    accentSoft: "rgba(179, 106, 94, 0.14)",
     iconName: "pointer",
     iconAlt: "Interaction Design icon",
     caption: "Interaction should clarify logic, not add noise.",
@@ -44,6 +53,9 @@ export const homeSkills = [
   },
   {
     label: "Creative Engineering",
+    accentBorder: "rgba(155, 130, 93, 0.22)",
+    accentColor: "#9b825d",
+    accentSoft: "rgba(155, 130, 93, 0.14)",
     iconName: "sparkles",
     iconAlt: "Creative Engineering icon",
     caption: "I bridge expressive design and production frontend.",
@@ -56,6 +68,9 @@ export const homeSkills = [
   },
   {
     label: "Delivery Rigor",
+    accentBorder: "rgba(111, 125, 149, 0.22)",
+    accentColor: "#6f7d95",
+    accentSoft: "rgba(111, 125, 149, 0.14)",
     iconName: "badgeCheck",
     iconAlt: "Delivery Rigor icon",
     caption: "The final bar is deliverable, maintainable, and iterative.",

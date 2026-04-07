@@ -224,7 +224,6 @@
   --skill-tone: 1;
   align-items: center;
   border-radius: 1rem;
-  box-shadow: 0 10px 24px rgba(114, 84, 38, 0);
   color: var(--portfolio-color-text-muted);
   display: inline-flex;
   font-family: var(--portfolio-font-label);
@@ -237,12 +236,11 @@
   padding: 0.5625rem 0.8125rem;
   transform: translateX(calc(var(--skill-push) * 1px));
   transition:
-    transform 220ms var(--home-sunny-ease),
-    opacity 220ms var(--home-sunny-ease),
-    border-color 220ms var(--home-sunny-ease),
-    background-color 220ms var(--home-sunny-ease),
-    color 220ms var(--home-sunny-ease),
-    box-shadow 260ms var(--home-sunny-ease);
+    transform 120ms linear,
+    opacity 120ms linear,
+    border-color 120ms ease,
+    background-color 120ms ease,
+    color 120ms ease;
   width: 100%;
 }
 
@@ -251,15 +249,13 @@
 }
 
 .skillItemActive {
-  background: rgba(255, 252, 246, 0.82);
-  border: 1px solid rgba(229, 219, 198, 0.84);
-  box-shadow: 0 14px 30px rgba(160, 117, 58, 0.08);
+  background: rgba(249, 250, 250, 0.92);
+  border: 1px solid var(--skill-accent-border, #e5e5e5);
   color: var(--portfolio-color-text-title);
 }
 
 .skillItemMuted {
-  background: rgba(255, 251, 244, 0.28);
-  border: 1px dashed rgba(224, 214, 195, 0.92);
+  border: 1px dashed #e5e5e5;
 }
 
 .skillIconWrap {
@@ -273,13 +269,13 @@
 }
 
 .skillIconWrapActive {
-  background: rgba(219, 162, 91, 0.16);
-  color: var(--portfolio-color-accent-brand);
+  background: var(--skill-accent-soft, rgba(179, 106, 94, 0.12));
+  color: var(--skill-accent, var(--portfolio-color-accent-brand));
 }
 
 .skillIconWrapMuted {
-  background: rgba(246, 239, 227, 0.82);
-  color: rgba(96, 88, 75, 0.86);
+  background: rgba(240, 237, 232, 0.74);
+  color: rgba(74, 77, 78, 0.84);
 }
 
 .skillIcon {
@@ -307,36 +303,6 @@
     linear-gradient(155deg, rgba(255, 229, 165, 0.9) 0%, rgba(171, 209, 241, 0.94) 100%);
 }
 
-.skillHighlightFrameInteractive::before,
-.skillHighlightFrameInteractive::after {
-  content: "";
-  inset: 0;
-  pointer-events: none;
-  position: absolute;
-}
-
-.skillHighlightFrameInteractive::before {
-  background:
-    radial-gradient(
-      ellipse 8rem 6rem at 28% 24%,
-      rgba(255, 247, 221, 0.62) 0%,
-      rgba(255, 247, 221, 0.18) 52%,
-      rgba(255, 247, 221, 0) 100%
-    ),
-    linear-gradient(180deg, rgba(255, 244, 216, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
-  mix-blend-mode: screen;
-}
-
-.skillHighlightFrameInteractive::after {
-  background: radial-gradient(
-    ellipse 11rem 8rem at 72% 78%,
-    rgba(174, 209, 238, 0.32) 0%,
-    rgba(174, 209, 238, 0.06) 54%,
-    rgba(174, 209, 238, 0) 100%
-  );
-  animation: sunnySurfaceBreath 12s var(--home-sunny-ease) infinite alternate;
-}
-
 .skillHighlightImage {
   object-fit: cover;
 }
@@ -345,7 +311,6 @@
   display: block;
   height: 100%;
   inset: 0;
-  opacity: 0.95;
   position: absolute;
   width: 100%;
 }
@@ -364,21 +329,20 @@
   top: 50%;
   transform: translate(-50%, -50%);
   transition:
-    transform 260ms var(--home-sunny-ease),
-    opacity 160ms var(--home-sunny-ease),
-    box-shadow 260ms var(--home-sunny-ease);
+    transform 200ms cubic-bezier(0.22, 0.86, 0.26, 1),
+    opacity 120ms ease;
 }
 
 .skillHighlightBadgeFading {
   opacity: 0;
-  transform: translate(-50%, -50%) scale(0.88);
+  transform: translate(-50%, -50%) scale(0.84);
 }
 
 .skillHighlightGlyph {
   align-items: center;
   background: rgba(255, 250, 241, 0.78);
   border-radius: 999px;
-  color: var(--portfolio-color-accent-brand);
+  color: var(--skill-accent, var(--portfolio-color-accent-brand));
   display: inline-flex;
   height: 2rem;
   justify-content: center;
@@ -386,7 +350,7 @@
 }
 
 .skillHighlightCaption {
-  color: rgba(88, 79, 69, 0.82);
+  color: rgba(46, 46, 46, 0.72);
   font-size: 0.82rem;
   line-height: 1.7;
   margin: 0;
@@ -576,13 +540,12 @@
   }
 
   .sunnyLeafField {
-    opacity: 1;
+    opacity: 0.7;
   }
 
   .sunnyLeafVideo {
-    object-position: 50% 42%;
-    transform: scale(1.04) translate3d(4%, -18%, 0) rotate(-12deg);
-    transform-origin: 50%;
+    object-position: center 34%;
+    transform: scale(1.22) translate3d(-8%, 0, 0);
   }
 
   .heroSection,
@@ -622,25 +585,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sunnyLeafField,
-  .skillHighlightFrameInteractive::after {
+  .sunnyLeafField {
     display: none;
-  }
-
-  .skillItem,
-  .skillHighlightBadge {
-    transition-duration: 0.01ms;
-  }
-}
-
-@keyframes sunnySurfaceBreath {
-  from {
-    opacity: 0.58;
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-
-  to {
-    opacity: 0.84;
-    transform: translate3d(0, -1.5%, 0) scale(1.03);
   }
 }
