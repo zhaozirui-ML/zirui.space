@@ -250,7 +250,7 @@
 
 .skillItemActive {
   background: rgba(249, 250, 250, 0.92);
-  border: 1px solid var(--skill-accent-border, #e5e5e5);
+  border: 1px solid #e5e5e5;
   color: var(--portfolio-color-text-title);
 }
 
@@ -269,8 +269,8 @@
 }
 
 .skillIconWrapActive {
-  background: var(--skill-accent-soft, rgba(179, 106, 94, 0.12));
-  color: var(--skill-accent, var(--portfolio-color-accent-brand));
+  background: rgba(179, 106, 94, 0.12);
+  color: var(--portfolio-color-accent-brand);
 }
 
 .skillIconWrapMuted {
@@ -299,8 +299,7 @@
 }
 
 .skillHighlightFrameInteractive {
-  background:
-    linear-gradient(155deg, rgba(255, 229, 165, 0.9) 0%, rgba(171, 209, 241, 0.94) 100%);
+  background: linear-gradient(130deg, #2f5497, #1f355f);
 }
 
 .skillHighlightImage {
@@ -318,9 +317,9 @@
 .skillHighlightBadge {
   align-items: center;
   background:
-    linear-gradient(180deg, rgba(255, 252, 245, 0.98) 0%, rgba(244, 234, 216, 0.86) 100%);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(214, 220, 231, 0.84) 100%);
   border-radius: 0.5rem;
-  box-shadow: 0 12px 22px rgba(143, 104, 46, 0.18);
+  box-shadow: 0 9px 14px rgba(4, 11, 24, 0.14);
   display: inline-flex;
   justify-content: center;
   left: 50%;
@@ -340,9 +339,9 @@
 
 .skillHighlightGlyph {
   align-items: center;
-  background: rgba(255, 250, 241, 0.78);
+  background: rgba(255, 255, 255, 0.74);
   border-radius: 999px;
-  color: var(--skill-accent, var(--portfolio-color-accent-brand));
+  color: var(--portfolio-color-accent-brand);
   display: inline-flex;
   height: 2rem;
   justify-content: center;

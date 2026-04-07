@@ -479,11 +479,6 @@ export default function HomeSkillsReveal({
 
   const activeSkill = skills[activeIndex] ?? skills[0];
   const ActiveIcon = skillIcons[activeSkill.iconName] || Orbit;
-  const activeSkillAccentStyle = /** @type {import("react").CSSProperties} */ ({
-    "--skill-accent": activeSkill.accentColor,
-    "--skill-accent-border": activeSkill.accentBorder,
-    "--skill-accent-soft": activeSkill.accentSoft,
-  });
 
   return (
     <div ref={rootRef} className={styles.skillsLayout}>
@@ -498,13 +493,6 @@ export default function HomeSkillsReveal({
               ref={(node) => {
                 rowRefs.current[index] = node;
               }}
-              style={
-                /** @type {import("react").CSSProperties} */ ({
-                  "--skill-accent": skill.accentColor,
-                  "--skill-accent-border": skill.accentBorder,
-                  "--skill-accent-soft": skill.accentSoft,
-                })
-              }
               className={[
                 styles.skillItem,
                 styles.skillItemInteractive,
@@ -535,10 +523,7 @@ export default function HomeSkillsReveal({
       </ul>
 
       <div className={styles.skillHighlight}>
-        <div
-          className={[styles.skillHighlightFrame, styles.skillHighlightFrameInteractive].join(" ")}
-          style={activeSkillAccentStyle}
-        >
+        <div className={[styles.skillHighlightFrame, styles.skillHighlightFrameInteractive].join(" ")}>
           {!webglReady ? (
             <Image
               alt={fallbackImageAlt}
