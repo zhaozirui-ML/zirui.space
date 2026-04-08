@@ -19,6 +19,10 @@
 
 ## 3. 工具链与依赖管理
 - **包管理**：默认使用 `pnpm`。
+- **Worktree 初始化**：使用 `git worktree` 新建工作目录后，不要假设 `node_modules` 已存在。进入该 worktree 后，先执行 `pnpm install`，再运行其他命令。
+- **Worktree 自动化**：仓库使用 `.githooks/post-checkout` 在 `git worktree add` 完成首次 checkout 后自动调用 `scripts/bootstrap-worktree.sh`。如果自动化没有生效，先检查 `git config core.hooksPath` 是否已经指向 `.githooks`。
+- **缺少依赖时的处理**：若 `pnpm typecheck`、`pnpm lint`、`pnpm dev` 因缺少 `tsc`、`eslint` 等命令失败，应先判断是否是当前 worktree 尚未执行 `pnpm install`，并明确告知这是环境未初始化，不是代码本身报错。
+- **初始化后的验证顺序**：完成 `pnpm install` 后，再执行 `pnpm typecheck` 和 `pnpm lint`。如果本地 pnpm store 已经缓存完整依赖，可视情况使用 `pnpm install --offline` 加快初始化。
 - **自动检查**：代码修改后自动运行 `pnpm typecheck` 和 `pnpm lint`。若失败，需主动协助定位并修复。
 - **Git 清理**：优先使用本地 `git-cleanup` skill；若手动执行，需确保删除前确认、保留受保护分支、汇报简洁。
 
