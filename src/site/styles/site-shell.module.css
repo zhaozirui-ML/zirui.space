@@ -108,6 +108,20 @@
   padding: 0 1.5rem;
 }
 
+.backLink {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-label);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.backLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
 .pageEyebrow {
   color: var(--portfolio-semantic-eyebrow-color);
   font-family: var(--portfolio-font-label);

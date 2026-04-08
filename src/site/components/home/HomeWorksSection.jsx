@@ -46,7 +46,10 @@ export default function HomeWorksSection() {
                 <p className={styles.workCardSummary}>{item.summary}</p>
               </div>
 
-              <Link className={styles.workCardButton} href={`/work/${item.slug}`}>
+              <Link
+                className={styles.workCardButton}
+                href={{ pathname: `/work/${item.slug}`, query: { from: "/" } }}
+              >
                 查看案例
               </Link>
             </div>

@@ -17,7 +17,11 @@ export default function WorkIndexPage() {
 
       <section className={styles.cardGrid}>
         {workItems.map((item) => (
-          <Link className={styles.workCard} href={`/work/${item.slug}`} key={item.slug}>
+          <Link
+            className={styles.workCard}
+            href={{ pathname: `/work/${item.slug}`, query: { from: "/work" } }}
+            key={item.slug}
+          >
             <div className={styles.workCardMeta}>
               <p className={styles.workCardMetaLabel}>{item.category}</p>
               <p className={styles.workCardMetaYear}>{item.year}</p>

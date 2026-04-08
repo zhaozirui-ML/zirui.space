@@ -4,7 +4,7 @@ import AxzoDesignSystemCaseStudyPage from "./AxzoDesignSystemCaseStudyPage";
 import { getWorkBySlug } from "../lib/get-work-by-slug";
 import styles from "../styles/site-shell.module.css";
 
-export default function WorkDetailPage({ slug }) {
+export default function WorkDetailPage({ returnHref = "/work", slug }) {
   const work = getWorkBySlug(slug);
 
   if (!work) {
@@ -13,12 +13,15 @@ export default function WorkDetailPage({ slug }) {
 
   // 先把 Figma 已经确认过的案例独立接进来，其他项目继续保留占位骨架。
   if (slug === "axzo-design-system") {
-    return <AxzoDesignSystemCaseStudyPage work={work} />;
+    return <AxzoDesignSystemCaseStudyPage backHref={returnHref} work={work} />;
   }
 
   return (
     <div className={styles.pageStack}>
       <section className={styles.pageIntro}>
+        <Link className={styles.backLink} href={returnHref}>
+          返回
+        </Link>
         <p className={styles.pageEyebrow}>{work.category}</p>
         <h1 className={styles.pageTitle}>{work.title}</h1>
         <p className={styles.pageDescription}>{work.detailSummary}</p>

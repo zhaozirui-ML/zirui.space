@@ -85,7 +85,7 @@ function OrbitDiagram({ orbit }) {
   );
 }
 
-export default function AxzoDesignSystemCaseStudyPage({ work }) {
+export default function AxzoDesignSystemCaseStudyPage({ backHref = "/work", work }) {
   const content = axzoDesignSystemCaseStudy;
   // 目录和锚点放在同一处维护，后面继续扩章节时不容易漏改。
   const sectionItems = [
@@ -130,11 +130,12 @@ export default function AxzoDesignSystemCaseStudyPage({ work }) {
   ];
   const tocTheme = {
     accentColor: "var(--axzo-accent-moss)",
-    backHref: "/work",
+    backHref,
     backLabel: "返回",
     desktopShiftX: "34rem",
     desktopTopOffset: "2rem",
     mutedColor: "rgba(122, 126, 128, 0.92)",
+    preferHistoryBack: false,
     titleColor: "var(--portfolio-semantic-title-color)",
   };
 
