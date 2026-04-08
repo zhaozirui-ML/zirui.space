@@ -1,0 +1,242 @@
+.page {
+  display: grid;
+  gap: 3rem;
+  margin: 0 auto;
+  max-width: var(--portfolio-layout-content-width, 52rem);
+  padding-top: 3.75rem;
+  width: 100%;
+}
+
+.pageIntro {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.pageTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-title);
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.038125rem;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.pageSubtitle {
+  color: var(--portfolio-color-text-muted);
+  font-family: var(--portfolio-font-body);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  margin: 0;
+}
+
+.pageContent {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.tabsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tabChip {
+  border-radius: 1rem;
+  font-family: var(--portfolio-font-label);
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.25rem;
+  min-height: 2.375rem;
+  padding: 0.5625rem 0.8125rem;
+}
+
+.tabChip :global(.ds-button__icon) {
+  color: currentColor;
+}
+
+.tabChipActive {
+  background: #f9fafa;
+  border-color: var(--portfolio-color-border-light);
+  color: var(--portfolio-color-text-body);
+}
+
+.tabChipInactive {
+  background: transparent;
+  border-color: var(--portfolio-color-border-strong);
+  border-style: dashed;
+  color: var(--portfolio-color-text-muted);
+}
+
+.rows {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.fullRow,
+.splitRow {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.splitRow {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.projectCard {
+  background: var(--portfolio-color-surface);
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: var(--portfolio-radius-lg);
+  color: inherit;
+  display: grid;
+  gap: 1.5rem;
+  overflow: hidden;
+  padding: 1.5625rem;
+  text-decoration: none;
+  transition:
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.projectCard:hover {
+  box-shadow: var(--portfolio-shadow-card);
+  transform: translateY(-1px);
+}
+
+.projectCardFeature {
+  width: 100%;
+}
+
+.projectCardCompact {
+  min-width: 0;
+}
+
+.previewFrame {
+  aspect-ratio: var(--work-preview-ratio);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.previewImage,
+.previewOverlayImage {
+  object-fit: cover;
+}
+
+.previewOverlay {
+  aspect-ratio: var(--work-preview-overlay-ratio);
+  box-shadow: var(--work-preview-overlay-shadow, none);
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--work-preview-overlay-width);
+}
+
+.previewOverlayImage {
+  border-radius: 0.25rem;
+}
+
+.projectContent {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.projectCopy {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.projectTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-title);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.5;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.projectSummary {
+  color: var(--portfolio-color-text-muted);
+  font-family: var(--portfolio-font-body);
+  font-size: 1rem;
+  letter-spacing: -0.011rem;
+  line-height: 1.375rem;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.projectMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  align-items: center;
+  border: 0.5px solid var(--portfolio-color-border-strong);
+  border-radius: 0.375rem;
+  color: var(--portfolio-color-text-body);
+  display: inline-flex;
+  font-family: "Inter", var(--portfolio-font-label);
+  font-size: 0.75rem;
+  font-weight: 400;
+  justify-content: center;
+  line-height: 1rem;
+  min-height: 1.5rem;
+  padding: 0.25rem 0.5rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .page {
+    padding-top: 2.5rem;
+  }
+
+  .splitRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    gap: 2rem;
+    padding-top: 1.5rem;
+  }
+
+  .pageTitle {
+    font-size: 1.75rem;
+  }
+
+  .tabsList {
+    gap: 0.75rem;
+  }
+
+  .projectCard {
+    border-radius: 1.25rem;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .projectTitle {
+    font-size: 1.25rem;
+    line-height: 1.35;
+  }
+
+  .projectSummary {
+    font-size: 0.9375rem;
+    line-height: 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projectCard {
+    transition: none;
+  }
+}
