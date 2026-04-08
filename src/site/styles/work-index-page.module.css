@@ -54,6 +54,11 @@
   padding: 0.5625rem 0.8125rem;
 }
 
+.tabChip:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--portfolio-color-accent-brand) 55%, white);
+  outline-offset: 2px;
+}
+
 .tabChip :global(.ds-button__icon) {
   color: currentColor;
 }
@@ -74,6 +79,10 @@
 .rows {
   display: grid;
   gap: 1.5rem;
+}
+
+.panel {
+  min-height: 20rem;
 }
 
 .fullRow,
@@ -194,6 +203,59 @@
   white-space: nowrap;
 }
 
+.placeholderPanel {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.98)),
+    radial-gradient(circle at top right, rgba(179, 106, 94, 0.08), transparent 42%);
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: var(--portfolio-radius-lg);
+  display: grid;
+  gap: 1.5rem;
+  min-height: 20rem;
+  padding: 1.75rem;
+}
+
+.placeholderEyebrow {
+  color: var(--portfolio-color-accent-brand);
+  font-family: var(--portfolio-font-label);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.placeholderCopy {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 36rem;
+}
+
+.placeholderTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-title);
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.placeholderDescription {
+  color: var(--portfolio-color-text-body);
+  font-family: var(--portfolio-font-body);
+  font-size: 1rem;
+  letter-spacing: -0.011rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.placeholderTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
 @media (max-width: 900px) {
   .page {
     padding-top: 2.5rem;
@@ -232,6 +294,15 @@
   .projectSummary {
     font-size: 0.9375rem;
     line-height: 1.5rem;
+  }
+
+  .placeholderPanel {
+    min-height: auto;
+    padding: 1.25rem;
+  }
+
+  .placeholderTitle {
+    font-size: 1.375rem;
   }
 }
 

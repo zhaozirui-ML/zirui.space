@@ -1,30 +1,12 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 import Button from "../../../design-system/components/Button";
-import { workItems, workPageRows } from "../data/work-items";
+import { workItems, workTabContent, workTabs } from "../data/work-items";
 import styles from "../styles/work-index-page.module.css";
-
-const workTabs = [
-  {
-    iconSrc: "/site/work/index/tab-professional-work.svg",
-    id: "professional-work",
-    isActive: true,
-    label: "Professional Work",
-  },
-  {
-    iconSrc: "/site/work/index/tab-explorations.svg",
-    id: "explorations",
-    isActive: false,
-    label: "Explorations",
-  },
-  {
-    iconSrc: "/site/work/index/tab-side-projects.svg",
-    id: "side-projects",
-    isActive: false,
-    label: "Side Projects",
-  },
-];
 
 function joinClassNames(...values) {
   return values.filter(Boolean).join(" ");
@@ -34,16 +16,17 @@ function ProjectTag({ text }) {
   return <span className={styles.tag}>{text}</span>;
 }
 
-function WorkTabChip({ tab }) {
+function WorkTabChip({ isActive, onSelect, tab }) {
   return (
-    <li>
+    <li role="presentation">
       <Button
-        aria-current={tab.isActive ? "page" : undefined}
-        as="div"
+        aria-controls={`work-panel-${tab.id}`}
+        aria-selected={isActive}
         className={joinClassNames(
           styles.tabChip,
-          tab.isActive ? styles.tabChipActive : styles.tabChipInactive,
+          isActive ? styles.tabChipActive : styles.tabChipInactive,
         )}
+        id={`work-tab-${tab.id}`}
         leadingIcon={
           <Image
             alt=""
@@ -54,6 +37,8 @@ function WorkTabChip({ tab }) {
             width={16}
           />
         }
+        onClick={() => onSelect(tab.id)}
+        role="tab"
         size="sm"
         variant="chip"
       >
@@ -151,12 +136,51 @@ function ProjectCard({ item }) {
   );
 }
 
-export default function WorkIndexPage() {
-  // 这里显式按 slug 取数据，是为了让 Figma 版式顺序独立于数据定义顺序，后面增减项目更安全。
+function PlaceholderPanel({ panel }) {
+  return (
+    <section className={styles.placeholderPanel}>
+      <p className={styles.placeholderEyebrow}>{panel.eyebrow}</p>
+      <div className={styles.placeholderCopy}>
+        <h2 className={styles.placeholderTitle}>{panel.title}</h2>
+        <p className={styles.placeholderDescription}>{panel.description}</p>
+      </div>
+      <div className={styles.placeholderTags}>
+        {panel.tags.map((tag) => (
+          <ProjectTag key={`${panel.eyebrow}-${tag}`} text={tag} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ProjectsPanel({ rows }) {
   const itemsBySlug = new Map(workItems.map((item) => [item.slug, item]));
-  const rows = workPageRows
+  const resolvedRows = rows
     .map((row) => row.map((slug) => itemsBySlug.get(slug)).filter(Boolean))
     .filter((row) => row.length > 0);
+
+  return (
+    <div className={styles.rows}>
+      {resolvedRows.map((row, index) =>
+        row.length === 1 ? (
+          <div className={styles.fullRow} key={`row-${index}`}>
+            <ProjectCard item={row[0]} />
+          </div>
+        ) : (
+          <div className={styles.splitRow} key={`row-${index}`}>
+            {row.map((item) => (
+              <ProjectCard item={item} key={item.slug} />
+            ))}
+          </div>
+        ),
+      )}
+    </div>
+  );
+}
+
+export default function WorkIndexPage() {
+  const [activeTabId, setActiveTabId] = useState(workTabs[0]?.id ?? "professional-work");
+  const activePanel = workTabContent[activeTabId] ?? workTabContent["professional-work"];
 
   return (
     <div className={styles.page}>
@@ -166,25 +190,31 @@ export default function WorkIndexPage() {
       </section>
 
       <section className={styles.pageContent}>
-        <ul aria-label="Work categories" className={styles.tabsList}>
+        <ul
+          aria-label="Work categories"
+          className={styles.tabsList}
+          role="tablist"
+        >
           {workTabs.map((tab) => (
-            <WorkTabChip key={tab.id} tab={tab} />
+            <WorkTabChip
+              isActive={tab.id === activeTabId}
+              key={tab.id}
+              onSelect={setActiveTabId}
+              tab={tab}
+            />
           ))}
         </ul>
 
-        <div className={styles.rows}>
-          {rows.map((row, index) =>
-            row.length === 1 ? (
-              <div className={styles.fullRow} key={`row-${index}`}>
-                <ProjectCard item={row[0]} />
-              </div>
-            ) : (
-              <div className={styles.splitRow} key={`row-${index}`}>
-                {row.map((item) => (
-                  <ProjectCard item={item} key={item.slug} />
-                ))}
-              </div>
-            ),
+        <div
+          aria-labelledby={`work-tab-${activeTabId}`}
+          className={styles.panel}
+          id={`work-panel-${activeTabId}`}
+          role="tabpanel"
+        >
+          {activePanel.type === "projects" ? (
+            <ProjectsPanel rows={activePanel.rows} />
+          ) : (
+            <PlaceholderPanel panel={activePanel} />
           )}
         </div>
       </section>

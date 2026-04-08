@@ -150,10 +150,49 @@ export const workItems = [
 
 export const homeWorkItems = workItems.filter((item) => item.showOnHome !== false);
 
-// Work 页不是平均网格，而是有主次节奏，所以这里显式保留 Figma 的排版顺序。
-export const workPageRows = [
-  ["drawing-ledger-2-0"],
-  ["axzo-design-system", "data-visualization-screen"],
-  ["cloudtower-design-system"],
-  ["smtx-elf-virtualization", "vm-features-optimization"],
+export const workTabs = [
+  {
+    iconSrc: "/site/work/index/tab-professional-work.svg",
+    id: "professional-work",
+    label: "Professional Work",
+  },
+  {
+    iconSrc: "/site/work/index/tab-explorations.svg",
+    id: "explorations",
+    label: "Explorations",
+  },
+  {
+    iconSrc: "/site/work/index/tab-side-projects.svg",
+    id: "side-projects",
+    label: "Side Projects",
+  },
 ];
+
+// Work 页不是平均网格，而是有主次节奏，所以这里显式保留各个 tab 的版式顺序。
+export const workTabContent = {
+  "professional-work": {
+    rows: [
+      ["drawing-ledger-2-0"],
+      ["axzo-design-system", "data-visualization-screen"],
+      ["cloudtower-design-system"],
+      ["smtx-elf-virtualization", "vm-features-optimization"],
+    ],
+    type: "projects",
+  },
+  explorations: {
+    description:
+      "This tab is reserved for interface experiments, motion studies, and visual directions that are still being refined before they become full case studies.",
+    eyebrow: "Explorations",
+    tags: ["Visual experiments", "Interaction studies", "Motion drafts"],
+    title: "A separate stream for in-progress design thinking",
+    type: "placeholder",
+  },
+  "side-projects": {
+    description:
+      "This tab will collect smaller self-initiated builds, tooling ideas, and independent side projects once they are documented into a format worth sharing.",
+    eyebrow: "Side Projects",
+    tags: ["Self-initiated", "Small builds", "Ongoing archive"],
+    title: "An archive for independent work outside client or product delivery",
+    type: "placeholder",
+  },
+};
