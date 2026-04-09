@@ -8,3 +8,4 @@ dist
 .codex-temp
 .codex
 tsconfig.tsbuildinfo
+test-results

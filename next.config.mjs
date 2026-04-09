@@ -6,7 +6,7 @@ const currentDirectory = path.dirname(fileURLToPath(import.meta.url));
 /** @type {import("next").NextConfig} */
 const nextConfig = {
   images: {
-    // 允许加载 Supabase Storage 的公开资源，先只放开当前项目域名做小范围验证。
+    // 允许加载 Supabase Storage 和 Framer 旧站的公开资源。
     remotePatterns: [
       {
         protocol: "https",
@@ -14,6 +14,11 @@ const nextConfig = {
         port: "",
         pathname: "/storage/v1/object/public/portfolio-assets/**",
         search: "",
+      },
+      {
+        protocol: "https",
+        hostname: "framerusercontent.com",
+        pathname: "/images/**",
       },
     ],
   },
