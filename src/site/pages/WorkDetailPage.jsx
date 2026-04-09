@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import DrawingLedgerCaseStudy from "../components/work/DrawingLedgerCaseStudy";
+import DataVisualizationScreenDetail from "../components/work-detail/DataVisualizationScreenDetail";
 import AxzoDesignSystemCaseStudyPage from "./AxzoDesignSystemCaseStudyPage";
 import { getWorkBySlug } from "../lib/get-work-by-slug";
 import styles from "../styles/site-shell.module.css";
@@ -11,7 +13,15 @@ export default function WorkDetailPage({ returnHref = "/work", slug }) {
     return null;
   }
 
-  // 先把 Figma 已经确认过的案例独立接进来，其他项目继续保留占位骨架。
+  // 这些案例页已经在仓库历史里有成型内容，当前分支只负责把它们重新接回统一路由。
+  if (slug === "drawing-ledger-2-0") {
+    return <DrawingLedgerCaseStudy backHref={returnHref} />;
+  }
+
+  if (slug === "data-visualization-screen") {
+    return <DataVisualizationScreenDetail backHref={returnHref} />;
+  }
+
   if (slug === "axzo-design-system") {
     return <AxzoDesignSystemCaseStudyPage backHref={returnHref} work={work} />;
   }

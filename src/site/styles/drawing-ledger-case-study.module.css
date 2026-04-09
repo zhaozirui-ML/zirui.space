@@ -1,0 +1,1059 @@
+.caseStudy {
+  display: grid;
+}
+
+.caseBody {
+  position: relative;
+}
+
+.fullBleedSection,
+.heroSection {
+  margin-left: calc(50% - 50vw);
+  width: 100vw;
+}
+
+.heroSection {
+  background: var(--portfolio-color-canvas);
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.heroBackdrop {
+  border-bottom-left-radius: var(--portfolio-radius-hero);
+  border-bottom-right-radius: var(--portfolio-radius-hero);
+  inset: 0 0 auto;
+  min-height: 100%;
+  overflow: hidden;
+  position: absolute;
+}
+
+.heroBackdropImage {
+  mix-blend-mode: multiply;
+  object-fit: cover;
+}
+
+.heroInner {
+  display: grid;
+  gap: var(--portfolio-space-md);
+  margin: 0 auto;
+  max-width: calc(90rem + 3rem);
+  padding: 7.75rem 1.5rem 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+.heroHeader {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: center;
+  margin: 0 auto;
+  max-width: 44rem;
+  text-align: center;
+}
+
+.heroTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-title);
+  font-size: clamp(2.75rem, 4vw, 3rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1;
+  margin: 0;
+}
+
+.heroSubtitle {
+  color: var(--portfolio-semantic-body-color);
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.heroMedia {
+  aspect-ratio: 1440 / 900;
+  position: relative;
+}
+
+.heroMediaImage {
+  object-fit: cover;
+}
+
+.sectionSurface {
+  background: var(--portfolio-semantic-section-background);
+}
+
+.canvasSurface {
+  background: var(--portfolio-color-canvas);
+}
+
+.sectionContent {
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: calc(52rem + 3rem);
+  padding: var(--portfolio-space-section-y) 1.5rem;
+  width: 100%;
+}
+
+.sectionContentTightBottom {
+  padding-bottom: 0;
+}
+
+.blockStack {
+  display: grid;
+  gap: var(--portfolio-space-lg);
+}
+
+.sectionFlow,
+.footerStack {
+  display: grid;
+  gap: var(--portfolio-space-md);
+}
+
+.sectionCluster {
+  display: grid;
+  gap: var(--portfolio-space-sm);
+}
+
+.sectionCluster > .caseSubheading + .caseSubheading {
+  margin-top: 1.5rem;
+}
+
+.reflectionHeader {
+  margin-top: 3rem;
+}
+
+.anchoredHeader {
+  scroll-margin-top: 6.5rem;
+}
+
+.richText {
+  color: var(--portfolio-semantic-body-color);
+  display: grid;
+  gap: 0.75rem;
+  font-size: 1rem;
+  letter-spacing: -0.011rem;
+  line-height: 1.5rem;
+}
+
+.richText p,
+.richText ul {
+  margin: 0;
+}
+
+.richText ul {
+  padding-left: 1.25rem;
+}
+
+.richText li + li {
+  margin-top: 0.375rem;
+}
+
+.richText strong {
+  color: var(--portfolio-semantic-title-color);
+  font-weight: 600;
+}
+
+.chartCard,
+.summaryCard,
+.feedbackCard,
+.taskPanel {
+  background: var(--portfolio-color-canvas);
+  border-radius: var(--portfolio-radius-md);
+  display: grid;
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+.chartCard {
+  background: var(--portfolio-color-canvas);
+}
+
+.chartTitle,
+.taskPanelTitle,
+.feedbackTitle,
+.summaryTitle {
+  color: var(--portfolio-semantic-body-color);
+  font-family: var(--portfolio-font-label);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.011rem;
+  line-height: 1.5rem;
+  margin: 0;
+}
+
+.chartTitle,
+.taskPanelTitle {
+  font-family: var(--portfolio-font-body);
+}
+
+.taskPanelTitle {
+  justify-self: center;
+}
+
+.chartTitle {
+  justify-self: start;
+}
+
+.lifecycleFigure {
+  height: 8.625rem;
+  overflow-x: auto;
+  position: relative;
+  width: 100%;
+}
+
+.lifecycleFlow {
+  align-items: center;
+  left: 0;
+  display: flex;
+  position: absolute;
+  top: 0;
+  width: 49rem;
+}
+
+.lifecycleChip {
+  align-items: center;
+  border: 1px solid var(--portfolio-color-border-strong);
+  border-radius: var(--portfolio-radius-md);
+  color: var(--portfolio-semantic-body-color);
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-family: var(--portfolio-font-body);
+  font-size: 0.875rem;
+  font-weight: 400;
+  justify-content: center;
+  line-height: 1.25rem;
+  min-height: 2.375rem;
+  padding: 0 0.8125rem;
+  width: var(--case-lifecycle-chip-width);
+  white-space: nowrap;
+}
+
+.lifecycleChipDashed {
+  border-style: dashed;
+}
+
+.lifecycleConnector {
+  background: rgba(220, 217, 209, 0.95);
+  display: block;
+  flex: 0 0 auto;
+  height: 1px;
+  width: 3.0625rem;
+}
+
+.lifecycleLegendFigure {
+  left: 10.3125rem;
+  position: absolute;
+  top: 2.5rem;
+  width: 36.5625rem;
+}
+
+.lifecycleLegendTrack {
+  height: 4.625rem;
+  position: relative;
+  width: 100%;
+}
+
+.lifecycleLegendStart,
+.lifecycleLegendEnd,
+.lifecycleLegendHorizontal,
+.lifecycleLegendStem {
+  background: var(--portfolio-color-border-strong);
+  position: absolute;
+}
+
+.lifecycleLegendStart {
+  height: 2.25rem;
+  left: 0;
+  top: 0;
+  width: 1px;
+}
+
+.lifecycleLegendEnd {
+  height: 2.25rem;
+  right: 0;
+  top: 0;
+  width: 1px;
+}
+
+.lifecycleLegendHorizontal {
+  height: 1px;
+  left: 0;
+  right: 0;
+  top: 2.25rem;
+}
+
+.lifecycleLegendStem {
+  height: 2.375rem;
+  left: calc(50% - 0.5px);
+  top: 2.25rem;
+  width: 1px;
+}
+
+.lifecycleLegendDot {
+  background: var(--portfolio-color-border-strong);
+  border-radius: 999px;
+  height: 0.375rem;
+  left: calc(50% - 0.1875rem);
+  position: absolute;
+  top: calc(2.25rem + 2.375rem - 0.1875rem);
+  width: 0.375rem;
+}
+
+.chartLegend,
+.caption,
+.iterationCaption,
+.mobileLandingLabel {
+  color: var(--portfolio-semantic-caption-color);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  margin: 0;
+}
+
+.chartLegend {
+  justify-self: center;
+  margin-top: 0.5rem;
+  text-align: center;
+  width: 100%;
+}
+
+.figure {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  width: 100%;
+}
+
+.figureSectionBreak {
+  margin-top: 1.5rem;
+}
+
+.caption {
+  justify-self: center;
+  text-align: center;
+}
+
+.mediaFrame {
+  border: 1px solid var(--portfolio-semantic-media-frame-border);
+  border-radius: var(--portfolio-radius-md);
+  height: var(--case-media-frame-height, 29.25rem);
+  min-height: 18rem;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.mediaFrameWarm {
+  background: var(--portfolio-semantic-media-frame-background);
+}
+
+.mediaFrameSurface {
+  background: var(--portfolio-color-surface);
+}
+
+.mediaBackground {
+  object-fit: cover;
+}
+
+.mediaInner,
+.shadowedInnerMedia {
+  border-radius: var(--portfolio-radius-sm);
+  overflow: hidden;
+  position: absolute;
+}
+
+.mediaInner,
+.shadowedInnerMedia {
+  /* 对齐 Figma 当前这类媒体卡片：
+   * 外框 832×468，前景图 760×475，距离左/右/上约 36px。
+   * 之前统一用 inset 会把前景图压成错误比例，导致截图被额外裁切。
+   */
+  height: var(--case-media-inner-height, 29.6875rem);
+  left: var(--case-media-inner-inset-x, 2.25rem);
+  right: var(--case-media-inner-inset-x, 2.25rem);
+  top: var(--case-media-inner-inset-top, 2.25rem);
+}
+
+.shadowedInnerMedia {
+  box-shadow: var(--portfolio-shadow-card);
+}
+
+.mediaImageCover,
+.mediaVideoCover,
+.roleCardImage,
+.phoneImage {
+  object-fit: cover;
+}
+
+.mediaImageContain,
+.mediaVideoContain {
+  object-fit: contain;
+}
+
+.mediaVideoCover,
+.mediaVideoContain {
+  height: 100%;
+  width: 100%;
+}
+
+.mediaPlaceholder {
+  align-items: center;
+  display: flex;
+  inset: 2.5rem;
+  justify-content: center;
+  position: absolute;
+}
+
+.taskPanel {
+  aspect-ratio: auto;
+  background: var(--portfolio-color-surface-warm);
+  border-radius: var(--portfolio-radius-md);
+  display: grid;
+  gap: 0.75rem;
+  justify-items: center;
+  padding: 3rem 1.5rem;
+}
+
+.taskTableWrap {
+  background: var(--portfolio-color-surface);
+  border-radius: var(--portfolio-radius-sm);
+  overflow: hidden;
+  padding: 1.25rem;
+  width: 41.875rem;
+}
+
+.taskTable {
+  border-collapse: collapse;
+  min-width: 0;
+  table-layout: fixed;
+  width: 39.375rem;
+}
+
+.taskColumnUser {
+  width: 8.1875rem;
+}
+
+.taskColumnScenario {
+  width: 11.0625rem;
+}
+
+.taskColumnTasks {
+  width: 20.125rem;
+}
+
+.taskTable th,
+.taskTable td {
+  border-bottom: 1px solid var(--portfolio-color-border-light);
+  text-align: left;
+}
+
+.taskTable th:not(:last-child),
+.taskTable td:not(:last-child) {
+  border-right: 1px solid var(--portfolio-color-border-light);
+}
+
+.taskTable tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.taskCellHead {
+  color: var(--portfolio-color-text-muted);
+  font-family: var(--portfolio-font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  height: 3rem;
+  padding-top: 0.8125rem;
+  vertical-align: top;
+}
+
+.taskCellBody,
+.taskCellTasksBody {
+  color: var(--portfolio-semantic-body-color);
+  font-family: var(--portfolio-font-body);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.25rem;
+}
+
+.taskCellBody {
+  padding-bottom: 0;
+  padding-top: 0;
+  vertical-align: middle;
+}
+
+.taskCellTasksBody {
+  padding-bottom: 0;
+  padding-top: 0.625rem;
+  vertical-align: top;
+}
+
+.taskCellUser {
+  padding-left: 1.875rem;
+}
+
+.taskCellScenario {
+  padding-left: 2.8125rem;
+}
+
+.taskCellTasks {
+  padding-left: 1.4375rem;
+}
+
+.compactList {
+  margin: 0;
+  padding-left: 1.3125rem;
+}
+
+.compactList li + li {
+  margin-top: 0;
+}
+
+.summaryCard {
+  background: var(--portfolio-color-canvas);
+}
+
+.summaryGroup {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.summaryLabel,
+.feedbackLabel {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-label);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  margin: 0;
+}
+
+.summaryList {
+  color: var(--portfolio-semantic-body-color);
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.summaryList li + li {
+  margin-top: 0.5rem;
+}
+
+.feedbackCard {
+  background: var(--portfolio-color-canvas);
+  gap: 0.5rem;
+}
+
+.emphasisList {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.emphasisList li + li {
+  margin-top: 0.5rem;
+}
+
+.roleScrollerSection {
+  overflow: hidden;
+}
+
+.roleScrollerFrame {
+  background: var(--portfolio-color-surface);
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: var(--portfolio-radius-md);
+  height: 26.25rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.roleScrollerBackground {
+  filter: blur(2.5px);
+  inset: 0;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.roleScroller {
+  display: grid;
+  gap: 1.25rem;
+  grid-auto-columns: 46rem;
+  grid-auto-flow: column;
+  -ms-overflow-style: none;
+  overflow-x: auto;
+  padding: 5.1875rem 2.1875rem 2.1875rem;
+  position: relative;
+  scrollbar-width: none;
+  scroll-padding-left: 2.1875rem;
+  scroll-snap-type: x proximity;
+  z-index: 1;
+}
+
+.roleScroller::-webkit-scrollbar {
+  display: none;
+}
+
+.roleCard {
+  display: grid;
+  gap: 0.75rem;
+  scroll-snap-align: start;
+  width: 46rem;
+}
+
+.roleCardTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-body);
+  font-size: 1rem;
+  letter-spacing: -0.011rem;
+  line-height: 1.5rem;
+  margin: 0;
+  width: 100%;
+}
+
+.roleCardMedia {
+  height: 13.5rem;
+  overflow: hidden;
+  position: relative;
+  width: 46rem;
+}
+
+.pendingAssetNotice {
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(236, 233, 228, 0.92);
+  border-radius: 1rem;
+  box-shadow: 0 20px 40px rgba(14, 18, 27, 0.08);
+  display: grid;
+  gap: 0.5rem;
+  max-width: 30rem;
+  padding: 1.25rem;
+}
+
+.pendingAssetEyebrow {
+  color: var(--portfolio-color-accent-brand);
+  font-family: var(--portfolio-font-label);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.pendingAssetTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-title);
+  font-size: 1.5rem;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.pendingAssetBody {
+  color: var(--portfolio-semantic-body-color);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.mobileCompareFrame {
+  display: block;
+  padding: 0;
+}
+
+.mobileComparePhoneBefore,
+.mobileComparePhoneAfter {
+  border: 0.5rem solid rgba(157, 173, 172, 0.52);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.mobileLandingPhone {
+  overflow: hidden;
+  position: relative;
+}
+
+.mobileComparePhoneBefore,
+.mobileComparePhoneAfter {
+  aspect-ratio: auto;
+  height: 33.125rem;
+  position: absolute;
+  top: 5.5625rem;
+  width: 15.3125rem;
+  z-index: 1;
+}
+
+.mobileComparePhoneBefore {
+  left: 8.0625rem;
+}
+
+.mobileComparePhoneAfter {
+  left: 28.5rem;
+}
+
+.beforeAfterLabelLeft,
+.beforeAfterLabelRight {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-body);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  margin: 0;
+  position: absolute;
+  top: 3rem;
+  z-index: 1;
+}
+
+.beforeAfterLabelLeft {
+  left: 14.3125rem;
+}
+
+.beforeAfterLabelRight {
+  left: 35.125rem;
+}
+
+.explorationGridFrame,
+.iterationFrame,
+.mobileLandingFrame {
+  background: var(--portfolio-semantic-media-frame-background);
+  border: 1px solid var(--portfolio-semantic-media-frame-border);
+  border-radius: var(--portfolio-radius-md);
+  display: grid;
+  gap: 0.75rem;
+  overflow: hidden;
+  padding: 2.25rem;
+  position: relative;
+}
+
+.explorationGrid,
+.iterationGrid {
+  display: grid;
+  gap: 2.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.explorationGridFrame {
+  height: 26.25rem;
+  padding: 0;
+  position: relative;
+}
+
+.explorationGrid {
+  gap: 3.75rem 2.5rem;
+  grid-template-columns: repeat(2, 15rem);
+  left: 50%;
+  position: absolute;
+  top: 3.625rem;
+  transform: translateX(-50%);
+  width: 32.5rem;
+}
+
+.explorationCell,
+.iterationImageWrap {
+  aspect-ratio: 240 / 122;
+  border-radius: var(--portfolio-radius-sm);
+  overflow: hidden;
+  position: relative;
+}
+
+.iterationCard {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.iterationFrame {
+  height: 29.25rem;
+  padding: 0;
+  position: relative;
+}
+
+.iterationLayout {
+  display: grid;
+  gap: 3.75rem;
+  left: 50%;
+  position: absolute;
+  top: 4.53125rem;
+  transform: translateX(-50%);
+  width: 42.625rem;
+}
+
+.iterationRow {
+  align-items: center;
+  column-gap: 1.3125rem;
+  display: grid;
+  grid-template-columns: 3.75rem 32.5rem;
+}
+
+.iterationRowLabel {
+  color: var(--portfolio-semantic-caption-color);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  margin: 0;
+}
+
+.iterationRowImages {
+  display: grid;
+  gap: 2.5rem;
+  grid-template-columns: repeat(2, 15rem);
+}
+
+.iterationImageWrap {
+  aspect-ratio: auto;
+  box-shadow: 0 1rem 2rem -0.75rem rgba(14, 18, 27, 0.1);
+  height: 8.1875rem;
+  width: 15rem;
+}
+
+.mobileLandingGrid {
+  display: grid;
+  gap: 1.875rem;
+  grid-template-columns: repeat(4, 10rem);
+  margin: 0 auto;
+  position: relative;
+  width: 45.625rem;
+  z-index: 1;
+}
+
+.mobileLandingCard {
+  display: grid;
+  gap: 1.25rem;
+  justify-items: center;
+  width: 10rem;
+}
+
+.mobileLandingPhone {
+  aspect-ratio: 160 / 346;
+  position: relative;
+  width: min(10rem, 100%);
+}
+
+.mobileLandingBackground {
+  object-fit: cover;
+  transform: scale(1.02);
+}
+
+.mobileLandingImage {
+  border: 0.375rem solid rgba(157, 173, 172, 0.52);
+  border-radius: 1.5rem;
+  object-fit: cover;
+}
+
+.mobileLandingFrame {
+  height: 29.3125rem;
+  padding: 3.25rem 3.1875rem 2.1875rem;
+  position: relative;
+}
+
+.mobileInteractionPhone {
+  border: 0.5rem solid rgba(157, 173, 172, 0.52);
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+
+@media (min-width: 1200px) {
+}
+
+@media (max-width: 1100px) {
+  .heroInner {
+    padding-top: 6.5rem;
+  }
+
+  .sectionContent {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+
+  .mobileLandingGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .heroSection {
+    min-height: auto;
+  }
+
+  .heroBackdrop {
+    height: 100%;
+  }
+
+  .heroInner {
+    gap: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .heroHeader {
+    justify-items: start;
+    text-align: left;
+  }
+
+  .lifecycleFlow {
+    display: grid;
+    min-width: 49rem;
+  }
+
+  .lifecycleConnector {
+    width: 2rem;
+  }
+
+  .lifecycleLegendFigure {
+    left: 11.75rem;
+  }
+
+  .lifecycleFigure {
+    min-width: 49rem;
+  }
+
+  .mediaInner,
+  .shadowedInnerMedia {
+    inset: 1.25rem;
+    height: auto;
+    left: auto;
+    right: auto;
+    top: auto;
+  }
+
+  .roleScroller {
+    grid-auto-columns: minmax(100%, 100%);
+    padding: 1.5rem;
+  }
+
+  .roleCardMedia {
+    height: 11rem;
+  }
+
+  .explorationGrid {
+    gap: 1rem;
+  }
+
+  .mobileCompareFrame {
+    padding: 4.5rem 1rem 1rem;
+  }
+
+  .mobileComparePhoneBefore,
+  .mobileComparePhoneAfter {
+    height: auto;
+    top: auto;
+    width: min(15.3125rem, 34vw);
+  }
+
+  .mobileComparePhoneBefore {
+    left: 8%;
+  }
+
+  .mobileComparePhoneAfter {
+    left: auto;
+    right: 8%;
+  }
+
+  .beforeAfterLabelLeft {
+    left: 24%;
+  }
+
+  .beforeAfterLabelRight {
+    left: auto;
+    right: 24%;
+  }
+}
+
+@media (max-width: 680px) {
+  .heroTitle {
+    font-size: 2.25rem;
+    line-height: 1.05;
+  }
+
+  .sectionContent {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .chartCard,
+  .summaryCard,
+  .feedbackCard,
+  .taskPanel,
+  .explorationGridFrame,
+  .iterationFrame,
+  .mobileLandingFrame {
+    padding: 1rem;
+  }
+
+  .mediaFrame {
+    min-height: 14rem;
+  }
+
+  .taskTable {
+    min-width: 39.375rem;
+  }
+
+  .mobileComparePhoneBefore,
+  .mobileComparePhoneAfter {
+    width: 42vw;
+  }
+
+  .beforeAfterLabelLeft,
+  .beforeAfterLabelRight {
+    top: 1.5rem;
+  }
+
+  .beforeAfterLabelLeft {
+    left: 18%;
+  }
+
+  .beforeAfterLabelRight {
+    right: 18%;
+  }
+
+  .explorationGrid,
+  .mobileLandingGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .iterationFrame {
+    height: auto;
+    padding: 1.5rem;
+  }
+
+  .iterationLayout {
+    gap: 1.5rem;
+    left: auto;
+    position: relative;
+    top: auto;
+    transform: none;
+    width: 100%;
+  }
+
+  .iterationRow {
+    gap: 0.75rem;
+    grid-template-columns: 1fr;
+  }
+
+  .iterationRowImages {
+    gap: 1rem;
+    grid-template-columns: 1fr;
+  }
+
+  .iterationImageWrap {
+    height: auto;
+    width: 100%;
+  }
+
+  .explorationGridFrame {
+    height: auto;
+    padding: 1.5rem 1.5rem 3rem;
+  }
+
+  .explorationGrid {
+    gap: 1rem;
+    left: auto;
+    position: relative;
+    top: auto;
+    transform: none;
+    width: 100%;
+  }
+
+  .mobileLandingPhone {
+    width: min(10rem, 60vw);
+  }
+
+  .mobileLandingFrame {
+    height: auto;
+    padding: 1.5rem;
+  }
+
+  .mobileLandingGrid {
+    width: 100%;
+  }
+}
