@@ -1,0 +1,15 @@
+#!/bin/sh
+
+old_ref="$1"
+checkout_type="$3"
+
+case "$old_ref" in
+  0000000000000000000000000000000000000000)
+    # git worktree add 完成首次 checkout 时，old_ref 会是全 0。
+    if [ "$checkout_type" = "1" ] && [ -x "./scripts/bootstrap-worktree.sh" ]; then
+      ./scripts/bootstrap-worktree.sh
+    fi
+    ;;
+esac
+
+exit 0

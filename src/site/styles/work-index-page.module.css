@@ -1,0 +1,52 @@
+.page {
+  display: grid;
+  gap: var(--portfolio-space-md);
+  margin: 0 auto;
+  max-width: var(--portfolio-layout-content-width, 52rem);
+  padding-top: 3.75rem;
+  width: 100%;
+}
+
+.pageContent {
+  display: grid;
+  gap: var(--portfolio-space-sm);
+}
+
+.rows {
+  display: grid;
+  gap: var(--portfolio-space-sm);
+}
+
+.panel {
+  min-height: 20rem;
+}
+
+.fullRow,
+.splitRow,
+.explorationSplitRow {
+  display: grid;
+  gap: var(--portfolio-space-sm);
+}
+
+.splitRow,
+.explorationSplitRow {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 900px) {
+  .page {
+    padding-top: 2.5rem;
+  }
+
+  .splitRow,
+  .explorationSplitRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    gap: var(--portfolio-space-sm);
+    padding-top: var(--portfolio-space-sm);
+  }
+}

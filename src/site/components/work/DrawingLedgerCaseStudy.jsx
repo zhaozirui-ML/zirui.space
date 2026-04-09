@@ -249,15 +249,6 @@ const tocItems = [
   },
 ];
 
-const tocTheme = {
-  accentColor: "var(--portfolio-color-accent-brand)",
-  backHref: "/work",
-  backLabel: "返回",
-  desktopTopOffset: "var(--portfolio-space-section-y)",
-  mutedColor: "rgba(122, 126, 128, 0.92)",
-  titleColor: "var(--portfolio-semantic-title-color)",
-};
-
 function joinClassNames(...values) {
   return values.filter(Boolean).join(" ");
 }
@@ -392,7 +383,16 @@ function PendingAssetNotice({ body, title }) {
   );
 }
 
-export default function DrawingLedgerCaseStudy() {
+export default function DrawingLedgerCaseStudy({ backHref = "/work" }) {
+  const tocTheme = {
+    accentColor: "var(--portfolio-color-accent-brand)",
+    backHref,
+    backLabel: "返回",
+    desktopTopOffset: "var(--portfolio-space-section-y)",
+    mutedColor: "rgba(122, 126, 128, 0.92)",
+    titleColor: "var(--portfolio-semantic-title-color)",
+  };
+
   return (
     <article className={styles.caseStudy}>
       <section className={styles.heroSection} id="case-hero">

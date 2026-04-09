@@ -1,35 +1,79 @@
-import Link from "next/link";
+"use client";
 
-import { workItems } from "../data/work-items";
-import styles from "../styles/site-shell.module.css";
+import { useState } from "react";
+
+import WorkExplorationsPanel from "../components/work/WorkExplorationsPanel";
+import WorkPageHeader from "../components/work/WorkPageHeader";
+import WorkProjectCard from "../components/work/WorkProjectCard";
+import WorkSideProjectsPanel from "../components/work/WorkSideProjectsPanel";
+import WorkTabs from "../components/work/WorkTabs";
+import { workItems, workTabContent, workTabs } from "../data/work-items";
+import styles from "../styles/work-index-page.module.css";
+
+function ProjectsPanel({ rows }) {
+  const itemsBySlug = new Map(workItems.map((item) => [item.slug, item]));
+  const resolvedRows = rows
+    .map((row) => row.map((slug) => itemsBySlug.get(slug)).filter(Boolean))
+    .filter((row) => row.length > 0);
+
+  return (
+    <>
+      {resolvedRows.map((row, index) =>
+        row.length === 1 ? (
+          <div className={styles.fullRow} key={`row-${index}`}>
+            <WorkProjectCard item={row[0]} />
+          </div>
+        ) : (
+          <div className={styles.splitRow} key={`row-${index}`}>
+            {row.map((item) => (
+              <WorkProjectCard item={item} key={item.slug} />
+            ))}
+          </div>
+        ),
+      )}
+    </>
+  );
+}
 
 export default function WorkIndexPage() {
-  return (
-    <div className={styles.pageStack}>
-      <section className={styles.pageIntro}>
-        <p className={styles.pageEyebrow}>Work</p>
-        <h1 className={styles.pageTitle}>作品页路由骨架已经先搭起来了</h1>
-        <p className={styles.pageDescription}>
-          这一步先把作品数据、列表页和 3 个详情页路径固定下来。后面新首页和
-          `/work` 会共用同一份数据，避免再次拆结构。
-        </p>
-      </section>
+  const [activeTabId, setActiveTabId] = useState(workTabs[0]?.id ?? "professional-work");
+  const activePanel = workTabContent[activeTabId] ?? workTabContent["professional-work"];
 
-      <section className={styles.cardGrid}>
-        {workItems.map((item) => (
-          <Link className={styles.workCard} href={`/work/${item.slug}`} key={item.slug}>
-            <div className={styles.workCardMeta}>
-              <p className={styles.workCardMetaLabel}>{item.category}</p>
-              <p className={styles.workCardMetaYear}>{item.year}</p>
-            </div>
-            <h2 className={styles.workCardTitle}>{item.title}</h2>
-            <p className={styles.workCardSummary}>{item.summary}</p>
-            <div className={styles.workCardFooter}>
-              <p className={styles.workCardPath}>/work/{item.slug}</p>
-              <span className={styles.workCardCta}>查看详情骨架</span>
-            </div>
-          </Link>
-        ))}
+  return (
+    <div className={styles.page}>
+      <WorkPageHeader />
+
+      <section className={styles.pageContent}>
+        <WorkTabs
+          activeTabId={activeTabId}
+          onSelect={setActiveTabId}
+          tabs={workTabs}
+        />
+
+        <div
+          aria-labelledby={`work-tab-${activeTabId}`}
+          className={styles.panel}
+          id={`work-panel-${activeTabId}`}
+          role="tabpanel"
+        >
+          <div className={styles.rows}>
+            {activePanel.type === "projects" ? (
+              <ProjectsPanel rows={activePanel.rows} />
+            ) : null}
+
+            {activePanel.type === "explorations" ? (
+              <WorkExplorationsPanel
+                rowClassName={styles.fullRow}
+                rowSplitClassName={styles.explorationSplitRow}
+                rows={activePanel.rows}
+              />
+            ) : null}
+
+            {activePanel.type === "side-projects" ? (
+              <WorkSideProjectsPanel items={activePanel.items} />
+            ) : null}
+          </div>
+        </div>
       </section>
     </div>
   );

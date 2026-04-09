@@ -41,15 +41,6 @@ const caseStudySections = [
   { hierarchy: "primary", id: "results-reflection", label: "成果与复盘" },
 ];
 
-const tocTheme = {
-  accentColor: "var(--axzo-case-accent)",
-  backHref: "/work",
-  backLabel: "返回",
-  desktopShiftX: "30.5rem",
-  desktopStartOffset: "0rem",
-  desktopStickyTop: "2rem",
-};
-
 const practiceSectionIds = [
   "practice-homepage",
   "practice-design-dev",
@@ -131,6 +122,7 @@ function OrbitDiagram({ orbit }) {
 }
 
 export default function AxzoDesignSystemCaseStudyPage({
+  backHref = "/work",
   headingAccentColor = "#647654",
   work,
 }) {
@@ -138,6 +130,16 @@ export default function AxzoDesignSystemCaseStudyPage({
   /** @type {import("react").CSSProperties & Record<string, string>} */
   const pageThemeStyles = {
     "--axzo-case-accent": headingAccentColor,
+  };
+  const tocTheme = {
+    accentColor: "var(--axzo-case-accent)",
+    backHref,
+    backLabel: "返回",
+    desktopShiftX: "30.5rem",
+    desktopTopOffset: "2rem",
+    mutedColor: "rgba(122, 126, 128, 0.92)",
+    preferHistoryBack: false,
+    titleColor: "var(--portfolio-semantic-title-color)",
   };
 
   return (

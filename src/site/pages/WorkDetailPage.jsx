@@ -7,33 +7,31 @@ import { getWorkBySlug } from "../lib/get-work-by-slug";
 import AxzoDesignSystemCaseStudyPage from "./AxzoDesignSystemCaseStudyPage";
 import styles from "../styles/site-shell.module.css";
 
-export default function WorkDetailPage({ slug }) {
+export default function WorkDetailPage({ returnHref = "/work", slug }) {
   const work = getWorkBySlug(slug);
 
   if (!work) {
     return null;
   }
 
-  // 先只把已经进入 Figma 对照实现的案例切到专用长页，其他案例继续保留通用骨架。
-  if (work.slug === "drawing-ledger-2-0") {
-    return (
-      <div className={styles.detailPage}>
-        <DrawingLedgerCaseStudy />
-      </div>
-    );
+  // 这些案例页已经在仓库历史里有成型内容，当前分支只负责把它们重新接回统一路由。
+  if (slug === "drawing-ledger-2-0") {
+    return <DrawingLedgerCaseStudy backHref={returnHref} />;
   }
 
-  if (work.slug === "data-visualization-screen") {
+  if (slug === "data-visualization-screen") {
     return (
       <DataVisualizationScreenDetail
+        backHref={returnHref}
         headingAccentColor={work.detailTheme?.headingAccentColor}
       />
     );
   }
 
-  if (work.slug === "axzo-design-system") {
+  if (slug === "axzo-design-system") {
     return (
       <AxzoDesignSystemCaseStudyPage
+        backHref={returnHref}
         headingAccentColor={work.detailTheme?.headingAccentColor}
         work={work}
       />
@@ -43,6 +41,9 @@ export default function WorkDetailPage({ slug }) {
   return (
     <div className={[styles.pageStack, styles.detailPage].join(" ")}>
       <section className={styles.pageIntro}>
+        <Link className={styles.backLink} href={returnHref}>
+          返回
+        </Link>
         <p className={styles.pageEyebrow}>{work.category}</p>
         <CaseStudyHeadingOne
           className={styles.pageIntroHeading}

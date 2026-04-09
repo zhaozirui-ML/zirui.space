@@ -32,20 +32,12 @@ const caseStudySections = [
   { hierarchy: "primary", id: "project-retrospective", label: "项目复盘" },
 ];
 
-const tocTheme = {
-  accentColor: "var(--data-vis-case-accent)",
-  backHref: "/work",
-  backLabel: "返回",
-  desktopShiftX: "29rem",
-  desktopStartOffset: "clamp(4.5rem, 8vw, 8.25rem)",
-  desktopStickyTop: "2rem",
-};
-
 function shouldBypassNextImageOptimizer(source) {
   return typeof source === "string" && source.startsWith("http");
 }
 
 export default function DataVisualizationScreenDetail({
+  backHref = "/work",
   headingAccentColor = "var(--portfolio-semantic-eyebrow-color)",
 }) {
   const {
@@ -60,6 +52,13 @@ export default function DataVisualizationScreenDetail({
   /** @type {import("react").CSSProperties & Record<string, string>} */
   const pageThemeStyles = {
     "--data-vis-case-accent": headingAccentColor,
+  };
+  const tocTheme = {
+    accentColor: "var(--data-vis-case-accent)",
+    backHref,
+    backLabel: "返回",
+    desktopShiftX: "29rem",
+    desktopTopOffset: "2rem",
   };
 
   return (

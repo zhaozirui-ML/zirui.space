@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { workItems } from "../../data/work-items";
+import { homeWorkItems } from "../../data/work-items";
 import styles from "../../styles/home-page.module.css";
 
 export default function HomeWorksSection() {
@@ -13,7 +13,7 @@ export default function HomeWorksSection() {
       </div>
 
       <div className={styles.workList}>
-        {workItems.map((item) => (
+        {homeWorkItems.map((item) => (
           <article
             className={[
               styles.workCard,
@@ -46,15 +46,22 @@ export default function HomeWorksSection() {
                   unoptimized
                   width={16}
                 />
-                <p className={styles.workCategoryLabel}>{item.category}</p>
+                <p className={styles.workCategoryLabel}>
+                  {item.homeCategory ?? item.category}
+                </p>
               </div>
 
               <div className={styles.workCopyStack}>
-                <h3 className={styles.workCardTitle}>{item.title}</h3>
-                <p className={styles.workCardSummary}>{item.summary}</p>
+                <h3 className={styles.workCardTitle}>{item.homeTitle ?? item.title}</h3>
+                <p className={styles.workCardSummary}>
+                  {item.homeSummary ?? item.summary}
+                </p>
               </div>
 
-              <Link className={styles.workCardButton} href={`/work/${item.slug}`}>
+              <Link
+                className={styles.workCardButton}
+                href={{ pathname: `/work/${item.slug}`, query: { from: "/" } }}
+              >
                 查看案例
               </Link>
             </div>
