@@ -152,23 +152,101 @@ export const homeWorkItems = workItems.filter((item) => item.showOnHome !== fals
 
 export const workTabs = [
   {
-    iconSrc: "/site/work/index/tab-professional-work.svg",
     id: "professional-work",
+    iconName: "layoutGrid",
     label: "Professional Work",
   },
   {
-    iconSrc: "/site/work/index/tab-explorations.svg",
     id: "explorations",
+    iconName: "layoutDashboard",
     label: "Explorations",
   },
   {
-    iconSrc: "/site/work/index/tab-side-projects.svg",
     id: "side-projects",
+    iconName: "heart",
     label: "Side Projects",
   },
 ];
 
 // Work 页不是平均网格，而是有主次节奏，所以这里显式保留各个 tab 的版式顺序。
+// explorations 和 side projects 也先走页面层数据，不急着提升到全局组件层。
+const explorationsRows = [
+  [
+    {
+      id: "earnings-card",
+      kind: "earnings",
+    },
+  ],
+  [
+    {
+      alt: "A device-style exploration showing a sunset scene and compact metrics.",
+      id: "device-card",
+      kind: "device-image",
+      src: "/site/work/explorations/exploration-hero-device.png",
+    },
+  ],
+  [
+    {
+      alt: "A blue gradient app icon exploration with a white cloud symbol.",
+      id: "cloud-icon-card",
+      kind: "cloud-image",
+      src: "/site/work/explorations/exploration-cloud-app.svg",
+    },
+    {
+      id: "list-icon-card",
+      kind: "list-illustration",
+    },
+  ],
+  [
+    {
+      alt: "A neon magenta light study on a dark background.",
+      id: "gradient-magenta-card",
+      kind: "full-image",
+      src: "/site/work/explorations/exploration-gradient-magenta.png",
+    },
+    {
+      alt: "A neon teal light study on a dark background.",
+      id: "gradient-teal-card",
+      kind: "full-image",
+      src: "/site/work/explorations/exploration-gradient-teal.png",
+    },
+  ],
+  [
+    {
+      alt: "A boarding-pass style ticket exploration in cool blue tones.",
+      id: "ticket-card",
+      kind: "ticket-image",
+      src: "/site/work/explorations/exploration-ticket.png",
+    },
+  ],
+  [
+    {
+      alt: "A vertical line texture study with a soft purple glow.",
+      id: "lines-card",
+      kind: "immersive-image",
+      src: "/site/work/explorations/exploration-lines-purple.png",
+    },
+  ],
+  [
+    {
+      alt: "An abstract blurred color study blending purple, cream, and pink.",
+      id: "blur-card",
+      kind: "immersive-image",
+      src: "/site/work/explorations/exploration-blur-pink.png",
+    },
+  ],
+];
+
+const sideProjectItems = [
+  {
+    href: "https://github.com/zhaozirui-ML/Lovers-weekly",
+    id: "lovers-weekly",
+    path: "/tools/report",
+    subtitle: "每周恋爱日志",
+    title: "Lovers-weekly",
+  },
+];
+
 export const workTabContent = {
   "professional-work": {
     rows: [
@@ -180,19 +258,11 @@ export const workTabContent = {
     type: "projects",
   },
   explorations: {
-    description:
-      "This tab is reserved for interface experiments, motion studies, and visual directions that are still being refined before they become full case studies.",
-    eyebrow: "Explorations",
-    tags: ["Visual experiments", "Interaction studies", "Motion drafts"],
-    title: "A separate stream for in-progress design thinking",
-    type: "placeholder",
+    rows: explorationsRows,
+    type: "explorations",
   },
   "side-projects": {
-    description:
-      "This tab will collect smaller self-initiated builds, tooling ideas, and independent side projects once they are documented into a format worth sharing.",
-    eyebrow: "Side Projects",
-    tags: ["Self-initiated", "Small builds", "Ongoing archive"],
-    title: "An archive for independent work outside client or product delivery",
-    type: "placeholder",
+    items: sideProjectItems,
+    type: "side-projects",
   },
 };

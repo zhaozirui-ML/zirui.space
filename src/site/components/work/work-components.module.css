@@ -1,0 +1,651 @@
+.pageIntro {
+  display: grid;
+  gap: var(--ds-space-xs);
+}
+
+.pageTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-title);
+  font-size: var(--portfolio-work-page-header-title-size);
+  font-weight: 600;
+  letter-spacing: var(--portfolio-work-page-header-title-letter-spacing);
+  line-height: var(--portfolio-work-page-header-title-line-height);
+  margin: 0;
+}
+
+.pageSubtitle {
+  color: var(--portfolio-color-text-muted);
+  font-family: var(--portfolio-font-body);
+  font-size: var(--portfolio-type-body-sm-size);
+  line-height: var(--portfolio-type-body-sm-line);
+  margin: 0;
+}
+
+.tabsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--portfolio-space-sm);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tabChip {
+  border-radius: var(--portfolio-work-tabs-radius);
+  font-family: var(--portfolio-font-label);
+  font-size: var(--portfolio-type-body-sm-size);
+  font-weight: var(--ds-type-label-weight);
+  line-height: var(--portfolio-type-body-sm-line);
+  min-height: var(--portfolio-work-tabs-min-height);
+  padding:
+    var(--portfolio-work-tabs-padding-block)
+    var(--portfolio-work-tabs-padding-inline);
+}
+
+.tabChip:focus-visible {
+  outline:
+    var(--portfolio-work-tabs-focus-outline-width) solid
+    color-mix(in srgb, var(--portfolio-color-accent-brand) 55%, white);
+  outline-offset: var(--portfolio-work-tabs-focus-outline-offset);
+}
+
+.tabChip :global(.ds-button__icon) {
+  color: currentColor;
+}
+
+.tabIcon {
+  display: block;
+  flex: 0 0 auto;
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+.tabChipActive {
+  background: var(--ds-color-surface-soft);
+  border-color: var(--portfolio-color-border-light);
+  color: var(--portfolio-color-text-body);
+}
+
+.tabChipInactive {
+  background: transparent;
+  border-color: var(--portfolio-color-border-strong);
+  border-style: dashed;
+  color: var(--portfolio-color-text-muted);
+}
+
+.projectCard {
+  background: var(--portfolio-color-surface);
+  border: var(--portfolio-work-border-width) solid var(--portfolio-color-border-light);
+  border-radius: var(--portfolio-radius-lg);
+  color: inherit;
+  display: grid;
+  gap: var(--portfolio-space-sm);
+  overflow: hidden;
+  padding: var(--portfolio-work-project-card-padding);
+  text-decoration: none;
+  transition:
+    box-shadow var(--portfolio-work-project-transition-duration) ease,
+    transform var(--portfolio-work-project-transition-duration) ease;
+}
+
+.projectCard:hover {
+  box-shadow: var(--portfolio-shadow-card);
+  transform: translateY(var(--portfolio-work-project-hover-translate-y));
+}
+
+.projectCardFeature {
+  width: 100%;
+}
+
+.projectCardCompact {
+  min-width: 0;
+}
+
+.previewFrame {
+  aspect-ratio: var(--work-preview-ratio);
+  border-radius: var(--portfolio-work-project-preview-radius);
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.previewImage,
+.previewOverlayImage {
+  object-fit: cover;
+}
+
+.previewOverlay {
+  aspect-ratio: var(--work-preview-overlay-ratio);
+  box-shadow: var(--work-preview-overlay-shadow, none);
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--work-preview-overlay-width);
+}
+
+.previewOverlayImage {
+  border-radius: var(--portfolio-work-project-preview-overlay-radius);
+}
+
+.projectContent {
+  display: grid;
+  gap: var(--portfolio-space-sm);
+}
+
+.projectCopy {
+  display: grid;
+  gap: var(--ds-space-xs);
+}
+
+.projectTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-title);
+  font-size: var(--portfolio-work-project-title-size);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: var(--portfolio-work-project-title-line-height);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.projectSummary {
+  color: var(--portfolio-color-text-muted);
+  font-family: var(--portfolio-font-body);
+  font-size: var(--portfolio-type-body-size);
+  letter-spacing: var(--portfolio-type-body-letter-spacing);
+  line-height: var(--portfolio-work-project-summary-line-height);
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.projectMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-xs);
+}
+
+.tag {
+  align-items: center;
+  border: var(--portfolio-work-tag-border-width) solid var(--portfolio-color-border-strong);
+  border-radius: var(--portfolio-work-tag-radius);
+  color: var(--portfolio-color-text-body);
+  display: inline-flex;
+  font-family: var(--portfolio-font-label);
+  font-size: var(--portfolio-type-caption-size);
+  font-weight: var(--portfolio-type-caption-weight);
+  justify-content: center;
+  line-height: var(--portfolio-work-tag-line-height);
+  min-height: var(--portfolio-work-tag-min-height);
+  padding:
+    var(--portfolio-work-tag-padding-block)
+    var(--portfolio-work-tag-padding-inline);
+  white-space: nowrap;
+}
+
+.explorationCard,
+.sideProjectCard {
+  background: var(--portfolio-color-surface);
+  border: var(--portfolio-work-border-width) solid var(--ds-color-border);
+  border-radius: var(--portfolio-radius-lg);
+  overflow: hidden;
+}
+
+.explorationCard {
+  display: grid;
+  place-items: center;
+}
+
+.explorationCardFeature {
+  min-height: var(--portfolio-work-exploration-card-feature-min-height);
+  padding:
+    var(--portfolio-work-exploration-card-padding-feature-block)
+    var(--portfolio-work-exploration-card-padding-feature-inline);
+}
+
+.explorationCardCompact {
+  min-height: var(--portfolio-work-exploration-card-compact-min-height);
+  padding:
+    var(--portfolio-work-exploration-card-padding-compact-block)
+    var(--portfolio-work-exploration-card-padding-compact-inline);
+}
+
+.explorationCardTall {
+  min-height: var(--portfolio-work-exploration-card-tall-min-height);
+  padding: var(--portfolio-work-border-width);
+}
+
+.explorationCardImmersive {
+  padding: var(--portfolio-work-border-width);
+}
+
+.earningsVisual {
+  background: var(--portfolio-work-exploration-earnings-surface);
+  border-radius: var(--portfolio-work-exploration-earnings-radius);
+  box-shadow: var(--portfolio-work-exploration-earnings-inset-shadow);
+  height: var(--portfolio-work-exploration-earnings-height);
+  max-width: var(--portfolio-work-exploration-earnings-visual-max-width);
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.earningsVisual::before {
+  background: var(--portfolio-work-exploration-earnings-glow-color);
+  border-radius: var(--ds-radius-pill);
+  content: "";
+  filter: blur(var(--portfolio-work-exploration-earnings-glow-blur));
+  height: var(--portfolio-work-exploration-earnings-glow-height);
+  left: var(--portfolio-work-exploration-earnings-glow-inset-left);
+  position: absolute;
+  top: var(--portfolio-work-exploration-earnings-glow-inset-top);
+  width: var(--portfolio-work-exploration-earnings-glow-width);
+}
+
+.earningsVisual::after {
+  background: var(--portfolio-work-exploration-earnings-highlight);
+  content: "";
+  inset: 0;
+  position: absolute;
+}
+
+.earningsOrb {
+  aspect-ratio: var(--portfolio-work-exploration-earnings-orb-aspect-ratio);
+  inset:
+    var(--portfolio-work-exploration-earnings-orb-inset-top)
+    auto
+    auto
+    var(--portfolio-work-exploration-earnings-orb-inset-left);
+  pointer-events: none;
+  position: absolute;
+  width: var(--portfolio-work-exploration-earnings-orb-width);
+}
+
+.earningsOrb :global(img) {
+  object-fit: cover;
+}
+
+.earningsContent {
+  display: grid;
+  gap: var(--ds-space-xs);
+  left: 50%;
+  max-width: var(--portfolio-work-exploration-earnings-content-max-width);
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - var(--portfolio-work-exploration-earnings-content-side-inset));
+  z-index: 1;
+}
+
+.earningsHeader {
+  align-items: center;
+  display: flex;
+  gap: var(--portfolio-work-exploration-earnings-header-gap);
+  justify-content: space-between;
+}
+
+.earningsLabel {
+  color: var(--portfolio-work-exploration-earnings-label-color);
+  font-family: var(--portfolio-font-mono);
+  font-size: var(--portfolio-work-exploration-earnings-label-size);
+  font-weight: 500;
+  line-height: var(--portfolio-work-exploration-earnings-label-line-height);
+  margin: 0;
+}
+
+.earningsAmount {
+  color: var(--portfolio-color-surface);
+  font-family: var(--portfolio-font-mono);
+  font-size: var(--portfolio-work-exploration-earnings-amount-size);
+  font-weight: 500;
+  line-height: 1;
+  margin: 0;
+  text-wrap: nowrap;
+}
+
+.explorationDeviceVisual {
+  aspect-ratio: 1;
+  max-width: var(--portfolio-work-exploration-device-max-width);
+  position: relative;
+  width: 100%;
+}
+
+.explorationDeviceVisual :global(img),
+.explorationTicketVisual :global(img),
+.explorationTallImage :global(img),
+.explorationImmersiveImage :global(img) {
+  object-fit: cover;
+}
+
+.explorationCloudVisual {
+  aspect-ratio: 1;
+  height: var(--portfolio-work-exploration-cloud-frame-size);
+  position: relative;
+  width: var(--portfolio-work-exploration-cloud-frame-size);
+}
+
+.explorationCloudAsset {
+  inset:
+    var(--portfolio-work-exploration-cloud-asset-inset-top)
+    var(--portfolio-work-exploration-cloud-asset-inset-right)
+    var(--portfolio-work-exploration-cloud-asset-inset-bottom)
+    var(--portfolio-work-exploration-cloud-asset-inset-left);
+  position: absolute;
+}
+
+.explorationCloudAsset :global(img) {
+  object-fit: fill;
+}
+
+.listIllustration {
+  height: var(--portfolio-work-exploration-list-composition-height);
+  position: relative;
+  width: var(--portfolio-work-exploration-list-size);
+}
+
+.listIllustrationShadowTop {
+  height: var(--portfolio-work-exploration-list-top-shadow-height);
+  inset: var(--portfolio-work-exploration-list-top-shadow-inset-top) auto auto 0;
+  position: absolute;
+  width: var(--portfolio-work-exploration-list-size);
+}
+
+.listIllustrationShadowTopAsset {
+  inset:
+    var(--portfolio-work-exploration-list-top-shadow-asset-inset-top)
+    var(--portfolio-work-exploration-list-top-shadow-asset-inset-right)
+    var(--portfolio-work-exploration-list-top-shadow-asset-inset-bottom)
+    var(--portfolio-work-exploration-list-top-shadow-asset-inset-left);
+  position: absolute;
+}
+
+.listIllustrationShadowBottom {
+  height: var(--portfolio-work-exploration-list-bottom-shadow-height);
+  inset: var(--portfolio-work-exploration-list-bottom-shadow-inset-top) auto auto 0;
+  position: absolute;
+  width: var(--portfolio-work-exploration-list-bottom-shadow-width);
+}
+
+.listIllustrationShadowBottomAsset {
+  inset:
+    var(--portfolio-work-exploration-list-bottom-shadow-asset-inset-top)
+    var(--portfolio-work-exploration-list-bottom-shadow-asset-inset-right)
+    var(--portfolio-work-exploration-list-bottom-shadow-asset-inset-bottom)
+    var(--portfolio-work-exploration-list-bottom-shadow-asset-inset-left);
+  position: absolute;
+}
+
+.listIllustrationShadowTopAsset :global(img),
+.listIllustrationShadowBottomAsset :global(img) {
+  object-fit: fill;
+}
+
+.listIllustrationPhone {
+  border-radius: var(--portfolio-work-exploration-list-phone-radius);
+  height: var(--portfolio-work-exploration-list-phone-height);
+  inset: 0 auto auto var(--portfolio-work-exploration-list-phone-inset-left);
+  overflow: hidden;
+  position: absolute;
+  width: var(--portfolio-work-exploration-list-phone-width);
+}
+
+.listIllustrationPhoneSurface {
+  background: var(--portfolio-work-exploration-list-gradient);
+  border-radius: var(--portfolio-work-exploration-list-phone-radius);
+  height: var(--portfolio-work-exploration-list-phone-surface-height);
+  inset: 0 auto auto var(--portfolio-work-exploration-list-phone-surface-inset-left);
+  position: absolute;
+  width: var(--portfolio-work-exploration-list-phone-width);
+}
+
+.listIllustrationItems {
+  display: grid;
+  gap: var(--portfolio-work-exploration-list-items-gap);
+  left: var(--portfolio-work-exploration-list-items-inset-left);
+  position: absolute;
+  top: var(--portfolio-work-exploration-list-items-inset-top);
+  width: var(--portfolio-work-exploration-list-items-width);
+}
+
+.listIllustrationLine {
+  background: var(--portfolio-color-surface);
+  border-radius: var(--portfolio-work-exploration-list-line-radius);
+  display: block;
+  height: var(--portfolio-work-exploration-list-line-height);
+  width: 100%;
+}
+
+.listIllustrationButton {
+  width: var(--portfolio-work-exploration-list-button-width);
+}
+
+.explorationTicketVisual {
+  aspect-ratio: var(--portfolio-work-exploration-ticket-aspect-ratio);
+  max-width: var(--portfolio-work-exploration-ticket-max-width);
+  position: relative;
+  width: 100%;
+}
+
+.explorationTallImage {
+  border-radius: calc(var(--portfolio-radius-lg) - var(--portfolio-work-inner-radius-offset));
+  height: 100%;
+  min-height: var(--portfolio-work-exploration-card-tall-image-min-height);
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.explorationImmersiveImage {
+  aspect-ratio: var(--portfolio-work-exploration-immersive-aspect-ratio);
+  border-radius: calc(var(--portfolio-radius-lg) - var(--portfolio-work-inner-radius-offset));
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.explorationImmersiveImageBlur :global(img) {
+  object-position: center;
+  transform: scale(var(--portfolio-work-exploration-blur-scale));
+}
+
+.sideProjectsList {
+  display: grid;
+  gap: var(--portfolio-space-sm);
+}
+
+.sideProjectCard {
+  align-items: start;
+  color: inherit;
+  display: grid;
+  gap: var(--portfolio-space-sm);
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding: var(--portfolio-work-side-project-padding);
+  text-decoration: none;
+  transition:
+    border-color var(--portfolio-work-side-project-transition-duration) ease,
+    box-shadow var(--portfolio-work-side-project-transition-duration) ease,
+    transform var(--portfolio-work-side-project-transition-duration) ease;
+}
+
+.sideProjectCard[data-interactive="true"] {
+  cursor: pointer;
+}
+
+.sideProjectCard[data-interactive="true"] * {
+  cursor: inherit;
+}
+
+.sideProjectCard:hover {
+  border-color: var(--portfolio-color-border-strong);
+  box-shadow: var(--portfolio-shadow-card);
+  transform: translateY(var(--portfolio-work-side-project-hover-translate-y));
+}
+
+.sideProjectCopy {
+  display: grid;
+  gap: var(--ds-space-xs);
+}
+
+.sideProjectTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-body);
+  font-size: var(--portfolio-work-side-project-title-size);
+  font-weight: 500;
+  line-height: var(--portfolio-work-side-project-title-line-height);
+  margin: 0;
+}
+
+.sideProjectSubtitle,
+.sideProjectPath {
+  color: var(--portfolio-color-text-muted);
+  font-family: var(--portfolio-font-body);
+  font-size: var(--portfolio-type-body-sm-size);
+  font-weight: var(--portfolio-type-body-sm-weight);
+  line-height: var(--portfolio-work-side-project-body-line-height);
+  margin: 0;
+}
+
+.sideProjectLink {
+  align-items: center;
+  color: inherit;
+  display: inline-flex;
+  gap: var(--ds-space-2xs);
+  justify-self: end;
+  text-decoration: none;
+}
+
+.sideProjectLinkIcon {
+  color: var(--portfolio-color-text-muted);
+  flex: 0 0 auto;
+  opacity: 0;
+  transform: translateX(calc(var(--portfolio-work-side-project-hover-path-shift-x) * -1));
+  transition:
+    opacity var(--portfolio-work-side-project-transition-duration) ease,
+    transform var(--portfolio-work-side-project-transition-duration) ease,
+    color var(--portfolio-work-side-project-transition-duration) ease;
+}
+
+.sideProjectCard:hover .sideProjectPath,
+.sideProjectCard:hover .sideProjectLinkIcon {
+  color: var(--portfolio-color-text-body);
+}
+
+.sideProjectCard:hover .sideProjectLinkIcon {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.sideProjectCard:focus-visible {
+  border-radius: var(--ds-radius-pill);
+  outline:
+    var(--portfolio-work-side-project-focus-outline-width) solid
+    color-mix(in srgb, var(--portfolio-color-accent-brand) 55%, white);
+  outline-offset: var(--portfolio-work-side-project-focus-outline-offset);
+}
+
+@media (max-width: 640px) {
+  .pageTitle {
+    font-size: var(--portfolio-work-page-header-mobile-title-size);
+  }
+
+  .tabsList {
+    gap: var(--portfolio-space-xs);
+  }
+
+  .projectCard {
+    border-radius: var(--portfolio-work-project-mobile-radius);
+    gap: var(--ds-space-md);
+    padding: var(--portfolio-work-project-mobile-padding);
+  }
+
+  .projectTitle {
+    font-size: var(--portfolio-work-project-mobile-title-size);
+    line-height: var(--portfolio-work-project-mobile-title-line-height);
+  }
+
+  .projectSummary {
+    font-size: var(--portfolio-work-project-mobile-summary-size);
+    line-height: var(--portfolio-work-project-mobile-summary-line-height);
+  }
+
+  .explorationCardFeature {
+    min-height: auto;
+    padding:
+      var(--portfolio-work-exploration-mobile-feature-padding-block)
+      var(--portfolio-work-exploration-mobile-feature-padding-inline);
+  }
+
+  .explorationCardCompact {
+    min-height: auto;
+    padding:
+      var(--portfolio-work-exploration-mobile-compact-padding-block)
+      var(--portfolio-work-exploration-mobile-compact-padding-inline);
+  }
+
+  .explorationCardTall {
+    min-height: var(--portfolio-work-exploration-mobile-tall-min-height);
+  }
+
+  .earningsVisual {
+    border-radius: var(--portfolio-work-exploration-mobile-earnings-radius);
+    height: var(--portfolio-work-exploration-mobile-earnings-height);
+  }
+
+  .earningsContent {
+    width: calc(100% - var(--portfolio-work-exploration-mobile-earnings-content-side-inset));
+  }
+
+  .earningsLabel {
+    font-size: var(--portfolio-work-exploration-mobile-earnings-label-size);
+  }
+
+  .earningsAmount {
+    font-size: var(--portfolio-work-exploration-mobile-earnings-amount-size);
+  }
+
+  .listIllustration {
+    height: calc(
+      var(--portfolio-work-exploration-list-composition-height) *
+      var(--portfolio-work-exploration-mobile-list-scale)
+    );
+    width: calc(
+      var(--portfolio-work-exploration-list-size) *
+      var(--portfolio-work-exploration-mobile-list-scale)
+    );
+  }
+
+  .listIllustrationShadowTop,
+  .listIllustrationShadowBottom,
+  .listIllustrationPhone,
+  .listIllustrationPhoneSurface,
+  .listIllustrationItems,
+  .listIllustrationLine {
+    transform-origin: top left;
+  }
+
+  .listIllustrationShadowTop {
+    transform: scale(var(--portfolio-work-exploration-mobile-list-scale));
+  }
+
+  .listIllustrationShadowBottom {
+    transform: scale(var(--portfolio-work-exploration-mobile-list-scale));
+  }
+
+  .listIllustrationPhone {
+    transform: scale(var(--portfolio-work-exploration-mobile-list-scale));
+  }
+
+  .listIllustrationPhoneSurface {
+    transform: scale(var(--portfolio-work-exploration-mobile-list-scale));
+  }
+
+  .sideProjectCard {
+    gap: var(--portfolio-work-side-project-mobile-gap);
+    grid-template-columns: 1fr;
+    padding: var(--portfolio-work-side-project-mobile-padding);
+  }
+
+  .sideProjectLink {
+    justify-self: start;
+  }
+}
