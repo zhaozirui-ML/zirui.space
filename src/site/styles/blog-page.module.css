@@ -1,0 +1,386 @@
+.blogPage {
+  --blog-grid-border: #ece9e4;
+  --blog-grid-border-strong: #dcd9d1;
+  --blog-grid-border-dashed: #ece9e4;
+  --blog-grid-border-ghost: rgb(220 217 209 / 0.45);
+  margin: 0 auto;
+  width: min(100%, 72rem);
+}
+
+.sectionFrame,
+.spacerFrame {
+  border-left: 1px solid var(--blog-grid-border);
+  border-right: 1px solid var(--blog-grid-border);
+  position: relative;
+}
+
+.sectionTitleRow,
+.sectionBodyRow,
+.spacerFrame {
+  display: grid;
+  grid-template-columns: 6rem minmax(0, 1fr) 6rem;
+}
+
+.sectionTitleRow {
+  border-top: 1px solid var(--blog-grid-border);
+  min-height: 8rem;
+}
+
+.sectionTitleRail {
+  border: 0;
+}
+
+.sectionTitleRailDashed {
+  border-style: dashed;
+}
+
+.featuredTitleRow {
+  border-top-style: dashed;
+}
+
+.browseTitleRow {
+  border-top: 0;
+}
+
+.browseTitleRail {
+  border-left: 0;
+  border-right: 0;
+}
+
+.sectionTitleCell {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.sectionTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-body);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.333;
+  margin: 0;
+  text-align: center;
+}
+
+.sectionBodyRow {
+  border-top: 1px dashed var(--blog-grid-border-dashed);
+}
+
+.featuredBodyRow {
+  border-top-style: solid;
+}
+
+.browseBodyRow {
+  border-top: 0;
+}
+
+.browseBodyRailHidden {
+  border-left: 0;
+  border-right: 0;
+}
+
+.sectionBodyRail {
+  border: 0;
+}
+
+.featuredRail {
+  background: transparent;
+}
+
+.browseRail {
+  background: transparent;
+}
+
+.featuredContent {
+  display: grid;
+}
+
+.cardLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.featuredCard {
+  background: transparent;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  padding: 1.5rem;
+  position: relative;
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
+}
+
+.featuredCard:focus-visible,
+.browseCard:focus-visible {
+  outline: 2px solid var(--portfolio-color-accent-brand);
+  outline-offset: 2px;
+}
+
+.featuredCardDark {
+  background: #1c1b1a;
+}
+
+.featuredCardReverse .featuredMedia {
+  order: 2;
+}
+
+.featuredCardReverse .featuredBody {
+  order: 1;
+}
+
+.featuredMedia {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  position: relative;
+}
+
+.featuredImage {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.featuredBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  justify-content: space-between;
+  min-width: 0;
+  padding: 2rem 1.5rem 2rem 0.5rem;
+}
+
+.featuredBodyReverse {
+  padding-left: 0;
+  padding-right: 2rem;
+}
+
+.featuredCopy {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.featuredTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-body);
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.333;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.featuredTitleDark {
+  color: #f9f8f6;
+}
+
+.featuredSummary {
+  color: var(--portfolio-semantic-body-color);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 28rem;
+}
+
+.featuredSummaryDark {
+  color: rgb(249 248 246 / 0.8);
+}
+
+.blogMeta {
+  color: #8a8580;
+  display: inline-flex;
+  flex-wrap: wrap;
+  font-family: var(--portfolio-font-body);
+  font-size: 0.875rem;
+  gap: 0.25rem;
+  letter-spacing: 0.01em;
+  line-height: 1.4286;
+  margin: 0;
+}
+
+.blogMetaDark {
+  color: #8a8580;
+}
+
+.spacerFrame {
+  min-height: 6rem;
+}
+
+.spacerFrameDashed {
+  border-bottom: 1px dashed var(--blog-grid-border-dashed);
+  border-top: 1px dashed var(--blog-grid-border-dashed);
+}
+
+.spacerFrameSolid {
+  border-bottom: 1px solid var(--blog-grid-border);
+  border-top: 1px solid var(--blog-grid-border);
+}
+
+.spacerRail {
+  border: 0;
+}
+
+.spacerRailDashed {
+  border-style: dashed;
+}
+
+.sectionTitleRow > .sectionTitleRail:first-child,
+.sectionBodyRow > .sectionBodyRail:first-child,
+.spacerFrame > .spacerRail:first-child {
+  border-right: 1px dashed var(--blog-grid-border-dashed);
+}
+
+.sectionTitleRow > .sectionTitleRail:last-child,
+.sectionBodyRow > .sectionBodyRail:last-child,
+.spacerFrame > .spacerRail:last-child {
+  border-left: 1px dashed var(--blog-grid-border-dashed);
+}
+
+.browseContent {
+  background: transparent;
+}
+
+.browseGrid {
+  display: grid;
+  gap: 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.browseCard {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem 1rem 0.75rem;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease;
+}
+
+.browseMedia {
+  aspect-ratio: 287 / 189;
+  overflow: hidden;
+  position: relative;
+}
+
+.browseBody {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.browseTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-body);
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.5556;
+  margin: 0;
+}
+
+@media (hover: hover) {
+  .featuredCard:hover {
+    background: rgb(179 106 94 / 0.05);
+  }
+
+  .featuredCardDark:hover {
+    background: #242220;
+  }
+
+  .featuredCard:hover .blogMeta {
+    color: #7f7a75;
+  }
+
+  .featuredCardDark:hover .blogMetaDark {
+    color: #908a84;
+  }
+
+  .browseCard:hover {
+    background: rgb(100 118 84 / 0.05);
+  }
+}
+
+@media (max-width: 960px) {
+  .sectionFrame,
+  .spacerFrame {
+    border-left: 0;
+    border-right: 0;
+  }
+
+  .sectionTitleRow,
+  .sectionBodyRow,
+  .spacerFrame {
+    grid-template-columns: 1fr;
+  }
+
+  .sectionTitleRail,
+  .sectionBodyRail,
+  .spacerRail {
+    display: none;
+  }
+
+  .sectionTitleRow {
+    min-height: auto;
+  }
+
+  .sectionTitleCell {
+    padding: 2rem 1rem;
+  }
+
+  .featuredCard {
+    grid-template-columns: 1fr;
+  }
+
+  .featuredCardReverse .featuredMedia,
+  .featuredCardReverse .featuredBody {
+    order: initial;
+  }
+
+  .featuredBody,
+  .featuredBodyReverse {
+    padding: 0 0 0.5rem;
+  }
+
+  .browseGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .browseCard {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .sectionTitle {
+    font-size: 1.25rem;
+  }
+
+  .featuredCard {
+    padding: 1rem;
+  }
+
+  .featuredTitle {
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+
+  .featuredSummary {
+    font-size: 0.9375rem;
+  }
+
+  .browseContent {
+    padding: 0;
+  }
+
+  .browseGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .browseCard {
+    padding: 1rem;
+  }
+
+  .spacerFrame {
+    min-height: 3rem;
+  }
+}
