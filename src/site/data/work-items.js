@@ -13,6 +13,9 @@ export const workItems = [
       "详情页骨架已预留，后续会在这里继续接入 Figma 长页内容、案例叙事和本地静态资产。",
     homeCardVariant: "featured",
     homeMediaPosition: "end",
+    detailTheme: Object.freeze({
+      headingAccentColor: "var(--portfolio-color-accent-brand)",
+    }),
     // 先用一张公开测试图验证 Supabase Storage 接入，确认链路通了再逐步迁移正式资源。
     homeImageSrc: getStorageAssetUrl("home/images/storage-test.png"),
     homeImageAlt: "图纸台账 2.0 项目预览图",
@@ -28,6 +31,9 @@ export const workItems = [
       "详情页骨架已预留，后续会补充设计系统目标、组件策略与落地方式。",
     homeCardVariant: "standard",
     homeMediaPosition: "start",
+    detailTheme: Object.freeze({
+      headingAccentColor: "#647654",
+    }),
     homeImageSrc: "/site/home/work-axzo.png",
     homeImageAlt: "AXZO Design System 项目预览图",
   },
@@ -39,9 +45,12 @@ export const workItems = [
     summary:
       "为大屏展示场景建立更稳定的信息层级、图表节奏与阅读顺序，提升可理解性。",
     detailSummary:
-      "详情页骨架已预留，后续会继续补充图表策略、布局推导和展示资产。",
+      "将省、市、区三级建筑大屏设计整合为统一视觉语言，并把图表探索扩展到更复杂的大屏场景。",
     homeCardVariant: "standard",
     homeMediaPosition: "end",
+    detailTheme: Object.freeze({
+      headingAccentColor: "#5684AE",
+    }),
     homeImageSrc: "/site/home/work-data-viz.png",
     homeImageAlt: "大屏数据可视化项目预览图",
   },

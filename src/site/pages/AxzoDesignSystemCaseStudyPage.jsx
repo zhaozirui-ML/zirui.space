@@ -1,28 +1,73 @@
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
 
+import {
+  CaseStudyHeadingOne,
+  CaseStudyHeadingTwo,
+} from "../components/case-study/CaseStudyHeading";
 import CaseStudyToc from "../components/case-study/CaseStudyToc";
 import { axzoDesignSystemCaseStudy } from "../data/axzo-design-system-case-study";
 import styles from "../styles/axzo-design-system-case-study.module.css";
+
+const caseStudySections = [
+  { hierarchy: "primary", id: "project-background", label: "项目背景" },
+  { hierarchy: "primary", id: "problem-definition", label: "问题定义" },
+  { hierarchy: "primary", id: "design-insight", label: "设计洞察" },
+  { hierarchy: "primary", id: "portal-positioning", label: "官网定位" },
+  { hierarchy: "primary", id: "design-goal", label: "设计目标" },
+  { hierarchy: "primary", id: "design-exploration", label: "设计探索" },
+  {
+    hierarchy: "secondary",
+    id: "exploration-consumption-journey",
+    label: "消费链路",
+  },
+  {
+    hierarchy: "secondary",
+    id: "exploration-information-architecture",
+    label: "传播策略",
+  },
+  { hierarchy: "primary", id: "design-practice", label: "设计实践" },
+  { hierarchy: "secondary", id: "practice-homepage", label: "首页设计" },
+  {
+    hierarchy: "secondary",
+    id: "practice-design-dev",
+    label: "设计与开发详情",
+  },
+  {
+    hierarchy: "secondary",
+    id: "practice-data-viz",
+    label: "数据可视化",
+  },
+  { hierarchy: "secondary", id: "practice-collaboration", label: "团队协同" },
+  { hierarchy: "primary", id: "results-reflection", label: "成果与复盘" },
+];
+
+const tocTheme = {
+  accentColor: "var(--axzo-case-accent)",
+  backHref: "/work",
+  backLabel: "返回",
+  desktopShiftX: "30.5rem",
+  desktopStartOffset: "0rem",
+  desktopStickyTop: "2rem",
+};
+
+const practiceSectionIds = [
+  "practice-homepage",
+  "practice-design-dev",
+  "practice-data-viz",
+  "practice-collaboration",
+];
 
 function joinClassNames(...classNames) {
   return classNames.filter(Boolean).join(" ");
 }
 
-function SectionHeader({ title, description = null }) {
-  return (
-    <div className={styles.sectionHeader}>
-      <h2 className={styles.sectionTitle}>{title}</h2>
-      {description ? <p className={styles.sectionDescription}>{description}</p> : null}
-    </div>
-  );
+function shouldBypassNextImageOptimizer(source) {
+  return typeof source === "string" && source.startsWith("http");
 }
 
 function MediaPanel({
   alt,
   caption = null,
-  frameRatio = null,
-  imagePosition = null,
   imageSrc,
   priority = false,
   ratio,
@@ -35,7 +80,7 @@ function MediaPanel({
 
   return (
     <figure className={styles.mediaFigure}>
-      <div className={frameClassName} style={{ aspectRatio: frameRatio || ratio }}>
+      <div className={frameClassName} style={{ aspectRatio: ratio }}>
         <div className={tone === "soft" ? styles.mediaInset : styles.mediaFill}>
           <div className={styles.mediaFill}>
             <Image
@@ -45,8 +90,7 @@ function MediaPanel({
               priority={priority}
               sizes="(max-width: 900px) calc(100vw - 2.5rem), 832px"
               src={imageSrc}
-              style={imagePosition ? { objectPosition: imagePosition } : undefined}
-              unoptimized
+              unoptimized={shouldBypassNextImageOptimizer(imageSrc)}
             />
           </div>
         </div>
@@ -81,65 +125,23 @@ function OrbitDiagram({ orbit }) {
           {orbit.bottom}
         </span>
       </div>
+      <p className={styles.orbitCaption}>{orbit.caption}</p>
     </div>
   );
 }
 
-export default function AxzoDesignSystemCaseStudyPage({ work }) {
+export default function AxzoDesignSystemCaseStudyPage({
+  headingAccentColor = "#647654",
+  work,
+}) {
   const content = axzoDesignSystemCaseStudy;
-  // 目录和锚点放在同一处维护，后面继续扩章节时不容易漏改。
-  const sectionItems = [
-    { hierarchy: "primary", id: "project-background", label: content.projectBackground.title },
-    { hierarchy: "primary", id: "problem-definition", label: content.problemDefinition.title },
-    { hierarchy: "primary", id: "insight", label: content.insight.title },
-    { hierarchy: "primary", id: "portal-positioning", label: content.portalPositioning.title },
-    { hierarchy: "primary", id: "design-goal", label: content.designGoal.title },
-    { hierarchy: "primary", id: "exploration", label: content.exploration.title },
-    {
-      hierarchy: "secondary",
-      id: "exploration-structure",
-      label: content.exploration.sections[0].theme,
-    },
-    {
-      hierarchy: "secondary",
-      id: "exploration-strategy",
-      label: content.exploration.sections[1].theme,
-    },
-    { hierarchy: "primary", id: "practice", label: content.practice.title },
-    {
-      hierarchy: "secondary",
-      id: "practice-homepage",
-      label: content.practice.pages[0].theme,
-    },
-    {
-      hierarchy: "secondary",
-      id: "practice-design-dev",
-      label: content.practice.pages[1].theme,
-    },
-    {
-      hierarchy: "secondary",
-      id: "practice-data-viz",
-      label: content.practice.pages[2].theme,
-    },
-    {
-      hierarchy: "secondary",
-      id: "practice-collaboration",
-      label: content.practice.pages[3].theme,
-    },
-    { hierarchy: "primary", id: "reflection", label: content.reflection.title },
-  ];
-  const tocTheme = {
-    accentColor: "var(--axzo-accent-moss)",
-    backHref: "/work",
-    backLabel: "返回",
-    desktopShiftX: "34rem",
-    desktopTopOffset: "2rem",
-    mutedColor: "rgba(122, 126, 128, 0.92)",
-    titleColor: "var(--portfolio-semantic-title-color)",
+  /** @type {import("react").CSSProperties & Record<string, string>} */
+  const pageThemeStyles = {
+    "--axzo-case-accent": headingAccentColor,
   };
 
   return (
-    <article className={joinClassNames(styles.caseStudy, "case-study-headerless")}>
+    <article className={styles.caseStudy} style={pageThemeStyles}>
       {/* 封面视觉里已经有主标题了，这里补一个语义上的 h1，方便无障碍和 SEO。 */}
       <h1 className="sr-only">{work.title}</h1>
 
@@ -153,7 +155,7 @@ export default function AxzoDesignSystemCaseStudyPage({ work }) {
             priority
             sizes="100vw"
             src={content.cover.backdropSrc}
-            unoptimized
+            unoptimized={shouldBypassNextImageOptimizer(content.cover.backdropSrc)}
           />
         </div>
 
@@ -161,40 +163,43 @@ export default function AxzoDesignSystemCaseStudyPage({ work }) {
           <div className={styles.heroPanelFrame}>
             <Image
               alt={content.cover.panelAlt}
-            className={styles.heroPanelImage}
-            fill
-            priority
-            sizes="(max-width: 640px) calc(100vw - 2rem), 75vw"
-            src={content.cover.panelSrc}
-            unoptimized
-          />
+              className={styles.heroPanelImage}
+              fill
+              priority
+              sizes="(max-width: 900px) 92vw, min(75vw, 1440px)"
+              src={content.cover.panelSrc}
+              unoptimized={shouldBypassNextImageOptimizer(content.cover.panelSrc)}
+            />
           </div>
         </div>
       </section>
 
       <div className={styles.caseBody}>
-        <CaseStudyToc items={sectionItems} {...tocTheme} />
+        <CaseStudyToc items={caseStudySections} {...tocTheme} />
 
         <div className={styles.contentStack}>
-          <section className={styles.section} id="project-background">
-            <SectionHeader
+          <section className={styles.section}>
+            <CaseStudyHeadingOne
+              className={styles.sectionHeader}
+              id="project-background"
+              descriptions={content.projectBackground.description}
               title={content.projectBackground.title}
-              description={content.projectBackground.description}
             />
             <MediaPanel
               alt={content.projectBackground.imageAlt}
               caption={content.projectBackground.caption}
-              imagePosition={content.projectBackground.imagePosition}
               imageSrc={content.projectBackground.imageSrc}
               priority
               ratio={content.projectBackground.ratio}
             />
           </section>
 
-          <section className={styles.section} id="problem-definition">
-            <SectionHeader
+          <section className={styles.section}>
+            <CaseStudyHeadingOne
+              className={styles.sectionHeader}
+              id="problem-definition"
+              descriptions={content.problemDefinition.description}
               title={content.problemDefinition.title}
-              description={content.problemDefinition.description}
             />
             <div className={styles.problemGrid}>
               {content.problemDefinition.items.map((item) => (
@@ -204,7 +209,7 @@ export default function AxzoDesignSystemCaseStudyPage({ work }) {
                     className={styles.problemIcon}
                     height={32}
                     src={item.imageSrc}
-                    unoptimized
+                    unoptimized={shouldBypassNextImageOptimizer(item.imageSrc)}
                     width={32}
                   />
                   <p className={styles.problemText}>{item.title}</p>
@@ -213,53 +218,43 @@ export default function AxzoDesignSystemCaseStudyPage({ work }) {
             </div>
           </section>
 
-          <section className={styles.section} id="insight">
-            <SectionHeader
+          <section className={styles.section}>
+            <CaseStudyHeadingOne
+              className={styles.sectionHeader}
+              id="design-insight"
+              descriptions={content.insight.description}
               title={content.insight.title}
-              description={content.insight.description}
             />
             <div className={styles.insightPanel}>
               <div className={styles.insightTop}>
                 <OrbitDiagram orbit={content.insight.leftOrbit} />
                 <div aria-hidden="true" className={styles.insightArrowHorizontal}>
-                  <ArrowRight className={styles.insightArrowIcon} />
+                  →
                 </div>
                 <OrbitDiagram orbit={content.insight.rightOrbit} />
               </div>
 
-              <div className={styles.insightCaptionRow}>
-                <p className={styles.orbitCaption}>{content.insight.leftOrbit.caption}</p>
-                <div aria-hidden="true" className={styles.insightCaptionSpacer} />
-                <p className={styles.orbitCaption}>{content.insight.rightOrbit.caption}</p>
+              <div aria-hidden="true" className={styles.insightArrowSplit}>
+                <span>↘</span>
+                <span>↙</span>
               </div>
 
-              <div className={styles.insightBottomArea}>
-                <div aria-hidden="true" className={styles.insightArrowSplit}>
-                  <ArrowRight
-                    className={joinClassNames(styles.insightArrowIcon, styles.insightArrowDiagonalLeft)}
-                  />
-                  <ArrowRight
-                    className={joinClassNames(styles.insightArrowIcon, styles.insightArrowDiagonalRight)}
-                  />
-                </div>
+              <div className={styles.insightMessage}>{content.insight.message}</div>
 
-                <div className={styles.insightBottomFlow}>
-                  <div className={styles.insightMessage}>{content.insight.message}</div>
-
-                  <div aria-hidden="true" className={styles.insightArrowVertical}>
-                    <ArrowRight className={styles.insightArrowIcon} />
-                  </div>
-
-                  <div className={styles.insightConclusion}>{content.insight.conclusion}</div>
-                </div>
+              <div aria-hidden="true" className={styles.insightArrowVertical}>
+                ↓
               </div>
+
+              <div className={styles.insightConclusion}>{content.insight.conclusion}</div>
             </div>
           </section>
 
-          <section className={styles.section} id="portal-positioning">
-            <SectionHeader
+          <section className={styles.section}>
+            <CaseStudyHeadingOne
+              className={styles.sectionHeader}
+              id="portal-positioning"
+              descriptions={content.portalPositioning.description}
               title={content.portalPositioning.title}
-              description={content.portalPositioning.description}
             />
             <div className={styles.roleGrid}>
               {content.portalPositioning.cards.map((card) => (
@@ -275,7 +270,7 @@ export default function AxzoDesignSystemCaseStudyPage({ work }) {
                       fill
                       sizes="(max-width: 900px) 96px, 120px"
                       src={card.imageSrc}
-                      unoptimized
+                      unoptimized={shouldBypassNextImageOptimizer(card.imageSrc)}
                     />
                   </div>
                 </article>
@@ -283,51 +278,48 @@ export default function AxzoDesignSystemCaseStudyPage({ work }) {
             </div>
           </section>
 
-          <section className={styles.section} id="design-goal">
-            <SectionHeader
+          <section className={styles.section}>
+            <CaseStudyHeadingOne
+              className={styles.sectionHeader}
+              id="design-goal"
+              descriptions={content.designGoal.description}
               title={content.designGoal.title}
-              description={content.designGoal.description}
             />
           </section>
 
-          <section className={joinClassNames(styles.section, styles.sectionLoose)} id="exploration">
-            <SectionHeader
+          <section className={styles.section}>
+            <CaseStudyHeadingOne
+              className={styles.sectionHeader}
+              id="design-exploration"
+              descriptions={content.exploration.description}
               title={content.exploration.title}
-              description={content.exploration.description}
             />
 
-            <article className={styles.storyBlock} id="exploration-structure">
-              <div className={styles.storyHeader}>
-                <p className={styles.themeLabel}>{content.exploration.sections[0].theme}</p>
-                <div className={styles.storyCopy}>
-                  {content.exploration.sections[0].paragraphs.map((paragraph) => (
-                    <p className={styles.storyParagraph} key={paragraph}>
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
-              </div>
+            <article className={styles.storyBlock}>
+              <CaseStudyHeadingTwo
+                accentColor="var(--axzo-case-accent)"
+                className={styles.storyHeader}
+                id="exploration-consumption-journey"
+                descriptions={content.exploration.sections[0].paragraphs}
+                title={content.exploration.sections[0].theme}
+              />
 
               <MediaPanel
                 alt={content.exploration.sections[0].imageAlt}
-                frameRatio={content.exploration.sections[0].frameRatio}
                 imageSrc={content.exploration.sections[0].imageSrc}
                 ratio={content.exploration.sections[0].ratio}
                 tone="soft"
               />
             </article>
 
-            <article className={styles.storyBlock} id="exploration-strategy">
-              <div className={styles.storyHeader}>
-                <p className={styles.themeLabel}>{content.exploration.sections[1].theme}</p>
-                <div className={styles.storyCopy}>
-                  {content.exploration.sections[1].paragraphs.map((paragraph) => (
-                    <p className={styles.storyParagraph} key={paragraph}>
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
-              </div>
+            <article className={styles.storyBlock}>
+              <CaseStudyHeadingTwo
+                accentColor="var(--axzo-case-accent)"
+                className={styles.storyHeader}
+                id="exploration-information-architecture"
+                descriptions={content.exploration.sections[1].paragraphs}
+                title={content.exploration.sections[1].theme}
+              />
 
               <ol className={styles.decisionList}>
                 {content.exploration.sections[1].decisions.map((decision) => (
@@ -339,39 +331,41 @@ export default function AxzoDesignSystemCaseStudyPage({ work }) {
             </article>
           </section>
 
-          <section className={joinClassNames(styles.section, styles.sectionLoose)} id="practice">
-            <SectionHeader
+          <section className={styles.section}>
+            <CaseStudyHeadingOne
+              className={styles.sectionHeader}
+              id="design-practice"
+              descriptions={content.practice.description}
               title={content.practice.title}
-              description={content.practice.description}
             />
 
             <div className={styles.practiceStack}>
-              {content.practice.pages.map((page, index) => {
-                const practiceIds = [
-                  "practice-homepage",
-                  "practice-design-dev",
-                  "practice-data-viz",
-                  "practice-collaboration",
-                ];
+              {content.practice.pages.map((page, index) => (
+                <article className={styles.practiceBlock} key={page.theme}>
+                  <CaseStudyHeadingTwo
+                    accentColor="var(--axzo-case-accent)"
+                    className={styles.storyHeader}
+                    id={practiceSectionIds[index]}
+                    descriptions={page.description}
+                    title={page.theme}
+                  />
 
-                return (
-                <article className={styles.practiceBlock} id={practiceIds[index]} key={page.theme}>
-                  <div className={styles.storyHeader}>
-                    <p className={styles.themeLabel}>{page.theme}</p>
-                    <div className={styles.storyCopy}>
-                      <p className={styles.storyParagraph}>{page.description}</p>
-                    </div>
-                  </div>
-
-                  <MediaPanel alt={page.imageAlt} imageSrc={page.imageSrc} ratio={page.ratio} />
+                  <MediaPanel
+                    alt={page.imageAlt}
+                    imageSrc={page.imageSrc}
+                    ratio={page.ratio}
+                  />
                 </article>
-                );
-              })}
+              ))}
             </div>
           </section>
 
-          <section className={joinClassNames(styles.section, styles.sectionLoose)} id="reflection">
-            <SectionHeader title={content.reflection.title} />
+          <section className={styles.section}>
+            <CaseStudyHeadingOne
+              className={styles.sectionHeader}
+              id="results-reflection"
+              title={content.reflection.title}
+            />
             <div className={styles.reflectionStack}>
               <p className={styles.sectionDescription}>{content.reflection.intro}</p>
 

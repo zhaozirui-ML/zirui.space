@@ -1,9 +1,8 @@
 .caseStudy {
-  --axzo-accent-moss: #647654;
+  --axzo-case-accent: #647654;
   --axzo-heading-font: var(--portfolio-font-title);
-  --axzo-insight-arrow-size: 1.5rem;
   display: grid;
-  gap: clamp(6rem, 8.25vw, 8.25rem);
+  gap: clamp(4.5rem, 7vw, 8.25rem);
 }
 
 .caseBody {
@@ -15,8 +14,7 @@
   display: flex;
   justify-content: center;
   margin-left: calc(50% - 50vw);
-  /* 这里按 Figma 的 1920×1080 封面关系控制外层高度，避免封面被主卡片内容反向撑高。 */
-  min-height: clamp(24rem, 56.25vw, 67.5rem);
+  min-height: clamp(22rem, 56vw, 42rem);
   overflow: clip;
   position: relative;
   width: 100vw;
@@ -35,10 +33,9 @@
 }
 
 .heroPanel {
-  max-width: calc(100vw - 2rem);
-  padding: 0;
+  padding: clamp(1rem, 4vw, 2rem);
   position: relative;
-  width: min(75vw, 90rem);
+  width: min(92vw, 90rem);
   z-index: 1;
 }
 
@@ -58,7 +55,7 @@
 
 .contentStack {
   display: grid;
-  gap: clamp(4.5rem, 6vw, 6rem);
+  gap: clamp(4rem, 6vw, 6rem);
   margin: 0 auto;
   padding: 0 1.5rem;
   width: min(100%, 55rem);
@@ -67,31 +64,14 @@
 .section {
   display: grid;
   gap: 1.5rem;
-  scroll-margin-top: 1.5rem;
-}
-
-.sectionLoose {
-  gap: 3rem;
 }
 
 .sectionHeader,
-.storyHeader {
-  display: grid;
-  gap: 0.75rem;
-}
-
+.storyHeader,
 .reflectionStack {
   display: grid;
-  gap: 1.5rem;
-}
-
-.sectionTitle {
-  color: var(--portfolio-color-text-title);
-  font-family: var(--axzo-heading-font);
-  font-size: 1.5rem;
-  font-weight: 400;
-  line-height: 1.35;
-  margin: 0;
+  gap: 0.75rem;
+  scroll-margin-top: 6.5rem;
 }
 
 .sectionDescription,
@@ -178,97 +158,54 @@
   border-radius: 1rem;
   display: grid;
   gap: 1rem;
-  padding: 2.25rem 1.5rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem) 1.5rem;
 }
 
 .insightTop {
-  align-items: center;
-  display: grid;
-  column-gap: 3.4375rem;
-  grid-template-columns: 18.5625rem 1.5rem 20.25rem;
-  justify-content: center;
-  width: min(100%, 47.1875rem);
-}
-
-.insightCaptionRow {
   align-items: start;
-  column-gap: 3.4375rem;
   display: grid;
-  grid-template-columns: 18.5625rem 1.5rem 20.25rem;
-  justify-content: center;
-  width: min(100%, 47.1875rem);
-}
-
-.insightCaptionSpacer {
-  width: 1.5rem;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  width: 100%;
 }
 
 .insightArrowHorizontal,
 .insightArrowSplit,
 .insightArrowVertical {
   color: var(--portfolio-color-border-strong);
-  display: flex;
-  justify-content: center;
+  font-family: var(--axzo-heading-font);
 }
 
-.insightArrowIcon {
-  height: var(--axzo-insight-arrow-size);
-  stroke-width: 1.75;
-  width: var(--axzo-insight-arrow-size);
+.insightArrowHorizontal,
+.insightArrowVertical {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  line-height: 1;
 }
 
 .insightArrowHorizontal {
   align-self: center;
 }
 
-.insightBottomArea {
-  display: grid;
-  gap: 1rem;
-  justify-items: center;
-  width: min(100%, 47.1875rem);
-}
-
-.insightBottomFlow {
-  display: grid;
-  gap: 0.9375rem;
-  justify-items: center;
-  width: min(100%, 21.5625rem);
-}
-
 .insightArrowSplit {
-  align-items: center;
-  height: var(--axzo-insight-arrow-size);
-  justify-content: space-between;
-  width: 16.424rem;
-}
-
-.insightArrowDiagonalLeft {
-  transform: rotate(58deg);
-}
-
-.insightArrowDiagonalRight {
-  transform: scaleY(-1) rotate(58deg);
-}
-
-.insightArrowVertical {
-  align-items: center;
-  height: var(--axzo-insight-arrow-size);
+  display: flex;
+  font-size: 2rem;
   justify-content: center;
-  transform: rotate(90deg);
-  width: var(--axzo-insight-arrow-size);
+  line-height: 1;
+  width: min(100%, 27rem);
+}
+
+.insightArrowSplit span:first-child {
+  margin-right: auto;
 }
 
 .insightMessage,
 .insightConclusion {
-  align-items: center;
   background: #faf9f6;
   border: 1px solid var(--portfolio-color-border-light);
   border-radius: 0.75rem;
-  display: flex;
-  justify-content: center;
+  max-width: 21.5625rem;
   padding: 0.75rem 1.25rem;
   text-align: center;
-  width: min(100%, 21.5625rem);
 }
 
 .insightMessage {
@@ -276,37 +213,36 @@
   font-family: var(--portfolio-font-body);
   font-size: 0.875rem;
   line-height: 1.4286;
-  min-height: 3.875rem;
 }
 
 .insightConclusion {
-  color: var(--axzo-accent-moss);
+  color: var(--axzo-case-accent);
   font-family: var(--portfolio-font-body);
   font-size: 0.875rem;
   line-height: 1.4286;
-  min-height: 2.625rem;
 }
 
 .orbitCard {
   display: grid;
+  gap: 1rem;
   justify-items: center;
 }
 
 .orbitDiagram {
   min-height: 14rem;
   position: relative;
-  width: 100%;
+  width: min(100%, 18.5625rem);
 }
 
 .orbitRing {
   border: 1px dashed var(--portfolio-color-border-strong);
   border-radius: 999px;
   height: 13.125rem;
-  left: 3.125rem;
+  left: 50%;
   opacity: 0.9;
   position: absolute;
   top: 0.4375rem;
-  transform: none;
+  transform: translateX(-50%);
   width: 13.125rem;
 }
 
@@ -317,12 +253,12 @@
   display: grid;
   height: 6.25rem;
   justify-items: center;
-  left: 6.5625rem;
+  left: 50%;
   padding: 1rem;
   position: absolute;
   text-align: center;
   top: 3.875rem;
-  transform: none;
+  transform: translateX(-50%);
   width: 6.25rem;
 }
 
@@ -377,24 +313,8 @@
   font-size: var(--portfolio-type-body-sm-size);
   line-height: var(--portfolio-type-body-sm-line);
   margin: 0;
-  justify-self: center;
+  max-width: 12rem;
   text-align: center;
-}
-
-.insightTop > .orbitCard:last-child .orbitRing {
-  left: 3.8125rem;
-}
-
-.insightTop > .orbitCard:last-child .orbitCenter {
-  left: 7.25rem;
-}
-
-.insightCaptionRow > .orbitCaption:first-child {
-  max-width: 11.8125rem;
-}
-
-.insightCaptionRow > .orbitCaption:last-child {
-  max-width: 11.625rem;
 }
 
 .roleCard {
@@ -428,35 +348,11 @@
   position: relative;
 }
 
-.themeLabel {
-  color: var(--axzo-accent-moss);
-  font-family: var(--portfolio-font-label);
-  font-size: var(--portfolio-type-label-size);
-  font-weight: var(--portfolio-type-label-weight);
-  letter-spacing: -0.011rem;
-  line-height: var(--portfolio-type-label-line);
-  margin: 0;
-}
-
-.storyCopy {
-  display: grid;
-  gap: 0.75rem;
-}
-
 .storyBlock,
+.practiceStack,
 .practiceBlock {
   display: grid;
   gap: 1.5rem;
-}
-
-.practiceStack {
-  display: grid;
-  gap: clamp(3rem, 4vw, 4rem);
-}
-
-.storyBlock,
-.practiceBlock {
-  scroll-margin-top: 1.5rem;
 }
 
 .decisionList {
@@ -488,8 +384,7 @@
 }
 
 .quote {
-  color: var(--axzo-accent-moss);
-  margin-top: 1.5rem;
+  color: var(--axzo-case-accent);
 }
 
 @media (max-width: 56rem) {
@@ -508,16 +403,6 @@
     transform: rotate(90deg);
   }
 
-  .insightCaptionRow {
-    gap: 0.75rem;
-    grid-template-columns: 1fr;
-    width: 100%;
-  }
-
-  .insightCaptionSpacer {
-    display: none;
-  }
-
   .insightArrowSplit {
     width: min(100%, 12rem);
   }
@@ -529,11 +414,7 @@
 
 @media (max-width: 40rem) {
   .heroPanel {
-    width: calc(100vw - 2rem);
-  }
-
-  .sectionTitle {
-    font-size: 1.375rem;
+    width: 100%;
   }
 
   .problemCard,

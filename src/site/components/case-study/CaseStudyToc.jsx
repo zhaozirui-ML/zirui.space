@@ -46,7 +46,10 @@ function TocLink({ activeId, item, onSelect }) {
   return (
     <a
       aria-current={activeId === item.id ? "location" : undefined}
-      className={joinClassNames(styles.tocLink, activeId === item.id ? styles.tocLinkActive : "")}
+      className={joinClassNames(
+        styles.tocLink,
+        activeId === item.id ? styles.tocLinkActive : ""
+      )}
       data-level={depth}
       href={`#${item.id}`}
       onClick={() => onSelect(item.id)}
@@ -54,10 +57,10 @@ function TocLink({ activeId, item, onSelect }) {
       onPointerEnter={(event) =>
         setPointerOrigin(event.currentTarget, event.clientX, event.clientY)
       }
-      onPointerMove={(event) =>
+      onPointerLeave={(event) =>
         setPointerOrigin(event.currentTarget, event.clientX, event.clientY)
       }
-      onPointerLeave={(event) =>
+      onPointerMove={(event) =>
         setPointerOrigin(event.currentTarget, event.clientX, event.clientY)
       }
       style={{ paddingInlineStart }}
@@ -73,7 +76,9 @@ export default function CaseStudyToc({
   backHref = "/work",
   backLabel = "返回",
   className = "",
+  desktopStartOffset = null,
   desktopShiftX = "33.5rem",
+  desktopStickyTop = null,
   desktopTopOffset = "6rem",
   hoverWashOpacity = 0,
   items,
@@ -135,10 +140,10 @@ export default function CaseStudyToc({
     "--case-study-toc-level-indent": levelIndent,
     "--case-study-toc-link-padding-start": linkPaddingStart,
     "--case-study-toc-muted": mutedColor,
-    "--case-study-toc-sticky-top": desktopTopOffset,
+    "--case-study-toc-sticky-top": desktopStickyTop ?? desktopTopOffset,
     "--case-study-toc-title": titleColor,
     "--case-study-toc-hover-wash-opacity": hoverWashOpacity,
-    "--case-study-toc-wrap-top": desktopTopOffset,
+    "--case-study-toc-wrap-top": desktopStartOffset ?? desktopTopOffset,
   };
 
   return (
