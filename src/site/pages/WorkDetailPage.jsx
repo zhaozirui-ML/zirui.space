@@ -17,9 +17,9 @@ export default function WorkDetailPage({ slug }) {
   // 先只把已经进入 Figma 对照实现的案例切到专用长页，其他案例继续保留通用骨架。
   if (work.slug === "drawing-ledger-2-0") {
     return (
-      <DrawingLedgerCaseStudy
-        headingAccentColor={work.detailTheme?.headingAccentColor}
-      />
+      <div className={styles.detailPage}>
+        <DrawingLedgerCaseStudy />
+      </div>
     );
   }
 
@@ -41,7 +41,7 @@ export default function WorkDetailPage({ slug }) {
   }
 
   return (
-    <div className={styles.pageStack}>
+    <div className={[styles.pageStack, styles.detailPage].join(" ")}>
       <section className={styles.pageIntro}>
         <p className={styles.pageEyebrow}>{work.category}</p>
         <CaseStudyHeadingOne

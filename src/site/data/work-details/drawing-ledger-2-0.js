@@ -5,14 +5,9 @@ import { getStorageAssetUrl } from "../../lib/get-storage-asset-url";
 // 或者把这里改成更细粒度的逐张切换逻辑，页面组件本身不用重写。
 const preferSupabaseAssets = true;
 
-// 这几个资源目前还没在 Supabase 上就位，所以测试阶段继续回退到本地或占位。
-// 这样可以先验证大部分链路，不会因为少数缺图直接把整页切坏。
-const pendingSupabaseAssetPaths = new Set([
-  "work/drawing-ledger-2-0/workflow-demo.png",
-  "work/drawing-ledger-2-0/responsive-demo.png",
-  "work/drawing-ledger-2-0/mobile-tab-interaction.png",
-  "work/drawing-ledger-2-0/mobile-landed-1.png",
-]);
+// 当前这页需要的资源已经都在 Supabase 上了。
+// 如果后面别的案例页还会边上传边开发，可以再恢复这类“待接入路径”回退逻辑。
+const pendingSupabaseAssetPaths = new Set();
 
 const assetDefinitions = {
   coverBackground: {
@@ -113,7 +108,8 @@ const assetDefinitions = {
   workflowDemo: {
     alt: "图纸下发流程联动示意图",
     localSrc: null,
-    storagePath: "work/drawing-ledger-2-0/workflow-demo.png",
+    mediaType: "video",
+    storagePath: "work/drawing-ledger-2-0/workflow-demo.mp4",
   },
   detailsResponsiveBackground: {
     alt: "",
@@ -123,7 +119,8 @@ const assetDefinitions = {
   responsiveDemo: {
     alt: "待办区响应式展示示意图",
     localSrc: null,
-    storagePath: "work/drawing-ledger-2-0/responsive-demo.png",
+    mediaType: "video",
+    storagePath: "work/drawing-ledger-2-0/responsive-demo.mp4",
   },
   mobileComparisonBackground: {
     alt: "",
@@ -188,7 +185,8 @@ const assetDefinitions = {
   mobileTabInteraction: {
     alt: "移动端 Tab 展开收起交互示意图",
     localSrc: null,
-    storagePath: "work/drawing-ledger-2-0/mobile-tab-interaction.png",
+    mediaType: "video",
+    storagePath: "work/drawing-ledger-2-0/mobile-tab-interaction.mp4",
   },
   mobileLanded1: {
     alt: "项目图纸页面",
@@ -232,6 +230,7 @@ export const drawingLedgerAssets = Object.fromEntries(
 
       return {
         ...asset,
+        mediaType: asset.mediaType || "image",
         src,
         unoptimized: shouldBypassNextImageOptimizer(src),
       };

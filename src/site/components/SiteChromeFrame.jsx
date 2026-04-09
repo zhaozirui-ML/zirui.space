@@ -7,20 +7,21 @@ import styles from "../styles/site-shell.module.css";
 
 const IMMERSIVE_PATHS = new Set([
   "/work/data-visualization-screen",
+  "/work/drawing-ledger-2-0",
+]);
+
+const FULL_BLEED_PATHS = new Set([
+  "/work/data-visualization-screen",
 ]);
 
 export default function SiteChromeFrame({ children }) {
   const pathname = usePathname();
   const isImmersiveCaseStudy = IMMERSIVE_PATHS.has(pathname);
-  const mainClassName = [
-    styles.siteMain,
-    isImmersiveCaseStudy ? styles.siteMainFlush : "",
-  ]
+  const isFullBleedCaseStudy = FULL_BLEED_PATHS.has(pathname);
+  const mainClassName = [styles.siteMain, isImmersiveCaseStudy ? styles.siteMainFlush : ""]
     .filter(Boolean)
     .join(" ");
-  const shellClassName = isImmersiveCaseStudy
-    ? styles.siteShellFullBleed
-    : styles.siteShell;
+  const shellClassName = isFullBleedCaseStudy ? styles.siteShellFullBleed : styles.siteShell;
 
   return (
     <>

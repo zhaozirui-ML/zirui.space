@@ -77,8 +77,10 @@ export function CaseStudyHeadingTwo({
 }
 
 export function CaseStudyHeadingThree({
+  children = null,
   className = "",
   descriptions = null,
+  hideLabel = false,
   id = null,
   label = "Label",
   labelAs: LabelTag = "p",
@@ -90,14 +92,17 @@ export function CaseStudyHeadingThree({
       className={joinClassNames(styles.headingBlock, styles.headingThree, className)}
       id={id}
     >
-      <div className={styles.headingThreePill}>
-        {createElement(LabelTag, { className: styles.headingThreeLabel }, label)}
-      </div>
+      {hideLabel ? null : (
+        <div className={styles.headingThreePill}>
+          {createElement(LabelTag, { className: styles.headingThreeLabel }, label)}
+        </div>
+      )}
       {paragraphs.map((paragraph) => (
         <p className={styles.headingBody} key={paragraph}>
           {paragraph}
         </p>
       ))}
+      {children}
     </div>
   );
 }

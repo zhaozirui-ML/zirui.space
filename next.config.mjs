@@ -11,7 +11,9 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "zikhatpucpynawwxbrun.supabase.co",
-        pathname: "/storage/v1/object/public/**",
+        port: "",
+        pathname: "/storage/v1/object/public/portfolio-assets/**",
+        search: "",
       },
     ],
   },

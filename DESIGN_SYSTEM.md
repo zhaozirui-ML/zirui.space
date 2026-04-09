@@ -121,7 +121,7 @@
 
 - `portfolioFontTitle`: `"FZQingKeBenYueSongS-R-GB", serif`
 - `portfolioFontBody`: `"Inter", "Noto Sans SC", "Noto Sans JP", sans-serif`
-- `portfolioFontLabel`: `"Inter", "Noto Sans SC", "Noto Sans JP", sans-serif`
+- `portfolioFontLabel`: `"Satoshi", "Inter", "Noto Sans SC", "Noto Sans JP", sans-serif`
 
 推荐字级：
 
@@ -131,6 +131,13 @@
 - `portfolioTypeLabel`: `16px / 24px / 500 / -0.176px`
 - `portfolioTypeBodySm`: `14px / 20px / 400 / -0.084px`
 - `portfolioTypeCaption`: `12px / 16px / 400`
+
+页面使用规则：
+
+- 模块首页（如 Home、Work、About、Blog 的首页）正文默认使用 `Satoshi`
+- 项目详情页正文默认使用 `Inter`
+- 导航、目录、按钮、标签、图注、辅助信息等功能性与信息性文字默认使用 `Satoshi`
+- 展示性标题继续按页面既有展示字体规则，不跟随正文一起切换
 
 ### 3.3 Spacing
 

@@ -18,9 +18,9 @@ export const portfolio = Object.freeze({
       title:
         'var(--font-fz-qingke-benyuesong), "Songti SC", "STSong", serif',
       body:
-        'var(--font-satoshi), "Inter", "Noto Sans SC", "Noto Sans JP", sans-serif',
+        'var(--font-inter), var(--font-satoshi), "Noto Sans SC", "Noto Sans JP", sans-serif',
       label:
-        'var(--font-satoshi), "Inter", "Noto Sans SC", "Noto Sans JP", sans-serif',
+        'var(--font-satoshi), var(--font-inter), "Noto Sans SC", "Noto Sans JP", sans-serif',
     }),
     scales: Object.freeze({
       hero: Object.freeze({
