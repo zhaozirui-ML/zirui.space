@@ -59,6 +59,9 @@ function shouldBypassNextImageOptimizer(source) {
 function MediaPanel({
   alt,
   caption = null,
+  captionClassName = "",
+  crop = null,
+  frameClassName: frameClassNameProp = "",
   imageSrc,
   priority = false,
   ratio,
@@ -66,57 +69,147 @@ function MediaPanel({
 }) {
   const frameClassName = joinClassNames(
     styles.mediaFrame,
+    frameClassNameProp,
     tone === "soft" ? styles.mediaFrameSoft : null,
   );
+  const frameStyle = crop
+    ? {
+        aspectRatio: ratio,
+        "--axzo-media-crop-height": crop.height,
+        "--axzo-media-crop-left": crop.left,
+        "--axzo-media-crop-top": crop.top,
+        "--axzo-media-crop-width": crop.width,
+      }
+    : { aspectRatio: ratio };
 
   return (
     <figure className={styles.mediaFigure}>
-      <div className={frameClassName} style={{ aspectRatio: ratio }}>
-        <div className={tone === "soft" ? styles.mediaInset : styles.mediaFill}>
-          <div className={styles.mediaFill}>
+      <div className={frameClassName} style={frameStyle}>
+        {crop ? (
+          <div className={styles.mediaCropViewport}>
             <Image
               alt={alt}
-              className={styles.mediaImage}
-              fill
+              className={styles.mediaImageCropped}
+              height={crop.intrinsicHeight}
               priority={priority}
               sizes="(max-width: 900px) calc(100vw - 2.5rem), 832px"
               src={imageSrc}
               unoptimized={shouldBypassNextImageOptimizer(imageSrc)}
+              width={crop.intrinsicWidth}
             />
           </div>
-        </div>
+        ) : (
+          <div className={tone === "soft" ? styles.mediaInset : styles.mediaFill}>
+            <div className={styles.mediaFill}>
+              <Image
+                alt={alt}
+                className={styles.mediaImage}
+                fill
+                priority={priority}
+                sizes="(max-width: 900px) calc(100vw - 2.5rem), 832px"
+                src={imageSrc}
+                unoptimized={shouldBypassNextImageOptimizer(imageSrc)}
+              />
+            </div>
+          </div>
+        )}
       </div>
-      {caption ? <figcaption className={styles.mediaCaption}>{caption}</figcaption> : null}
+      {caption ? (
+        <figcaption className={joinClassNames(styles.mediaCaption, captionClassName)}>
+          {caption}
+        </figcaption>
+      ) : null}
     </figure>
   );
 }
 
-function OrbitDiagram({ orbit }) {
+function ArrowRightSoftIcon({ className = "" }) {
   return (
-    <div className={styles.orbitCard}>
-      <div className={styles.orbitDiagram}>
-        <div aria-hidden="true" className={styles.orbitRing} />
-        <div className={styles.orbitCenter}>
+    <svg
+      aria-hidden="true"
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        clipRule="evenodd"
+        d="M13.1161 5.36612C13.6043 4.87796 14.3957 4.87796 14.8839 5.36612L20.6339 11.1161C20.8683 11.3505 21 11.6685 21 12C21 12.3315 20.8683 12.6494 20.6339 12.8839L14.8839 18.6339C14.3957 19.122 13.6043 19.122 13.1161 18.6339C12.628 18.1457 12.628 17.3543 13.1161 16.8661L16.7322 13.25H4.25C3.55964 13.25 3 12.6903 3 12C3 11.3096 3.55964 10.75 4.25 10.75H16.7322L13.1161 7.13388C12.628 6.64573 12.628 5.85427 13.1161 5.36612Z"
+        fill="currentColor"
+        fillRule="evenodd"
+      />
+    </svg>
+  );
+}
+
+function OrbitDiagram({ orbit, variant }) {
+  const isRight = variant === "right";
+
+  return (
+    <div
+      className={joinClassNames(
+        styles.orbitCard,
+        isRight ? styles.orbitCardRight : styles.orbitCardLeft,
+      )}
+    >
+      <div
+        className={joinClassNames(
+          styles.orbitDiagram,
+          isRight ? styles.orbitDiagramRight : styles.orbitDiagramLeft,
+        )}
+      >
+        <div
+          aria-hidden="true"
+          className={joinClassNames(
+            styles.orbitRing,
+            isRight ? styles.orbitRingRight : styles.orbitRingLeft,
+          )}
+        />
+        <div
+          className={joinClassNames(
+            styles.orbitCenter,
+            isRight ? styles.orbitCenterRight : styles.orbitCenterLeft,
+          )}
+        >
           <span className={styles.orbitCenterText}>
             {orbit.centerLines.map((line) => (
               <span key={line}>{line}</span>
             ))}
           </span>
         </div>
-        <span className={joinClassNames(styles.orbitTag, styles.orbitTagTop)}>
+        <span
+          className={joinClassNames(
+            styles.orbitTag,
+            isRight ? styles.orbitTagTopRight : styles.orbitTagTopLeft,
+          )}
+        >
           {orbit.top}
         </span>
-        <span className={joinClassNames(styles.orbitTag, styles.orbitTagLeft)}>
+        <span
+          className={joinClassNames(
+            styles.orbitTag,
+            isRight ? styles.orbitTagLeftRight : styles.orbitTagLeftLeft,
+          )}
+        >
           {orbit.left}
         </span>
-        <span className={joinClassNames(styles.orbitTag, styles.orbitTagRight)}>
+        <span
+          className={joinClassNames(
+            styles.orbitTag,
+            isRight ? styles.orbitTagRightRight : styles.orbitTagRightLeft,
+          )}
+        >
           {orbit.right}
         </span>
-        <span className={joinClassNames(styles.orbitTag, styles.orbitTagBottom)}>
+        <span
+          className={joinClassNames(
+            styles.orbitTag,
+            isRight ? styles.orbitTagBottomRight : styles.orbitTagBottomLeft,
+          )}
+        >
           {orbit.bottom}
         </span>
       </div>
-      <p className={styles.orbitCaption}>{orbit.caption}</p>
     </div>
   );
 }
@@ -190,6 +283,9 @@ export default function AxzoDesignSystemCaseStudyPage({
             <MediaPanel
               alt={content.projectBackground.imageAlt}
               caption={content.projectBackground.caption}
+              captionClassName={styles.projectBackgroundCaption}
+              crop={content.projectBackground.imageCrop}
+              frameClassName={styles.projectBackgroundFrame}
               imageSrc={content.projectBackground.imageSrc}
               priority
               ratio={content.projectBackground.ratio}
@@ -228,26 +324,48 @@ export default function AxzoDesignSystemCaseStudyPage({
               title={content.insight.title}
             />
             <div className={styles.insightPanel}>
-              <div className={styles.insightTop}>
-                <OrbitDiagram orbit={content.insight.leftOrbit} />
-                <div aria-hidden="true" className={styles.insightArrowHorizontal}>
-                  →
+              <div className={styles.insightCanvas}>
+                <div className={styles.insightTop}>
+                  <OrbitDiagram orbit={content.insight.leftOrbit} variant="left" />
+                  <div aria-hidden="true" className={styles.insightArrowHorizontal}>
+                    <ArrowRightSoftIcon className={styles.insightArrowIcon} />
+                  </div>
+                  <OrbitDiagram orbit={content.insight.rightOrbit} variant="right" />
                 </div>
-                <OrbitDiagram orbit={content.insight.rightOrbit} />
+
+                <div className={styles.insightCaptionRow}>
+                  <p className={joinClassNames(styles.orbitCaption, styles.orbitCaptionLeft)}>
+                    {content.insight.leftOrbit.caption}
+                  </p>
+                  <div aria-hidden="true" className={styles.insightCaptionSpacer} />
+                  <p className={joinClassNames(styles.orbitCaption, styles.orbitCaptionRight)}>
+                    {content.insight.rightOrbit.caption}
+                  </p>
+                </div>
+
+                <div className={styles.insightBottomArea}>
+                  <div aria-hidden="true" className={styles.insightArrowSplit}>
+                    <span className={styles.insightArrowDiagonalLeft}>
+                      <ArrowRightSoftIcon className={styles.insightArrowIcon} />
+                    </span>
+                    <span className={styles.insightArrowDiagonalRight}>
+                      <ArrowRightSoftIcon className={styles.insightArrowIcon} />
+                    </span>
+                  </div>
+
+                  <div className={styles.insightBottomFlow}>
+                    <div className={styles.insightMessage}>{content.insight.message}</div>
+
+                    <div aria-hidden="true" className={styles.insightArrowVertical}>
+                      <ArrowRightSoftIcon className={styles.insightArrowIcon} />
+                    </div>
+
+                    <div className={styles.insightConclusion}>
+                      {content.insight.conclusion}
+                    </div>
+                  </div>
+                </div>
               </div>
-
-              <div aria-hidden="true" className={styles.insightArrowSplit}>
-                <span>↘</span>
-                <span>↙</span>
-              </div>
-
-              <div className={styles.insightMessage}>{content.insight.message}</div>
-
-              <div aria-hidden="true" className={styles.insightArrowVertical}>
-                ↓
-              </div>
-
-              <div className={styles.insightConclusion}>{content.insight.conclusion}</div>
             </div>
           </section>
 

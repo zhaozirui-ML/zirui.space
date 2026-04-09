@@ -1,45 +1,29 @@
 import { getStorageAssetUrl } from "../lib/get-storage-asset-url";
 
-// 这页先把 Supabase 接法准备好，但在你正式上传素材前默认继续走本地资源。
-// 这样后面只需要把开关切成 true，就能按同一套路径规则开始迁移。
-const preferSupabaseAssets = false;
-
-const pendingSupabaseAssetPaths = new Set([]);
-
-function getStoragePathFromLocalSrc(localSrc) {
-  if (typeof localSrc !== "string" || !localSrc.startsWith("/site/")) {
-    return null;
-  }
-
-  return localSrc.replace(/^\/site\//, "");
-}
-
-function resolveAssetSource(localSrc) {
-  const storagePath = getStoragePathFromLocalSrc(localSrc);
-
-  if (!preferSupabaseAssets || !storagePath) {
-    return localSrc;
-  }
-
-  if (pendingSupabaseAssetPaths.has(storagePath)) {
-    return localSrc;
-  }
-
-  return getStorageAssetUrl(storagePath);
-}
+// 这页的资源正式走 Supabase，避免主分支继续停留在本地预览路径。
+const getAxzoAssetUrl = (fileName) =>
+  getStorageAssetUrl(`work/axzo-design-system/${fileName}`);
 
 export const axzoDesignSystemCaseStudy = {
   cover: {
-    backdropSrc: resolveAssetSource("/site/work/axzo-design-system/cover-card.png"),
-    panelSrc: resolveAssetSource("/site/work/axzo-design-system/cover-background.png"),
+    backdropSrc: getAxzoAssetUrl("cover-card.png"),
+    panelSrc: getAxzoAssetUrl("cover-background.png"),
     panelAlt: "Axzo Design System 官网封面主视觉",
   },
   projectBackground: {
     title: "项目背景",
     description:
       "2025 年团队将「组件化」设为关键 OKR，希望推动设计与开发组件同步率达到 100%。在此背景下，团队需要一个统一入口，承接组件化建设成果，并服务于内部协同与对上展示。",
-    imageSrc: resolveAssetSource("/site/work/axzo-design-system/okr-screenshot.png"),
+    imageSrc: getAxzoAssetUrl("okr-screenshot.png"),
     imageAlt: "组件化 OKR 截图",
+    imageCrop: {
+      height: "330.04%",
+      intrinsicHeight: 848,
+      intrinsicWidth: 1243,
+      left: "0.12%",
+      top: "-129.26%",
+      width: "100.01%",
+    },
     caption: "组件化 OKR",
     ratio: "832 / 172",
   },
@@ -50,22 +34,22 @@ export const axzoDesignSystemCaseStudy = {
     items: [
       {
         title: "设计资产有沉淀，但入口分散",
-        imageSrc: resolveAssetSource("/site/work/axzo-design-system/problem-entry.svg"),
+        imageSrc: getAxzoAssetUrl("problem-entry.svg"),
         imageAlt: "统一入口问题图标",
       },
       {
         title: "数据可视化规范建设不足",
-        imageSrc: resolveAssetSource("/site/work/axzo-design-system/problem-dataviz.svg"),
+        imageSrc: getAxzoAssetUrl("problem-dataviz.svg"),
         imageAlt: "数据可视化问题图标",
       },
       {
         title: "UI 实现存在局部不一致",
-        imageSrc: resolveAssetSource("/site/work/axzo-design-system/problem-ui.svg"),
+        imageSrc: getAxzoAssetUrl("problem-ui.svg"),
         imageAlt: "界面不一致问题图标",
       },
       {
         title: "设计开发协作效率低",
-        imageSrc: resolveAssetSource("/site/work/axzo-design-system/problem-collab.svg"),
+        imageSrc: getAxzoAssetUrl("problem-collab.svg"),
         imageAlt: "协作效率问题图标",
       },
     ],
@@ -102,27 +86,27 @@ export const axzoDesignSystemCaseStudy = {
         title: "统一入口",
         description:
           "把设计、开发、数据可视化和协作内容收拢到同一阵地",
-        imageSrc: resolveAssetSource("/site/work/axzo-design-system/role-entry.png"),
+        imageSrc: getAxzoAssetUrl("role-entry.png"),
         imageAlt: "统一入口意象图",
       },
       {
         title: "使用说明",
         description:
           "帮助团队成员快速理解系统的结构、边界和进入方式",
-        imageSrc: resolveAssetSource("/site/work/axzo-design-system/role-guide.png"),
+        imageSrc: getAxzoAssetUrl("role-guide.png"),
         imageAlt: "使用说明意象图",
       },
       {
         title: "协作桥梁",
         description: "连接设计师、开发与业务协作中的关键流程",
-        imageSrc: resolveAssetSource("/site/work/axzo-design-system/role-collab.png"),
+        imageSrc: getAxzoAssetUrl("role-collab.png"),
         imageAlt: "协作桥梁意象图",
       },
       {
         title: "展示窗口",
         description:
           "向管理层和团队展示组件化建设成果及系统成熟度",
-        imageSrc: resolveAssetSource("/site/work/axzo-design-system/role-showcase.png"),
+        imageSrc: getAxzoAssetUrl("role-showcase.png"),
         imageAlt: "展示窗口意象图",
       },
     ],
@@ -142,7 +126,7 @@ export const axzoDesignSystemCaseStudy = {
           "在信息架构设计上，我从「团队成员如何理解和使用设计系统」的视角出发，规划了官网的整体结构。",
           "1.0 官网被拆解为四个一级模块：设计、开发、数据可视化、团队协同。它们分别对应了团队使用设计系统时最核心的四类任务。",
         ],
-        imageSrc: resolveAssetSource("/site/work/axzo-design-system/exploration-structure.png"),
+        imageSrc: getAxzoAssetUrl("exploration-structure.png"),
         imageAlt: "设计系统消费链路结构图",
         ratio: "2090 / 580",
       },
@@ -165,7 +149,7 @@ export const axzoDesignSystemCaseStudy = {
         theme: "首页设计",
         description:
           "首页承担的职责，不只是“看起来完整”，而是先建立设计系统认知，再展示系统能力，最后引导进入具体模块。首页通过 Hero、组件能力预览、快速开始等内容，把抽象的设计系统转化成一个团队可理解、易访问的产品入口。",
-        imageSrc: resolveAssetSource("/site/work/axzo-design-system/practice-homepage.png"),
+        imageSrc: getAxzoAssetUrl("practice-homepage.png"),
         imageAlt: "Axzo Design System 首页设计截图",
         ratio: "832 / 2227",
       },
@@ -173,7 +157,7 @@ export const axzoDesignSystemCaseStudy = {
         theme: "设计与开发详情",
         description:
           "设计与开发模块的价值，不只是承载已有内容，而是把已有资产重新组织成更清晰的阅读与接入路径。页面中包含快速上手、安装方式、组件引入、组件规范等内容，使设计系统从「知道有」变成「知道怎么用」。",
-        imageSrc: resolveAssetSource("/site/work/axzo-design-system/practice-design-dev.png"),
+        imageSrc: getAxzoAssetUrl("practice-design-dev.png"),
         imageAlt: "设计与开发详情页截图",
         ratio: "832 / 787",
       },
@@ -181,7 +165,7 @@ export const axzoDesignSystemCaseStudy = {
         theme: "数据可视化",
         description:
           "数据可视化模块是整个官网中的关键增量。它承接了团队中尚未完全成熟的图表规范，通过模块化结构把图表基础、图表类型、案例与资源组织起来，为后续持续建设提供落点。页面中已展示多种图表类型和相关案例方向。",
-        imageSrc: resolveAssetSource("/site/work/axzo-design-system/practice-data-viz.png"),
+        imageSrc: getAxzoAssetUrl("practice-data-viz.png"),
         imageAlt: "数据可视化模块截图",
         ratio: "832 / 3059",
       },
@@ -189,7 +173,7 @@ export const axzoDesignSystemCaseStudy = {
         theme: "团队协同",
         description:
           "团队协同模块主要服务于产品、设计与开发的协同工作流。1.0 版本中，我先整合了 Figma 文件管理规范、PRD Figma 模板以及设计评审与反馈机制 3 部分内容。将设计系统由单纯的设计资产沉淀，扩展为团队运作的基础设施。",
-        imageSrc: resolveAssetSource("/site/work/axzo-design-system/practice-collaboration.png"),
+        imageSrc: getAxzoAssetUrl("practice-collaboration.png"),
         imageAlt: "团队协同模块截图",
         ratio: "832 / 1011",
       },

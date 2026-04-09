@@ -4,9 +4,6 @@ const preferSupabaseAssets = true;
 
 const pendingSupabaseAssetPaths = new Set([]);
 
-const figmaExpansionThumbRightImageSrc =
-  "https://www.figma.com/api/mcp/asset/d69a2045-8482-4061-ac79-393862f047db";
-
 function getStoragePathFromLocalSrc(localSrc) {
   if (typeof localSrc !== "string" || !localSrc.startsWith("/site/")) {
     return null;
@@ -173,10 +170,9 @@ export const dataVisualizationScreenDetail = Object.freeze({
           "/site/work/data-visualization-screen/expansion-thumb-left.png"
         ),
         leftImageAlt: "视觉语言扩展左侧缩略图",
-        // 当前 Supabase 这张图的宽高比与 Figma 节点不一致，
-        // 继续硬裁切会一直偏离设计稿。先回退到 Figma 的真实资源，
-        // 等你后面重传正确切图后，再切回项目自己的正式路径。
-        rightImageSrc: figmaExpansionThumbRightImageSrc,
+        rightImageSrc: resolveAssetSource(
+          "/site/work/data-visualization-screen/expansion-thumb-right.png"
+        ),
         rightImageAlt: "视觉语言扩展右侧缩略图",
       }),
     }),

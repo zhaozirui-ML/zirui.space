@@ -103,6 +103,10 @@
   position: relative;
 }
 
+.projectBackgroundFrame {
+  border-radius: 0.75rem;
+}
+
 .mediaFrameSoft {
   background: #faf9f6;
 }
@@ -118,6 +122,22 @@
   width: 100%;
 }
 
+.mediaCropViewport {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.mediaImageCropped {
+  height: var(--axzo-media-crop-height);
+  left: var(--axzo-media-crop-left);
+  max-width: none;
+  position: absolute;
+  top: var(--axzo-media-crop-top);
+  width: var(--axzo-media-crop-width);
+}
+
 .mediaCaption {
   color: var(--portfolio-color-text-muted);
   font-family: var(--portfolio-font-body);
@@ -125,6 +145,10 @@
   line-height: var(--portfolio-type-caption-line);
   margin: 0;
   text-align: center;
+}
+
+.projectBackgroundCaption {
+  color: var(--portfolio-semantic-body-color);
 }
 
 .problemGrid,
@@ -157,45 +181,88 @@
   border: 1px solid var(--portfolio-color-border-light);
   border-radius: 1rem;
   display: grid;
+  justify-items: center;
+  padding: 2.25rem 1.5rem;
+}
+
+.insightCanvas {
+  display: grid;
   gap: 1rem;
-  padding: clamp(1.5rem, 3vw, 2.25rem) 1.5rem;
+  justify-items: center;
+  width: min(100%, 47.1875rem);
 }
 
 .insightTop {
-  align-items: start;
+  align-items: center;
   display: grid;
-  gap: 1rem;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 0;
+  grid-template-columns: 18.5625rem 1.5rem 20.25rem;
+  justify-content: center;
   width: 100%;
 }
 
-.insightArrowHorizontal,
-.insightArrowSplit,
-.insightArrowVertical {
-  color: var(--portfolio-color-border-strong);
-  font-family: var(--axzo-heading-font);
+.insightCaptionRow {
+  align-items: start;
+  column-gap: 0;
+  display: grid;
+  grid-template-columns: 18.5625rem 1.5rem 20.25rem;
+  width: 100%;
+}
+
+.insightCaptionSpacer {
+  width: 1.5rem;
 }
 
 .insightArrowHorizontal,
-.insightArrowVertical {
-  font-size: clamp(1.75rem, 4vw, 2.25rem);
-  line-height: 1;
+.insightArrowVertical,
+.insightArrowDiagonalLeft,
+.insightArrowDiagonalRight {
+  align-items: center;
+  color: var(--portfolio-color-surface-warm);
+  display: inline-flex;
+  justify-content: center;
+}
+
+.insightArrowIcon {
+  display: block;
+  height: 1.5rem;
+  width: 1.5rem;
 }
 
 .insightArrowHorizontal {
   align-self: center;
 }
 
-.insightArrowSplit {
-  display: flex;
-  font-size: 2rem;
-  justify-content: center;
-  line-height: 1;
-  width: min(100%, 27rem);
+.insightBottomArea {
+  display: grid;
+  gap: 1rem;
+  justify-items: center;
+  width: min(100%, 47.1875rem);
 }
 
-.insightArrowSplit span:first-child {
-  margin-right: auto;
+.insightBottomFlow {
+  display: grid;
+  gap: 0.9375rem;
+  justify-items: center;
+  width: min(100%, 21.5625rem);
+}
+
+.insightArrowSplit {
+  display: flex;
+  justify-content: space-between;
+  width: min(100%, 16.424rem);
+}
+
+.insightArrowDiagonalLeft {
+  height: 2.049rem;
+  transform: rotate(60deg);
+  width: 2.049rem;
+}
+
+.insightArrowDiagonalRight {
+  height: 2.049rem;
+  transform: rotate(120deg) scaleY(-1);
+  width: 2.049rem;
 }
 
 .insightMessage,
@@ -203,47 +270,80 @@
   background: #faf9f6;
   border: 1px solid var(--portfolio-color-border-light);
   border-radius: 0.75rem;
-  max-width: 21.5625rem;
   padding: 0.75rem 1.25rem;
   text-align: center;
+  width: min(100%, 21.5625rem);
 }
 
 .insightMessage {
   color: var(--portfolio-semantic-body-color);
   font-family: var(--portfolio-font-body);
-  font-size: 0.875rem;
+  font-size: var(--portfolio-type-body-sm-size);
+  letter-spacing: -0.084px;
   line-height: 1.4286;
+  min-height: 3.875rem;
 }
 
 .insightConclusion {
   color: var(--axzo-case-accent);
   font-family: var(--portfolio-font-body);
-  font-size: 0.875rem;
+  font-size: var(--portfolio-type-body-sm-size);
+  letter-spacing: -0.084px;
   line-height: 1.4286;
+  min-height: 2.625rem;
+}
+
+.insightArrowVertical {
+  transform: rotate(90deg);
 }
 
 .orbitCard {
   display: grid;
-  gap: 1rem;
   justify-items: center;
 }
 
+.orbitCardLeft {
+  width: 18.5625rem;
+}
+
+.orbitCardRight {
+  width: 20.25rem;
+}
+
 .orbitDiagram {
-  min-height: 14rem;
   position: relative;
-  width: min(100%, 18.5625rem);
+}
+
+.orbitDiagramLeft {
+  height: 13.5rem;
+  width: 18.5625rem;
+}
+
+.orbitDiagramRight {
+  height: 13.5rem;
+  width: 20.25rem;
 }
 
 .orbitRing {
   border: 1px dashed var(--portfolio-color-border-strong);
   border-radius: 999px;
-  height: 13.125rem;
-  left: 50%;
   opacity: 0.9;
   position: absolute;
+}
+
+.orbitRingLeft,
+.orbitRingRight {
+  height: 13.125rem;
   top: 0.4375rem;
-  transform: translateX(-50%);
   width: 13.125rem;
+}
+
+.orbitRingLeft {
+  left: 3.125rem;
+}
+
+.orbitRingRight {
+  left: 3.8125rem;
 }
 
 .orbitCenter {
@@ -253,23 +353,33 @@
   display: grid;
   height: 6.25rem;
   justify-items: center;
-  left: 50%;
   padding: 1rem;
   position: absolute;
   text-align: center;
-  top: 3.875rem;
-  transform: translateX(-50%);
   width: 6.25rem;
 }
 
+.orbitCenterLeft,
+.orbitCenterRight {
+  top: 3.875rem;
+}
+
+.orbitCenterLeft {
+  left: 6.5625rem;
+}
+
+.orbitCenterRight {
+  left: 7.25rem;
+}
+
 .orbitCenterText {
-  color: var(--portfolio-color-text-body);
+  color: var(--portfolio-semantic-body-color);
   display: grid;
   font-family: var(--portfolio-font-label);
   font-size: 1rem;
   font-weight: 500;
   gap: 0;
-  letter-spacing: -0.011rem;
+  letter-spacing: -0.176px;
   line-height: 1.5rem;
 }
 
@@ -285,26 +395,48 @@
   position: absolute;
 }
 
-.orbitTagTop {
-  left: 50%;
+.orbitTagTopLeft {
+  left: 8rem;
   top: 0;
-  transform: translateX(-50%);
 }
 
-.orbitTagLeft {
+.orbitTagTopRight {
+  left: 8.6875rem;
+  top: 0;
+}
+
+.orbitTagLeftLeft {
   left: 0;
   top: 6.25rem;
 }
 
-.orbitTagRight {
-  right: 0;
+.orbitTagLeftRight {
+  left: 0;
   top: 6.25rem;
 }
 
-.orbitTagBottom {
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+.orbitTagRightLeft {
+  left: 14.0625rem;
+  top: 6.25rem;
+}
+
+.orbitTagRightRight {
+  left: 14.75rem;
+  top: 6.25rem;
+}
+
+.orbitTagBottomLeft {
+  left: 8.375rem;
+  top: 12.5rem;
+}
+
+.orbitTagBottomRight {
+  left: 8.375rem;
+  top: 6.25rem;
+}
+
+.orbitTagBottomRight {
+  top: 12.5rem;
 }
 
 .orbitCaption {
@@ -313,8 +445,16 @@
   font-size: var(--portfolio-type-body-sm-size);
   line-height: var(--portfolio-type-body-sm-line);
   margin: 0;
-  max-width: 12rem;
+  justify-self: center;
   text-align: center;
+}
+
+.orbitCaptionLeft {
+  max-width: 11.8125rem;
+}
+
+.orbitCaptionRight {
+  max-width: 11.625rem;
 }
 
 .roleCard {
@@ -393,9 +533,28 @@
   }
 
   .problemGrid,
-  .roleGrid,
+  .roleGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .insightCanvas {
+    width: 100%;
+  }
+
   .insightTop {
     grid-template-columns: 1fr;
+    justify-items: center;
+    row-gap: 1rem;
+  }
+
+  .insightCaptionRow {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    row-gap: 0.75rem;
+  }
+
+  .insightCaptionSpacer {
+    display: none;
   }
 
   .insightArrowHorizontal {
@@ -404,7 +563,14 @@
   }
 
   .insightArrowSplit {
-    width: min(100%, 12rem);
+    width: min(100%, 10rem);
+  }
+
+  .orbitCardLeft,
+  .orbitCardRight,
+  .orbitDiagramLeft,
+  .orbitDiagramRight {
+    width: min(100%, 20.25rem);
   }
 
   .roleCard {

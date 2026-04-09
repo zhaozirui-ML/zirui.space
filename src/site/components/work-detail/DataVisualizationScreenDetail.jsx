@@ -268,7 +268,7 @@ export default function DataVisualizationScreenDetail({
                   <div className={styles.expansionGalleryThumbRight}>
                     <Image
                       alt={practice.visualExpansion.gallery.rightImageAlt}
-                      className={styles.figureImage}
+                      className={`${styles.figureImage} ${styles.figureImageExpansionThumbRight}`}
                       fill
                       sizes="(max-width: 900px) 100vw, 621px"
                       src={practice.visualExpansion.gallery.rightImageSrc}

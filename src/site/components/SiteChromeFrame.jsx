@@ -6,6 +6,8 @@ import SiteHeader from "./SiteHeader";
 import styles from "../styles/site-shell.module.css";
 
 const IMMERSIVE_PATHS = new Set([
+  // Axzo 详情页需要让 Hero 贴顶显示，并隐藏全站导航。
+  "/work/axzo-design-system",
   "/work/data-visualization-screen",
   "/work/drawing-ledger-2-0",
 ]);
