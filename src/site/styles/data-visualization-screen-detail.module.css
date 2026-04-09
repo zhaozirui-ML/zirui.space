@@ -204,21 +204,22 @@
   margin: 0;
 }
 
-.practiceSection,
-.figureBlock {
+.practiceSection {
   display: grid;
   gap: 1.5rem;
 }
 
-.practiceSection {
-  justify-items: stretch;
-  width: 100%;
-}
-
 .figureBlock {
+  display: grid;
+  gap: 0.75rem;
   justify-self: center;
   margin: 0 auto;
   max-width: 75rem;
+  width: 100%;
+}
+
+.practiceSection {
+  justify-items: stretch;
   width: 100%;
 }
 
@@ -245,7 +246,18 @@
   width: 100%;
 }
 
+.figureImageWideBleed {
+  display: block;
+  height: 100%;
+  left: -1.41%;
+  max-width: none;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+}
+
 .practiceGalleryFrame,
+.expansionGalleryFrame,
 .demoFrame,
 .outcomesFrame {
   background: var(--portfolio-semantic-media-frame-background);
@@ -260,6 +272,10 @@
   height: clamp(32rem, 58vw, 43.125rem);
 }
 
+.expansionGalleryFrame {
+  height: 43.125rem;
+}
+
 .practiceGalleryMain {
   border-radius: 0.75rem;
   box-shadow: 0 1px 2px rgba(10, 13, 20, 0.03);
@@ -270,6 +286,48 @@
   top: 50%;
   transform: translate(-50%, -50%);
   width: min(75%, 56.25rem);
+}
+
+.expansionGalleryMain,
+.expansionGalleryThumbLeft,
+.expansionGalleryThumbRight {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  position: absolute;
+}
+
+.expansionGalleryMain {
+  height: 30.625rem;
+  left: calc(50% + 7.25rem);
+  top: calc(50% - 3.25rem);
+  transform: translate(-50%, -50%);
+  width: 54.5rem;
+}
+
+.figureImageExpansionMain {
+  height: 100%;
+  left: -0.83%;
+  max-width: none;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  width: 100.83%;
+}
+
+.expansionGalleryThumbLeft {
+  box-shadow: 0 1px 2px rgba(10, 13, 20, 0.03);
+  height: 24.375rem;
+  left: 3rem;
+  top: 13.6875rem;
+  width: 43.3125rem;
+}
+
+.expansionGalleryThumbRight {
+  box-shadow: 0 16px 32px -12px rgba(14, 18, 27, 0.1);
+  height: 21.875rem;
+  left: 40.4375rem;
+  top: 18.1875rem;
+  width: 38.8125rem;
 }
 
 .practiceGalleryThumb {
@@ -317,7 +375,39 @@
 }
 
 .demoFrame {
-  padding: clamp(1rem, 4vw, 3rem);
+  padding: 0;
+}
+
+.demoVideo {
+  background: #0d2144;
+  display: block;
+  height: auto;
+  max-width: none;
+  object-fit: cover;
+  position: absolute;
+}
+
+.demoFrameMetric {
+  height: 25.75rem;
+}
+
+.demoVideoMetric {
+  height: 142.7184466%;
+  left: -1px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: calc(100% + 2px);
+}
+
+.demoFrameCharts {
+  height: 45.5rem;
+}
+
+.demoVideoCharts {
+  height: 100%;
+  inset: 0;
+  transform: none;
+  width: 100%;
 }
 
 .demoBoard {
@@ -695,6 +785,42 @@
     aspect-ratio: 900 / 562.5;
   }
 
+  .expansionGalleryFrame {
+    height: auto;
+  }
+
+  .expansionGalleryMain,
+  .expansionGalleryThumbLeft,
+  .expansionGalleryThumbRight {
+    left: auto;
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    width: 100%;
+  }
+
+  .expansionGalleryMain {
+    aspect-ratio: 872 / 490;
+    height: auto;
+  }
+
+  .figureImageExpansionMain {
+    inset: 0;
+    left: auto;
+    width: 100%;
+  }
+
+  .expansionGalleryThumbLeft {
+    aspect-ratio: 693 / 390;
+    height: auto;
+  }
+
+  .expansionGalleryThumbRight {
+    aspect-ratio: 621 / 350;
+    height: auto;
+  }
+
   .practiceGalleryThumb1,
   .practiceGalleryThumb2,
   .practiceGalleryThumb3,
@@ -726,6 +852,22 @@
   .demoFrame,
   .outcomesFrame {
     padding: 0.875rem;
+  }
+
+  .demoFrameMetric,
+  .demoFrameCharts {
+    height: auto;
+  }
+
+  .demoVideo {
+    position: relative;
+  }
+
+  .demoVideoMetric,
+  .demoVideoCharts {
+    inset: auto;
+    transform: none;
+    width: 100%;
   }
 
   .retrospectiveCard {

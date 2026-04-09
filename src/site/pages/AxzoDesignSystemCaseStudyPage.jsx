@@ -61,6 +61,10 @@ function joinClassNames(...classNames) {
   return classNames.filter(Boolean).join(" ");
 }
 
+function shouldBypassNextImageOptimizer(source) {
+  return typeof source === "string" && source.startsWith("http");
+}
+
 function MediaPanel({
   alt,
   caption = null,
@@ -86,6 +90,7 @@ function MediaPanel({
               priority={priority}
               sizes="(max-width: 900px) calc(100vw - 2.5rem), 832px"
               src={imageSrc}
+              unoptimized={shouldBypassNextImageOptimizer(imageSrc)}
             />
           </div>
         </div>
@@ -150,6 +155,7 @@ export default function AxzoDesignSystemCaseStudyPage({
             priority
             sizes="100vw"
             src={content.cover.backdropSrc}
+            unoptimized={shouldBypassNextImageOptimizer(content.cover.backdropSrc)}
           />
         </div>
 
@@ -162,6 +168,7 @@ export default function AxzoDesignSystemCaseStudyPage({
               priority
               sizes="(max-width: 900px) 92vw, min(75vw, 1440px)"
               src={content.cover.panelSrc}
+              unoptimized={shouldBypassNextImageOptimizer(content.cover.panelSrc)}
             />
           </div>
         </div>
@@ -202,6 +209,7 @@ export default function AxzoDesignSystemCaseStudyPage({
                     className={styles.problemIcon}
                     height={32}
                     src={item.imageSrc}
+                    unoptimized={shouldBypassNextImageOptimizer(item.imageSrc)}
                     width={32}
                   />
                   <p className={styles.problemText}>{item.title}</p>
@@ -262,6 +270,7 @@ export default function AxzoDesignSystemCaseStudyPage({
                       fill
                       sizes="(max-width: 900px) 96px, 120px"
                       src={card.imageSrc}
+                      unoptimized={shouldBypassNextImageOptimizer(card.imageSrc)}
                     />
                   </div>
                 </article>

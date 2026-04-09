@@ -1,11 +1,48 @@
+import { getStorageAssetUrl } from "../lib/get-storage-asset-url";
+
+const preferSupabaseAssets = true;
+
+const pendingSupabaseAssetPaths = new Set([]);
+
+const figmaExpansionThumbRightImageSrc =
+  "https://www.figma.com/api/mcp/asset/d69a2045-8482-4061-ac79-393862f047db";
+
+function getStoragePathFromLocalSrc(localSrc) {
+  if (typeof localSrc !== "string" || !localSrc.startsWith("/site/")) {
+    return null;
+  }
+
+  // 这页本地目录名是 data-visualization-screen，但你在 Supabase 里实际上传的是 data-visualization。
+  // 这里先把这层映射集中在数据层，后面即使要改目录名，也不用到组件里逐个替换。
+  return localSrc
+    .replace(/^\/site\/work\/data-visualization-screen\//, "work/data-visualization/");
+}
+
+function resolveAssetSource(localSrc) {
+  const storagePath = getStoragePathFromLocalSrc(localSrc);
+
+  if (!preferSupabaseAssets || !storagePath) {
+    return localSrc;
+  }
+
+  if (pendingSupabaseAssetPaths.has(storagePath)) {
+    return localSrc;
+  }
+
+  return getStorageAssetUrl(storagePath);
+}
+
 // 先把案例长页内容整理成单独数据对象，第二阶段继续补后半段时不需要把文案散落在组件里。
 export const dataVisualizationScreenDetail = Object.freeze({
   hero: Object.freeze({
     title: "大屏数据可视化",
     subtitle: "从工作台中的图表探索，延展到更复杂的大屏场景",
-    backgroundImageSrc:
-      "/site/work/data-visualization-screen/hero-background.png",
-    coverImageSrc: "/site/work/data-visualization-screen/hero-dashboard.png",
+    backgroundImageSrc: resolveAssetSource(
+      "/site/work/data-visualization-screen/hero-background.png"
+    ),
+    coverImageSrc: resolveAssetSource(
+      "/site/work/data-visualization-screen/hero-dashboard.png"
+    ),
     coverImageAlt: "广东省建筑工人管理服务信息平台的大屏主视觉预览图",
   }),
   background: Object.freeze({
@@ -25,22 +62,30 @@ export const dataVisualizationScreenDetail = Object.freeze({
     intro: "在这个项目里，设计挑战主要来源以下 4 个方面：",
     items: Object.freeze([
       {
-        iconSrc: "/site/work/data-visualization-screen/problem-1.png",
+        iconSrc: resolveAssetSource(
+          "/site/work/data-visualization-screen/problem-1.png"
+        ),
         iconAlt: "问题定义卡片图标 1",
         label: "收敛历史上逐渐分化的视觉方案",
       },
       {
-        iconSrc: "/site/work/data-visualization-screen/problem-2.png",
+        iconSrc: resolveAssetSource(
+          "/site/work/data-visualization-screen/problem-2.png"
+        ),
         iconAlt: "问题定义卡片图标 2",
         label: "让省、市、区三级页面保持统一气质",
       },
       {
-        iconSrc: "/site/work/data-visualization-screen/problem-3.png",
+        iconSrc: resolveAssetSource(
+          "/site/work/data-visualization-screen/problem-3.png"
+        ),
         iconAlt: "问题定义卡片图标 3",
         label: "在多人协作下减少图表视觉的样式漂移",
       },
       {
-        iconSrc: "/site/work/data-visualization-screen/problem-4.png",
+        iconSrc: resolveAssetSource(
+          "/site/work/data-visualization-screen/problem-4.png"
+        ),
         iconAlt: "问题定义卡片图标 4",
         label: "将新的图表视觉语言扩展到所有大屏",
       },
@@ -80,30 +125,59 @@ export const dataVisualizationScreenDetail = Object.freeze({
       ]),
       gallery: Object.freeze({
         caption: "CMS Dashboard Charts",
-        mainImageSrc: "/site/work/data-visualization-screen/practice-main-chart.png",
+        mainImageSrc: resolveAssetSource(
+          "/site/work/data-visualization-screen/practice-main-chart.png"
+        ),
         mainImageAlt: "CMS Dashboard Charts 主图",
         thumbnails: Object.freeze([
           {
-            imageSrc:
-              "/site/work/data-visualization-screen/practice-thumb-1.png",
-            imageAlt: "CMS Dashboard Charts 缩略图 1",
+            imageSrc: resolveAssetSource(
+              "/site/work/data-visualization-screen/practice-thumb-4.png"
+            ),
+            imageAlt: "果冻效果应用缩略图 1",
           },
           {
-            imageSrc:
-              "/site/work/data-visualization-screen/practice-thumb-2.png",
-            imageAlt: "CMS Dashboard Charts 缩略图 2",
+            imageSrc: resolveAssetSource(
+              "/site/work/data-visualization-screen/practice-thumb-1.png"
+            ),
+            imageAlt: "果冻效果应用缩略图 2",
           },
           {
-            imageSrc:
-              "/site/work/data-visualization-screen/practice-thumb-3.png",
-            imageAlt: "CMS Dashboard Charts 缩略图 3",
+            imageSrc: resolveAssetSource(
+              "/site/work/data-visualization-screen/practice-thumb-2.png"
+            ),
+            imageAlt: "果冻效果应用缩略图 3",
           },
           {
-            imageSrc:
-              "/site/work/data-visualization-screen/practice-thumb-4.png",
-            imageAlt: "CMS Dashboard Charts 缩略图 4",
+            imageSrc: resolveAssetSource(
+              "/site/work/data-visualization-screen/practice-thumb-3.png"
+            ),
+            imageAlt: "果冻效果应用缩略图 4",
+            presentation: "wide-bleed",
           },
         ]),
+      }),
+    }),
+    visualExpansion: Object.freeze({
+      eyebrow: "视觉语言扩展",
+      paragraphs: Object.freeze([
+        "在这次省、市、区三级大屏整合中，所有涉及图表的页面，基本都延续使用了这套「果冻效果」视觉语言。这让整套大屏在观感上更统一性与视觉识别度。",
+      ]),
+      gallery: Object.freeze({
+        caption: "果冻效果应用效果",
+        mainImageSrc: resolveAssetSource(
+          "/site/work/data-visualization-screen/expansion-main.png"
+        ),
+        mainImageAlt: "视觉语言扩展主图",
+        leftImageSrc: resolveAssetSource(
+          "/site/work/data-visualization-screen/expansion-thumb-left.png"
+        ),
+        leftImageAlt: "视觉语言扩展左侧缩略图",
+        // 当前 Supabase 这张图的宽高比与 Figma 节点不一致，
+        // 继续硬裁切会一直偏离设计稿。先回退到 Figma 的真实资源，
+        // 等你后面重传正确切图后，再切回项目自己的正式路径。
+        rightImageSrc: figmaExpansionThumbRightImageSrc,
+        rightImageAlt: "视觉语言扩展右侧缩略图",
       }),
     }),
     systemization: Object.freeze({
@@ -114,12 +188,18 @@ export const dataVisualizationScreenDetail = Object.freeze({
       ]),
       demos: Object.freeze([
         {
-          type: "indicator-card",
           caption: "异形数据指标卡",
+          title: "异形数据指标卡演示视频",
+          videoSrc: resolveAssetSource(
+            "/site/work/data-visualization-screen/metric-card.mp4"
+          ),
         },
         {
-          type: "responsive-chart",
           caption: "响应式图表",
+          title: "响应式图表演示视频",
+          videoSrc: resolveAssetSource(
+            "/site/work/data-visualization-screen/charts.mp4"
+          ),
         },
       ]),
     }),
@@ -127,7 +207,9 @@ export const dataVisualizationScreenDetail = Object.freeze({
   outcomes: Object.freeze({
     title: "设计成果",
     intro: "下面汇总了我负责的项目首页与质安监管模块的完整页面设计。",
-    imageSrc: "/site/work/data-visualization-screen/outcomes-overview.png",
+    imageSrc: resolveAssetSource(
+      "/site/work/data-visualization-screen/outcomes-overview.png"
+    ),
     imageAlt: "大屏数据可视化项目全部页面概览",
     caption: "全部页面概览",
   }),
@@ -138,25 +220,33 @@ export const dataVisualizationScreenDetail = Object.freeze({
       {
         title: "延续视觉语言",
         description: "将先前定义的图表风格扩展到本次三级大屏项目中",
-        imageSrc: "/site/work/data-visualization-screen/retrospective-1.png",
+        imageSrc: resolveAssetSource(
+          "/site/work/data-visualization-screen/retrospective-1.png"
+        ),
         imageAlt: "延续视觉语言缩略图",
       },
       {
         title: "协助组件沉淀",
         description: "把高频图表和指标模块沉淀为可复用设计资产",
-        imageSrc: "/site/work/data-visualization-screen/retrospective-2.png",
+        imageSrc: resolveAssetSource(
+          "/site/work/data-visualization-screen/retrospective-2.png"
+        ),
         imageAlt: "协助组件沉淀缩略图",
       },
       {
         title: "推动整体统一",
         description: "帮助三级页面在更大范围内形成一致的视觉表达",
-        imageSrc: "/site/work/data-visualization-screen/retrospective-3.png",
+        imageSrc: resolveAssetSource(
+          "/site/work/data-visualization-screen/retrospective-3.png"
+        ),
         imageAlt: "推动整体统一缩略图",
       },
       {
         title: "支持多人协作",
         description: "通过规则和复用降低样式偏差，提升团队推进效率",
-        imageSrc: "/site/work/data-visualization-screen/retrospective-4.png",
+        imageSrc: resolveAssetSource(
+          "/site/work/data-visualization-screen/retrospective-4.png"
+        ),
         imageAlt: "支持多人协作缩略图",
       },
     ]),
