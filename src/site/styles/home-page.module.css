@@ -402,6 +402,14 @@
   gap: 1.75rem;
 }
 
+.workCardContentLeadAccent {
+  --brand-diffuse-width: 23.5rem;
+  --brand-diffuse-height: 19rem;
+  --brand-diffuse-left: -3.15rem;
+  --brand-diffuse-top: -3rem;
+  --brand-diffuse-blur: 36px;
+}
+
 .workCategoryRow {
   align-items: center;
   display: inline-flex;

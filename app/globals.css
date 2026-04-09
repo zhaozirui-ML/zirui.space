@@ -37,6 +37,66 @@ img {
   min-height: 100dvh;
 }
 
+.brand-diffuse-surface {
+  --brand-diffuse-width: 23.5rem;
+  --brand-diffuse-height: 19rem;
+  --brand-diffuse-left: -3.15rem;
+  --brand-diffuse-top: -3rem;
+  --brand-diffuse-blur: 36px;
+  --brand-diffuse-opacity: 0.96;
+  --brand-diffuse-glow:
+    radial-gradient(
+      ellipse 90% 78% at 29% 18%,
+      rgba(179, 106, 94, 0.17) 0%,
+      rgba(179, 106, 94, 0.13) 26%,
+      rgba(244, 228, 223, 0.11) 52%,
+      rgba(255, 255, 255, 0) 82%
+    ),
+    radial-gradient(
+      ellipse 72% 66% at 48% 26%,
+      rgba(255, 246, 242, 0.82) 0%,
+      rgba(255, 255, 255, 0) 84%
+    );
+  --brand-diffuse-wash:
+    linear-gradient(
+      180deg,
+      rgba(255, 248, 245, 0.64) 0%,
+      rgba(255, 250, 247, 0.24) 56%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  isolation: isolate;
+  position: relative;
+}
+
+.brand-diffuse-surface::before {
+  background: var(--brand-diffuse-glow);
+  content: "";
+  filter: blur(var(--brand-diffuse-blur));
+  height: var(--brand-diffuse-height);
+  left: var(--brand-diffuse-left);
+  opacity: var(--brand-diffuse-opacity);
+  pointer-events: none;
+  position: absolute;
+  top: var(--brand-diffuse-top);
+  width: var(--brand-diffuse-width);
+  z-index: 0;
+}
+
+.brand-diffuse-surface::after {
+  background: var(--brand-diffuse-wash);
+  content: "";
+  height: 12rem;
+  inset: -1rem -0.6rem auto -1rem;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+.brand-diffuse-surface > * {
+  position: relative;
+  z-index: 1;
+}
+
 .sr-only {
   border: 0;
   clip: rect(0 0 0 0);

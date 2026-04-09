@@ -28,7 +28,15 @@ export default function HomeWorksSection() {
               .join(" ")}
             key={item.slug}
           >
-            <div className={styles.workCardContent}>
+            <div
+              className={[
+                styles.workCardContent,
+                item.slug === "drawing-ledger-2-0" ? "brand-diffuse-surface" : "",
+                item.slug === "drawing-ledger-2-0" ? styles.workCardContentLeadAccent : "",
+              ]
+                .filter(Boolean)
+                .join(" ")}
+            >
               <div className={styles.workCategoryRow}>
                 <Image
                   alt=""
