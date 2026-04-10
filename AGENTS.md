@@ -5,7 +5,7 @@
 ## 1. 沟通与代码风格
 - **语言策略**：中文解释思路与注释（侧重说明“为什么”而非“做什么”）；英文用于变量、函数和组件命名。
 - **沟通对象**：面向“非开发者”，必须解释推导过程，拒绝只给结论。
-- **代码实现**：优先选择小范围、低风险、易回退的改动。实现前说明计划，实现后总结改动及作用；复杂实现补充解释性注释。
+- **代码实现**：优先选择小范围、低风险、易回退的改动；实现前说明计划，实现后总结改动及作用；复杂实现补充解释性注释。
 
 ## 2. 工作流与变更控制
 - **标准推进**：遵循“分析说明 -> 最小可行改动 -> 总结结果”的闭环；已有 dev server 时优先复用。
@@ -18,11 +18,8 @@
 
 ## 3. 工具链与依赖管理
 - **包管理**：默认使用 `pnpm`。
-- **Worktree 初始化**：使用 `git worktree` 新建工作目录后，不要假设 `node_modules` 已存在。进入该 worktree 后，先执行 `pnpm install`，再运行其他命令。
-- **Worktree 自动化**：仓库使用 `.githooks/post-checkout` 在 `git worktree add` 完成首次 checkout 后自动调用 `scripts/bootstrap-worktree.sh`。如果自动化没有生效，先检查 `git config core.hooksPath` 是否已经指向 `.githooks`。
-- **缺少依赖时的处理**：若 `pnpm typecheck`、`pnpm lint`、`pnpm dev` 因缺少 `tsc`、`eslint` 等命令失败，应先判断是否是当前 worktree 尚未执行 `pnpm install`，并明确告知这是环境未初始化，不是代码本身报错。
-- **初始化后的验证顺序**：完成 `pnpm install` 后，再执行 `pnpm typecheck` 和 `pnpm lint`。如果本地 pnpm store 已经缓存完整依赖，可视情况使用 `pnpm install --offline` 加快初始化。
-- **自动检查**：代码修改后自动运行 `pnpm typecheck` 和 `pnpm lint`。若失败，需主动协助定位并修复。
+- **Worktree 与依赖**：`git worktree` 新建工作目录后，先 `pnpm install` 再做其他事；如果 `typecheck` / `lint` / `dev` 报缺少命令，优先判断是不是当前 worktree 还没初始化。
+- **自动检查**：代码修改后自动运行 `pnpm typecheck` 和 `pnpm lint`；若失败，需主动协助定位并修复。
 - **Git 清理**：优先使用本地 `git-cleanup` skill；若手动执行，需确保删除前确认、保留受保护分支、汇报简洁。
 
 ## 4. 专项规则：字体接入
@@ -30,7 +27,5 @@
 - **临时与正式**：可先临时占位预览；一旦确认采用，需立即转为正式接入方案。引入新字体时需明确：来源、主要用途及影响范围。
 
 ## 5. 设计上下文文档分工
-- **高层设计意图**：涉及受众、品牌气质、情绪目标、参考网站、长期设计原则时，优先查看 `docs/design-context.md`。
-- **系统层规则**：涉及 token、组件、主题变量、设计系统职责边界时，优先查看 `DESIGN_SYSTEM.md`。
-- **页面层规则**：涉及页面叙事、案例页排版、页面模式、Figma 落地检查项时，优先查看 `GUIDELINES.md`。
-- **冲突处理**：如果三者出现直接冲突，不要自行扩大改动范围；先说明冲突点与影响，再等待确认后处理。
+- 高层设计意图看 `docs/design-context.md`；系统层规则看 `DESIGN_SYSTEM.md`；页面层规则看 `GUIDELINES.md`。
+- 如果三者出现直接冲突，不要扩大改动范围；先说明冲突点与影响，再等待确认后处理。
