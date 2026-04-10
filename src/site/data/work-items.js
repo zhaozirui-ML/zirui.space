@@ -1,3 +1,5 @@
+import { getStorageAssetUrl } from "../lib/get-storage-asset-url";
+
 // 作品数据继续集中在这里，首页、/work 和详情页都从同一个数据源读取。
 // 首页只拿“精选项目”，Work 页再按 Figma 版式做分组渲染，避免后面维护两份 slug。
 export const workItems = [
@@ -18,13 +20,17 @@ export const workItems = [
     homeCardVariant: "featured",
     homeMediaPosition: "end",
     homeMediaFrame: {
-      backgroundSrc: "/site/home/figma-home/work-drawing-background.png",
+      backgroundSrc: getStorageAssetUrl(
+        "work/drawing-ledger-2-0/home-background.png"
+      ),
       foregroundAspectRatio: "360 / 225",
       foregroundHeight: "74.5%",
       foregroundLeft: "10.2%",
       foregroundRadius: "0",
       foregroundShadow: "none",
-      foregroundSrc: "/site/home/figma-home/work-drawing-foreground.png",
+      foregroundSrc: getStorageAssetUrl(
+        "work/drawing-ledger-2-0/home-foreground.png"
+      ),
       foregroundTop: "14.5%",
       foregroundWidth: "79.6%",
     },
@@ -39,7 +45,7 @@ export const workItems = [
       type: "plain",
       alt: "Drawing Register 2.0 preview",
       ratio: "782 / 440",
-      src: "/site/work/index/drawing-register-2-0.png",
+      src: getStorageAssetUrl("work/drawing-ledger-2-0/work-preview.png"),
     },
   },
   {
@@ -58,13 +64,17 @@ export const workItems = [
     homeCardVariant: "standard",
     homeMediaPosition: "start",
     homeMediaFrame: {
-      backgroundSrc: "/site/home/figma-home/work-axzo-background.png",
+      backgroundSrc: getStorageAssetUrl(
+        "work/axzo-design-system/home-background.png"
+      ),
       foregroundAspectRatio: "312 / 190.694",
       foregroundHeight: "78.5%",
       foregroundLeft: "50%",
       foregroundRadius: "0.25rem",
       foregroundShadow: "none",
-      foregroundSrc: "/site/home/figma-home/work-axzo-foreground.png",
+      foregroundSrc: getStorageAssetUrl(
+        "work/axzo-design-system/home-foreground.png"
+      ),
       foregroundTop: "50%",
       foregroundTransform: "translate(-50%, -50%)",
       foregroundWidth: "74.3%",
@@ -79,8 +89,12 @@ export const workItems = [
     workPreview: {
       type: "framed",
       alt: "Axzo Design Portal preview",
-      backgroundSrc: "/site/work/index/axzo-design-portal-bg.png",
-      foregroundSrc: "/site/work/index/axzo-design-portal-main.png",
+      backgroundSrc: getStorageAssetUrl(
+        "work/axzo-design-system/work-background.png"
+      ),
+      foregroundSrc: getStorageAssetUrl(
+        "work/axzo-design-system/work-foreground.png"
+      ),
       foregroundAspectRatio: "302 / 180",
       foregroundWidth: "85.31%",
       ratio: "354 / 240",
@@ -104,13 +118,17 @@ export const workItems = [
     homeCardVariant: "standard",
     homeMediaPosition: "end",
     homeMediaFrame: {
-      backgroundSrc: "/site/home/figma-home/work-data-background.png",
+      backgroundSrc: getStorageAssetUrl(
+        "work/data-visualization-screen/home-background.png"
+      ),
       foregroundAspectRatio: "302.4 / 170.1",
       foregroundHeight: "70.1%",
       foregroundLeft: "50%",
       foregroundRadius: "0.25rem",
       foregroundShadow: "0 3.2px 6.4px -2.4px rgba(14, 18, 27, 0.1)",
-      foregroundSrc: "/site/home/figma-home/work-data-foreground.png",
+      foregroundSrc: getStorageAssetUrl(
+        "work/data-visualization-screen/home-foreground.png"
+      ),
       foregroundTop: "50%",
       foregroundTransform: "translate(-50%, -50%)",
       foregroundWidth: "72%",
@@ -125,8 +143,12 @@ export const workItems = [
     workPreview: {
       type: "framed",
       alt: "Data Visualization System preview",
-      backgroundSrc: "/site/work/index/data-visualization-system-bg.png",
-      foregroundSrc: "/site/work/index/data-visualization-system-main.png",
+      backgroundSrc: getStorageAssetUrl(
+        "work/data-visualization-screen/work-background.png"
+      ),
+      foregroundSrc: getStorageAssetUrl(
+        "work/data-visualization-screen/work-foreground.png"
+      ),
       foregroundAspectRatio: "302 / 170",
       foregroundWidth: "85.31%",
       ratio: "354 / 240",
@@ -150,7 +172,7 @@ export const workItems = [
       type: "plain",
       alt: "CloudTower Design System preview",
       ratio: "782 / 505",
-      src: "/site/work/index/cloudtower-design-system.png",
+      src: getStorageAssetUrl("work/cloudtower-design-system/work-preview.png"),
     },
   },
   {
@@ -170,7 +192,7 @@ export const workItems = [
       type: "plain",
       alt: "SMTX ELF Virtualization preview",
       ratio: "354 / 240",
-      src: "/site/work/index/smtx-elf-virtualization.png",
+      src: getStorageAssetUrl("work/smtx-elf-virtualization/work-preview.png"),
     },
   },
   {
@@ -190,7 +212,7 @@ export const workItems = [
       type: "plain",
       alt: "VM Features Optimization preview",
       ratio: "354 / 240",
-      src: "/site/work/index/vm-features-optimization.png",
+      src: getStorageAssetUrl("work/vm-features-optimization/work-preview.png"),
     },
   },
 ];
