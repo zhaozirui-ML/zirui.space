@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { browseBlogPosts, featuredBlogPosts } from "../data/blog-posts";
+import { blogIndexPosts, featuredBlogPosts } from "../data/blog-posts";
 import { formatBlogDate } from "../lib/format-blog-date";
 import styles from "../styles/blog-page.module.css";
 
@@ -118,7 +118,7 @@ export default function BlogPage() {
           />
           <div className={styles.browseContent}>
             <div className={styles.browseGrid}>
-              {browseBlogPosts.map((post) => (
+              {blogIndexPosts.map((post) => (
                 <Link
                   aria-label={`Read ${post.title}`}
                   className={[styles.cardLink, styles.browseCard].join(" ")}

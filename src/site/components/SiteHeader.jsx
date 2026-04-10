@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 
 import { siteNavigation } from "../data/navigation";
+import { getStorageAssetUrl } from "../lib/get-storage-asset-url";
 import styles from "../styles/site-shell.module.css";
 
 export default function SiteHeader() {
@@ -96,13 +96,17 @@ export default function SiteHeader() {
       <div className={styles.siteHeaderFrame} style={headerStyle}>
         <div className={styles.siteHeaderInner}>
           <Link className={styles.brandLink} href="/">
-            <Image
-              alt=""
+            <video
               aria-hidden="true"
+              autoPlay
               className={styles.brandMark}
               height={20}
-              src="/site/home/ascii-art-static.png"
-              unoptimized
+              loop
+              muted
+              playsInline
+              preload="auto"
+              role="presentation"
+              src={getStorageAssetUrl("home/avatar/home-avatar.mp4")}
               width={20}
             />
             <span>Zirui Zhao</span>

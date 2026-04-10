@@ -102,11 +102,9 @@ export const blogPosts = [
       "这篇文章来自于我在 23 年年中的一次组会分享，主要记录《沟通的方法》一书里对远程沟通、倾听和积极回应的阅读感悟。",
     date: "2023年2月10日",
     category: "GUIDE",
-    imageSrc:
-      "https://framerusercontent.com/images/VXVd6VwBBpsY0PBNf9ACGuwlo.jpg?width=5345&height=3563",
+    imageSrc: getBlogAssetUrl("communication-at-work", "cover.jpg"),
     imageAlt: "沟通的方法文章封面",
-    heroImageSrc:
-      "https://framerusercontent.com/images/VXVd6VwBBpsY0PBNf9ACGuwlo.jpg?width=5345&height=3563",
+    heroImageSrc: getBlogAssetUrl("communication-at-work", "cover.jpg"),
     heroImageAlt: "沟通的方法文章 banner",
     tone: "light",
     layout: "imageEnd",
@@ -194,7 +192,7 @@ export const blogPosts = [
       },
       {
         type: "image",
-        src: "https://framerusercontent.com/images/McXlPU2xUz2W6c7ln6i9PoOZTk.png",
+        src: getBlogAssetUrl("communication-at-work", "body-1.png"),
         alt: "",
       },
       {
@@ -223,7 +221,7 @@ export const blogPosts = [
       },
       {
         type: "image",
-        src: "https://framerusercontent.com/images/avOxeYiSufhiErCE17n15F1Ico.png",
+        src: getBlogAssetUrl("communication-at-work", "body-2.png"),
         alt: "",
       },
       {
@@ -471,16 +469,14 @@ export const blogPosts = [
       "这篇文章围绕产品创新的五要素、问题与解决方案的对焦过程，以及如何分辨真实用户需求展开整理。",
     date: "2022年4月20日",
     category: "GUIDE",
-    imageSrc:
-      "https://framerusercontent.com/images/VxphzLRXgblM8jZJnzPZ6Bhw5pI.jpg?width=2800&height=2800",
+    imageSrc: getBlogAssetUrl("hammer-and-nails", "cover.jpg"),
     imageAlt: "锤子与钉子文章缩略图",
-    heroImageSrc:
-      "https://framerusercontent.com/images/VxphzLRXgblM8jZJnzPZ6Bhw5pI.jpg?width=2800&height=2800",
+    heroImageSrc: getBlogAssetUrl("hammer-and-nails", "cover.jpg"),
     heroImageAlt: "锤子与钉子文章 banner",
     contentBlocks: [
       {
         type: "image",
-        src: "https://framerusercontent.com/images/eM3cmB3K5QoefSTiczzjul4hbaU.png?width=2000&height=1038",
+        src: getBlogAssetUrl("hammer-and-nails", "body-1.png"),
         alt: "",
       },
       {
@@ -647,7 +643,7 @@ export const blogPosts = [
       },
       {
         type: "image",
-        src: "https://framerusercontent.com/images/Dwg05ecesEOyLXENTrcq7wtu0o.png?width=2000&height=1688",
+        src: getBlogAssetUrl("hammer-and-nails", "body-2.png"),
         alt: "",
       },
       {
@@ -696,11 +692,9 @@ export const blogPosts = [
       "这是一篇关于笔记工具期待、蜜月期、使用痛点和后续取舍的复盘，重点不在工具神话，而在自己需求的变化。",
     date: "2024年1月15日",
     category: "TOOLS",
-    imageSrc:
-      "https://framerusercontent.com/images/P7cQ0XB7oysajZb45i30Sqh3Q.jpg?width=3600&height=2400",
+    imageSrc: getBlogAssetUrl("obsidian-from-honeymoon-to-wakeup", "cover.jpg"),
     imageAlt: "Obsidian：从满心欢喜到梦醒时分文章缩略图",
-    heroImageSrc:
-      "https://framerusercontent.com/images/P7cQ0XB7oysajZb45i30Sqh3Q.jpg?width=3600&height=2400",
+    heroImageSrc: getBlogAssetUrl("obsidian-from-honeymoon-to-wakeup", "cover.jpg"),
     heroImageAlt: "Obsidian：从满心欢喜到梦醒时分文章 banner",
     contentBlocks: [
       {
@@ -770,7 +764,7 @@ export const blogPosts = [
       },
       {
         type: "image",
-        src: "https://framerusercontent.com/images/2Nq0Lj1m2tnM5DrvZGLVCI0tHOU.png?width=3056&height=1218",
+        src: getBlogAssetUrl("obsidian-from-honeymoon-to-wakeup", "body-1.png"),
         alt: "",
       },
     ],
@@ -784,11 +778,9 @@ export const blogPosts = [
       "这篇文章围绕传统 Todos 的问题、Burner List 系统的做法，以及它为什么能帮助人们重新聚焦最重要的任务。",
     date: "2025年10月23日",
     category: "GUIDE",
-    imageSrc:
-      "https://framerusercontent.com/images/IWuwwbDt6mxzPCujCX92dn9138g.jpg?width=6000&height=4000",
+    imageSrc: getBlogAssetUrl("minimal-todos", "cover.jpg"),
     imageAlt: "简约 Todos 文章缩略图",
-    heroImageSrc:
-      "https://framerusercontent.com/images/IWuwwbDt6mxzPCujCX92dn9138g.jpg?width=6000&height=4000",
+    heroImageSrc: getBlogAssetUrl("minimal-todos", "cover.jpg"),
     heroImageAlt: "简约 Todos 文章 banner",
     contentBlocks: [
       {
@@ -1002,30 +994,25 @@ export const blogPosts = [
       },
     ],
   },
-  {
-    slug: "to-be-continue",
-    section: "browse",
-    title: "To be Continue",
-    summary: "一篇保留中的文章页面，目前只留下了最直接的更新提示。",
-    detailSummary: "这篇文章在 V1 站点中暂时只有一个非常简短的占位内容：敬请期待。",
-    date: "2024年6月22日",
-    category: "GUIDE",
-    imageSrc:
-      "https://framerusercontent.com/images/WlRldDSjtDSdVsovz4sBYi8xr0.png?width=1280&height=800",
-    imageAlt: "To be Continue 文章缩略图",
-    heroImageSrc:
-      "https://framerusercontent.com/images/WlRldDSjtDSdVsovz4sBYi8xr0.png?width=1280&height=800",
-    heroImageAlt: "To be Continue 文章 banner",
-    contentBlocks: [
-      {
-        type: "heading",
-        level: "h2",
-        text: "敬请期待！！",
-      },
-    ],
-  },
 ];
+
+function getBlogDateTimestamp(date) {
+  const match = date.match(/^(\d{4})年(\d{1,2})月(\d{1,2})日$/);
+
+  if (!match) {
+    return 0;
+  }
+
+  const [, year, month, day] = match;
+
+  return new Date(Number(year), Number(month) - 1, Number(day)).getTime();
+}
 
 export const featuredBlogPosts = blogPosts.filter((post) => post.section === "featured");
 
 export const browseBlogPosts = blogPosts.filter((post) => post.section === "browse");
+
+// Browse all 需要把 featured 文章也包含进来，并且按发布时间倒序显示。
+export const blogIndexPosts = [...blogPosts].sort(
+  (left, right) => getBlogDateTimestamp(right.date) - getBlogDateTimestamp(left.date)
+);

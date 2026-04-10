@@ -1,5 +1,8 @@
+import { getStorageAssetUrl } from "../lib/get-storage-asset-url";
+
 export const homeIntro = {
-  avatarSrc: "/site/home/ascii-art-static.png",
+  avatarMediaType: "video",
+  avatarSrc: getStorageAssetUrl("home/avatar/home-avatar.mp4"),
   avatarAlt: "Zirui Zhao 的首页头像插图",
   title:
     "Hey, I'm Zirui Zhao! A Product Designer with 4 years of experience. I design enterprise products across workflows, systems, and interfaces that teams can actually ship.",

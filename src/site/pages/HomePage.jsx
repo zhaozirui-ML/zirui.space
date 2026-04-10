@@ -16,14 +16,30 @@ export default function HomePage() {
 
       <div className={styles.homeTopMode}>
         <section className={styles.heroSection}>
-          <Image
-            alt={homeIntro.avatarAlt}
-            className={styles.heroAvatar}
-            height={76}
-            src={homeIntro.avatarSrc}
-            unoptimized
-            width={76}
-          />
+          {homeIntro.avatarMediaType === "video" ? (
+            <video
+              aria-label={homeIntro.avatarAlt}
+              autoPlay
+              className={styles.heroAvatar}
+              height={76}
+              loop
+              muted
+              playsInline
+              preload="auto"
+              role="img"
+              src={homeIntro.avatarSrc}
+              width={76}
+            />
+          ) : (
+            <Image
+              alt={homeIntro.avatarAlt}
+              className={styles.heroAvatar}
+              height={76}
+              src={homeIntro.avatarSrc}
+              unoptimized
+              width={76}
+            />
+          )}
           <h1 className={styles.heroTitle}>{homeIntro.title}</h1>
         </section>
       </div>
