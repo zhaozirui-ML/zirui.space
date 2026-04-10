@@ -1,3 +1,5 @@
+import { getBlogAssetUrl } from "../lib/get-blog-asset-url";
+
 // Blog 内容继续集中在数据层管理。
 // 这一版把 V1 站点上的真实文章内容迁入当前项目，页面只负责渲染，不在组件里散写正文。
 export const blogPosts = [
@@ -10,11 +12,9 @@ export const blogPosts = [
       "在 SmartX 内，设计师接到的需求大致可分为主线任务和支线任务，而设计系统部分又能继续细分出不同类型的沉淀工作。",
     date: "2023年6月28日",
     category: "DESIGN",
-    imageSrc:
-      "https://framerusercontent.com/images/UMX9BcVLmN4nyEMeGXkiDrbtZIo.jpg?width=5184&height=3456",
+    imageSrc: getBlogAssetUrl("smartx-design-workflow", "cover.jpg"),
     imageAlt: "SmartX 的设计工作流程文章封面",
-    heroImageSrc:
-      "https://framerusercontent.com/images/UMX9BcVLmN4nyEMeGXkiDrbtZIo.jpg?width=5184&height=3456",
+    heroImageSrc: getBlogAssetUrl("smartx-design-workflow", "cover.jpg"),
     heroImageAlt: "SmartX 的设计工作流程文章 banner",
     tone: "dark",
     layout: "imageStart",
@@ -75,7 +75,7 @@ export const blogPosts = [
       },
       {
         type: "image",
-        src: "https://framerusercontent.com/images/MvFFlJMzGt8fbgcfdanf1fak.png",
+        src: getBlogAssetUrl("smartx-design-workflow", "body-1.png"),
         alt: "",
       },
       {
@@ -84,7 +84,7 @@ export const blogPosts = [
       },
       {
         type: "image",
-        src: "https://framerusercontent.com/images/705vSeQNnFnIiysClk2XClEZ1bE.png",
+        src: getBlogAssetUrl("smartx-design-workflow", "body-2.png"),
         alt: "",
       },
       {

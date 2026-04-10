@@ -1,6 +1,67 @@
 .page {
+  --data-vis-hero-title: #fff;
+  --data-vis-hero-subtitle: rgba(252, 251, 248, 0.96);
+  --data-vis-hero-media-frame: rgba(10, 31, 76, 0.36);
+  --data-vis-demo-surface:
+    radial-gradient(circle at 20% 24%, rgba(66, 122, 241, 0.22), transparent 30%),
+    linear-gradient(180deg, #10264d 0%, #0d2144 100%);
+  --data-vis-demo-frame-border: rgba(50, 112, 255, 0.18);
+  --data-vis-demo-outline: rgba(69, 138, 255, 0.12);
+  --data-vis-demo-label: #58a9ff;
+  --data-vis-demo-text: #e7eeff;
+  --data-vis-demo-text-strong: #fff;
+  --data-vis-demo-text-body: rgba(233, 240, 255, 0.88);
+  --data-vis-demo-text-muted: rgba(233, 240, 255, 0.72);
+  --data-vis-demo-positive: #8dd56a;
+  --data-vis-demo-neutral: #ffb648;
+  --data-vis-chart-inset-bg: rgba(18, 38, 79, 0.92);
+  --data-vis-chart-inset-border: rgba(58, 112, 214, 0.14);
+  --data-vis-chart-track: rgba(153, 181, 255, 0.12);
+  --data-vis-gallery-shadow-soft: 0 1px 2px rgba(10, 13, 20, 0.03);
+  --data-vis-gallery-shadow-float: 0 16px 32px -12px rgba(14, 18, 27, 0.1);
+  --data-vis-demo-video-bg: #0d2144;
+  --data-vis-demo-surface-shadow: 0 14px 24px rgba(11, 20, 37, 0.16);
+  --data-vis-indicator-surface:
+    radial-gradient(circle at 40% 36%, rgba(75, 131, 255, 0.32), transparent 40%),
+    linear-gradient(180deg, rgba(19, 42, 84, 0.98), rgba(13, 32, 66, 0.98));
+  --data-vis-indicator-border: rgba(64, 138, 255, 0.3);
+  --data-vis-indicator-frame-border: rgba(87, 160, 255, 0.28);
+  --data-vis-chart-positive-fill: linear-gradient(90deg, #60d2a6, #71e1c7);
+  --data-vis-chart-neutral-fill: linear-gradient(90deg, #ffa86a, #ffb38b);
+  --data-vis-chart-positive-fill-vertical: linear-gradient(180deg, #b5f58b, #7ddb9a);
+  --data-vis-chart-neutral-fill-vertical: linear-gradient(180deg, #ffc38d, #ff9c67);
+  --data-vis-legend-positive: #8bebb2;
+  --data-vis-legend-neutral: #ffaf74;
   display: grid;
   gap: 0;
+}
+
+:global([data-color-theme="dark"]) .page {
+  --data-vis-hero-media-frame: rgba(18, 41, 84, 0.46);
+  --data-vis-demo-surface:
+    radial-gradient(circle at 20% 24%, rgba(90, 144, 255, 0.2), transparent 32%),
+    linear-gradient(180deg, #14315f 0%, #10284f 100%);
+  --data-vis-demo-frame-border: rgba(86, 150, 255, 0.2);
+  --data-vis-demo-outline: rgba(92, 156, 255, 0.16);
+  --data-vis-demo-label: #76b8ff;
+  --data-vis-demo-text-body: rgba(236, 242, 255, 0.9);
+  --data-vis-demo-text-muted: rgba(236, 242, 255, 0.76);
+  --data-vis-chart-inset-bg: rgba(20, 44, 90, 0.94);
+  --data-vis-chart-inset-border: rgba(74, 130, 230, 0.18);
+  --data-vis-chart-track: rgba(166, 194, 255, 0.16);
+  --data-vis-gallery-shadow-float: 0 18px 36px -14px rgba(4, 12, 26, 0.26);
+  --data-vis-demo-surface-shadow: 0 16px 30px rgba(5, 14, 29, 0.24);
+  --data-vis-indicator-surface:
+    radial-gradient(circle at 40% 36%, rgba(92, 152, 255, 0.34), transparent 40%),
+    linear-gradient(180deg, rgba(23, 50, 99, 0.98), rgba(16, 39, 78, 0.98));
+  --data-vis-indicator-border: rgba(92, 156, 255, 0.34);
+  --data-vis-indicator-frame-border: rgba(112, 176, 255, 0.32);
+  --data-vis-chart-positive-fill: linear-gradient(90deg, #79e5bc, #8deed0);
+  --data-vis-chart-neutral-fill: linear-gradient(90deg, #ffba80, #ffc59d);
+  --data-vis-chart-positive-fill-vertical: linear-gradient(180deg, #c8ff9e, #8ae5aa);
+  --data-vis-chart-neutral-fill-vertical: linear-gradient(180deg, #ffd1a4, #ffae7a);
+  --data-vis-legend-positive: #a5f5c6;
+  --data-vis-legend-neutral: #ffc189;
 }
 
 .caseBody {
@@ -44,7 +105,7 @@
   /* Figma 这里使用了单独的中文衬线标题字。
    * 第一阶段先不引入新字体，只用现有站点标题变量 + 系统宋体兜底，
    * 这样可以先把页面结构和节奏做对，后面再单独决定是否正式接入新字体。 */
-  color: #fff;
+  color: var(--data-vis-hero-title);
   font-family:
     var(--portfolio-font-title),
     "Songti SC",
@@ -58,7 +119,7 @@
 }
 
 .heroSubtitle {
-  color: rgba(252, 251, 248, 0.96);
+  color: var(--data-vis-hero-subtitle);
   font-family: var(--portfolio-font-body);
   font-size: clamp(1rem, 1.4vw, 1.25rem);
   line-height: 1.5;
@@ -66,7 +127,7 @@
 }
 
 .heroMediaFrame {
-  background: rgba(10, 31, 76, 0.36);
+  background: var(--data-vis-hero-media-frame);
   border-radius: var(--portfolio-radius-lg);
   box-shadow: var(--portfolio-shadow-card);
   overflow: hidden;
@@ -278,7 +339,7 @@
 
 .practiceGalleryMain {
   border-radius: 0.75rem;
-  box-shadow: 0 1px 2px rgba(10, 13, 20, 0.03);
+  box-shadow: var(--data-vis-gallery-shadow-soft);
   height: clamp(18rem, 47vw, 35.1875rem);
   left: 50%;
   overflow: hidden;
@@ -322,7 +383,7 @@
 }
 
 .expansionGalleryThumbLeft {
-  box-shadow: 0 1px 2px rgba(10, 13, 20, 0.03);
+  box-shadow: var(--data-vis-gallery-shadow-soft);
   height: 24.375rem;
   left: 3rem;
   top: 13.6875rem;
@@ -331,7 +392,7 @@
 }
 
 .expansionGalleryThumbRight {
-  box-shadow: 0 16px 32px -12px rgba(14, 18, 27, 0.1);
+  box-shadow: var(--data-vis-gallery-shadow-float);
   height: 21.875rem;
   left: 40.4375rem;
   top: 18.1875rem;
@@ -388,7 +449,7 @@
 }
 
 .demoVideo {
-  background: #0d2144;
+  background: var(--data-vis-demo-video-bg);
   display: block;
   height: auto;
   max-width: none;
@@ -420,21 +481,19 @@
 }
 
 .demoBoard {
-  background:
-    radial-gradient(circle at 20% 24%, rgba(66, 122, 241, 0.22), transparent 30%),
-    linear-gradient(180deg, #10264d 0%, #0d2144 100%);
+  background: var(--data-vis-demo-surface);
   border-radius: 0.75rem;
   box-shadow:
-    inset 0 0 0 1px rgba(50, 112, 255, 0.18),
-    0 14px 24px rgba(11, 20, 37, 0.16);
-  color: #e7eeff;
+    inset 0 0 0 1px var(--data-vis-demo-frame-border),
+    var(--data-vis-demo-surface-shadow);
+  color: var(--data-vis-demo-text);
   overflow: hidden;
   padding: clamp(0.875rem, 2vw, 1.5rem);
   position: relative;
 }
 
 .demoBoard::after {
-  border: 1px solid rgba(69, 138, 255, 0.12);
+  border: 1px solid var(--data-vis-demo-outline);
   border-radius: inherit;
   content: "";
   inset: 0.5rem;
@@ -443,7 +502,7 @@
 }
 
 .demoBoardLabel {
-  color: #58a9ff;
+  color: var(--data-vis-demo-label);
   font-family: var(--portfolio-font-label);
   font-size: 0.6875rem;
   font-weight: 700;
@@ -459,10 +518,8 @@
 }
 
 .indicatorCard {
-  background:
-    radial-gradient(circle at 40% 36%, rgba(75, 131, 255, 0.32), transparent 40%),
-    linear-gradient(180deg, rgba(19, 42, 84, 0.98), rgba(13, 32, 66, 0.98));
-  border: 1px solid rgba(64, 138, 255, 0.3);
+  background: var(--data-vis-indicator-surface);
+  border: 1px solid var(--data-vis-indicator-border);
   border-radius: 0.5rem;
   display: grid;
   gap: 0.375rem;
@@ -473,14 +530,14 @@
 }
 
 .indicatorCardFrame {
-  border: 1px solid rgba(87, 160, 255, 0.28);
+  border: 1px solid var(--data-vis-indicator-frame-border);
   border-radius: 0.375rem;
   inset: 0.375rem;
   position: absolute;
 }
 
 .indicatorCardLabel {
-  color: rgba(233, 240, 255, 0.88);
+  color: var(--data-vis-demo-text-body);
   font-family: var(--portfolio-font-body);
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -489,7 +546,7 @@
 
 .indicatorCardValue {
   align-items: baseline;
-  color: #fff;
+  color: var(--data-vis-demo-text-strong);
   display: inline-flex;
   font-family: var(--portfolio-font-label);
   font-size: clamp(2rem, 4vw, 2.625rem);
@@ -500,13 +557,13 @@
 }
 
 .indicatorCardUnit {
-  color: rgba(233, 240, 255, 0.72);
+  color: var(--data-vis-demo-text-muted);
   font-size: 1rem;
 }
 
 .indicatorCardMeta {
   align-items: center;
-  color: rgba(233, 240, 255, 0.72);
+  color: var(--data-vis-demo-text-muted);
   display: inline-flex;
   font-family: var(--portfolio-font-body);
   font-size: 0.875rem;
@@ -516,11 +573,11 @@
 }
 
 .indicatorCardMetaPositive {
-  color: #8dd56a;
+  color: var(--data-vis-demo-positive);
 }
 
 .indicatorCardMetaNeutral {
-  color: #ffb648;
+  color: var(--data-vis-demo-neutral);
 }
 
 .chartPanel {
@@ -535,8 +592,8 @@
 }
 
 .chartInset {
-  background: rgba(18, 38, 79, 0.92);
-  border: 1px solid rgba(58, 112, 214, 0.14);
+  background: var(--data-vis-chart-inset-bg);
+  border: 1px solid var(--data-vis-chart-inset-border);
   border-radius: 0.75rem;
   display: grid;
   gap: 0.875rem;
@@ -565,7 +622,7 @@
 .comparisonLabel,
 .chartTag,
 .ageHeader {
-  color: rgba(231, 238, 255, 0.72);
+  color: var(--data-vis-demo-text-muted);
   font-family: var(--portfolio-font-body);
   font-size: 0.75rem;
   line-height: 1rem;
@@ -573,7 +630,7 @@
 
 .tradeTrack,
 .ageTrack {
-  background: rgba(153, 181, 255, 0.12);
+  background: var(--data-vis-chart-track);
   border-radius: 999px;
   height: 0.3125rem;
   overflow: hidden;
@@ -590,11 +647,11 @@
 
 .tradeFill,
 .ageFillMale {
-  background: linear-gradient(90deg, #60d2a6, #71e1c7);
+  background: var(--data-vis-chart-positive-fill);
 }
 
 .ageFillFemale {
-  background: linear-gradient(90deg, #ffa86a, #ffb38b);
+  background: var(--data-vis-chart-neutral-fill);
 }
 
 .ageHeader {
@@ -621,7 +678,7 @@
 
 .legendItem {
   align-items: center;
-  color: rgba(231, 238, 255, 0.8);
+  color: color-mix(in srgb, var(--data-vis-demo-text-muted) 88%, transparent);
   display: inline-flex;
   font-family: var(--portfolio-font-body);
   font-size: 0.75rem;
@@ -638,11 +695,11 @@
 }
 
 .legendDotSafe {
-  background: #8bebb2;
+  background: var(--data-vis-legend-positive);
 }
 
 .legendDotDanger {
-  background: #ffaf74;
+  background: var(--data-vis-legend-neutral);
 }
 
 .chartTag {
@@ -678,11 +735,11 @@
 }
 
 .comparisonBarSafe {
-  background: linear-gradient(180deg, #b5f58b, #7ddb9a);
+  background: var(--data-vis-chart-positive-fill-vertical);
 }
 
 .comparisonBarDanger {
-  background: linear-gradient(180deg, #ffc38d, #ff9c67);
+  background: var(--data-vis-chart-neutral-fill-vertical);
 }
 
 .outcomesFrame {
