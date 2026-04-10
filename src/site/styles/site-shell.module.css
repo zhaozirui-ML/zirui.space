@@ -269,6 +269,73 @@
   padding: 1.5rem;
 }
 
+.legacyOverviewPanel {
+  align-items: stretch;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(249, 247, 241, 0.92));
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: var(--portfolio-radius-lg);
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
+  overflow: hidden;
+  padding: 1rem;
+}
+
+.legacyPreviewFrame {
+  aspect-ratio: var(--legacy-preview-ratio, 16 / 10);
+  background: #f3efe4;
+  border-radius: calc(var(--portfolio-radius-lg) - 0.25rem);
+  overflow: hidden;
+  position: relative;
+}
+
+.legacyPreviewImage {
+  object-fit: cover;
+}
+
+.legacyOverviewContent {
+  display: grid;
+  gap: 1rem;
+  padding: 0.5rem;
+}
+
+.legacyFactsGrid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+}
+
+.legacyFactCard {
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid rgba(24, 24, 24, 0.08);
+  border-radius: 1rem;
+  display: grid;
+  gap: 0.25rem;
+  margin: 0;
+  min-height: 5.5rem;
+  padding: 0.9rem 1rem;
+}
+
+.legacyFactLabel {
+  color: var(--portfolio-semantic-eyebrow-color);
+  font-family: var(--portfolio-font-label);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.legacyFactValue {
+  color: var(--portfolio-semantic-title-color);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.5;
+  margin: 0;
+}
+
 .placeholderTitle {
   color: var(--portfolio-semantic-title-color);
   font-family: var(--portfolio-font-title);
@@ -295,6 +362,31 @@
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 0.2em;
+}
+
+.primaryLinkButton {
+  align-items: center;
+  background: var(--portfolio-semantic-title-color);
+  border-radius: 0.9rem;
+  color: #fff;
+  display: inline-flex;
+  font-family: var(--portfolio-font-label);
+  font-size: 0.875rem;
+  font-weight: 700;
+  justify-content: center;
+  margin-top: 0.75rem;
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.primaryLinkButton:hover {
+  box-shadow: var(--portfolio-shadow-card);
+  transform: translateY(-1px);
+  transition:
+    box-shadow 160ms ease,
+    transform 160ms ease;
 }
 
 .siteFooter {
@@ -330,6 +422,14 @@
   .siteMainFlush {
     padding-top: 0;
   }
+
+  .legacyOverviewPanel {
+    grid-template-columns: 1fr;
+  }
+
+  .legacyFactsGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 640px) {
@@ -344,7 +444,8 @@
 
   .pageIntro,
   .workCard,
-  .placeholderPanel {
+  .placeholderPanel,
+  .legacyOverviewPanel {
     padding-left: 1rem;
     padding-right: 1rem;
   }

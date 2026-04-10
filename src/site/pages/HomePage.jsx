@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import HomeBlogsSection from "../components/home/HomeBlogsSection";
 import HomeSunnyShadow from "../components/home/HomeSunnyShadow";
 import HomeSkillsSection from "../components/home/HomeSkillsSection";
 import HomeWorksSection from "../components/home/HomeWorksSection";
@@ -25,11 +26,11 @@ export default function HomePage() {
           />
           <h1 className={styles.heroTitle}>{homeIntro.title}</h1>
         </section>
-
-        <HomeSkillsSection />
       </div>
 
       <HomeWorksSection />
+      <HomeSkillsSection />
+      <HomeBlogsSection />
     </div>
   );
 }

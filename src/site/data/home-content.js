@@ -2,7 +2,7 @@ export const homeIntro = {
   avatarSrc: "/site/home/ascii-art-static.png",
   avatarAlt: "Zirui Zhao 的首页头像插图",
   title:
-    "Hey, I'm Zirui Zhao! A Product Designer with 4 years of experience. I design complex systems into experiences that are readable, shippable, and memorable.",
+    "Hey, I'm Zirui Zhao! A Product Designer with 4 years of experience. I design enterprise products across workflows, systems, and interfaces that teams can actually ship.",
 };
 
 export const homeSkills = [

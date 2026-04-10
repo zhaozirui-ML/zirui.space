@@ -3,5 +3,4 @@ export const siteNavigation = [
   { label: "Work", href: "/work" },
   { label: "Blog", href: "/blog" },
   { label: "About", href: "/about" },
-  { label: "Mode", href: "/design-system" },
 ];

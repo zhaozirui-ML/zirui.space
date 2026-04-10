@@ -4,19 +4,23 @@ import {
   getAllBlogSlugs,
   getBlogBySlug,
 } from "../../../../src/site/lib/get-blog-by-slug";
+import { getReturnPath } from "../../../../src/site/lib/get-return-path";
 import BlogDetailPage from "../../../../src/site/pages/BlogDetailPage";
 
 export function generateStaticParams() {
   return getAllBlogSlugs().map((slug) => ({ slug }));
 }
 
-export default async function BlogDetailRoutePage({ params }) {
+export default async function BlogDetailRoutePage({ params, searchParams }) {
   const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
   const post = getBlogBySlug(resolvedParams.slug);
 
   if (!post) {
     notFound();
   }
 
-  return <BlogDetailPage slug={resolvedParams.slug} />;
+  const returnHref = getReturnPath(resolvedSearchParams?.from, "/blog");
+
+  return <BlogDetailPage returnHref={returnHref} slug={resolvedParams.slug} />;
 }

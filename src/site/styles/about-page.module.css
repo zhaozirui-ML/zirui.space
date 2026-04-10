@@ -1,0 +1,259 @@
+.page {
+  display: grid;
+  gap: clamp(4rem, 7vw, 6rem);
+  margin: 0 auto;
+  max-width: var(--portfolio-layout-content-width);
+  width: 100%;
+}
+
+.hero {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.heroCopy {
+  display: grid;
+  gap: 0.875rem;
+}
+
+.eyebrow {
+  color: var(--portfolio-semantic-eyebrow-color);
+  font-family: var(--portfolio-font-label);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.title {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-title);
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+  margin: 0;
+  max-width: 12ch;
+  text-wrap: balance;
+}
+
+.description {
+  color: var(--portfolio-semantic-body-color);
+  font-size: 1rem;
+  line-height: 1.8;
+  margin: 0;
+  max-width: 44rem;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tag {
+  background: rgba(240, 237, 232, 0.88);
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: 999px;
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-label);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  padding: 0.75rem 1rem;
+}
+
+.section {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.sectionHeading {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 44rem;
+}
+
+.sectionTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-title);
+  font-size: clamp(1.625rem, 2.4vw, 2.25rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.sectionDescription {
+  color: var(--portfolio-color-text-muted);
+  font-size: 0.975rem;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.experienceGrid,
+.principlesGrid,
+.supportGrid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.experienceGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.card {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(249, 247, 241, 0.92));
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: var(--portfolio-radius-lg);
+  box-shadow: 0 10px 24px -18px rgba(14, 18, 27, 0.18);
+  display: grid;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.cardHeader {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.cardTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-title);
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+  margin: 0;
+}
+
+.cardMeta {
+  color: var(--portfolio-color-accent-brand);
+  font-family: var(--portfolio-font-label);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.cardBody {
+  color: var(--portfolio-semantic-body-color);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.principlesGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.principleCard {
+  background: var(--portfolio-color-surface);
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: var(--portfolio-radius-lg);
+  display: grid;
+  gap: 0.875rem;
+  min-height: 100%;
+  padding: 1.5rem;
+}
+
+.principleTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-label);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.supportGrid {
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 22rem);
+}
+
+.supportCard {
+  background: var(--portfolio-color-surface);
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: var(--portfolio-radius-lg);
+  display: grid;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.list {
+  color: var(--portfolio-semantic-body-color);
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.list li {
+  line-height: 1.8;
+}
+
+.contactBlock {
+  display: grid;
+  gap: 1rem;
+}
+
+.contactLink {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-label);
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.contactLink:hover,
+.secondaryLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.secondaryLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+}
+
+.secondaryLink {
+  color: var(--portfolio-color-text-muted);
+  font-family: var(--portfolio-font-label);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (max-width: 900px) {
+  .experienceGrid,
+  .principlesGrid,
+  .supportGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    gap: var(--portfolio-space-md);
+  }
+
+  .title {
+    max-width: 100%;
+  }
+
+  .card,
+  .principleCard,
+  .supportCard {
+    padding: 1.25rem;
+  }
+}

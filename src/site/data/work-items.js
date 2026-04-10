@@ -4,19 +4,30 @@ export const workItems = [
   {
     slug: "drawing-ledger-2-0",
     title: "Drawing Register 2.0",
-    homeTitle: "图纸台账 2.0",
+    homeTitle: "Drawing Register 2.0",
     category: "Web + App",
     homeCategory: "App & Web",
     year: "2025",
     summary:
       "Redesigning the end to end workflow for drawing registration, parsing, and collaboration",
     homeSummary:
-      "围绕施工业务里的图纸流转、确认与下发流程，重构核心信息结构与操作链路。",
+      "Redesigned a complex drawing workflow across upload, parsing, registration, and collaboration.",
     detailSummary:
       "A detailed case study will be connected here next, including the workflow redesign, parsing logic, and collaboration decisions.",
     showOnHome: true,
     homeCardVariant: "featured",
     homeMediaPosition: "end",
+    homeMediaFrame: {
+      backgroundSrc: "/site/home/figma-home/work-drawing-background.png",
+      foregroundAspectRatio: "360 / 225",
+      foregroundHeight: "74.5%",
+      foregroundLeft: "10.2%",
+      foregroundRadius: "0",
+      foregroundShadow: "none",
+      foregroundSrc: "/site/home/figma-home/work-drawing-foreground.png",
+      foregroundTop: "14.5%",
+      foregroundWidth: "79.6%",
+    },
     detailTheme: Object.freeze({
       headingAccentColor: "var(--portfolio-color-accent-brand)",
     }),
@@ -34,18 +45,30 @@ export const workItems = [
   {
     slug: "axzo-design-system",
     title: "Axzo Design Portal",
-    homeTitle: "AXZO Design System",
+    homeTitle: "Axzo Design System Portal",
     category: "Web",
     year: "2025",
     summary:
       "Designing how a design system is understood, accessed, and adopted",
     homeSummary:
-      "整理组件规则、视觉语义与交付协作方式，降低复杂业务中的设计和开发沟通成本。",
+      "Designing how a design system is understood, accessed, and adopted",
     detailSummary:
       "A detailed case study will be connected here next, including the portal structure, adoption strategy, and design system rollout.",
     showOnHome: true,
     homeCardVariant: "standard",
     homeMediaPosition: "start",
+    homeMediaFrame: {
+      backgroundSrc: "/site/home/figma-home/work-axzo-background.png",
+      foregroundAspectRatio: "312 / 190.694",
+      foregroundHeight: "78.5%",
+      foregroundLeft: "50%",
+      foregroundRadius: "0.25rem",
+      foregroundShadow: "none",
+      foregroundSrc: "/site/home/figma-home/work-axzo-foreground.png",
+      foregroundTop: "50%",
+      foregroundTransform: "translate(-50%, -50%)",
+      foregroundWidth: "74.3%",
+    },
     detailTheme: Object.freeze({
       headingAccentColor: "#647654",
     }),
@@ -67,19 +90,31 @@ export const workItems = [
   {
     slug: "data-visualization-screen",
     title: "Data Visualization System",
-    homeTitle: "大屏数据可视化",
+    homeTitle: "Data Visualization System",
     category: "Large Screen",
-    homeCategory: "Web",
+    homeCategory: "Data Visualization",
     year: "2025",
     summary:
       "Designing a portal for how a design system spreads",
     homeSummary:
-      "为大屏展示场景建立更稳定的信息层级、图表节奏与阅读顺序，提升可理解性。",
+      "Defined a reusable visual language for dashboards and large-screen data experiences.",
     detailSummary:
       "将省、市、区三级建筑大屏设计整合为统一视觉语言，并把图表探索扩展到更复杂的大屏场景。",
     showOnHome: true,
     homeCardVariant: "standard",
     homeMediaPosition: "end",
+    homeMediaFrame: {
+      backgroundSrc: "/site/home/figma-home/work-data-background.png",
+      foregroundAspectRatio: "302.4 / 170.1",
+      foregroundHeight: "70.1%",
+      foregroundLeft: "50%",
+      foregroundRadius: "0.25rem",
+      foregroundShadow: "0 3.2px 6.4px -2.4px rgba(14, 18, 27, 0.1)",
+      foregroundSrc: "/site/home/figma-home/work-data-foreground.png",
+      foregroundTop: "50%",
+      foregroundTransform: "translate(-50%, -50%)",
+      foregroundWidth: "72%",
+    },
     detailTheme: Object.freeze({
       headingAccentColor: "#5684AE",
     }),
@@ -107,6 +142,7 @@ export const workItems = [
       "Systematically evolving an existing design system through component refinement, reusable patterns, and UI map documentation",
     detailSummary:
       "A detailed case study will be connected here next, covering component refinement, reusable patterns, and system mapping.",
+    legacyUrl: "https://zirui.framer.website/design-system",
     showOnHome: false,
     workCardVariant: "featureTall",
     workTags: ["2023-2024", "Web", "Design System"],
@@ -126,6 +162,7 @@ export const workItems = [
       "Designing a standalone virtualization product for flexible resource expansion",
     detailSummary:
       "A detailed case study will be connected here next, including the virtualization product framing and resource management decisions.",
+    legacyUrl: "https://zirui.framer.website/smtx-elf",
     showOnHome: false,
     workCardVariant: "compact",
     workTags: ["2023", "Web", "UI/UX Design"],
@@ -145,6 +182,7 @@ export const workItems = [
       "Improving batch VM creation with clearer logic, lower error rates, and better efficiency",
     detailSummary:
       "A detailed case study will be connected here next, focusing on interaction logic and operational efficiency improvements.",
+    legacyUrl: "https://zirui.framer.website/vm-optimization",
     showOnHome: false,
     workCardVariant: "compact",
     workTags: ["2023", "Web", "Interaction Design"],
