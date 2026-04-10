@@ -1,8 +1,9 @@
 .blogPage {
-  --blog-grid-border: #ece9e4;
-  --blog-grid-border-strong: #dcd9d1;
-  --blog-grid-border-dashed: #ece9e4;
-  --blog-grid-border-ghost: rgb(220 217 209 / 0.45);
+  --blog-grid-border: var(--portfolio-color-border-light);
+  --blog-grid-border-strong: var(--portfolio-color-border-strong);
+  --blog-grid-border-dashed: var(--portfolio-color-border-light);
+  --blog-grid-border-ghost:
+    color-mix(in srgb, var(--portfolio-color-border-strong) 45%, transparent);
   margin: 0 auto;
   width: min(100%, 72rem);
 }
@@ -186,11 +187,11 @@
 }
 
 .featuredSummaryDark {
-  color: rgb(249 248 246 / 0.8);
+  color: color-mix(in srgb, var(--portfolio-color-text-title) 80%, transparent);
 }
 
 .blogMeta {
-  color: #8a8580;
+  color: var(--portfolio-color-text-subtle);
   display: inline-flex;
   flex-wrap: wrap;
   font-family: var(--portfolio-font-body);
@@ -202,7 +203,7 @@
 }
 
 .blogMetaDark {
-  color: #8a8580;
+  color: var(--portfolio-color-text-subtle);
 }
 
 .spacerFrame {
@@ -280,7 +281,8 @@
 
 @media (hover: hover) {
   .featuredCard:hover {
-    background: rgb(179 106 94 / 0.05);
+    background:
+      color-mix(in srgb, var(--portfolio-color-accent-brand) 5%, transparent);
   }
 
   .featuredCardDark:hover {
@@ -288,15 +290,16 @@
   }
 
   .featuredCard:hover .blogMeta {
-    color: #7f7a75;
+    color: var(--portfolio-color-text-muted);
   }
 
   .featuredCardDark:hover .blogMetaDark {
-    color: #908a84;
+    color: var(--portfolio-color-text-muted);
   }
 
   .browseCard:hover {
-    background: rgb(100 118 84 / 0.05);
+    background:
+      color-mix(in srgb, var(--portfolio-color-accent-moss) 5%, transparent);
   }
 }
 

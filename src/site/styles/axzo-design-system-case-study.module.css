@@ -1,5 +1,5 @@
 .caseStudy {
-  --axzo-case-accent: #647654;
+  --axzo-case-accent: var(--portfolio-color-accent-moss);
   --axzo-heading-font: var(--portfolio-font-title);
   display: grid;
   gap: clamp(4.5rem, 7vw, 8.25rem);
@@ -108,7 +108,7 @@
 }
 
 .mediaFrameSoft {
-  background: #faf9f6;
+  background: var(--portfolio-color-bg-soft);
 }
 
 .mediaInset {

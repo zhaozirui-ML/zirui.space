@@ -79,7 +79,7 @@ export default function CaseStudyToc({
   items,
   levelIndent = "0.875rem",
   linkPaddingStart = "0.625rem",
-  mutedColor = "rgba(122, 126, 128, 0.92)",
+  mutedColor = "var(--portfolio-color-text-muted)",
   preferHistoryBack = true,
   titleColor = "var(--portfolio-semantic-title-color)",
 }) {

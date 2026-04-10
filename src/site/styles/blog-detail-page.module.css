@@ -1,8 +1,8 @@
 .articlePage {
   --blog-reading-width: 42rem;
   --blog-header-width: 58rem;
-  --blog-grid-border: #ece9e4;
-  --blog-grid-border-dashed: #ece9e4;
+  --blog-grid-border: var(--portfolio-color-border-light);
+  --blog-grid-border-dashed: var(--portfolio-color-border-light);
 
   display: grid;
   gap: 0;
@@ -134,7 +134,7 @@
 
 .metaRow {
   align-items: center;
-  color: var(--portfolio-color-text-muted);
+  color: var(--portfolio-color-text-subtle);
   display: flex;
   flex-wrap: wrap;
   font-size: 0.9375rem;

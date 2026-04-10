@@ -389,7 +389,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work" }) {
     backHref,
     backLabel: "返回",
     desktopTopOffset: "var(--portfolio-space-section-y)",
-    mutedColor: "rgba(122, 126, 128, 0.92)",
+    mutedColor: "var(--portfolio-color-text-muted)",
     titleColor: "var(--portfolio-semantic-title-color)",
   };
 

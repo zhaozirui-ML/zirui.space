@@ -1,6 +1,8 @@
 .homePage {
-  --home-background-offset-top: 10.25rem;
+  --home-main-offset-top: 4.5rem;
   --home-sunny-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --home-sunny-window-width: 100vw;
+  --home-sunny-window-height: 100svh;
   display: grid;
   gap: 6rem;
   margin: 0 auto;
@@ -16,8 +18,7 @@
   position: relative;
 }
 
-.homeTopMode::before,
-.homeTopMode::after {
+.homeTopMode::before {
   content: "";
   left: 50%;
   pointer-events: none;
@@ -31,85 +32,66 @@
   display: none;
 }
 
-.homeTopMode::after {
-  background: linear-gradient(
-    180deg,
-    rgba(252, 251, 248, 0) 0%,
-    rgba(252, 249, 243, 0.54) 42%,
-    rgba(252, 251, 248, 1) 100%
-  );
-  bottom: -3.75rem;
-  height: 11rem;
-}
-
 .homeBackground {
-  bottom: -1.25rem;
+  height: var(--home-sunny-window-height);
   left: 50%;
   opacity: 1;
   overflow: hidden;
   pointer-events: none;
   position: absolute;
-  top: calc(-1 * var(--home-background-offset-top));
+  top: calc(-1 * var(--home-main-offset-top));
   transform: translateX(-50%);
-  width: min(120rem, 100vw);
+  width: var(--home-sunny-window-width);
   z-index: 0;
 }
 
 .homeBackground::before {
-  background: linear-gradient(180deg, rgba(252, 251, 248, 0.02) 0%, rgba(252, 251, 248, 0.92) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(252, 251, 248, 0.12) 0%,
+    rgba(252, 251, 248, 0.34) 28%,
+    rgba(252, 251, 248, 0.76) 68%,
+    rgba(252, 251, 248, 1) 100%
+  );
   content: "";
   inset: 0;
   position: absolute;
 }
 
 .sunnyLeafField {
-  /* 把真实树影收成一个更局部的顶部窗口，避免整块顶部都被视频占满。 */
+  /* 参考 huazi.space 的顶部 Dappled Light：做成更轻、更居中的顶部光斑窗口。 */
   inset: 0;
   opacity: 1;
   -webkit-mask-image:
     linear-gradient(
-      112deg,
-      rgba(0, 0, 0, 0) 14%,
-      rgba(0, 0, 0, 0.18) 36%,
-      rgba(0, 0, 0, 0.84) 66%,
-      rgba(0, 0, 0, 1) 100%
-    ),
-    linear-gradient(
       180deg,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0.06) 22%,
-      rgba(0, 0, 0, 0.44) 54%,
-      rgba(0, 0, 0, 0.9) 82%,
-      rgba(0, 0, 0, 1) 100%
+      rgba(0, 0, 0, 0.78) 0%,
+      rgba(0, 0, 0, 0.58) 18%,
+      rgba(0, 0, 0, 0.22) 52%,
+      rgba(0, 0, 0, 0.04) 82%,
+      rgba(0, 0, 0, 0) 100%
     ),
     radial-gradient(
-      ellipse 92% 82% at 26% 84%,
+      ellipse 78% 60% at 50% 10%,
       rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.82) 42%,
-      rgba(0, 0, 0, 0.3) 72%,
+      rgba(0, 0, 0, 0.8) 44%,
+      rgba(0, 0, 0, 0.3) 76%,
       rgba(0, 0, 0, 0) 100%
     );
   mask-image:
     linear-gradient(
-      112deg,
-      rgba(0, 0, 0, 0) 14%,
-      rgba(0, 0, 0, 0.18) 36%,
-      rgba(0, 0, 0, 0.84) 66%,
-      rgba(0, 0, 0, 1) 100%
-    ),
-    linear-gradient(
       180deg,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0.06) 22%,
-      rgba(0, 0, 0, 0.44) 54%,
-      rgba(0, 0, 0, 0.9) 82%,
-      rgba(0, 0, 0, 1) 100%
+      rgba(0, 0, 0, 0.78) 0%,
+      rgba(0, 0, 0, 0.58) 18%,
+      rgba(0, 0, 0, 0.22) 52%,
+      rgba(0, 0, 0, 0.04) 82%,
+      rgba(0, 0, 0, 0) 100%
     ),
     radial-gradient(
-      ellipse 92% 82% at 26% 84%,
+      ellipse 78% 60% at 50% 10%,
       rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.82) 42%,
-      rgba(0, 0, 0, 0.3) 72%,
+      rgba(0, 0, 0, 0.8) 44%,
+      rgba(0, 0, 0, 0.3) 76%,
       rgba(0, 0, 0, 0) 100%
     );
   -webkit-mask-repeat: no-repeat;
@@ -123,16 +105,16 @@
 }
 
 .sunnyLeafVideo {
-  filter: saturate(0.68) brightness(1.02);
+  filter: saturate(0.88) brightness(1.06) contrast(0.92);
   height: 100%;
   left: 0;
   mix-blend-mode: multiply;
   object-fit: cover;
-  object-position: 50% 42%;
-  opacity: 0.52;
+  object-position: 50% 45%;
+  opacity: 0.72;
   position: absolute;
   top: 0;
-  transform: scale(1.04) translate3d(4%, -18%, 0) rotate(-12deg);
+  transform: scale(1.12) translate3d(0, -10%, 0);
   transform-origin: 50%;
   user-select: none;
   will-change: transform, opacity;
@@ -254,13 +236,13 @@
 }
 
 .skillItemActive {
-  background: rgba(249, 250, 250, 0.92);
-  border: 1px solid #e5e5e5;
+  background: color-mix(in srgb, var(--portfolio-color-surface) 92%, transparent);
+  border: 1px solid var(--portfolio-color-border-light);
   color: var(--portfolio-color-text-title);
 }
 
 .skillItemMuted {
-  border: 1px dashed #e5e5e5;
+  border: 1px dashed var(--portfolio-color-border-light);
 }
 
 .skillIconWrap {
@@ -279,8 +261,8 @@
 }
 
 .skillIconWrapMuted {
-  background: rgba(240, 237, 232, 0.74);
-  color: rgba(74, 77, 78, 0.84);
+  background: color-mix(in srgb, var(--portfolio-color-surface-warm) 74%, transparent);
+  color: color-mix(in srgb, var(--portfolio-color-text-body) 84%, transparent);
 }
 
 .skillIcon {
@@ -322,7 +304,11 @@
 .skillHighlightBadge {
   align-items: center;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(214, 220, 231, 0.84) 100%);
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--portfolio-color-bg-pure) 98%, transparent) 0%,
+      color-mix(in srgb, var(--portfolio-color-surface-raised) 84%, transparent) 100%
+    );
   border-radius: 0.5rem;
   box-shadow: 0 9px 14px rgba(4, 11, 24, 0.14);
   display: inline-flex;
@@ -344,7 +330,7 @@
 
 .skillHighlightGlyph {
   align-items: center;
-  background: rgba(255, 255, 255, 0.74);
+  background: color-mix(in srgb, var(--portfolio-color-bg-pure) 74%, transparent);
   border-radius: 999px;
   color: var(--portfolio-color-accent-brand);
   display: inline-flex;
@@ -354,7 +340,7 @@
 }
 
 .skillHighlightCaption {
-  color: rgba(46, 46, 46, 0.72);
+  color: color-mix(in srgb, var(--portfolio-color-text-body) 72%, transparent);
   font-size: 0.82rem;
   line-height: 1.7;
   margin: 0;
@@ -370,7 +356,7 @@
 
 .workCard {
   background: var(--portfolio-color-surface);
-  border: 1px solid #e3e5e8;
+  border: 1px solid var(--portfolio-color-border-light);
   border-radius: 1.5rem;
   display: grid;
   gap: 3rem;
@@ -381,7 +367,7 @@
 }
 
 .workCard:hover {
-  border-color: rgba(45, 47, 48, 0.12);
+  border-color: var(--portfolio-color-border-strong);
 }
 
 .workCardFeatured {
@@ -424,7 +410,7 @@
 }
 
 .workCategoryLabel {
-  color: rgba(109, 115, 120, 0.8);
+  color: color-mix(in srgb, var(--portfolio-color-text-muted) 80%, transparent);
   font-family: var(--portfolio-font-label);
   font-size: 0.75rem;
   font-weight: 700;
@@ -432,6 +418,16 @@
   line-height: 1rem;
   margin: 0;
   text-transform: uppercase;
+}
+
+:global([data-color-theme="dark"]) .homeBackground::before {
+  background: linear-gradient(
+    180deg,
+    rgba(18, 17, 16, 0.08) 0%,
+    rgba(18, 17, 16, 0.22) 28%,
+    rgba(28, 27, 26, 0.72) 68%,
+    rgba(28, 27, 26, 0.96) 100%
+  );
 }
 
 .workCopyStack {
@@ -595,6 +591,7 @@
 
 @media (max-width: 900px) {
   .homePage {
+    --home-main-offset-top: 3rem;
     gap: 4.5rem;
   }
 
@@ -604,7 +601,7 @@
 
   .homeTopMode::before {
     height: 34rem;
-    top: calc(-1 * var(--home-background-offset-top) + 1.5rem);
+    top: calc(-1 * var(--home-main-offset-top) + 1.5rem);
   }
 
   .skillsLayout,
@@ -638,7 +635,9 @@
 
 @media (max-width: 640px) {
   .homePage {
-    --home-background-offset-top: 9.5rem;
+    --home-main-offset-top: 3rem;
+    --home-sunny-window-width: 100vw;
+    --home-sunny-window-height: 100svh;
     gap: 3.5rem;
   }
 
@@ -646,23 +645,13 @@
     gap: 4rem;
   }
 
-  .homeTopMode::after {
-    bottom: -3rem;
-    height: 8rem;
-  }
-
-  .homeBackground {
-    bottom: -0.5rem;
-    top: calc(-1 * var(--home-background-offset-top) + 1.5rem);
-  }
-
   .sunnyLeafField {
-    opacity: 0.7;
+    opacity: 0.84;
   }
 
   .sunnyLeafVideo {
-    object-position: center 34%;
-    transform: scale(1.22) translate3d(-8%, 0, 0);
+    object-position: center 16%;
+    transform: scale(1.16) translate3d(0, -6%, 0);
   }
 
   .heroSection,

@@ -10,11 +10,11 @@ import styles from "../styles/home-page.module.css";
 export default function HomePage() {
   return (
     <div className={styles.homePage}>
-      <div className={styles.homeTopMode}>
-        <div aria-hidden="true" className={styles.homeBackground}>
-          <HomeSunnyShadow />
-        </div>
+      <div aria-hidden="true" className={styles.homeBackground}>
+        <HomeSunnyShadow />
+      </div>
 
+      <div className={styles.homeTopMode}>
         <section className={styles.heroSection}>
           <Image
             alt={homeIntro.avatarAlt}

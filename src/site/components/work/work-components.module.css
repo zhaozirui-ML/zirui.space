@@ -45,7 +45,7 @@
 .tabChip:focus-visible {
   outline:
     var(--portfolio-work-tabs-focus-outline-width) solid
-    color-mix(in srgb, var(--portfolio-color-accent-brand) 55%, white);
+    var(--portfolio-color-accent-brand);
   outline-offset: var(--portfolio-work-tabs-focus-outline-offset);
 }
 
@@ -61,7 +61,7 @@
 }
 
 .tabChipActive {
-  background: var(--ds-color-surface-soft);
+  background: var(--portfolio-color-bg-soft);
   border-color: var(--portfolio-color-border-light);
   color: var(--portfolio-color-text-body);
 }
@@ -186,7 +186,7 @@
 .explorationCard,
 .sideProjectCard {
   background: var(--portfolio-color-surface);
-  border: var(--portfolio-work-border-width) solid var(--ds-color-border);
+  border: var(--portfolio-work-border-width) solid var(--portfolio-color-border-light);
   border-radius: var(--portfolio-radius-lg);
   overflow: hidden;
 }
@@ -539,7 +539,7 @@
   border-radius: var(--ds-radius-pill);
   outline:
     var(--portfolio-work-side-project-focus-outline-width) solid
-    color-mix(in srgb, var(--portfolio-color-accent-brand) 55%, white);
+    var(--portfolio-color-accent-brand);
   outline-offset: var(--portfolio-work-side-project-focus-outline-offset);
 }
 
