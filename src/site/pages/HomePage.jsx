@@ -1,7 +1,6 @@
 import Image from "next/image";
 
 import HomeBlogsSection from "../components/home/HomeBlogsSection";
-import HomeSunnyShadow from "../components/home/HomeSunnyShadow";
 import HomeSkillsSection from "../components/home/HomeSkillsSection";
 import HomeWorksSection from "../components/home/HomeWorksSection";
 import { homeIntro } from "../data/home-content";
@@ -10,10 +9,6 @@ import styles from "../styles/home-page.module.css";
 export default function HomePage() {
   return (
     <div className={styles.homePage}>
-      <div aria-hidden="true" className={styles.homeBackground}>
-        <HomeSunnyShadow />
-      </div>
-
       <div className={styles.homeTopMode}>
         <section className={styles.heroSection}>
           <Image

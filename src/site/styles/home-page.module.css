@@ -1,8 +1,6 @@
 .homePage {
   --home-main-offset-top: 4.5rem;
   --home-sunny-ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --home-sunny-window-width: 100vw;
-  --home-sunny-window-height: 100svh;
   display: grid;
   gap: 6rem;
   margin: 0 auto;
@@ -30,98 +28,6 @@
 
 .homeTopMode::before {
   display: none;
-}
-
-.homeBackground {
-  height: var(--home-sunny-window-height);
-  left: 0;
-  opacity: 1;
-  overflow: hidden;
-  pointer-events: none;
-  position: fixed;
-  top: 0;
-  width: var(--home-sunny-window-width);
-  z-index: 0;
-}
-
-.homeBackground::before {
-  background: linear-gradient(
-    180deg,
-    rgba(252, 251, 248, 0.12) 0%,
-    rgba(252, 251, 248, 0.34) 28%,
-    rgba(252, 251, 248, 0.76) 68%,
-    rgba(252, 251, 248, 1) 100%
-  );
-  content: "";
-  inset: 0;
-  position: absolute;
-}
-
-.sunnyLeafField {
-  /* 参考 huazi.space 的顶部 Dappled Light：做成更轻、更居中的顶部光斑窗口。 */
-  inset: 0;
-  opacity: 1;
-  -webkit-mask-image:
-    linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.78) 0%,
-      rgba(0, 0, 0, 0.58) 18%,
-      rgba(0, 0, 0, 0.22) 52%,
-      rgba(0, 0, 0, 0.04) 82%,
-      rgba(0, 0, 0, 0) 100%
-    ),
-    radial-gradient(
-      ellipse 78% 60% at 50% 10%,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.8) 44%,
-      rgba(0, 0, 0, 0.3) 76%,
-      rgba(0, 0, 0, 0) 100%
-    );
-  mask-image:
-    linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.78) 0%,
-      rgba(0, 0, 0, 0.58) 18%,
-      rgba(0, 0, 0, 0.22) 52%,
-      rgba(0, 0, 0, 0.04) 82%,
-      rgba(0, 0, 0, 0) 100%
-    ),
-    radial-gradient(
-      ellipse 78% 60% at 50% 10%,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.8) 44%,
-      rgba(0, 0, 0, 0.3) 76%,
-      rgba(0, 0, 0, 0) 100%
-    );
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-  overflow: hidden;
-  pointer-events: none;
-  position: absolute;
-  z-index: 1;
-}
-
-.sunnyLeafVideo {
-  filter: saturate(0.88) brightness(1.06) contrast(0.92);
-  height: 100%;
-  left: 0;
-  mix-blend-mode: multiply;
-  object-fit: cover;
-  object-position: 50% 45%;
-  opacity: 0.72;
-  position: absolute;
-  top: 0;
-  transform: scale(1.12) translate3d(0, -10%, 0);
-  transform-origin: 50%;
-  user-select: none;
-  will-change: transform, opacity;
-  width: 100%;
-}
-
-.sunnyLeafVideo::-webkit-media-controls {
-  display: none !important;
 }
 
 .heroSection,
@@ -419,16 +325,6 @@
   text-transform: uppercase;
 }
 
-:global([data-color-theme="dark"]) .homeBackground::before {
-  background: linear-gradient(
-    180deg,
-    rgba(18, 17, 16, 0.08) 0%,
-    rgba(18, 17, 16, 0.22) 28%,
-    rgba(28, 27, 26, 0.72) 68%,
-    rgba(28, 27, 26, 0.96) 100%
-  );
-}
-
 .workCopyStack {
   display: grid;
   gap: 1.5rem;
@@ -635,22 +531,11 @@
 @media (max-width: 640px) {
   .homePage {
     --home-main-offset-top: 3rem;
-    --home-sunny-window-width: 100vw;
-    --home-sunny-window-height: 100svh;
     gap: 3.5rem;
   }
 
   .homeTopMode {
     gap: 4rem;
-  }
-
-  .sunnyLeafField {
-    opacity: 0.84;
-  }
-
-  .sunnyLeafVideo {
-    object-position: center 16%;
-    transform: scale(1.16) translate3d(0, -6%, 0);
   }
 
   .heroSection,
@@ -698,11 +583,5 @@
 
   .blogCardMedia {
     min-height: calc(10rem - 2px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .sunnyLeafField {
-    display: none;
   }
 }

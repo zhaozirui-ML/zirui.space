@@ -8,7 +8,9 @@ import {
 import useMediaQuery from "../../../design-system/hooks/useMediaQuery";
 
 import { inter, ivyPresto, satoshi } from "../fonts/site-fonts";
+import { isModuleHomePath } from "../lib/is-module-home-path";
 import SiteChromeFrame from "./SiteChromeFrame";
+import SiteSunnyBackground from "./SiteSunnyBackground";
 import styles from "../styles/site-shell.module.css";
 
 export default function SiteLayout({ children }) {
@@ -19,7 +21,7 @@ export default function SiteLayout({ children }) {
     ...portfolioThemeCssVariables[colorTheme],
     colorScheme: colorTheme,
   });
-  const isModuleHome = ["/", "/about", "/blog", "/work"].includes(pathname);
+  const isModuleHome = isModuleHomePath(pathname);
   const rootClassName = [
     styles.siteRoot,
     isModuleHome ? styles.siteRootModuleHome : "",
@@ -36,6 +38,8 @@ export default function SiteLayout({ children }) {
       data-color-theme={colorTheme}
       style={themeStyle}
     >
+      {/* 模块首页统一从壳层挂一层 Sunny Mode，避免首页自身和壳层重复渲染 video。 */}
+      {isModuleHome ? <SiteSunnyBackground /> : null}
       <SiteChromeFrame>{children}</SiteChromeFrame>
     </div>
   );
