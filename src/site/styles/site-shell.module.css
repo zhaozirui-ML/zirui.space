@@ -3,6 +3,7 @@
   color: var(--portfolio-semantic-body-color);
   font-family: var(--portfolio-font-body);
   min-height: 100dvh;
+  position: relative;
 }
 
 .siteRootModuleHome {
@@ -99,6 +100,8 @@
 
 .siteMain {
   padding: 4.5rem 0 7.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 .siteMainFlush {
@@ -304,6 +307,8 @@
 .siteFooter {
   border-top: 1px solid var(--portfolio-color-border-light);
   padding: 3rem 0;
+  position: relative;
+  z-index: 1;
 }
 
 .siteFooterInner {
