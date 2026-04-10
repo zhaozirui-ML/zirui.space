@@ -9,6 +9,9 @@
 - 封面、章节、大图、图注这些模式应该怎么组织
 
 如果要看 design system 本体，请看 [DESIGN_SYSTEM.md](/Users/zhaozirui/Desktop/AI%20Coding/Portfolio2026/DESIGN_SYSTEM.md)。
+如果要看更上层的受众、品牌气质、参考方向与长期设计原则，请先看 [docs/design-context.md](/Users/zhaozirui/Desktop/AI%20Coding/Portfolio2026/docs/design-context.md)。
+
+本文档只负责 page layer：页面气质落地、案例叙事结构、页面级 non-negotiables 和 Figma 实现规则。
 
 ## 1. Design Direction
 

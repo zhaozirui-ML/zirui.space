@@ -8,7 +8,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings=0",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "playwright:doctor": "node scripts/playwright-doctor.mjs",
+    "validate:homepage:playwright": "node scripts/validate-homepage-playwright.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.7.0",
@@ -22,6 +24,7 @@
     "@types/react-dom": "^19.2.3",
     "eslint": "^9.0.0",
     "eslint-config-next": "16.2.1",
+    "playwright-core": "^1.59.1",
     "typescript": "^5.9.0"
   }
 }

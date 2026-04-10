@@ -1,17 +1,53 @@
 // 这份 token 专门服务作品集页面，不直接替换现有通用设计系统。
 // 先把方向稳定下来，后续页面可以按需接入，而不是一次性全局替换。
+const portfolioLightColors = Object.freeze({
+  canvas: "#fcfbf8",
+  bgSoft: "#faf9f6",
+  bgPure: "#ffffff",
+  surface: "#ffffff",
+  surfaceWarm: "#f0ede8",
+  surfaceRaised: "#e3e1db",
+  textTitle: "#2d2f30",
+  textBody: "#4a4d4e",
+  textMuted: "#7a7e80",
+  textSubtle: "#9fa3a7",
+  textInverted: "#fcfbf8",
+  borderLight: "#ece9e4",
+  borderStrong: "#dcd9d1",
+  accentBrand: "#b36a5e",
+  accentMoss: "#647654",
+  accentBlue: "#5684ae",
+  accentOchre: "#c9a66b",
+});
+
+const portfolioDarkColors = Object.freeze({
+  canvas: "#1c1b1a",
+  bgSoft: "#242321",
+  bgPure: "#121110",
+  surface: "#2a2927",
+  surfaceWarm: "#353330",
+  surfaceRaised: "#353330",
+  textTitle: "#f9f8f6",
+  textBody: "#dcd9d1",
+  textMuted: "#9a948e",
+  textSubtle: "#8a8580",
+  textInverted: "#2d2f30",
+  borderLight: "#45423e",
+  borderStrong: "#5d5853",
+  accentBrand: "#c57a6c",
+  accentMoss: "#7e8f7a",
+  accentBlue: "#8da1b3",
+  accentOchre: "#d9b475",
+});
+
 export const portfolio = Object.freeze({
-  colors: Object.freeze({
-    canvas: "#fcfbf8",
-    surface: "#ffffff",
-    surfaceWarm: "#f0ede8",
-    textTitle: "#2d2f30",
-    textBody: "#4a4d4e",
-    textMuted: "#7a7e80",
-    borderLight: "#ece9e4",
-    borderStrong: "#dcd9d1",
-    accentBrand: "#b36a5e",
+  // 为了不破坏现有消费方，默认 colors 仍指向 light 主题。
+  colors: portfolioLightColors,
+  colorThemes: Object.freeze({
+    light: portfolioLightColors,
+    dark: portfolioDarkColors,
   }),
+  defaultColorTheme: "light",
   typography: Object.freeze({
     families: Object.freeze({
       // 一级标题统一切到项目内托管的“方正清刻本悦宋”，避免继续依赖本机字体。

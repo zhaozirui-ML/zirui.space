@@ -8,7 +8,7 @@ export default function HomeWorksSection() {
   return (
     <section className={styles.section}>
       <div className={styles.sectionHeader}>
-        <h2 className={styles.sectionTitle}>Works</h2>
+        <h2 className={styles.sectionTitle}>Recent Works</h2>
         <p className={styles.sectionSubtitle}>See what I do</p>
       </div>
 
@@ -62,25 +62,64 @@ export default function HomeWorksSection() {
                 className={styles.workCardButton}
                 href={{ pathname: `/work/${item.slug}`, query: { from: "/" } }}
               >
-                查看案例
+                View Project
               </Link>
             </div>
 
             <div className={styles.workCardMedia}>
-              <Image
-                alt={item.homeImageAlt}
-                className={[
-                  styles.workCardImage,
-                  item.slug === "drawing-ledger-2-0" ? styles.workCardImageContain : "",
-                ]
-                  .filter(Boolean)
-                  .join(" ")}
-                fill
-                sizes="(max-width: 900px) 100vw, 460px"
-                src={item.homeImageSrc}
-                // Supabase 测试图先跳过 Next 图片代理，避免本地开发环境误判上游地址。
-                unoptimized
-              />
+              {item.homeMediaFrame ? (
+                <>
+                  <Image
+                    alt={item.homeImageAlt}
+                    className={styles.workCardImage}
+                    fill
+                    priority={item.slug === "drawing-ledger-2-0"}
+                    sizes="(max-width: 900px) 100vw, 460px"
+                    src={item.homeMediaFrame.backgroundSrc}
+                    unoptimized
+                  />
+                  <div
+                    className={styles.workCardForeground}
+                    style={{
+                      aspectRatio: item.homeMediaFrame.foregroundAspectRatio,
+                      borderRadius: item.homeMediaFrame.foregroundRadius,
+                      boxShadow: item.homeMediaFrame.foregroundShadow,
+                      height: item.homeMediaFrame.foregroundHeight,
+                      left: item.homeMediaFrame.foregroundLeft,
+                      top: item.homeMediaFrame.foregroundTop,
+                      transform: item.homeMediaFrame.foregroundTransform,
+                      width: item.homeMediaFrame.foregroundWidth,
+                    }}
+                  >
+                    <Image
+                      alt=""
+                      aria-hidden="true"
+                      className={styles.workCardForegroundImage}
+                      fill
+                      priority={item.slug === "drawing-ledger-2-0"}
+                      sizes="(max-width: 900px) 100vw, 360px"
+                      src={item.homeMediaFrame.foregroundSrc}
+                      unoptimized
+                    />
+                  </div>
+                </>
+              ) : (
+                <Image
+                  alt={item.homeImageAlt}
+                  className={[
+                    styles.workCardImage,
+                    item.slug === "drawing-ledger-2-0" ? styles.workCardImageContain : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                  fill
+                  priority={item.slug === "drawing-ledger-2-0"}
+                  sizes="(max-width: 900px) 100vw, 460px"
+                  src={item.homeImageSrc}
+                  // Supabase 测试图先跳过 Next 图片代理，避免本地开发环境误判上游地址。
+                  unoptimized
+                />
+              )}
             </div>
           </article>
         ))}

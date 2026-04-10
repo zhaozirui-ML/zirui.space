@@ -36,8 +36,8 @@
 
 .siteHeaderInner {
   align-items: center;
-  background: #fff;
-  border: 1px solid rgba(9, 10, 12, 0.04);
+  background: var(--portfolio-color-surface);
+  border: 1px solid var(--portfolio-color-border-light);
   border-radius: var(--portfolio-radius-md);
   box-shadow:
     0 calc(2px * var(--site-header-shadow-progress, 0))
@@ -90,7 +90,11 @@
 }
 
 .navigationLink:hover {
-  background: rgba(45, 47, 48, 0.04);
+  background: color-mix(
+    in srgb,
+    var(--portfolio-semantic-title-color) 7%,
+    transparent
+  );
 }
 
 .siteMain {
@@ -210,7 +214,7 @@
 }
 
 .workCardMetaYear {
-  color: rgba(45, 47, 48, 0.56);
+  color: var(--portfolio-color-text-subtle);
   font-size: 0.875rem;
   margin: 0;
 }
@@ -251,7 +255,7 @@
   align-items: center;
   background: var(--portfolio-semantic-title-color);
   border-radius: 0.75rem;
-  color: #fff;
+  color: var(--portfolio-color-text-inverted);
   display: inline-flex;
   font-family: var(--portfolio-font-label);
   font-size: 0.875rem;

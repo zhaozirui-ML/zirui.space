@@ -5,17 +5,27 @@ import { typography } from "./typography";
 
 export { colors, portfolio, spacing, typography };
 
-// 作品集主题只在站点层按需接入，不直接污染 design-system 预览页。
-export const portfolioCssVariables = {
-  "--portfolio-color-canvas": portfolio.colors.canvas,
-  "--portfolio-color-surface": portfolio.colors.surface,
-  "--portfolio-color-surface-warm": portfolio.colors.surfaceWarm,
-  "--portfolio-color-text-title": portfolio.colors.textTitle,
-  "--portfolio-color-text-body": portfolio.colors.textBody,
-  "--portfolio-color-text-muted": portfolio.colors.textMuted,
-  "--portfolio-color-border-light": portfolio.colors.borderLight,
-  "--portfolio-color-border-strong": portfolio.colors.borderStrong,
-  "--portfolio-color-accent-brand": portfolio.colors.accentBrand,
+const buildPortfolioColorVariables = (themeColors) => ({
+  "--portfolio-color-canvas": themeColors.canvas,
+  "--portfolio-color-bg-soft": themeColors.bgSoft,
+  "--portfolio-color-bg-pure": themeColors.bgPure,
+  "--portfolio-color-surface": themeColors.surface,
+  "--portfolio-color-surface-warm": themeColors.surfaceWarm,
+  "--portfolio-color-surface-raised": themeColors.surfaceRaised,
+  "--portfolio-color-text-title": themeColors.textTitle,
+  "--portfolio-color-text-body": themeColors.textBody,
+  "--portfolio-color-text-muted": themeColors.textMuted,
+  "--portfolio-color-text-subtle": themeColors.textSubtle,
+  "--portfolio-color-text-inverted": themeColors.textInverted,
+  "--portfolio-color-border-light": themeColors.borderLight,
+  "--portfolio-color-border-strong": themeColors.borderStrong,
+  "--portfolio-color-accent-brand": themeColors.accentBrand,
+  "--portfolio-color-accent-moss": themeColors.accentMoss,
+  "--portfolio-color-accent-blue": themeColors.accentBlue,
+  "--portfolio-color-accent-ochre": themeColors.accentOchre,
+});
+
+const portfolioSharedCssVariables = {
   "--portfolio-font-title": portfolio.typography.families.title,
   "--portfolio-font-body": portfolio.typography.families.body,
   "--portfolio-font-label": portfolio.typography.families.label,
@@ -311,6 +321,25 @@ export const portfolioCssVariables = {
   "--portfolio-work-side-project-mobile-gap":
     portfolio.work.sideProject.mobileGap,
 };
+
+// 作品集主题只在站点层按需接入，不直接污染 design-system 预览页。
+export const portfolioLightCssVariables = {
+  ...buildPortfolioColorVariables(portfolio.colorThemes.light),
+  ...portfolioSharedCssVariables,
+};
+
+export const portfolioDarkCssVariables = {
+  ...buildPortfolioColorVariables(portfolio.colorThemes.dark),
+  ...portfolioSharedCssVariables,
+};
+
+export const portfolioThemeCssVariables = Object.freeze({
+  light: portfolioLightCssVariables,
+  dark: portfolioDarkCssVariables,
+});
+
+// 为了不破坏现有页面，默认仍然导出 light 主题变量。
+export const portfolioCssVariables = portfolioLightCssVariables;
 
 // 把 token 同步成全局 CSS 变量，这样组件样式和预览页面都能共用同一份设计值。
 export const rootCssVariables = {

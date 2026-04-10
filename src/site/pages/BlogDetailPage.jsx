@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { getBlogBySlug } from "../lib/get-blog-by-slug";
+import { getReturnPath } from "../lib/get-return-path";
 import { formatBlogDate } from "../lib/format-blog-date";
 import shellStyles from "../styles/site-shell.module.css";
 import styles from "../styles/blog-detail-page.module.css";
@@ -73,7 +74,7 @@ function renderContentBlock(block, index) {
   return null;
 }
 
-export default function BlogDetailPage({ slug }) {
+export default function BlogDetailPage({ returnHref = "/blog", slug }) {
   const post = getBlogBySlug(slug);
 
   if (!post) {
@@ -109,10 +110,12 @@ export default function BlogDetailPage({ slug }) {
     contentGroups.push(currentGroup);
   }
 
+  const safeReturnHref = getReturnPath(returnHref, "/blog");
+
   return (
     <div className={styles.articlePage}>
       <div className={styles.backLinkRow}>
-        <Link aria-label="Back to Blog" className={styles.backLink} href="/blog">
+        <Link aria-label="Back to Blog" className={styles.backLink} href={safeReturnHref}>
           <span aria-hidden="true" className={styles.backLinkIcon}>
             ←
           </span>
