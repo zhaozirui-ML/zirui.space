@@ -119,7 +119,7 @@ export const workItems = [
     homeMediaPosition: "end",
     homeMediaFrame: {
       backgroundSrc: getStorageAssetUrl(
-        "work/data-visualization-screen/home-background.png"
+        "work/data-visualization/home-background.png"
       ),
       foregroundAspectRatio: "302.4 / 170.1",
       foregroundHeight: "70.1%",
@@ -127,7 +127,7 @@ export const workItems = [
       foregroundRadius: "0.25rem",
       foregroundShadow: "0 3.2px 6.4px -2.4px rgba(14, 18, 27, 0.1)",
       foregroundSrc: getStorageAssetUrl(
-        "work/data-visualization-screen/home-foreground.png"
+        "work/data-visualization/home-foreground.png"
       ),
       foregroundTop: "50%",
       foregroundTransform: "translate(-50%, -50%)",
@@ -144,10 +144,10 @@ export const workItems = [
       type: "framed",
       alt: "Data Visualization System preview",
       backgroundSrc: getStorageAssetUrl(
-        "work/data-visualization-screen/work-background.png"
+        "work/data-visualization/work-background.png"
       ),
       foregroundSrc: getStorageAssetUrl(
-        "work/data-visualization-screen/work-foreground.png"
+        "work/data-visualization/work-foreground.png"
       ),
       foregroundAspectRatio: "302 / 170",
       foregroundWidth: "85.31%",
