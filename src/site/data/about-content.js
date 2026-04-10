@@ -1,28 +1,44 @@
 export const aboutPageContent = {
   hero: {
     eyebrow: "About",
-    title: "About Zirui",
+    title: "Designing complex workflows with clarity",
     description:
-      "我是一名产品设计师，主要关注复杂企业产品中的工作流、系统结构与交付协作。我希望把高复杂度的问题拆解清楚，并把设计真正推进到可落地、可协作、可长期演进的状态。",
+      "我主要处理复杂企业产品中的工作流、系统结构与交付协作。比起只优化界面，我更在意把问题拆清、把规则建起来，并让设计真正进入可落地的协作流程。",
     tags: ["Complex systems", "Design systems", "Delivery rigor"],
+    noteTitle: "What I usually work on",
+    noteItems: [
+      "复杂工作流与角色协作",
+      "系统结构与交互逻辑梳理",
+      "设计规则、组件与交付治理",
+    ],
   },
   experience: {
-    eyebrow: "Experience Snapshot",
-    title: "Designing through systems, workflows, and implementation constraints",
+    eyebrow: "Selected Background",
+    title: "Past work shaped how I think about systems and delivery",
     description:
-      "我的项目大多不只是界面优化，而是围绕角色关系、业务流程、协作方式与实现边界展开。下面这两段经历，基本概括了我长期在处理的问题类型。",
+      "我过往的项目大多不只是界面优化，而是围绕角色关系、业务流程、协作方式与实现边界展开。下面这两段工作经历，基本概括了我长期在处理的问题类型。",
     items: [
       {
         company: "SmartX",
         role: "Product Designer",
         summary:
           "主要负责企业级虚拟化产品 SMTX ELF 与分布式集群管理平台 CloudTower 的设计工作，长期面对资源配置、权限关系与系统协作等高复杂度问题。",
+        focus: [
+          "企业级虚拟化产品",
+          "权限与资源配置复杂度",
+          "系统协作与管理平台体验",
+        ],
       },
       {
         company: "Axzsource",
         role: "Senior UX Designer",
         summary:
           "主导施工业务线图纸模块的 Web 与 App 全链路设计，从上传解析到任务协同逐步搭建业务闭环，同时推动组件库与设计规则治理，降低沟通与返工成本。",
+        focus: [
+          "Web + App 全链路体验",
+          "从 0 到 1 的业务闭环",
+          "组件库与设计规则治理",
+        ],
       },
     ],
   },
@@ -65,6 +81,11 @@ export const aboutPageContent = {
       "如果你也在处理复杂产品、设计系统，或希望让设计与交付更顺畅，可以直接通过邮箱联系我。第一版先保留最必要的联系入口，让页面保持克制。",
     email: "mailto:Zhaozirui721@gmail.com",
     emailLabel: "Zhaozirui721@gmail.com",
+    topics: [
+      "复杂业务产品设计",
+      "设计系统与规则治理",
+      "设计到交付协作优化",
+    ],
     links: [
       {
         href: "https://x.com/atc12138",

@@ -11,15 +11,24 @@ export default function AboutPage() {
           <p className={styles.eyebrow}>{hero.eyebrow}</p>
           <h1 className={styles.title}>{hero.title}</h1>
           <p className={styles.description}>{hero.description}</p>
+
+          <ul className={styles.tagList}>
+            {hero.tags.map((tag) => (
+              <li className={styles.tag} key={tag}>
+                {tag}
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <ul className={styles.tagList}>
-          {hero.tags.map((tag) => (
-            <li className={styles.tag} key={tag}>
-              {tag}
-            </li>
-          ))}
-        </ul>
+        <aside className={styles.heroNote}>
+          <p className={styles.heroNoteTitle}>{hero.noteTitle}</p>
+          <ul className={styles.list}>
+            {hero.noteItems.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </aside>
       </section>
 
       <section className={styles.section}>
@@ -37,6 +46,11 @@ export default function AboutPage() {
                 <h3 className={styles.cardTitle}>{item.company}</h3>
               </div>
               <p className={styles.cardBody}>{item.summary}</p>
+              <ul className={styles.compactList}>
+                {item.focus.map((focusItem) => (
+                  <li key={focusItem}>{focusItem}</li>
+                ))}
+              </ul>
             </article>
           ))}
         </div>
@@ -78,6 +92,14 @@ export default function AboutPage() {
             <p className={styles.eyebrow}>{contact.eyebrow}</p>
             <h2 className={styles.sectionTitle}>{contact.title}</h2>
             <p className={styles.sectionDescription}>{contact.description}</p>
+
+            <ul className={styles.tagList}>
+              {contact.topics.map((topic) => (
+                <li className={styles.tag} key={topic}>
+                  {topic}
+                </li>
+              ))}
+            </ul>
 
             <a className={styles.contactLink} href={contact.email}>
               {contact.emailLabel}
