@@ -34,13 +34,12 @@
 
 .homeBackground {
   height: var(--home-sunny-window-height);
-  left: 50%;
+  left: 0;
   opacity: 1;
   overflow: hidden;
   pointer-events: none;
-  position: absolute;
-  top: calc(-1 * var(--home-main-offset-top));
-  transform: translateX(-50%);
+  position: fixed;
+  top: 0;
   width: var(--home-sunny-window-width);
   z-index: 0;
 }
