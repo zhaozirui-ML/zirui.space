@@ -284,7 +284,7 @@
 }
 
 .ds-card--dark .ds-card__meta {
-  color: rgba(255, 255, 255, 0.62);
+  color: var(--ds-color-text-subtle);
 }
 
 @media (max-width: 880px) {

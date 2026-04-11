@@ -108,8 +108,8 @@
   background:
     radial-gradient(
       5.5rem circle at var(--toc-cursor-origin),
-      rgba(179, 106, 94, 0.12),
-      rgba(179, 106, 94, 0.06) 35%,
+      color-mix(in srgb, var(--case-study-toc-accent) 12%, transparent),
+      color-mix(in srgb, var(--case-study-toc-accent) 6%, transparent) 35%,
       transparent 72%
     );
   border-radius: inherit;

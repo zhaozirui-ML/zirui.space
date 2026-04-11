@@ -122,7 +122,7 @@
 }
 
 .featuredCardDark {
-  background: #1c1b1a;
+  background: var(--portfolio-color-bg-primary);
 }
 
 .featuredCardReverse .featuredMedia {
@@ -175,7 +175,7 @@
 }
 
 .featuredTitleDark {
-  color: #f9f8f6;
+  color: var(--portfolio-color-text-title);
 }
 
 .featuredSummary {
@@ -286,7 +286,7 @@
   }
 
   .featuredCardDark:hover {
-    background: #242220;
+    background: var(--portfolio-color-bg-soft);
   }
 
   .featuredCard:hover .blogMeta {

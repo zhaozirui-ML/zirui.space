@@ -1,17 +1,22 @@
 .page {
-  --data-vis-hero-title: #fff;
-  --data-vis-hero-subtitle: rgba(252, 251, 248, 0.96);
+  --data-vis-hero-title: var(--portfolio-color-text-inverted);
+  --data-vis-hero-subtitle:
+    color-mix(in srgb, var(--portfolio-color-text-inverted) 96%, var(--portfolio-color-accent-blue));
   --data-vis-hero-media-frame: rgba(10, 31, 76, 0.36);
   --data-vis-demo-surface:
     radial-gradient(circle at 20% 24%, rgba(66, 122, 241, 0.22), transparent 30%),
     linear-gradient(180deg, #10264d 0%, #0d2144 100%);
   --data-vis-demo-frame-border: rgba(50, 112, 255, 0.18);
   --data-vis-demo-outline: rgba(69, 138, 255, 0.12);
-  --data-vis-demo-label: #58a9ff;
-  --data-vis-demo-text: #e7eeff;
-  --data-vis-demo-text-strong: #fff;
-  --data-vis-demo-text-body: rgba(233, 240, 255, 0.88);
-  --data-vis-demo-text-muted: rgba(233, 240, 255, 0.72);
+  --data-vis-demo-label:
+    color-mix(in srgb, var(--portfolio-color-accent-blue) 88%, var(--portfolio-color-text-inverted));
+  --data-vis-demo-text:
+    color-mix(in srgb, var(--portfolio-color-text-inverted) 92%, var(--portfolio-color-accent-blue));
+  --data-vis-demo-text-strong: var(--portfolio-color-text-inverted);
+  --data-vis-demo-text-body:
+    color-mix(in srgb, var(--portfolio-color-text-inverted) 88%, var(--portfolio-color-accent-blue));
+  --data-vis-demo-text-muted:
+    color-mix(in srgb, var(--portfolio-color-text-inverted) 72%, var(--portfolio-color-accent-blue));
   --data-vis-demo-positive: #8dd56a;
   --data-vis-demo-neutral: #ffb648;
   --data-vis-chart-inset-bg: rgba(18, 38, 79, 0.92);
@@ -43,9 +48,12 @@
     linear-gradient(180deg, #14315f 0%, #10284f 100%);
   --data-vis-demo-frame-border: rgba(86, 150, 255, 0.2);
   --data-vis-demo-outline: rgba(92, 156, 255, 0.16);
-  --data-vis-demo-label: #76b8ff;
-  --data-vis-demo-text-body: rgba(236, 242, 255, 0.9);
-  --data-vis-demo-text-muted: rgba(236, 242, 255, 0.76);
+  --data-vis-demo-label:
+    color-mix(in srgb, var(--portfolio-color-accent-blue) 92%, var(--portfolio-color-text-inverted));
+  --data-vis-demo-text-body:
+    color-mix(in srgb, var(--portfolio-color-text-inverted) 90%, var(--portfolio-color-accent-blue));
+  --data-vis-demo-text-muted:
+    color-mix(in srgb, var(--portfolio-color-text-inverted) 76%, var(--portfolio-color-accent-blue));
   --data-vis-chart-inset-bg: rgba(20, 44, 90, 0.94);
   --data-vis-chart-inset-border: rgba(74, 130, 230, 0.18);
   --data-vis-chart-track: rgba(166, 194, 255, 0.16);
