@@ -1,101 +1,87 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { siteNavigation } from "../data/navigation";
 import { getStorageAssetUrl } from "../lib/get-storage-asset-url";
 import styles from "../styles/site-shell.module.css";
 
-export default function SiteHeader() {
-  const [headerState, setHeaderState] = useState({
-    scrollProgress: 0,
-    width: 1920,
+function isNavigationItemActive(pathname, href) {
+  if (href === "/") {
+    return pathname === "/";
+  }
+
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+export default function SiteHeader({ colorTheme, onThemeToggle }) {
+  const pathname = usePathname();
+  const navigationRef = useRef(null);
+  const itemRefs = useRef(new Map());
+  const [indicatorStyle, setIndicatorStyle] = useState({
+    opacity: 0,
+    transform: "translate3d(0, 0, 0)",
   });
 
   useEffect(() => {
-    let frameId = 0;
-    const targetState = {
-      scrollProgress: 0,
-      width: 1920,
-    };
+    const updateIndicator = () => {
+      const navigationElement = navigationRef.current;
 
-    const updateTargetState = () => {
-      // 参考 instruct.ai，导航在前 200px 滚动区间内线性收缩到目标宽度。
-      const nextProgress = Math.min(window.scrollY / 200, 1);
-      const expandedWidth = Math.max(window.innerWidth, 320);
-      const compactWidth = expandedWidth <= 1200 ? expandedWidth : 1200;
-      const nextWidth = expandedWidth - (expandedWidth - compactWidth) * nextProgress;
+      if (!navigationElement) {
+        return;
+      }
 
-      targetState.scrollProgress = nextProgress;
-      targetState.width = nextWidth;
-    };
+      const activeItem = siteNavigation.find((item) => isNavigationItemActive(pathname, item.href));
+      const activeElement = activeItem ? itemRefs.current.get(activeItem.href) : null;
 
-    const animateHeader = () => {
-      frameId = 0;
+      if (!activeElement) {
+        setIndicatorStyle((currentStyle) =>
+          currentStyle.opacity === 0
+            ? currentStyle
+            : { opacity: 0, transform: currentStyle.transform },
+        );
+        return;
+      }
 
-      setHeaderState((currentState) => {
-        // 这里刻意做一层缓动追赶，去模拟参考站点平滑滚动容器带来的“慢一点”的感觉。
-        const nextProgress =
-          currentState.scrollProgress +
-          (targetState.scrollProgress - currentState.scrollProgress) * 0.11;
-        const nextWidth =
-          currentState.width + (targetState.width - currentState.width) * 0.11;
-        const widthChanged = Math.abs(targetState.width - nextWidth) >= 0.8;
-        const progressChanged =
-          Math.abs(targetState.scrollProgress - nextProgress) >= 0.003;
+      const navRect = navigationElement.getBoundingClientRect();
+      const activeRect = activeElement.getBoundingClientRect();
+      const nextLeft = activeRect.left - navRect.left + activeRect.width / 2 - 3;
 
-        if (!widthChanged && !progressChanged) {
-          return {
-            scrollProgress: targetState.scrollProgress,
-            width: targetState.width,
-          };
-        }
-
-        frameId = window.requestAnimationFrame(animateHeader);
-
-        return {
-          scrollProgress: nextProgress,
-          width: nextWidth,
-        };
+      setIndicatorStyle({
+        opacity: 1,
+        transform: `translate3d(${nextLeft}px, 0, 0)`,
       });
     };
 
-    const handleViewportChange = () => {
-      updateTargetState();
+    updateIndicator();
 
-      if (!frameId) {
-        frameId = window.requestAnimationFrame(animateHeader);
-      }
-    };
+    const navigationElement = navigationRef.current;
+    const resizeObserver =
+      typeof ResizeObserver === "undefined" || !navigationElement
+        ? null
+        : new ResizeObserver(() => {
+            updateIndicator();
+          });
 
-    handleViewportChange();
-    window.addEventListener("scroll", handleViewportChange, { passive: true });
-    window.addEventListener("resize", handleViewportChange);
+    if (navigationElement && resizeObserver) {
+      resizeObserver.observe(navigationElement);
+    }
+
+    window.addEventListener("resize", updateIndicator);
 
     return () => {
-      if (frameId) {
-        window.cancelAnimationFrame(frameId);
-      }
-
-      window.removeEventListener("scroll", handleViewportChange);
-      window.removeEventListener("resize", handleViewportChange);
+      resizeObserver?.disconnect();
+      window.removeEventListener("resize", updateIndicator);
     };
-  }, []);
-
-  const headerStyle = /** @type {any} */ ({
-    "--site-header-shadow-progress": Math.max(
-      0,
-      Math.min((headerState.scrollProgress - 0.22) / 0.78, 1),
-    ),
-    "--site-header-width": `${headerState.width}px`,
-  });
+  }, [pathname]);
 
   return (
     <header className={styles.siteHeader}>
-      <div className={styles.siteHeaderFrame} style={headerStyle}>
+      <div className={styles.siteHeaderFrame}>
         <div className={styles.siteHeaderInner}>
-          <Link className={styles.brandLink} href="/">
+          <div aria-hidden="true" className={styles.brandLink}>
             <video
               aria-hidden="true"
               autoPlay
@@ -109,15 +95,105 @@ export default function SiteHeader() {
               src={getStorageAssetUrl("home/avatar/home-avatar.mp4")}
               width={20}
             />
-            <span>Zirui Zhao</span>
-          </Link>
-          <nav aria-label="主导航" className={styles.navigation}>
-            {siteNavigation.map((item) => (
-              <Link className={styles.navigationLink} href={item.href} key={item.href}>
-                {item.label}
-              </Link>
-            ))}
+          </div>
+          <nav aria-label="主导航" className={styles.navigation} ref={navigationRef}>
+            {siteNavigation.map((item) => {
+              const isActive = isNavigationItemActive(pathname, item.href);
+              const linkClassName = [
+                styles.navigationLink,
+                isActive ? styles.navigationLinkActive : "",
+              ]
+                .filter(Boolean)
+                .join(" ");
+
+              return (
+                <div
+                  className={styles.navigationItem}
+                  data-active={isActive ? "true" : "false"}
+                  key={item.href}
+                  ref={(element) => {
+                    if (element) {
+                      itemRefs.current.set(item.href, element);
+                      return;
+                    }
+
+                    itemRefs.current.delete(item.href);
+                  }}
+                >
+                  <Link
+                    aria-current={isActive ? "page" : undefined}
+                    className={linkClassName}
+                    href={item.href}
+                  >
+                    {item.label}
+                  </Link>
+                </div>
+              );
+            })}
+            <span
+              aria-hidden="true"
+              className={styles.navigationIndicator}
+              style={indicatorStyle}
+            />
           </nav>
+          <button
+            aria-label={colorTheme === "dark" ? "切换到浅色主题" : "切换到深色主题"}
+            aria-pressed={colorTheme === "dark"}
+            className={styles.navigationAction}
+            data-theme={colorTheme}
+            onClick={onThemeToggle}
+            type="button"
+          >
+            <span aria-hidden="true" className={styles.navigationActionIcon}>
+              <span className={styles.navigationActionGlyph} data-icon="sun">
+                <svg
+                  fill="none"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 2.16699V3.28238M8 12.7182V13.8337M4.58359 4.58345L5.37226 5.37212M10.6277 10.6278L11.4164 11.4165M2.1665 8.00033H3.28189M12.7181 8.00033H13.8335M4.58359 11.4165L5.37226 10.6278M10.6277 5.37212L11.4164 4.58345"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="1.2"
+                  />
+                  <circle
+                    cx="8.00001"
+                    cy="8.00033"
+                    r="2.41667"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                  />
+                </svg>
+              </span>
+              <span className={styles.navigationActionGlyph} data-icon="moon">
+                <svg
+                  fill="none"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M10.9023 2.2334C10.3933 2.05626 9.84595 1.95996 9.27591 1.95996C6.57857 1.95996 4.39111 4.14742 4.39111 6.84476C4.39111 9.5421 6.57857 11.7296 9.27591 11.7296C11.6628 11.7296 13.6498 10.0172 14.0766 7.75282C13.5842 7.99573 13.0301 8.13189 12.4443 8.13189C10.3846 8.13189 8.71482 6.46207 8.71482 4.40233C8.71482 3.54985 9.00075 2.76416 9.4822 2.13514C9.93788 2.14248 10.3857 2.17531 10.9023 2.2334Z"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="1.2"
+                  />
+                  <path
+                    d="M11.9321 3.07129V4.24726M11.3441 3.65928H12.5201"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeWidth="1.2"
+                  />
+                </svg>
+              </span>
+            </span>
+          </button>
         </div>
       </div>
     </header>

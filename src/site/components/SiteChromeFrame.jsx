@@ -16,7 +16,7 @@ const FULL_BLEED_PATHS = new Set([
   "/work/data-visualization-screen",
 ]);
 
-export default function SiteChromeFrame({ children }) {
+export default function SiteChromeFrame({ children, colorTheme, onThemeToggle }) {
   const pathname = usePathname();
   const isImmersiveCaseStudy = IMMERSIVE_PATHS.has(pathname);
   const isFullBleedCaseStudy = FULL_BLEED_PATHS.has(pathname);
@@ -27,20 +27,13 @@ export default function SiteChromeFrame({ children }) {
 
   return (
     <>
-      {isImmersiveCaseStudy ? null : <SiteHeader />}
+      {isImmersiveCaseStudy ? null : (
+        <SiteHeader colorTheme={colorTheme} onThemeToggle={onThemeToggle} />
+      )}
 
       <main className={mainClassName}>
         <div className={shellClassName}>{children}</div>
       </main>
-
-      <footer className={styles.siteFooter}>
-        <div className={styles.siteShell}>
-          <div className={styles.siteFooterInner}>
-            <p className={styles.footerText}>© 2026 Zirui Zhao All rights reserved.</p>
-            <p className={styles.footerText}>zhaozirui721@gmail.com</p>
-          </div>
-        </div>
-      </footer>
     </>
   );
 }
