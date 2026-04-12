@@ -21,7 +21,11 @@
 }
 
 .siteHeader {
-  bottom: max(1rem, env(safe-area-inset-bottom, 0px) + 0.75rem);
+  /* 参考目标稿把底部悬浮导航再上提一档，同时继续复用基础 spacing token。 */
+  bottom: max(
+    calc(var(--ds-space-2xs) * 8),
+    env(safe-area-inset-bottom, 0px) + calc(var(--ds-space-2xs) * 6)
+  );
   display: flex;
   justify-content: center;
   left: 0;
@@ -216,7 +220,10 @@
 
 @media (max-width: 640px) {
   .siteHeader {
-    bottom: max(0.75rem, env(safe-area-inset-bottom, 0px) + 0.5rem);
+    bottom: max(
+      calc(var(--ds-space-2xs) * 5),
+      env(safe-area-inset-bottom, 0px) + calc(var(--ds-space-2xs) * 4)
+    );
     padding: 0 0.75rem;
   }
 
