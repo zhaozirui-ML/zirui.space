@@ -58,7 +58,9 @@ export default function DataVisualizationScreenDetail({
     backHref,
     backLabel: "返回",
     desktopShiftX: "29rem",
-    desktopTopOffset: "2rem",
+    // 目录起点要和正文首个模块共享同一组顶部节奏，
+    // 否则会出现 TOC 提前“飘”上去，而“项目背景”还没到的错位感。
+    desktopTopOffset: "clamp(4.5rem, 8vw, 8.25rem)",
   };
 
   return (

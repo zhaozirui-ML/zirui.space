@@ -229,7 +229,7 @@ export default function AxzoDesignSystemCaseStudyPage({
     backHref,
     backLabel: "返回",
     desktopShiftX: "30.5rem",
-    desktopTopOffset: "2rem",
+    desktopTopOffset: "0rem",
     mutedColor: "var(--portfolio-color-text-muted)",
     preferHistoryBack: false,
     titleColor: "var(--portfolio-semantic-title-color)",

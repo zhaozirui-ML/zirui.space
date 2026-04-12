@@ -1,6 +1,6 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
 
 import {
@@ -55,6 +55,7 @@ function getThemePreferenceSnapshot() {
 export default function SiteLayout({ children }) {
   const pathname = usePathname();
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  const themeToggleSoundRef = useRef(null);
   const themePreference = useSyncExternalStore(
     subscribeThemePreference,
     getThemePreferenceSnapshot,
@@ -78,7 +79,33 @@ export default function SiteLayout({ children }) {
     .filter(Boolean)
     .join(" ");
 
+  useEffect(() => {
+    // 只在客户端预载音效，避免服务端渲染阶段触碰浏览器音频 API。
+    const themeToggleSound = new Audio("/site/sfx/theme-toggle-select-click.wav");
+    themeToggleSound.preload = "auto";
+    themeToggleSoundRef.current = themeToggleSound;
+
+    return () => {
+      themeToggleSoundRef.current = null;
+    };
+  }, []);
+
+  const playThemeToggleSound = () => {
+    const themeToggleSound = themeToggleSoundRef.current;
+
+    if (!themeToggleSound) {
+      return;
+    }
+
+    // 音效只是附加反馈：如果浏览器阻止播放，不影响主题切换本身。
+    themeToggleSound.currentTime = 0;
+    themeToggleSound.volume = 0.35;
+    void themeToggleSound.play().catch(() => {});
+  };
+
   const handleThemeToggle = () => {
+    playThemeToggleSound();
+
     const nextTheme = colorTheme === "dark" ? "light" : "dark";
     window.localStorage.setItem("portfolio-color-theme", nextTheme);
     window.dispatchEvent(new Event("portfolio-theme-change"));

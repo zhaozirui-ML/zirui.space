@@ -301,6 +301,11 @@
   min-height: 22.625rem;
 }
 
+.workCardStandard .workCardMedia {
+  height: 19.5rem;
+  min-height: 19.5rem;
+}
+
 .workCardMediaStart .workCardContent {
   order: 2;
 }
@@ -396,6 +401,7 @@
 
 .workCardFeatured .workCardMedia {
   border-radius: 0.75rem;
+  height: 21rem;
   min-height: 21rem;
 }
 
@@ -416,6 +422,7 @@
 
 .workCardForegroundImage {
   object-fit: cover;
+  position: absolute;
 }
 
 .blogList {

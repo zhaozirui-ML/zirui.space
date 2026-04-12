@@ -4,6 +4,47 @@ import Link from "next/link";
 import { homeWorkItems } from "../../data/work-items";
 import styles from "../../styles/home-page.module.css";
 
+function getForegroundImageStyle(homeMediaFrame) {
+  return /** @type {any} */ ({
+    ...(homeMediaFrame?.foregroundImageHeight
+      ? { height: homeMediaFrame.foregroundImageHeight }
+      : {}),
+    ...(homeMediaFrame?.foregroundImageLeft
+      ? { left: homeMediaFrame.foregroundImageLeft }
+      : {}),
+    ...(homeMediaFrame?.foregroundImageMaxWidth
+      ? { maxWidth: homeMediaFrame.foregroundImageMaxWidth }
+      : {}),
+    ...(homeMediaFrame?.foregroundImageTop
+      ? { top: homeMediaFrame.foregroundImageTop }
+      : {}),
+    ...(homeMediaFrame?.foregroundImageWidth
+      ? { width: homeMediaFrame.foregroundImageWidth }
+      : {}),
+  });
+}
+
+function hasCustomForegroundImageLayout(homeMediaFrame) {
+  return Boolean(
+    homeMediaFrame?.foregroundImageHeight ||
+      homeMediaFrame?.foregroundImageLeft ||
+      homeMediaFrame?.foregroundImageMaxWidth ||
+      homeMediaFrame?.foregroundImageTop ||
+      homeMediaFrame?.foregroundImageWidth,
+  );
+}
+
+function getForegroundImageDimensions(homeMediaFrame) {
+  if (!hasCustomForegroundImageLayout(homeMediaFrame)) {
+    return null;
+  }
+
+  return {
+    height: 269,
+    width: 404,
+  };
+}
+
 export default function HomeWorksSection() {
   return (
     <section className={styles.section}>
@@ -91,16 +132,31 @@ export default function HomeWorksSection() {
                       width: item.homeMediaFrame.foregroundWidth,
                     }}
                   >
-                    <Image
-                      alt=""
-                      aria-hidden="true"
-                      className={styles.workCardForegroundImage}
-                      fill
-                      priority={item.slug === "drawing-ledger-2-0"}
-                      sizes="(max-width: 900px) 100vw, 360px"
-                      src={item.homeMediaFrame.foregroundSrc}
-                      unoptimized
-                    />
+                    {hasCustomForegroundImageLayout(item.homeMediaFrame) ? (
+                      <Image
+                        alt=""
+                        aria-hidden="true"
+                        className={styles.workCardForegroundImage}
+                        height={getForegroundImageDimensions(item.homeMediaFrame)?.height ?? 269}
+                        priority={item.slug === "drawing-ledger-2-0"}
+                        sizes="(max-width: 900px) 100vw, 404px"
+                        src={item.homeMediaFrame.foregroundSrc}
+                        style={getForegroundImageStyle(item.homeMediaFrame)}
+                        unoptimized
+                        width={getForegroundImageDimensions(item.homeMediaFrame)?.width ?? 404}
+                      />
+                    ) : (
+                      <Image
+                        alt=""
+                        aria-hidden="true"
+                        className={styles.workCardForegroundImage}
+                        fill
+                        priority={item.slug === "drawing-ledger-2-0"}
+                        sizes="(max-width: 900px) 100vw, 360px"
+                        src={item.homeMediaFrame.foregroundSrc}
+                        unoptimized
+                      />
+                    )}
                   </div>
                 </>
               ) : (

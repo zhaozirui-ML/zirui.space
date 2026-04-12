@@ -14,7 +14,7 @@
 
 .heroSection {
   background: var(--portfolio-color-canvas);
-  min-height: 100vh;
+  min-height: 67.5rem;
   overflow: hidden;
   position: relative;
 }
@@ -38,7 +38,7 @@
   gap: var(--portfolio-space-md);
   margin: 0 auto;
   max-width: calc(90rem + 3rem);
-  padding: 7.75rem 1.5rem 3rem;
+  padding: 4.5rem 1.5rem 0;
   position: relative;
   z-index: 1;
 }

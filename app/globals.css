@@ -47,25 +47,56 @@ img {
   --brand-diffuse-glow:
     radial-gradient(
       ellipse 90% 78% at 29% 18%,
-      rgba(179, 106, 94, 0.17) 0%,
-      rgba(179, 106, 94, 0.13) 26%,
-      rgba(244, 228, 223, 0.11) 52%,
-      rgba(255, 255, 255, 0) 82%
+      color-mix(in srgb, var(--portfolio-color-accent-brand) 18%, transparent) 0%,
+      color-mix(in srgb, var(--portfolio-color-accent-brand) 14%, transparent) 26%,
+      color-mix(in srgb, var(--portfolio-color-surface-warm) 42%, transparent) 52%,
+      transparent 82%
     ),
     radial-gradient(
       ellipse 72% 66% at 48% 26%,
-      rgba(255, 246, 242, 0.82) 0%,
-      rgba(255, 255, 255, 0) 84%
+      color-mix(in srgb, var(--portfolio-color-bg-pure) 82%, transparent) 0%,
+      transparent 84%
     );
   --brand-diffuse-wash:
+    radial-gradient(
+      ellipse 92% 72% at 22% 8%,
+      color-mix(in srgb, var(--portfolio-color-bg-pure) 34%, transparent) 0%,
+      color-mix(in srgb, var(--portfolio-color-bg-pure) 18%, transparent) 34%,
+      transparent 78%
+    ),
     linear-gradient(
       180deg,
-      rgba(255, 248, 245, 0.64) 0%,
-      rgba(255, 250, 247, 0.24) 56%,
-      rgba(255, 255, 255, 0) 100%
+      color-mix(in srgb, var(--portfolio-color-bg-pure) 22%, transparent) 0%,
+      color-mix(in srgb, var(--portfolio-color-bg-pure) 8%, transparent) 48%,
+      transparent 100%
     );
   isolation: isolate;
   position: relative;
+}
+
+[data-color-theme="dark"] .brand-diffuse-surface {
+  --brand-diffuse-blur: 48px;
+  --brand-diffuse-opacity: 0.58;
+  --brand-diffuse-glow:
+    radial-gradient(
+      ellipse 88% 74% at 28% 18%,
+      color-mix(in srgb, var(--portfolio-color-accent-brand) 24%, transparent) 0%,
+      color-mix(in srgb, var(--portfolio-color-accent-brand) 12%, transparent) 24%,
+      color-mix(in srgb, var(--portfolio-color-surface-raised) 14%, transparent) 48%,
+      transparent 78%
+    ),
+    radial-gradient(
+      ellipse 68% 60% at 44% 24%,
+      color-mix(in srgb, var(--portfolio-color-surface-raised) 18%, transparent) 0%,
+      transparent 76%
+    );
+  --brand-diffuse-wash:
+    radial-gradient(
+      ellipse 96% 76% at 20% 10%,
+      color-mix(in srgb, var(--portfolio-color-surface) 10%, transparent) 0%,
+      color-mix(in srgb, var(--portfolio-color-bg-soft) 4%, transparent) 28%,
+      transparent 72%
+    );
 }
 
 .brand-diffuse-surface::before {
@@ -84,11 +115,14 @@ img {
 
 .brand-diffuse-surface::after {
   background: var(--brand-diffuse-wash);
+  filter: blur(20px);
   content: "";
-  height: 12rem;
-  inset: -1rem -0.6rem auto -1rem;
+  height: 13.5rem;
+  left: -2rem;
   pointer-events: none;
   position: absolute;
+  top: -2.2rem;
+  width: calc(100% + 3.5rem);
   z-index: 0;
 }
 

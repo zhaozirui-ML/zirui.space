@@ -24,15 +24,20 @@ export const workItems = [
         "work/drawing-ledger-2-0/home-background.png"
       ),
       foregroundAspectRatio: "360 / 225",
-      foregroundHeight: "74.5%",
-      foregroundLeft: "10.2%",
+      foregroundHeight: "66.96%",
+      foregroundImageHeight: "119.56%",
+      foregroundLeft: "10.22%",
+      foregroundImageLeft: "-6.11%",
+      foregroundImageMaxWidth: "none",
       foregroundRadius: "0",
       foregroundShadow: "none",
       foregroundSrc: getStorageAssetUrl(
         "work/drawing-ledger-2-0/home-foreground.png"
       ),
-      foregroundTop: "14.5%",
-      foregroundWidth: "79.6%",
+      foregroundImageTop: "-5.33%",
+      foregroundImageWidth: "112.22%",
+      foregroundTop: "16.67%",
+      foregroundWidth: "80%",
     },
     detailTheme: Object.freeze({
       headingAccentColor: "var(--portfolio-color-accent-brand)",
@@ -68,7 +73,7 @@ export const workItems = [
         "work/axzo-design-system/home-background.png"
       ),
       foregroundAspectRatio: "312 / 190.694",
-      foregroundHeight: "78.5%",
+      foregroundHeight: "61.12%",
       foregroundLeft: "50%",
       foregroundRadius: "0.25rem",
       foregroundShadow: "none",
@@ -77,7 +82,7 @@ export const workItems = [
       ),
       foregroundTop: "50%",
       foregroundTransform: "translate(-50%, -50%)",
-      foregroundWidth: "74.3%",
+      foregroundWidth: "85.01%",
     },
     detailTheme: Object.freeze({
       headingAccentColor: "#647654",
@@ -122,7 +127,7 @@ export const workItems = [
         "work/data-visualization/home-background.png"
       ),
       foregroundAspectRatio: "302.4 / 170.1",
-      foregroundHeight: "70.1%",
+      foregroundHeight: "54.52%",
       foregroundLeft: "50%",
       foregroundRadius: "0.25rem",
       foregroundShadow: "0 3.2px 6.4px -2.4px rgba(14, 18, 27, 0.1)",
@@ -131,7 +136,7 @@ export const workItems = [
       ),
       foregroundTop: "50%",
       foregroundTransform: "translate(-50%, -50%)",
-      foregroundWidth: "72%",
+      foregroundWidth: "82.40%",
     },
     detailTheme: Object.freeze({
       headingAccentColor: "#5684AE",

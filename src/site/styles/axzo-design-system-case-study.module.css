@@ -14,7 +14,7 @@
   display: flex;
   justify-content: center;
   margin-left: calc(50% - 50vw);
-  min-height: clamp(22rem, 56vw, 42rem);
+  min-height: 67.5rem;
   overflow: clip;
   position: relative;
   width: 100vw;
@@ -528,6 +528,10 @@
 }
 
 @media (max-width: 56rem) {
+  .hero {
+    min-height: auto;
+  }
+
   .contentStack {
     padding: 0 1rem;
   }

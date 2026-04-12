@@ -87,6 +87,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  min-height: 67.5rem;
   padding:
     clamp(4.5rem, 8vw, 7.75rem)
     clamp(1rem, 3vw, 1.5rem)
@@ -912,6 +913,10 @@
 }
 
 @media (max-width: 640px) {
+  .hero {
+    min-height: auto;
+  }
+
   .hero {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
