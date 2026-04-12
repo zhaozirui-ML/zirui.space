@@ -4,7 +4,9 @@
   --blog-grid-border-dashed: var(--portfolio-color-border-light);
   --blog-grid-border-ghost:
     color-mix(in srgb, var(--portfolio-color-border-strong) 45%, transparent);
+  background: var(--portfolio-color-bg-soft);
   margin: 0 auto;
+  margin-top: calc(var(--ds-space-2xs) * 15);
   width: min(100%, 72rem);
 }
 
@@ -310,6 +312,10 @@
     border-right: 0;
   }
 
+  .blogPage {
+    margin-top: calc(var(--ds-space-2xs) * 10);
+  }
+
   .sectionTitleRow,
   .sectionBodyRow,
   .spacerFrame {
@@ -354,6 +360,10 @@
 }
 
 @media (max-width: 640px) {
+  .blogPage {
+    margin-top: calc(var(--ds-space-2xs) * 6);
+  }
+
   .sectionTitle {
     font-size: 1.25rem;
   }

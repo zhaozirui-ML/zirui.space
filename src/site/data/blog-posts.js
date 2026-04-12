@@ -6,16 +6,17 @@ export const blogPosts = [
   {
     slug: "smartx-design-workflow",
     section: "featured",
-    title: "SmartX 的设计工作流程",
-    summary: "整理 SmartX 内设计工作的主线、支线和设计系统相关任务的工作范围。",
+    title: "The SmartX Design Workflow",
+    summary:
+      "An overview of core design work, supporting tracks, and design system responsibilities at SmartX.",
     detailSummary:
       "在 SmartX 内，设计师接到的需求大致可分为主线任务和支线任务，而设计系统部分又能继续细分出不同类型的沉淀工作。",
     date: "2023年6月28日",
     category: "DESIGN",
     imageSrc: getBlogAssetUrl("smartx-design-workflow", "cover.jpg"),
-    imageAlt: "SmartX 的设计工作流程文章封面",
+    imageAlt: "Cover image for The SmartX Design Workflow",
     heroImageSrc: getBlogAssetUrl("smartx-design-workflow", "cover.jpg"),
-    heroImageAlt: "SmartX 的设计工作流程文章 banner",
+    heroImageAlt: "Banner image for The SmartX Design Workflow",
     tone: "dark",
     layout: "imageStart",
     contentBlocks: [
@@ -96,16 +97,17 @@ export const blogPosts = [
   {
     slug: "communication-at-work",
     section: "featured",
-    title: "沟通的方法",
-    summary: "从倾听、识别沟通模式到积极回应，整理一套在工作中更有效沟通的方法。",
+    title: "Better Communication at Work",
+    summary:
+      "From listening and recognizing communication patterns to responding proactively, a practical guide to more effective collaboration at work.",
     detailSummary:
       "这篇文章来自于我在 23 年年中的一次组会分享，主要记录《沟通的方法》一书里对远程沟通、倾听和积极回应的阅读感悟。",
     date: "2023年2月10日",
     category: "GUIDE",
     imageSrc: getBlogAssetUrl("communication-at-work", "cover.jpg"),
-    imageAlt: "沟通的方法文章封面",
+    imageAlt: "Cover image for Better Communication at Work",
     heroImageSrc: getBlogAssetUrl("communication-at-work", "cover.jpg"),
-    heroImageAlt: "沟通的方法文章 banner",
+    heroImageAlt: "Banner image for Better Communication at Work",
     tone: "light",
     layout: "imageEnd",
     contentBlocks: [
