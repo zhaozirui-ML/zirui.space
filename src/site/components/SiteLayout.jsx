@@ -66,6 +66,8 @@ export default function SiteLayout({ children }) {
     colorScheme: colorTheme,
   });
   const isModuleHome = isModuleHomePath(pathname);
+  // 暗色模式不展示顶部的 Sunny Mode / dappled light 背景，只保留模块首页在浅色模式下的氛围层。
+  const shouldShowSunnyBackground = isModuleHome && colorTheme !== "dark";
   const rootClassName = [
     styles.siteRoot,
     isModuleHome ? styles.siteRootModuleHome : "",
@@ -89,7 +91,7 @@ export default function SiteLayout({ children }) {
       style={themeStyle}
     >
       {/* 模块首页统一从壳层挂一层 Sunny Mode，避免首页自身和壳层重复渲染 video。 */}
-      {isModuleHome ? <SiteSunnyBackground /> : null}
+      {shouldShowSunnyBackground ? <SiteSunnyBackground /> : null}
       <SiteChromeFrame
         colorTheme={colorTheme}
         onThemeToggle={handleThemeToggle}
