@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 
 import {
   aboutContactItems,
@@ -75,7 +76,18 @@ export default function AboutPage() {
                     })}
                   </div>
                 ) : (
-                  <p className={styles.metaValue}>{item.value}</p>
+                  item.href ? (
+                    <Link
+                      aria-label={`Send email to ${item.value}`}
+                      className={styles.metaValueLink}
+                      href={item.href}
+                    >
+                      <span className={styles.metaValue}>{item.value}</span>
+                      <ArrowUpRight aria-hidden="true" className={styles.metaValueArrow} />
+                    </Link>
+                  ) : (
+                    <p className={styles.metaValue}>{item.value}</p>
+                  )
                 )}
               </article>
             ))}

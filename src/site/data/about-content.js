@@ -5,6 +5,7 @@ export const aboutContactItems = [
   },
   {
     label: "Email",
+    href: "mailto:Zhaozirui721@gmail.com",
     value: "Zhaozirui721@gmail.com",
   },
   {
