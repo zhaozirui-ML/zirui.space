@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 
+import { getServerLanguage } from "../../../../src/site/i18n/server";
 import {
   getAllWorkSlugs,
   getWorkBySlug,
@@ -12,6 +13,7 @@ export function generateStaticParams() {
 }
 
 export default async function WorkDetailRoutePage({ params, searchParams }) {
+  const language = await getServerLanguage();
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
   const work = getWorkBySlug(resolvedParams.slug);
@@ -22,5 +24,11 @@ export default async function WorkDetailRoutePage({ params, searchParams }) {
 
   const returnHref = getReturnPath(resolvedSearchParams?.from, "/work");
 
-  return <WorkDetailPage returnHref={returnHref} slug={resolvedParams.slug} />;
+  return (
+    <WorkDetailPage
+      language={language}
+      returnHref={returnHref}
+      slug={resolvedParams.slug}
+    />
+  );
 }

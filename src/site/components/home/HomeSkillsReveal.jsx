@@ -11,6 +11,7 @@ import {
   Sparkles,
 } from "lucide-react";
 
+import { getLocalizedValue } from "../../i18n/get-localized-value";
 import styles from "../../styles/home-page.module.css";
 import { createProgram } from "./skill-reveal-shader";
 
@@ -48,6 +49,7 @@ const LOOP_EPSILON = {
 export default function HomeSkillsReveal({
   fallbackImageAlt,
   fallbackImageSrc,
+  language,
   skills,
 }) {
   const rootRef = useRef(null);
@@ -489,7 +491,7 @@ export default function HomeSkillsReveal({
 
           return (
             <li
-              key={skill.label}
+              key={getLocalizedValue(skill.label, language)}
               ref={(node) => {
                 rowRefs.current[index] = node;
               }}
@@ -516,7 +518,7 @@ export default function HomeSkillsReveal({
                   strokeWidth={1.9}
                 />
               </span>
-              <span>{skill.label}</span>
+              <span>{getLocalizedValue(skill.label, language)}</span>
             </li>
           );
         })}
@@ -552,7 +554,9 @@ export default function HomeSkillsReveal({
             </span>
           </div>
         </div>
-        <p className={styles.skillHighlightCaption}>{activeSkill.caption}</p>
+        <p className={styles.skillHighlightCaption}>
+          {getLocalizedValue(activeSkill.caption, language)}
+        </p>
       </div>
     </div>
   );

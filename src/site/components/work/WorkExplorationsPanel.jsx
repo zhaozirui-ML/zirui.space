@@ -1,9 +1,10 @@
 import Image from "next/image";
 
+import { getLocalizedValue } from "../../i18n/get-localized-value";
 import { joinClassNames } from "./join-class-names";
 import styles from "./work-components.module.css";
 
-function ExplorationEarningsVisual() {
+function ExplorationEarningsVisual({ language }) {
   return (
     <div className={styles.earningsVisual}>
       <div className={styles.earningsOrb}>
@@ -20,7 +21,9 @@ function ExplorationEarningsVisual() {
 
       <div className={styles.earningsContent}>
         <div className={styles.earningsHeader}>
-          <p className={styles.earningsLabel}>Total earnings</p>
+          <p className={styles.earningsLabel}>
+            {language === "en" ? "Total earnings" : "总收益"}
+          </p>
           <Image
             alt=""
             aria-hidden="true"
@@ -85,11 +88,11 @@ function ExplorationListIllustration() {
   );
 }
 
-function ExplorationCard({ card }) {
+function ExplorationCard({ card, language }) {
   if (card.kind === "earnings") {
     return (
       <article className={joinClassNames(styles.explorationCard, styles.explorationCardFeature)}>
-        <ExplorationEarningsVisual />
+        <ExplorationEarningsVisual language={language} />
       </article>
     );
   }
@@ -99,7 +102,7 @@ function ExplorationCard({ card }) {
       <article className={joinClassNames(styles.explorationCard, styles.explorationCardFeature)}>
         <div className={styles.explorationDeviceVisual}>
           <Image
-            alt={card.alt}
+            alt={getLocalizedValue(card.alt, language)}
             fill
             loading="eager"
             sizes="(max-width: 900px) min(100vw - 5rem, 456px), 456px"
@@ -116,7 +119,7 @@ function ExplorationCard({ card }) {
       <article className={joinClassNames(styles.explorationCard, styles.explorationCardFeature)}>
         <div className={styles.explorationTicketVisual}>
           <Image
-            alt={card.alt}
+            alt={getLocalizedValue(card.alt, language)}
             fill
             loading="eager"
             sizes="(max-width: 900px) min(100vw - 5rem, 500px), 500px"
@@ -134,7 +137,7 @@ function ExplorationCard({ card }) {
         <div className={styles.explorationCloudVisual}>
           <div className={styles.explorationCloudAsset}>
             <Image
-              alt={card.alt}
+              alt={getLocalizedValue(card.alt, language)}
               fill
               loading="eager"
               sizes="(max-width: 900px) min(100vw - 5rem, 260px), 260px"
@@ -160,7 +163,7 @@ function ExplorationCard({ card }) {
       <article className={joinClassNames(styles.explorationCard, styles.explorationCardTall)}>
         <div className={styles.explorationTallImage}>
           <Image
-            alt={card.alt}
+            alt={getLocalizedValue(card.alt, language)}
             fill
             loading="eager"
             sizes="(max-width: 900px) calc(100vw - 4rem), 404px"
@@ -181,7 +184,7 @@ function ExplorationCard({ card }) {
         )}
       >
         <Image
-          alt={card.alt}
+          alt={getLocalizedValue(card.alt, language)}
           fill
           loading="eager"
           sizes="(max-width: 900px) calc(100vw - 4rem), 830px"
@@ -193,18 +196,23 @@ function ExplorationCard({ card }) {
   );
 }
 
-export default function WorkExplorationsPanel({ rowClassName, rowSplitClassName, rows }) {
+export default function WorkExplorationsPanel({
+  language,
+  rowClassName,
+  rowSplitClassName,
+  rows,
+}) {
   return (
     <>
       {rows.map((row, index) =>
         row.length === 1 ? (
           <div className={rowClassName} key={`exploration-row-${index}`}>
-            <ExplorationCard card={row[0]} />
+            <ExplorationCard card={row[0]} language={language} />
           </div>
         ) : (
           <div className={rowSplitClassName} key={`exploration-row-${index}`}>
             {row.map((card) => (
-              <ExplorationCard card={card} key={card.id} />
+              <ExplorationCard card={card} key={card.id} language={language} />
             ))}
           </div>
         ),

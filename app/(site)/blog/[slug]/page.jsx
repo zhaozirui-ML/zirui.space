@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 
+import { getServerLanguage } from "../../../../src/site/i18n/server";
 import {
   getAllBlogSlugs,
   getBlogBySlug,
@@ -12,6 +13,7 @@ export function generateStaticParams() {
 }
 
 export default async function BlogDetailRoutePage({ params, searchParams }) {
+  const language = await getServerLanguage();
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
   const post = getBlogBySlug(resolvedParams.slug);
@@ -22,5 +24,11 @@ export default async function BlogDetailRoutePage({ params, searchParams }) {
 
   const returnHref = getReturnPath(resolvedSearchParams?.from, "/blog");
 
-  return <BlogDetailPage returnHref={returnHref} slug={resolvedParams.slug} />;
+  return (
+    <BlogDetailPage
+      language={language}
+      returnHref={returnHref}
+      slug={resolvedParams.slug}
+    />
+  );
 }

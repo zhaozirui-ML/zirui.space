@@ -78,6 +78,14 @@
   gap: 0.25rem;
 }
 
+.siteHeaderControls {
+  align-items: center;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
 .navigationLink {
   border-radius: 0.75rem;
   color: var(--portfolio-semantic-title-color);
@@ -95,6 +103,54 @@
     var(--portfolio-semantic-title-color) 7%,
     transparent
   );
+}
+
+.languageToggle {
+  align-items: center;
+  background: color-mix(
+    in srgb,
+    var(--portfolio-semantic-title-color) 4%,
+    var(--portfolio-color-surface)
+  );
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: 999px;
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.1875rem;
+}
+
+.languageToggleButton {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  color: var(--portfolio-color-text-muted);
+  cursor: pointer;
+  font-family: var(--portfolio-font-label);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  min-height: 2rem;
+  min-width: 2.5rem;
+  padding: 0 0.625rem;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease,
+    opacity 180ms ease;
+}
+
+.languageToggleButton:hover {
+  color: var(--portfolio-semantic-title-color);
+}
+
+.languageToggleButton:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.languageToggleButtonActive {
+  background: var(--portfolio-semantic-title-color);
+  color: var(--portfolio-color-text-inverted);
 }
 
 .siteMain {
@@ -333,6 +389,10 @@
 
   .siteMainFlush {
     padding-top: 0;
+  }
+
+  .siteHeaderControls {
+    justify-content: flex-start;
   }
 }
 

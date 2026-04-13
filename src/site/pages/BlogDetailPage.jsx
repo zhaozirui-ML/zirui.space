@@ -1,5 +1,8 @@
 import Link from "next/link";
 
+import DetailTranslationPlaceholder from "../components/DetailTranslationPlaceholder";
+import { untranslatedDetailDictionary } from "../i18n/dictionary";
+import { getLocalizedValue } from "../i18n/get-localized-value";
 import { getBlogBySlug } from "../lib/get-blog-by-slug";
 import { getReturnPath } from "../lib/get-return-path";
 import { formatBlogDate } from "../lib/format-blog-date";
@@ -74,11 +77,30 @@ function renderContentBlock(block, index) {
   return null;
 }
 
-export default function BlogDetailPage({ returnHref = "/blog", slug }) {
+export default function BlogDetailPage({
+  language,
+  returnHref = "/blog",
+  slug,
+}) {
   const post = getBlogBySlug(slug);
 
   if (!post) {
     return null;
+  }
+
+  if (language === "en" && post.translationStatus?.en !== "translated") {
+    return (
+      <DetailTranslationPlaceholder
+        backHref={returnHref}
+        backLabel={untranslatedDetailDictionary.backToBlog}
+        description={untranslatedDetailDictionary.description}
+        eyebrow={untranslatedDetailDictionary.blogEyebrow}
+        language={language}
+        noteItems={untranslatedDetailDictionary.noteItems}
+        noteTitle={untranslatedDetailDictionary.noteTitle}
+        title={getLocalizedValue(post.title, language)}
+      />
+    );
   }
 
   const contentGroups = [];
@@ -115,11 +137,17 @@ export default function BlogDetailPage({ returnHref = "/blog", slug }) {
   return (
     <div className={styles.articlePage}>
       <div className={styles.backLinkRow}>
-        <Link aria-label="Back to Blog" className={styles.backLink} href={safeReturnHref}>
+        <Link
+          aria-label={getLocalizedValue(untranslatedDetailDictionary.backToBlog, language)}
+          className={styles.backLink}
+          href={safeReturnHref}
+        >
           <span aria-hidden="true" className={styles.backLinkIcon}>
             ←
           </span>
-          <span className={styles.backLinkLabel}>Back</span>
+          <span className={styles.backLinkLabel}>
+            {language === "en" ? "Back" : "返回"}
+          </span>
         </Link>
       </div>
 
@@ -130,10 +158,10 @@ export default function BlogDetailPage({ returnHref = "/blog", slug }) {
             <div className={[shellStyles.pageStack, styles.headerStack].join(" ")}>
               <section className={[shellStyles.pageIntro, styles.articleIntro].join(" ")}>
                 <h1 className={[shellStyles.pageTitle, styles.articleTitle].join(" ")}>
-                  {post.title}
+                  {getLocalizedValue(post.title, language)}
                 </h1>
                 <p className={styles.metaRow}>
-                  <span>{formatBlogDate(post.date)}</span>
+                  <span>{formatBlogDate(post.date, language)}</span>
                 </p>
               </section>
             </div>
@@ -151,12 +179,16 @@ export default function BlogDetailPage({ returnHref = "/blog", slug }) {
                 {/* 这里直接沿用 V1 站点的远程 banner，只替换内容，不改当前图片接入链路。 */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  alt={post.heroImageAlt}
+                  alt={getLocalizedValue(post.heroImageAlt, language)}
                   className={styles.heroImage}
                   src={post.heroImageSrc}
                 />
               </div>
-              {post.heroCaption ? <p className={styles.heroCaption}>{post.heroCaption}</p> : null}
+              {post.heroCaption ? (
+                <p className={styles.heroCaption}>
+                  {getLocalizedValue(post.heroCaption, language)}
+                </p>
+              ) : null}
             </section>
           </div>
           <div aria-hidden="true" className={styles.detailRail} />
@@ -174,7 +206,7 @@ export default function BlogDetailPage({ returnHref = "/blog", slug }) {
           <div aria-hidden="true" className={styles.detailRail} />
           <div className={styles.bodyContent}>
             <div className={styles.body}>
-              <p className={styles.intro}>{post.summary}</p>
+              <p className={styles.intro}>{getLocalizedValue(post.summary, language)}</p>
 
               {contentGroups.map((group, groupIndex) => (
                 <section
@@ -196,8 +228,12 @@ export default function BlogDetailPage({ returnHref = "/blog", slug }) {
 
             {post.articleFooterTitle && post.articleFooterText ? (
               <section className={styles.articleFooter}>
-                <h2 className={styles.articleFooterTitle}>{post.articleFooterTitle}</h2>
-                <p className={styles.articleFooterText}>{post.articleFooterText}</p>
+                <h2 className={styles.articleFooterTitle}>
+                  {getLocalizedValue(post.articleFooterTitle, language)}
+                </h2>
+                <p className={styles.articleFooterText}>
+                  {getLocalizedValue(post.articleFooterText, language)}
+                </p>
               </section>
             ) : null}
           </div>

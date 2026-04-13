@@ -2,6 +2,9 @@
 
 import { usePathname } from "next/navigation";
 
+import { siteShellDictionary } from "../i18n/dictionary";
+import { getLocalizedValue } from "../i18n/get-localized-value";
+import { useLanguage } from "../i18n/LanguageProvider";
 import SiteHeader from "./SiteHeader";
 import styles from "../styles/site-shell.module.css";
 
@@ -17,9 +20,14 @@ const FULL_BLEED_PATHS = new Set([
 ]);
 
 export default function SiteChromeFrame({ children }) {
+  const { language } = useLanguage();
   const pathname = usePathname();
-  const isImmersiveCaseStudy = IMMERSIVE_PATHS.has(pathname);
-  const isFullBleedCaseStudy = FULL_BLEED_PATHS.has(pathname);
+  const isEnglishPlaceholderCaseStudy =
+    language === "en" && IMMERSIVE_PATHS.has(pathname);
+  const isImmersiveCaseStudy =
+    IMMERSIVE_PATHS.has(pathname) && !isEnglishPlaceholderCaseStudy;
+  const isFullBleedCaseStudy =
+    FULL_BLEED_PATHS.has(pathname) && !isEnglishPlaceholderCaseStudy;
   const mainClassName = [styles.siteMain, isImmersiveCaseStudy ? styles.siteMainFlush : ""]
     .filter(Boolean)
     .join(" ");
@@ -36,7 +44,9 @@ export default function SiteChromeFrame({ children }) {
       <footer className={styles.siteFooter}>
         <div className={styles.siteShell}>
           <div className={styles.siteFooterInner}>
-            <p className={styles.footerText}>© 2026 Zirui Zhao All rights reserved.</p>
+            <p className={styles.footerText}>
+              {getLocalizedValue(siteShellDictionary.footerCopyright, language)}
+            </p>
             <p className={styles.footerText}>zhaozirui721@gmail.com</p>
           </div>
         </div>

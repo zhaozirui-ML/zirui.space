@@ -1,23 +1,34 @@
+const t = (zh, en) => ({ zh, en });
+
 // Blog 内容继续集中在数据层管理。
 // 这一版把 V1 站点上的真实文章内容迁入当前项目，页面只负责渲染，不在组件里散写正文。
 export const blogPosts = [
   {
     slug: "smartx-design-workflow",
     section: "featured",
-    title: "SmartX 的设计工作流程",
-    summary: "整理 SmartX 内设计工作的主线、支线和设计系统相关任务的工作范围。",
-    detailSummary:
+    title: t("SmartX 的设计工作流程", "SmartX Design Workflow"),
+    summary: t(
+      "整理 SmartX 内设计工作的主线、支线和设计系统相关任务的工作范围。",
+      "A breakdown of SmartX design work across core product tracks, side tasks, and design system responsibilities.",
+    ),
+    detailSummary: t(
       "在 SmartX 内，设计师接到的需求大致可分为主线任务和支线任务，而设计系统部分又能继续细分出不同类型的沉淀工作。",
+      "At SmartX, design work usually splits into core product tracks and side tasks, while design system work can be divided into several different types of long-term contributions.",
+    ),
     date: "2023年6月28日",
-    category: "DESIGN",
+    category: t("设计", "DESIGN"),
     imageSrc:
       "https://framerusercontent.com/images/UMX9BcVLmN4nyEMeGXkiDrbtZIo.jpg?width=5184&height=3456",
-    imageAlt: "SmartX 的设计工作流程文章封面",
+    imageAlt: t("SmartX 的设计工作流程文章封面", "Cover image for SmartX Design Workflow"),
     heroImageSrc:
       "https://framerusercontent.com/images/UMX9BcVLmN4nyEMeGXkiDrbtZIo.jpg?width=5184&height=3456",
-    heroImageAlt: "SmartX 的设计工作流程文章 banner",
+    heroImageAlt: t("SmartX 的设计工作流程文章 banner", "Hero banner for SmartX Design Workflow"),
     tone: "dark",
     layout: "imageStart",
+    translationStatus: {
+      en: "placeholder",
+      zh: "translated",
+    },
     contentBlocks: [
       {
         type: "heading",
@@ -96,20 +107,29 @@ export const blogPosts = [
   {
     slug: "communication-at-work",
     section: "featured",
-    title: "沟通的方法",
-    summary: "从倾听、识别沟通模式到积极回应，整理一套在工作中更有效沟通的方法。",
-    detailSummary:
+    title: t("沟通的方法", "On Better Communication"),
+    summary: t(
+      "从倾听、识别沟通模式到积极回应，整理一套在工作中更有效沟通的方法。",
+      "Notes on listening, reading communication patterns, and responding with more clarity at work.",
+    ),
+    detailSummary: t(
       "这篇文章来自于我在 23 年年中的一次组会分享，主要记录《沟通的方法》一书里对远程沟通、倾听和积极回应的阅读感悟。",
+      "This post comes from an internal sharing session in 2023 and captures what I learned from the book The Method of Communication about remote communication, listening, and constructive responses.",
+    ),
     date: "2023年2月10日",
-    category: "GUIDE",
+    category: t("方法", "GUIDE"),
     imageSrc:
       "https://framerusercontent.com/images/VXVd6VwBBpsY0PBNf9ACGuwlo.jpg?width=5345&height=3563",
-    imageAlt: "沟通的方法文章封面",
+    imageAlt: t("沟通的方法文章封面", "Cover image for On Better Communication"),
     heroImageSrc:
       "https://framerusercontent.com/images/VXVd6VwBBpsY0PBNf9ACGuwlo.jpg?width=5345&height=3563",
-    heroImageAlt: "沟通的方法文章 banner",
+    heroImageAlt: t("沟通的方法文章 banner", "Hero banner for On Better Communication"),
     tone: "light",
     layout: "imageEnd",
+    translationStatus: {
+      en: "placeholder",
+      zh: "translated",
+    },
     contentBlocks: [
       {
         type: "heading",
@@ -421,20 +441,35 @@ export const blogPosts = [
   {
     slug: "goals-activities-tasks-and-actions",
     section: "featured",
-    title: "设计中的目标、活动、任务、行为",
-    summary: "从目标、活动、任务、动作的层级关系出发，重新看产品设计应该围绕什么展开。",
-    detailSummary:
+    title: t("设计中的目标、活动、任务、行为", "Goals, Activities, Tasks, and Actions in Design"),
+    summary: t(
+      "从目标、活动、任务、动作的层级关系出发，重新看产品设计应该围绕什么展开。",
+      "A look at how product design changes when you center goals instead of activities, tasks, or actions.",
+    ),
+    detailSummary: t(
       "理解目标在设计中的指导意义。目标、活动、任务、动作，以不同层级为中心进行设计会产生完全不同的结果。",
+      "An exploration of why goals matter in design, and how centering different layers such as goals, activities, tasks, or actions leads to very different results.",
+    ),
     date: "2023年8月8日",
-    category: "GUIDE",
+    category: t("方法", "GUIDE"),
     imageSrc:
       "https://framerusercontent.com/images/InuNHIQ0GzOduJG7DthhRGJV8fY.jpg?width=1000&height=1334",
-    imageAlt: "设计中的目标、活动、任务、行为文章封面",
+    imageAlt: t(
+      "设计中的目标、活动、任务、行为文章封面",
+      "Cover image for Goals, Activities, Tasks, and Actions in Design",
+    ),
     heroImageSrc:
       "https://framerusercontent.com/images/InuNHIQ0GzOduJG7DthhRGJV8fY.jpg?width=1000&height=1334",
-    heroImageAlt: "设计中的目标、活动、任务、行为文章 banner",
+    heroImageAlt: t(
+      "设计中的目标、活动、任务、行为文章 banner",
+      "Hero banner for Goals, Activities, Tasks, and Actions in Design",
+    ),
     tone: "light",
     layout: "imageStart",
+    translationStatus: {
+      en: "placeholder",
+      zh: "translated",
+    },
     contentBlocks: [
       {
         type: "paragraph",
@@ -465,18 +500,27 @@ export const blogPosts = [
   {
     slug: "hammer-and-nails",
     section: "browse",
-    title: "锤子与钉子",
-    summary: "从产品创新和需求识别的角度，讨论如何先找到问题，再让方案与问题真正对焦。",
-    detailSummary:
+    title: t("锤子与钉子", "Hammers and Nails"),
+    summary: t(
+      "从产品创新和需求识别的角度，讨论如何先找到问题，再让方案与问题真正对焦。",
+      "A note on product innovation and demand discovery: find the right problem first, then make sure the solution actually fits.",
+    ),
+    detailSummary: t(
       "这篇文章围绕产品创新的五要素、问题与解决方案的对焦过程，以及如何分辨真实用户需求展开整理。",
+      "This post walks through the five elements of product innovation, how problems and solutions align with each other, and how to identify real user needs.",
+    ),
     date: "2022年4月20日",
-    category: "GUIDE",
+    category: t("方法", "GUIDE"),
     imageSrc:
       "https://framerusercontent.com/images/VxphzLRXgblM8jZJnzPZ6Bhw5pI.jpg?width=2800&height=2800",
-    imageAlt: "锤子与钉子文章缩略图",
+    imageAlt: t("锤子与钉子文章缩略图", "Thumbnail image for Hammers and Nails"),
     heroImageSrc:
       "https://framerusercontent.com/images/VxphzLRXgblM8jZJnzPZ6Bhw5pI.jpg?width=2800&height=2800",
-    heroImageAlt: "锤子与钉子文章 banner",
+    heroImageAlt: t("锤子与钉子文章 banner", "Hero banner for Hammers and Nails"),
+    translationStatus: {
+      en: "placeholder",
+      zh: "translated",
+    },
     contentBlocks: [
       {
         type: "image",
@@ -690,18 +734,33 @@ export const blogPosts = [
   {
     slug: "obsidian-from-honeymoon-to-wakeup",
     section: "browse",
-    title: "Obsidian：从满心欢喜到梦醒时分",
-    summary: "记录从最初被 Obsidian 吸引，到逐渐看清它与自己真实需求之间差距的过程。",
-    detailSummary:
+    title: t("Obsidian：从满心欢喜到梦醒时分", "Obsidian: From Honeymoon to Wake-Up Call"),
+    summary: t(
+      "记录从最初被 Obsidian 吸引，到逐渐看清它与自己真实需求之间差距的过程。",
+      "A reflection on being drawn to Obsidian first, then gradually seeing the gap between its promise and what I actually needed.",
+    ),
+    detailSummary: t(
       "这是一篇关于笔记工具期待、蜜月期、使用痛点和后续取舍的复盘，重点不在工具神话，而在自己需求的变化。",
+      "A retrospective on expectations, honeymoon-phase excitement, real pain points, and the later tradeoffs of using a note-taking tool.",
+    ),
     date: "2024年1月15日",
-    category: "TOOLS",
+    category: t("工具", "TOOLS"),
     imageSrc:
       "https://framerusercontent.com/images/P7cQ0XB7oysajZb45i30Sqh3Q.jpg?width=3600&height=2400",
-    imageAlt: "Obsidian：从满心欢喜到梦醒时分文章缩略图",
+    imageAlt: t(
+      "Obsidian：从满心欢喜到梦醒时分文章缩略图",
+      "Thumbnail image for Obsidian: From Honeymoon to Wake-Up Call",
+    ),
     heroImageSrc:
       "https://framerusercontent.com/images/P7cQ0XB7oysajZb45i30Sqh3Q.jpg?width=3600&height=2400",
-    heroImageAlt: "Obsidian：从满心欢喜到梦醒时分文章 banner",
+    heroImageAlt: t(
+      "Obsidian：从满心欢喜到梦醒时分文章 banner",
+      "Hero banner for Obsidian: From Honeymoon to Wake-Up Call",
+    ),
+    translationStatus: {
+      en: "placeholder",
+      zh: "translated",
+    },
     contentBlocks: [
       {
         type: "heading",
@@ -778,18 +837,27 @@ export const blogPosts = [
   {
     slug: "minimal-todos",
     section: "browse",
-    title: "简约 Todos",
-    summary: "从传统待办事项列表的问题出发，重新理解 Burner List 这种更专注的待办方式。",
-    detailSummary:
+    title: t("简约 Todos", "Minimal Todos"),
+    summary: t(
+      "从传统待办事项列表的问题出发，重新理解 Burner List 这种更专注的待办方式。",
+      "A reflection on the problems of traditional todo lists and why Burner List offers a more focused way to work.",
+    ),
+    detailSummary: t(
       "这篇文章围绕传统 Todos 的问题、Burner List 系统的做法，以及它为什么能帮助人们重新聚焦最重要的任务。",
+      "This post looks at what breaks in traditional todo systems, how Burner List works, and why it helps people refocus on the most important task.",
+    ),
     date: "2025年10月23日",
-    category: "GUIDE",
+    category: t("方法", "GUIDE"),
     imageSrc:
       "https://framerusercontent.com/images/IWuwwbDt6mxzPCujCX92dn9138g.jpg?width=6000&height=4000",
-    imageAlt: "简约 Todos 文章缩略图",
+    imageAlt: t("简约 Todos 文章缩略图", "Thumbnail image for Minimal Todos"),
     heroImageSrc:
       "https://framerusercontent.com/images/IWuwwbDt6mxzPCujCX92dn9138g.jpg?width=6000&height=4000",
-    heroImageAlt: "简约 Todos 文章 banner",
+    heroImageAlt: t("简约 Todos 文章 banner", "Hero banner for Minimal Todos"),
+    translationStatus: {
+      en: "placeholder",
+      zh: "translated",
+    },
     contentBlocks: [
       {
         type: "heading",
@@ -1005,17 +1073,27 @@ export const blogPosts = [
   {
     slug: "to-be-continue",
     section: "browse",
-    title: "To be Continue",
-    summary: "一篇保留中的文章页面，目前只留下了最直接的更新提示。",
-    detailSummary: "这篇文章在 V1 站点中暂时只有一个非常简短的占位内容：敬请期待。",
+    title: t("敬请期待", "To Be Continued"),
+    summary: t(
+      "一篇保留中的文章页面，目前只留下了最直接的更新提示。",
+      "A reserved article page that currently only keeps the most direct update note.",
+    ),
+    detailSummary: t(
+      "这篇文章在 V1 站点中暂时只有一个非常简短的占位内容：敬请期待。",
+      "This article only had a very short placeholder in the V1 site: coming soon.",
+    ),
     date: "2024年6月22日",
-    category: "GUIDE",
+    category: t("方法", "GUIDE"),
     imageSrc:
       "https://framerusercontent.com/images/WlRldDSjtDSdVsovz4sBYi8xr0.png?width=1280&height=800",
-    imageAlt: "To be Continue 文章缩略图",
+    imageAlt: t("To be Continue 文章缩略图", "Thumbnail image for To Be Continued"),
     heroImageSrc:
       "https://framerusercontent.com/images/WlRldDSjtDSdVsovz4sBYi8xr0.png?width=1280&height=800",
-    heroImageAlt: "To be Continue 文章 banner",
+    heroImageAlt: t("To be Continue 文章 banner", "Hero banner for To Be Continued"),
+    translationStatus: {
+      en: "placeholder",
+      zh: "translated",
+    },
     contentBlocks: [
       {
         type: "heading",

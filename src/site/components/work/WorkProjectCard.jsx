@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { workIndexDictionary } from "../../i18n/dictionary";
+import { getLocalizedValue } from "../../i18n/get-localized-value";
 import { joinClassNames } from "./join-class-names";
 import styles from "./work-components.module.css";
 
@@ -8,7 +10,7 @@ function WorkProjectTag({ text }) {
   return <span className={styles.tag}>{text}</span>;
 }
 
-function WorkProjectPreview({ item }) {
+function WorkProjectPreview({ item, language }) {
   const preview = item.workPreview;
   const previewStyle = /** @type {any} */ ({
     "--work-preview-ratio": preview.ratio,
@@ -24,7 +26,7 @@ function WorkProjectPreview({ item }) {
     return (
       <div className={styles.previewFrame} style={previewStyle}>
         <Image
-          alt={preview.alt}
+          alt={getLocalizedValue(preview.alt, language)}
           className={styles.previewImage}
           fill
           loading="eager"
@@ -51,7 +53,7 @@ function WorkProjectPreview({ item }) {
   return (
     <div className={styles.previewFrame} style={previewStyle}>
       <Image
-        alt={preview.alt}
+        alt={getLocalizedValue(preview.alt, language)}
         className={styles.previewImage}
         fill
         loading="eager"
@@ -67,7 +69,7 @@ function WorkProjectPreview({ item }) {
   );
 }
 
-export default function WorkProjectCard({ item }) {
+export default function WorkProjectCard({ item, language }) {
   return (
     <Link
       className={joinClassNames(
@@ -78,16 +80,19 @@ export default function WorkProjectCard({ item }) {
       )}
       href={{ pathname: `/work/${item.slug}`, query: { from: "/work" } }}
     >
-      <WorkProjectPreview item={item} />
+      <WorkProjectPreview item={item} language={language} />
 
       <div className={styles.projectContent}>
         <div className={styles.projectCopy}>
-          <h2 className={styles.projectTitle}>{item.title}</h2>
-          <p className={styles.projectSummary}>{item.summary}</p>
+          <h2 className={styles.projectTitle}>{getLocalizedValue(item.title, language)}</h2>
+          <p className={styles.projectSummary}>{getLocalizedValue(item.summary, language)}</p>
         </div>
 
-        <div className={styles.projectMeta} aria-label={`${item.title} metadata`}>
-          {item.workTags.map((tag) => (
+        <div
+          className={styles.projectMeta}
+          aria-label={`${getLocalizedValue(item.title, language)} ${getLocalizedValue(workIndexDictionary.metadataAriaLabel, language)}`}
+        >
+          {getLocalizedValue(item.workTags, language).map((tag) => (
             <WorkProjectTag key={`${item.slug}-${tag}`} text={tag} />
           ))}
         </div>

@@ -4,10 +4,14 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { siteShellDictionary } from "../i18n/dictionary";
+import { getLocalizedValue } from "../i18n/get-localized-value";
+import { useLanguage } from "../i18n/LanguageProvider";
 import { siteNavigation } from "../data/navigation";
 import styles from "../styles/site-shell.module.css";
 
 export default function SiteHeader() {
+  const { isPending, language, setLanguage } = useLanguage();
   const [headerState, setHeaderState] = useState({
     scrollProgress: 0,
     width: 1920,
@@ -107,13 +111,56 @@ export default function SiteHeader() {
             />
             <span>Zirui Zhao</span>
           </Link>
-          <nav aria-label="主导航" className={styles.navigation}>
-            {siteNavigation.map((item) => (
-              <Link className={styles.navigationLink} href={item.href} key={item.href}>
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+          <div className={styles.siteHeaderControls}>
+            <nav
+              aria-label={getLocalizedValue(
+                siteShellDictionary.navigationAriaLabel,
+                language,
+              )}
+              className={styles.navigation}
+            >
+              {siteNavigation.map((item) => (
+                <Link className={styles.navigationLink} href={item.href} key={item.href}>
+                  {getLocalizedValue(item.label, language)}
+                </Link>
+              ))}
+            </nav>
+
+            <div
+              aria-label={getLocalizedValue(siteShellDictionary.languageSwitchLabel, language)}
+              className={styles.languageToggle}
+              role="group"
+            >
+              <button
+                aria-pressed={language === "zh"}
+                className={[
+                  styles.languageToggleButton,
+                  language === "zh" ? styles.languageToggleButtonActive : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+                disabled={isPending}
+                onClick={() => setLanguage("zh")}
+                type="button"
+              >
+                中
+              </button>
+              <button
+                aria-pressed={language === "en"}
+                className={[
+                  styles.languageToggleButton,
+                  language === "en" ? styles.languageToggleButtonActive : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+                disabled={isPending}
+                onClick={() => setLanguage("en")}
+                type="button"
+              >
+                EN
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </header>

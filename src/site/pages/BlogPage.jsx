@@ -2,10 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { browseBlogPosts, featuredBlogPosts } from "../data/blog-posts";
+import { blogIndexDictionary } from "../i18n/dictionary";
+import { getLocalizedValue } from "../i18n/get-localized-value";
 import { formatBlogDate } from "../lib/format-blog-date";
 import styles from "../styles/blog-page.module.css";
 
-export default function BlogPage() {
+export default function BlogPage({ language }) {
   return (
     <div className={styles.blogPage}>
       <section aria-labelledby="blog-featured-heading" className={styles.sectionFrame}>
@@ -13,7 +15,7 @@ export default function BlogPage() {
           <div aria-hidden="true" className={styles.sectionTitleRail} />
           <div className={styles.sectionTitleCell}>
             <h1 className={styles.sectionTitle} id="blog-featured-heading">
-              Featured
+              {getLocalizedValue(blogIndexDictionary.featuredHeading, language)}
             </h1>
           </div>
           <div
@@ -31,7 +33,7 @@ export default function BlogPage() {
 
               return (
                 <Link
-                  aria-label={`Read ${post.title}`}
+                  aria-label={`${getLocalizedValue(blogIndexDictionary.readArticleAriaLabel, language)} ${getLocalizedValue(post.title, language)}`}
                   className={[
                     styles.cardLink,
                     styles.featuredCard,
@@ -43,7 +45,7 @@ export default function BlogPage() {
                 >
                   <div className={styles.featuredMedia}>
                     <Image
-                      alt={post.imageAlt}
+                      alt={getLocalizedValue(post.imageAlt, language)}
                       className={styles.featuredImage}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 960px) 92vw, 448px"
@@ -65,7 +67,7 @@ export default function BlogPage() {
                           isDark ? styles.featuredTitleDark : "",
                         ].join(" ")}
                       >
-                        {post.title}
+                        {getLocalizedValue(post.title, language)}
                       </h2>
                       <p
                         className={[
@@ -73,7 +75,7 @@ export default function BlogPage() {
                           isDark ? styles.blogMetaDark : "",
                         ].join(" ")}
                       >
-                        <span>{formatBlogDate(post.date)}</span>
+                        <span>{formatBlogDate(post.date, language)}</span>
                       </p>
                       <p
                         className={[
@@ -81,7 +83,7 @@ export default function BlogPage() {
                           isDark ? styles.featuredSummaryDark : "",
                         ].join(" ")}
                       >
-                        {post.summary}
+                        {getLocalizedValue(post.summary, language)}
                       </p>
                     </div>
 
@@ -105,7 +107,7 @@ export default function BlogPage() {
           <div aria-hidden="true" className={[styles.sectionTitleRail, styles.browseTitleRail].join(" ")} />
           <div className={styles.sectionTitleCell}>
             <h2 className={styles.sectionTitle} id="blog-browse-heading">
-              Browse all
+              {getLocalizedValue(blogIndexDictionary.browseHeading, language)}
             </h2>
           </div>
           <div aria-hidden="true" className={[styles.sectionTitleRail, styles.browseTitleRail].join(" ")} />
@@ -120,14 +122,14 @@ export default function BlogPage() {
             <div className={styles.browseGrid}>
               {browseBlogPosts.map((post) => (
                 <Link
-                  aria-label={`Read ${post.title}`}
+                  aria-label={`${getLocalizedValue(blogIndexDictionary.readArticleAriaLabel, language)} ${getLocalizedValue(post.title, language)}`}
                   className={[styles.cardLink, styles.browseCard].join(" ")}
                   href={`/blog/${post.slug}`}
                   key={post.slug}
                 >
                   <div className={styles.browseMedia}>
                     <Image
-                      alt={post.imageAlt}
+                      alt={getLocalizedValue(post.imageAlt, language)}
                       className={styles.featuredImage}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, 287px"
@@ -137,9 +139,11 @@ export default function BlogPage() {
                   </div>
 
                   <div className={styles.browseBody}>
-                    <h3 className={styles.browseTitle}>{post.title}</h3>
+                    <h3 className={styles.browseTitle}>
+                      {getLocalizedValue(post.title, language)}
+                    </h3>
                     <p className={styles.blogMeta}>
-                      <span>{formatBlogDate(post.date)}</span>
+                      <span>{formatBlogDate(post.date, language)}</span>
                     </p>
                   </div>
                 </Link>
