@@ -11,25 +11,25 @@ export const aboutContactItems = [
     label: "SNS",
     value: [
       {
-        href: "https://x.com/",
+        href: "https://x.com/atc12138",
         iconSrc: "/site/about/sns-x.svg",
         label: "X",
         platform: "x",
       },
       {
-        href: "https://www.instagram.com/",
+        href: "https://www.instagram.com/atc12138/",
         iconSrc: "/site/about/sns-instagram.svg",
         label: "Instagram",
         platform: "instagram",
       },
       {
-        href: "https://www.notion.so/",
+        href: "https://www.notion.so/HI-ATC-8a125e8f64414017b830ac0f7d5d3810?pvs=4",
         iconSrc: "/site/about/sns-notion.svg",
         label: "Notion",
         platform: "notion",
       },
       {
-        href: "https://open.spotify.com/",
+        href: "https://open.spotify.com/collection/tracks",
         iconSrc: "/site/about/sns-spotify.svg",
         label: "Spotify",
         platform: "spotify",
