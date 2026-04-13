@@ -4,7 +4,7 @@
   --blog-grid-border-dashed: var(--portfolio-color-border-light);
   --blog-grid-border-ghost:
     color-mix(in srgb, var(--portfolio-color-border-strong) 45%, transparent);
-  background: var(--portfolio-color-bg-soft);
+  background: var(--portfolio-color-bg-pure);
   margin: 0 auto;
   margin-top: calc(var(--ds-space-2xs) * 15);
   width: min(100%, 72rem);
