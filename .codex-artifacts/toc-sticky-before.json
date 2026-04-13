@@ -1,0 +1,95 @@
+[
+  {
+    "slug": "drawing-ledger-2-0",
+    "titleTextFound": "图纸台账 2.0\n\n从“信息坟墓”到“主动式协作中心”的设计重构\n\n返回\n业务背景\n问题定位\n设计目标\n设计实践\n设计分析\nRound 1\nRound 2\nDe",
+    "checkpoints": [
+      {
+        "scrollY": 0,
+        "tocTop": 1212,
+        "headingTop": 1212
+      },
+      {
+        "scrollY": 400,
+        "tocTop": 812,
+        "headingTop": 812
+      },
+      {
+        "scrollY": 900,
+        "tocTop": 312,
+        "headingTop": 312
+      },
+      {
+        "scrollY": 1300,
+        "tocTop": 132,
+        "headingTop": -88
+      },
+      {
+        "scrollY": 1800,
+        "tocTop": 132,
+        "headingTop": -588
+      }
+    ]
+  },
+  {
+    "slug": "axzo-design-system",
+    "titleTextFound": "Axzo Design Portal\n返回\n项目背景\n问题定义\n设计洞察\n官网定位\n设计目标\n设计探索\n消费链路\n传播策略\n设计实践\n首页设计\n设计与开发详情\n",
+    "checkpoints": [
+      {
+        "scrollY": 0,
+        "tocTop": 1180.796875,
+        "headingTop": 1180.796875
+      },
+      {
+        "scrollY": 400,
+        "tocTop": 780.796875,
+        "headingTop": 780.796875
+      },
+      {
+        "scrollY": 900,
+        "tocTop": 280.796875,
+        "headingTop": 280.796875
+      },
+      {
+        "scrollY": 1300,
+        "tocTop": 0,
+        "headingTop": -119.203125
+      },
+      {
+        "scrollY": 1800,
+        "tocTop": 0,
+        "headingTop": -619.203125
+      }
+    ]
+  },
+  {
+    "slug": "data-visualization-screen",
+    "titleTextFound": "大屏数据可视化\n\n从工作台中的图表探索，延展到更复杂的大屏场景\n\n返回\n项目背景\n问题定义\n设计目标\n设计实践\n图表视觉语言\n视觉语言扩展\n组件化沉淀\n设计成果",
+    "checkpoints": [
+      {
+        "scrollY": 0,
+        "tocTop": 1195.1875,
+        "headingTop": 1195.1875
+      },
+      {
+        "scrollY": 400,
+        "tocTop": 795.1875,
+        "headingTop": 795.1875
+      },
+      {
+        "scrollY": 900,
+        "tocTop": 295.1875,
+        "headingTop": 295.1875
+      },
+      {
+        "scrollY": 1300,
+        "tocTop": 115.1875,
+        "headingTop": -104.8125
+      },
+      {
+        "scrollY": 1800,
+        "tocTop": 115.1875,
+        "headingTop": -604.8125
+      }
+    ]
+  }
+]
