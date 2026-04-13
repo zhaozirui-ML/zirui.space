@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import DetailTranslationPlaceholder from "../components/DetailTranslationPlaceholder";
+import { untranslatedDetailDictionary } from "../i18n/dictionary";
 import { getBlogBySlug } from "../lib/get-blog-by-slug";
 import { getReturnPath } from "../lib/get-return-path";
 import { formatBlogDate } from "../lib/format-blog-date";
@@ -74,7 +76,14 @@ function renderContentBlock(block, index) {
   return null;
 }
 
-export default function BlogDetailPage({ returnHref = "/blog", slug }) {
+/**
+ * @param {{
+ *   language?: import("../i18n/config").SiteLanguage,
+ *   returnHref?: string,
+ *   slug: string,
+ * }} props
+ */
+export default function BlogDetailPage({ language = "zh", returnHref = "/blog", slug }) {
   const post = getBlogBySlug(slug);
 
   if (!post) {
@@ -112,6 +121,21 @@ export default function BlogDetailPage({ returnHref = "/blog", slug }) {
 
   const safeReturnHref = getReturnPath(returnHref, "/blog");
 
+  if (language === "en") {
+    return (
+      <DetailTranslationPlaceholder
+        backHref={safeReturnHref}
+        backLabel={untranslatedDetailDictionary.backToBlog}
+        description={untranslatedDetailDictionary.description}
+        eyebrow={untranslatedDetailDictionary.blogEyebrow}
+        language={language}
+        noteItems={untranslatedDetailDictionary.noteItems}
+        noteTitle={untranslatedDetailDictionary.noteTitle}
+        title={untranslatedDetailDictionary.blogTitle}
+      />
+    );
+  }
+
   return (
     <div className={styles.articlePage}>
       <div className={styles.backLinkRow}>
@@ -133,7 +157,7 @@ export default function BlogDetailPage({ returnHref = "/blog", slug }) {
                   {post.title}
                 </h1>
                 <p className={styles.metaRow}>
-                  <span>{formatBlogDate(post.date)}</span>
+                  <span>{formatBlogDate(post.date, language)}</span>
                 </p>
               </section>
             </div>

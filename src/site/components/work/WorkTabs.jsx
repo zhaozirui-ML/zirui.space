@@ -1,6 +1,8 @@
 import { Heart, LayoutDashboard, LayoutGrid } from "lucide-react";
 
 import Button from "../../../../design-system/components/Button";
+import { workIndexDictionary } from "../../i18n/dictionary";
+import { getLocalizedValue } from "../../i18n/get-localized-value";
 import { joinClassNames } from "./join-class-names";
 import styles from "./work-components.module.css";
 
@@ -10,7 +12,7 @@ const tabIcons = {
   layoutGrid: LayoutGrid,
 };
 
-function WorkTabChip({ isActive, onSelect, tab }) {
+function WorkTabChip({ isActive, language, onSelect, tab }) {
   const TabIcon = tabIcons[tab.iconName];
 
   return (
@@ -38,16 +40,16 @@ function WorkTabChip({ isActive, onSelect, tab }) {
         size="sm"
         variant="chip"
       >
-        {tab.label}
+        {getLocalizedValue(tab.label, language)}
       </Button>
     </li>
   );
 }
 
-export default function WorkTabs({ activeTabId, onSelect, tabs }) {
+export default function WorkTabs({ activeTabId, language, onSelect, tabs }) {
   return (
     <ul
-      aria-label="Work categories"
+      aria-label={getLocalizedValue(workIndexDictionary.tabAriaLabel, language)}
       className={styles.tabsList}
       role="tablist"
     >
@@ -55,6 +57,7 @@ export default function WorkTabs({ activeTabId, onSelect, tabs }) {
         <WorkTabChip
           isActive={tab.id === activeTabId}
           key={tab.id}
+          language={language}
           onSelect={onSelect}
           tab={tab}
         />

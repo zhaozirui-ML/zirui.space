@@ -2,12 +2,19 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { featuredBlogPosts } from "../../data/blog-posts";
+import { homePageDictionary } from "../../i18n/dictionary";
+import { getLocalizedValue } from "../../i18n/get-localized-value";
 import { formatBlogDate } from "../../lib/format-blog-date";
 import styles from "../../styles/home-page.module.css";
 
 const homeBlogPosts = featuredBlogPosts.slice(0, 2);
 
-export default function HomeBlogsSection() {
+/**
+ * 首页文章区块会跟随语言切换标题、按钮和日期格式。
+ *
+ * @param {{ language: import("../../i18n/config").SiteLanguage }} props
+ */
+export default function HomeBlogsSection({ language }) {
   if (homeBlogPosts.length === 0) {
     return null;
   }
@@ -15,14 +22,18 @@ export default function HomeBlogsSection() {
   return (
     <section className={styles.section}>
       <div className={styles.sectionHeader}>
-        <h2 className={styles.sectionTitle}>Blogs</h2>
-        <p className={styles.sectionSubtitle}>See what I Thought</p>
+        <h2 className={styles.sectionTitle}>
+          {getLocalizedValue(homePageDictionary.blogsSectionTitle, language)}
+        </h2>
+        <p className={styles.sectionSubtitle}>
+          {getLocalizedValue(homePageDictionary.blogsSectionSubtitle, language)}
+        </p>
       </div>
 
       <div className={styles.blogList}>
         {homeBlogPosts.map((post) => (
           <Link
-            aria-label={`Read ${post.title}`}
+            aria-label={`${getLocalizedValue(homePageDictionary.blogsSectionViewArticle, language)}: ${post.title}`}
             className={styles.blogCard}
             href={{ pathname: `/blog/${post.slug}`, query: { from: "/" } }}
             key={post.slug}
@@ -47,7 +58,7 @@ export default function HomeBlogsSection() {
               </div>
 
               <p className={styles.blogCardMeta}>
-                <span>{formatBlogDate(post.date)}</span>
+                <span>{formatBlogDate(post.date, language)}</span>
                 <span aria-hidden="true">·</span>
                 <span>{post.category}</span>
               </p>

@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { homeWorkItems } from "../../data/work-items";
+import { homePageDictionary } from "../../i18n/dictionary";
+import { getLocalizedValue } from "../../i18n/get-localized-value";
 import styles from "../../styles/home-page.module.css";
 
 function getForegroundImageStyle(homeMediaFrame) {
@@ -45,12 +47,21 @@ function getForegroundImageDimensions(homeMediaFrame) {
   };
 }
 
-export default function HomeWorksSection() {
+/**
+ * 首页作品区块会跟随语言切换标题和按钮文案。
+ *
+ * @param {{ language: import("../../i18n/config").SiteLanguage }} props
+ */
+export default function HomeWorksSection({ language }) {
   return (
     <section className={styles.section}>
       <div className={styles.sectionHeader}>
-        <h2 className={styles.sectionTitle}>Recent Works</h2>
-        <p className={styles.sectionSubtitle}>See what I do</p>
+        <h2 className={styles.sectionTitle}>
+          {getLocalizedValue(homePageDictionary.workSectionTitle, language)}
+        </h2>
+        <p className={styles.sectionSubtitle}>
+          {getLocalizedValue(homePageDictionary.workSectionSubtitle, language)}
+        </p>
       </div>
 
       <div className={styles.workList}>
@@ -88,14 +99,16 @@ export default function HomeWorksSection() {
                   width={16}
                 />
                 <p className={styles.workCategoryLabel}>
-                  {item.homeCategory ?? item.category}
+                  {getLocalizedValue(item.homeCategory ?? item.category, language)}
                 </p>
               </div>
 
               <div className={styles.workCopyStack}>
-                <h3 className={styles.workCardTitle}>{item.homeTitle ?? item.title}</h3>
+                <h3 className={styles.workCardTitle}>
+                  {getLocalizedValue(item.homeTitle ?? item.title, language)}
+                </h3>
                 <p className={styles.workCardSummary}>
-                  {item.homeSummary ?? item.summary}
+                  {getLocalizedValue(item.homeSummary ?? item.summary, language)}
                 </p>
               </div>
 
@@ -103,7 +116,7 @@ export default function HomeWorksSection() {
                 className={styles.workCardButton}
                 href={{ pathname: `/work/${item.slug}`, query: { from: "/" } }}
               >
-                View Project
+                {getLocalizedValue(homePageDictionary.workSectionViewProject, language)}
               </Link>
             </div>
 

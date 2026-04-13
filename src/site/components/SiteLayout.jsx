@@ -9,6 +9,7 @@ import {
 import useMediaQuery from "../../../design-system/hooks/useMediaQuery";
 
 import { inter, ivyPresto, satoshi } from "../fonts/site-fonts";
+import { LanguageProvider } from "../i18n/LanguageProvider";
 import { isModuleHomePath } from "../lib/is-module-home-path";
 import SiteChromeFrame from "./SiteChromeFrame";
 import SiteSunnyBackground from "./SiteSunnyBackground";
@@ -52,7 +53,7 @@ function getThemePreferenceSnapshot() {
     : null;
 }
 
-export default function SiteLayout({ children }) {
+export default function SiteLayout({ children, initialLanguage }) {
   const pathname = usePathname();
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const themeToggleSoundRef = useRef(null);
@@ -112,19 +113,21 @@ export default function SiteLayout({ children }) {
   };
 
   return (
-    <div
-      className={rootClassName}
-      data-color-theme={colorTheme}
-      style={themeStyle}
-    >
-      {/* 模块首页统一从壳层挂一层 Sunny Mode，避免首页自身和壳层重复渲染 video。 */}
-      {shouldShowSunnyBackground ? <SiteSunnyBackground /> : null}
-      <SiteChromeFrame
-        colorTheme={colorTheme}
-        onThemeToggle={handleThemeToggle}
+    <LanguageProvider initialLanguage={initialLanguage}>
+      <div
+        className={rootClassName}
+        data-color-theme={colorTheme}
+        style={themeStyle}
       >
-        {children}
-      </SiteChromeFrame>
-    </div>
+        {/* 模块首页统一从壳层挂一层 Sunny Mode，避免首页自身和壳层重复渲染 video。 */}
+        {shouldShowSunnyBackground ? <SiteSunnyBackground /> : null}
+        <SiteChromeFrame
+          colorTheme={colorTheme}
+          onThemeToggle={handleThemeToggle}
+        >
+          {children}
+        </SiteChromeFrame>
+      </div>
+    </LanguageProvider>
   );
 }

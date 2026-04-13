@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { workIndexDictionary } from "../../i18n/dictionary";
+import { getLocalizedValue } from "../../i18n/get-localized-value";
 import { joinClassNames } from "./join-class-names";
 import styles from "./work-components.module.css";
 
@@ -67,7 +69,9 @@ function WorkProjectPreview({ item }) {
   );
 }
 
-export default function WorkProjectCard({ item }) {
+export default function WorkProjectCard({ item, language }) {
+  const title = getLocalizedValue(item.title, language);
+
   return (
     <Link
       className={joinClassNames(
@@ -82,11 +86,14 @@ export default function WorkProjectCard({ item }) {
 
       <div className={styles.projectContent}>
         <div className={styles.projectCopy}>
-          <h2 className={styles.projectTitle}>{item.title}</h2>
-          <p className={styles.projectSummary}>{item.summary}</p>
+          <h2 className={styles.projectTitle}>{title}</h2>
+          <p className={styles.projectSummary}>{getLocalizedValue(item.summary, language)}</p>
         </div>
 
-        <div className={styles.projectMeta} aria-label={`${item.title} metadata`}>
+        <div
+          className={styles.projectMeta}
+          aria-label={`${title} ${getLocalizedValue(workIndexDictionary.metadataAriaLabel, language)}`}
+        >
           {item.workTags.map((tag) => (
             <WorkProjectTag key={`${item.slug}-${tag}`} text={tag} />
           ))}

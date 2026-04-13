@@ -6,6 +6,7 @@ import {
 } from "../components/case-study/CaseStudyHeading";
 import CaseStudyToc from "../components/case-study/CaseStudyToc";
 import { axzoDesignSystemCaseStudy } from "../data/axzo-design-system-case-study";
+import { getLocalizedValue } from "../i18n/get-localized-value";
 import styles from "../styles/axzo-design-system-case-study.module.css";
 
 const caseStudySections = [
@@ -214,12 +215,22 @@ function OrbitDiagram({ orbit, variant }) {
   );
 }
 
+/**
+ * @param {{
+ *   backHref?: string,
+ *   headingAccentColor?: string,
+ *   language?: import("../i18n/config").SiteLanguage,
+ *   work: import("../data/work-items").workItems[number],
+ * }} props
+ */
 export default function AxzoDesignSystemCaseStudyPage({
   backHref = "/work",
   headingAccentColor = "#647654",
+  language = "zh",
   work,
 }) {
   const content = axzoDesignSystemCaseStudy;
+  const workTitle = getLocalizedValue(work.title, language);
   /** @type {import("react").CSSProperties & Record<string, string>} */
   const pageThemeStyles = {
     "--axzo-case-accent": headingAccentColor,
@@ -238,9 +249,9 @@ export default function AxzoDesignSystemCaseStudyPage({
   return (
     <article className={styles.caseStudy} style={pageThemeStyles}>
       {/* 封面视觉里已经有主标题了，这里补一个语义上的 h1，方便无障碍和 SEO。 */}
-      <h1 className="sr-only">{work.title}</h1>
+      <h1 className="sr-only">{workTitle}</h1>
 
-      <section className={styles.hero} aria-label={`${work.title} 封面`}>
+      <section className={styles.hero} aria-label={`${workTitle} 封面`}>
         <div className={styles.heroBackdrop}>
           <Image
             alt=""

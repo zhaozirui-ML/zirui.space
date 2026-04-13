@@ -1,10 +1,13 @@
 import SiteLayout from "../src/site/components/SiteLayout";
 import HomePage from "../src/site/pages/HomePage";
+import { getServerLanguage } from "../src/site/i18n/server";
 
-export default function Page() {
+export default async function Page() {
+  const initialLanguage = await getServerLanguage();
+
   return (
-    <SiteLayout>
-      <HomePage />
+    <SiteLayout initialLanguage={initialLanguage}>
+      <HomePage language={initialLanguage} />
     </SiteLayout>
   );
 }

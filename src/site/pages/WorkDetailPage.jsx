@@ -1,17 +1,42 @@
 import Link from "next/link";
 
 import { CaseStudyHeadingOne } from "../components/case-study/CaseStudyHeading";
+import DetailTranslationPlaceholder from "../components/DetailTranslationPlaceholder";
 import DrawingLedgerCaseStudy from "../components/work/DrawingLedgerCaseStudy";
 import DataVisualizationScreenDetail from "../components/work-detail/DataVisualizationScreenDetail";
+import { untranslatedDetailDictionary } from "../i18n/dictionary";
+import { getLocalizedValue } from "../i18n/get-localized-value";
 import { getWorkBySlug } from "../lib/get-work-by-slug";
 import AxzoDesignSystemCaseStudyPage from "./AxzoDesignSystemCaseStudyPage";
 import styles from "../styles/site-shell.module.css";
 
-export default function WorkDetailPage({ returnHref = "/work", slug }) {
+/**
+ * @param {{
+ *   language?: import("../i18n/config").SiteLanguage,
+ *   returnHref?: string,
+ *   slug: string,
+ * }} props
+ */
+export default function WorkDetailPage({ language = "zh", returnHref = "/work", slug }) {
   const work = getWorkBySlug(slug);
 
   if (!work) {
     return null;
+  }
+
+  if (language === "en") {
+    return (
+      <DetailTranslationPlaceholder
+        backHref={returnHref}
+        backLabel={untranslatedDetailDictionary.backToWork}
+        description={untranslatedDetailDictionary.description}
+        eyebrow={untranslatedDetailDictionary.workEyebrow}
+        language={language}
+        noteItems={untranslatedDetailDictionary.noteItems}
+        noteTitle={untranslatedDetailDictionary.noteTitle}
+        title={untranslatedDetailDictionary.workTitle}
+      />
+    );
   }
 
   // 这些案例页已经在仓库历史里有成型内容，当前分支只负责把它们重新接回统一路由。
@@ -33,6 +58,7 @@ export default function WorkDetailPage({ returnHref = "/work", slug }) {
       <AxzoDesignSystemCaseStudyPage
         backHref={returnHref}
         headingAccentColor={work.detailTheme?.headingAccentColor}
+        language={language}
         work={work}
       />
     );
@@ -44,11 +70,11 @@ export default function WorkDetailPage({ returnHref = "/work", slug }) {
         <Link className={styles.backLink} href={returnHref}>
           返回
         </Link>
-        <p className={styles.pageEyebrow}>{work.category}</p>
+        <p className={styles.pageEyebrow}>{getLocalizedValue(work.category, language)}</p>
         <CaseStudyHeadingOne
           className={styles.pageIntroHeading}
-          descriptions={work.detailSummary}
-          title={work.title}
+          descriptions={getLocalizedValue(work.detailSummary, language)}
+          title={getLocalizedValue(work.title, language)}
           titleAs="h1"
         >
           <p className={styles.pageDescription}>
