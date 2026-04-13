@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 import {
   aboutContactItems,
@@ -61,9 +62,14 @@ export default function AboutPage() {
                           rel="noreferrer"
                           target="_blank"
                         >
-                          <span aria-hidden="true" className={styles.snsGlyph}>
-                            {link.glyph}
-                          </span>
+                          <Image
+                            alt=""
+                            aria-hidden="true"
+                            className={styles.snsIcon}
+                            height={16}
+                            src={link.iconSrc}
+                            width={16}
+                          />
                         </Link>
                       );
                     })}
