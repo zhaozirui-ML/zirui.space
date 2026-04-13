@@ -1012,8 +1012,6 @@ function getBlogDateTimestamp(date) {
 
 export const featuredBlogPosts = blogPosts.filter((post) => post.section === "featured");
 
-export const browseBlogPosts = blogPosts.filter((post) => post.section === "browse");
-
 // Browse all 需要把 featured 文章也包含进来，并且按发布时间倒序显示。
 export const blogIndexPosts = [...blogPosts].sort(
   (left, right) => getBlogDateTimestamp(right.date) - getBlogDateTimestamp(left.date)

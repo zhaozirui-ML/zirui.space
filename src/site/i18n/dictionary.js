@@ -1,12 +1,4 @@
 export const siteShellDictionary = {
-  footerCopyright: {
-    zh: "© 2026 赵子锐 版权所有。",
-    en: "© 2026 Zirui Zhao. All rights reserved.",
-  },
-  languageSwitchLabel: {
-    zh: "切换网站语言",
-    en: "Switch site language",
-  },
   languageSwitchToChineseLabel: {
     zh: "切换到中文",
     en: "Switch to Chinese",
@@ -61,14 +53,6 @@ export const aboutPageDictionary = {
     zh: "邮箱",
     en: "Email",
   },
-  contactPhoneLabel: {
-    zh: "电话",
-    en: "Phone",
-  },
-  contactSocialLabel: {
-    zh: "社交链接",
-    en: "Social links",
-  },
   educationTitle: {
     zh: "教育",
     en: "Education",
@@ -80,18 +64,6 @@ export const aboutPageDictionary = {
   skillsTitle: {
     zh: "技能",
     en: "Skills",
-  },
-  aboutDescription: {
-    zh: "这里会慢慢补上更完整的个人介绍、经历和联系方式。",
-    en: "This page will gradually grow into a fuller introduction, experience summary, and contact hub.",
-  },
-  aboutEyebrow: {
-    zh: "关于",
-    en: "About",
-  },
-  aboutTitle: {
-    zh: "关于页已经准备好了",
-    en: "The About page is ready",
   },
 };
 

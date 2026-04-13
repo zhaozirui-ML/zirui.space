@@ -8,12 +8,6 @@ export const SITE_LANGUAGE_COOKIE_PATH = "/";
  */
 
 /**
- * 这里集中定义站点支持的语言，避免后面在页面里散落硬编码判断。
- * @type {SiteLanguage[]}
- */
-export const SITE_LANGUAGES = ["zh", "en"];
-
-/**
  * @param {unknown} value
  * @returns {value is SiteLanguage}
  */

@@ -367,7 +367,6 @@
   --detail-card-placeholder-gap: 1rem;
   --detail-card-placeholder-list-gap: 0.75rem;
   --detail-card-placeholder-list-padding: 1.25rem;
-  --detail-footer-padding-block: 3rem;
   font-family: var(--portfolio-font-body);
 }
 
@@ -557,29 +556,8 @@
   text-underline-offset: 0.2em;
 }
 
-.siteFooter {
-  border-top: 1px solid var(--portfolio-color-border-light);
-  padding: var(--detail-footer-padding-block) 0;
-  position: relative;
-  z-index: 1;
-}
-
-.siteFooterInner {
-  align-items: center;
-  color: var(--portfolio-color-text-muted);
-  display: flex;
-  font-size: 0.875rem;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.footerText {
-  margin: 0;
-}
-
 @media (max-width: 900px) {
   .siteHeaderInner,
-  .siteFooterInner,
   .workCardFooter {
     align-items: flex-start;
     flex-direction: column;
