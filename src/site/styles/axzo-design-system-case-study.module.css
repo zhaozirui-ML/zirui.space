@@ -1,8 +1,35 @@
 .caseStudy {
   --axzo-case-accent: var(--portfolio-color-accent-moss);
   --axzo-heading-font: var(--portfolio-font-title);
+  --axzo-page-gap: clamp(4.5rem, 7vw, 8.25rem);
+  --axzo-content-gap: clamp(4rem, 6vw, 6rem);
+  --axzo-content-padding-inline: 1.5rem;
+  --axzo-content-padding-inline-mobile: 1rem;
+  --axzo-section-gap: 1.5rem;
+  --axzo-subsection-gap: 0.75rem;
+  --axzo-media-figure-gap: 0.75rem;
+  --axzo-card-gap: 1rem;
+  --axzo-card-gap-lg: 1.5rem;
+  --axzo-card-padding: 1rem;
+  --axzo-card-padding-lg: 1.5rem;
+  --axzo-card-radius: 1rem;
+  --axzo-card-radius-sm: 0.75rem;
+  --axzo-card-radius-xs: 0.875rem;
+  --axzo-insight-padding: 2.25rem;
+  --axzo-insight-padding-inline: 1.5rem;
+  --axzo-panel-padding: 1.5rem 1rem;
+  --axzo-result-padding: 1.5rem 1rem;
+  --axzo-list-padding: 1.25rem;
+  --axzo-list-gap: 0.75rem;
+  --axzo-list-gap-tight: 0.5rem;
+  --axzo-orbit-gap: 0.75rem;
+  --axzo-orbit-gap-tight: 0;
+  --axzo-mobile-row-gap: 1rem;
+  --axzo-mobile-row-gap-tight: 0.75rem;
+  --axzo-mobile-card-radius: 0.875rem;
+  --axzo-mobile-media-inset: 1rem;
   display: grid;
-  gap: clamp(4.5rem, 7vw, 8.25rem);
+  gap: var(--axzo-page-gap);
 }
 
 .caseBody {
@@ -40,7 +67,7 @@
 }
 
 .heroPanelFrame {
-  border-radius: 1rem;
+  border-radius: var(--axzo-card-radius);
   box-shadow: 0 32px 80px rgba(53, 65, 71, 0.12);
   overflow: hidden;
   position: relative;
@@ -55,22 +82,22 @@
 
 .contentStack {
   display: grid;
-  gap: clamp(4rem, 6vw, 6rem);
+  gap: var(--axzo-content-gap);
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 var(--axzo-content-padding-inline);
   width: min(100%, 55rem);
 }
 
 .section {
   display: grid;
-  gap: 1.5rem;
+  gap: var(--axzo-section-gap);
 }
 
 .sectionHeader,
 .storyHeader,
 .reflectionStack {
   display: grid;
-  gap: 0.75rem;
+  gap: var(--axzo-subsection-gap);
   scroll-margin-top: 6.5rem;
 }
 
@@ -91,20 +118,20 @@
 
 .mediaFigure {
   display: grid;
-  gap: 0.75rem;
+  gap: var(--axzo-media-figure-gap);
   margin: 0;
 }
 
 .mediaFrame {
   background: var(--portfolio-color-surface);
   border: 1px solid var(--portfolio-color-border-light);
-  border-radius: 1rem;
+  border-radius: var(--axzo-card-radius);
   overflow: hidden;
   position: relative;
 }
 
 .projectBackgroundFrame {
-  border-radius: 0.75rem;
+  border-radius: var(--axzo-card-radius-sm);
 }
 
 .mediaFrameSoft {
@@ -154,7 +181,7 @@
 .problemGrid,
 .roleGrid {
   display: grid;
-  gap: 1.5rem;
+  gap: var(--axzo-card-gap-lg);
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
@@ -162,9 +189,9 @@
   align-items: center;
   background: var(--portfolio-color-surface);
   border: 1px solid var(--portfolio-color-border-light);
-  border-radius: 0.75rem;
+  border-radius: var(--axzo-card-radius-sm);
   display: grid;
-  gap: 1rem;
+  gap: var(--axzo-card-gap);
   grid-template-columns: 2rem minmax(0, 1fr);
   min-height: 3.625rem;
   padding: 0.8125rem;
@@ -179,15 +206,15 @@
   align-items: center;
   background: var(--portfolio-color-surface);
   border: 1px solid var(--portfolio-color-border-light);
-  border-radius: 1rem;
+  border-radius: var(--axzo-card-radius);
   display: grid;
   justify-items: center;
-  padding: 2.25rem 1.5rem;
+  padding: var(--axzo-insight-padding) var(--axzo-insight-padding-inline);
 }
 
 .insightCanvas {
   display: grid;
-  gap: 1rem;
+  gap: var(--axzo-card-gap);
   justify-items: center;
   width: min(100%, 47.1875rem);
 }
@@ -195,7 +222,7 @@
 .insightTop {
   align-items: center;
   display: grid;
-  gap: 0;
+  gap: var(--axzo-orbit-gap-tight);
   grid-template-columns: 18.5625rem 1.5rem 20.25rem;
   justify-content: center;
   width: 100%;
@@ -235,7 +262,7 @@
 
 .insightBottomArea {
   display: grid;
-  gap: 1rem;
+  gap: var(--axzo-card-gap);
   justify-items: center;
   width: min(100%, 47.1875rem);
 }
@@ -269,7 +296,7 @@
 .insightConclusion {
   background: #faf9f6;
   border: 1px solid var(--portfolio-color-border-light);
-  border-radius: 0.75rem;
+  border-radius: var(--axzo-card-radius-sm);
   padding: 0.75rem 1.25rem;
   text-align: center;
   width: min(100%, 21.5625rem);
@@ -353,7 +380,7 @@
   display: grid;
   height: 6.25rem;
   justify-items: center;
-  padding: 1rem;
+  padding: var(--axzo-card-padding);
   position: absolute;
   text-align: center;
   width: 6.25rem;
@@ -378,7 +405,7 @@
   font-family: var(--portfolio-font-label);
   font-size: 1rem;
   font-weight: 500;
-  gap: 0;
+  gap: var(--axzo-orbit-gap-tight);
   letter-spacing: -0.176px;
   line-height: 1.5rem;
 }
@@ -460,7 +487,7 @@
 .roleCard {
   background: var(--portfolio-color-surface);
   border: 1px solid var(--portfolio-color-border-light);
-  border-radius: 0.75rem;
+  border-radius: var(--axzo-card-radius-sm);
   display: grid;
   grid-template-columns: minmax(0, 1fr) 7.5rem;
   overflow: hidden;
@@ -469,8 +496,8 @@
 .roleBody {
   align-content: center;
   display: grid;
-  gap: 0.25rem;
-  padding: 1rem;
+  gap: var(--axzo-list-gap-tight);
+  padding: var(--axzo-card-padding);
 }
 
 .roleTitle {
@@ -492,28 +519,28 @@
 .practiceStack,
 .practiceBlock {
   display: grid;
-  gap: 1.5rem;
+  gap: var(--axzo-card-gap-lg);
 }
 
 .decisionList {
   display: grid;
-  gap: 0.75rem;
+  gap: var(--axzo-list-gap);
   margin: 0;
-  padding-left: 1.25rem;
+  padding-left: var(--axzo-list-padding);
 }
 
 .resultPanel {
   background: var(--portfolio-color-canvas);
   border: 1px solid var(--portfolio-color-border-light);
-  border-radius: 1rem;
-  padding: 1.5rem 1rem;
+  border-radius: var(--axzo-card-radius);
+  padding: var(--axzo-result-padding);
 }
 
 .resultList {
   display: grid;
-  gap: 0.75rem;
+  gap: var(--axzo-list-gap);
   margin: 0;
-  padding-left: 1.5rem;
+  padding-left: var(--axzo-content-padding-inline);
 }
 
 .resultItem {
@@ -533,7 +560,7 @@
   }
 
   .contentStack {
-    padding: 0 1rem;
+    padding: 0 var(--axzo-content-padding-inline-mobile);
   }
 
   .problemGrid,
@@ -548,13 +575,13 @@
   .insightTop {
     grid-template-columns: 1fr;
     justify-items: center;
-    row-gap: 1rem;
+    row-gap: var(--axzo-mobile-row-gap);
   }
 
   .insightCaptionRow {
     grid-template-columns: 1fr;
     justify-items: center;
-    row-gap: 0.75rem;
+    row-gap: var(--axzo-mobile-row-gap-tight);
   }
 
   .insightCaptionSpacer {
@@ -589,10 +616,10 @@
 
   .problemCard,
   .roleCard {
-    border-radius: 0.875rem;
+    border-radius: var(--axzo-mobile-card-radius);
   }
 
   .mediaInset {
-    inset: 1rem;
+    inset: var(--axzo-mobile-media-inset);
   }
 }

@@ -1,0 +1,11 @@
+{
+  "themeBefore": null,
+  "themeAfter": null,
+  "styles": {
+    "backgroundColor": "rgb(154, 148, 142)",
+    "maskImage": "url(\"http://localhost:3002/site/about/sns-x.svg\")",
+    "webkitMaskImage": "url(\"http://localhost:3002/site/about/sns-x.svg\")",
+    "width": "16px",
+    "height": "16px"
+  }
+}

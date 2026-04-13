@@ -1,17 +1,38 @@
 .articlePage {
   --blog-reading-width: 42rem;
   --blog-header-width: 58rem;
+  --blog-page-width: 72rem;
+  --blog-page-gap: 0;
+  --blog-back-link-row-padding-top: 0.5rem;
+  --blog-back-link-row-padding-bottom: 1rem;
+  --blog-header-side-padding: 1.5rem;
+  --blog-header-stack-gap: clamp(1.25rem, 2vw, 1.75rem);
+  --blog-header-stack-padding-y: clamp(1.75rem, 3vw, 2.5rem);
+  --blog-hero-content-padding-top: clamp(1.5rem, 2vw, 1.75rem);
+  --blog-hero-content-padding-bottom: clamp(1.75rem, 3vw, 2.25rem);
+  --blog-body-gap: clamp(2.75rem, 5vw, 4rem);
+  --blog-body-content-padding-top: clamp(2rem, 3vw, 2.75rem);
+  --blog-body-content-padding-bottom: clamp(2.25rem, 4vw, 3rem);
+  --blog-content-section-gap: 1rem;
+  --blog-content-section-stack-gap: 0.625rem;
+  --blog-content-list-gap: 0.625rem;
+  --blog-content-list-padding-left: 1.5rem;
+  --blog-content-list-nested-padding-left: 1.25rem;
+  --blog-content-list-nested-margin-top: 0.75rem;
+  --blog-content-image-radius: 1rem;
+  --blog-article-footer-gap: 0.75rem;
+  --blog-article-footer-padding-top: 1.5rem;
   --blog-grid-border: var(--portfolio-color-border-light);
   --blog-grid-border-dashed: var(--portfolio-color-border-light);
 
   display: grid;
-  gap: 0;
+  gap: var(--blog-page-gap);
   margin: 0 auto;
-  width: min(100%, 72rem);
+  width: min(100%, var(--blog-page-width));
 }
 
 .backLinkRow {
-  padding: 0.5rem 0 1rem;
+  padding: var(--blog-back-link-row-padding-top) 0 var(--blog-back-link-row-padding-bottom);
 }
 
 .detailFrame {
@@ -59,13 +80,13 @@
 .headerContent,
 .heroContent,
 .bodyContent {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding-left: var(--blog-header-side-padding);
+  padding-right: var(--blog-header-side-padding);
 }
 
 .headerStack {
-  gap: clamp(1.25rem, 2vw, 1.75rem);
-  padding: clamp(1.75rem, 3vw, 2.5rem) 0;
+  gap: var(--blog-header-stack-gap);
+  padding: var(--blog-header-stack-padding-y) 0;
 }
 
 .articleIntro {
@@ -156,8 +177,8 @@
 }
 
 .heroContent {
-  padding-bottom: clamp(1.75rem, 3vw, 2.25rem);
-  padding-top: clamp(1.5rem, 2vw, 1.75rem);
+  padding-bottom: var(--blog-hero-content-padding-bottom);
+  padding-top: var(--blog-hero-content-padding-top);
 }
 
 .heroImageWrap {
@@ -183,13 +204,13 @@
 
 .body {
   display: grid;
-  gap: clamp(2.75rem, 5vw, 4rem);
+  gap: var(--blog-body-gap);
   justify-items: center;
 }
 
 .bodyContent {
-  padding-bottom: clamp(2.25rem, 4vw, 3rem);
-  padding-top: clamp(2rem, 3vw, 2.75rem);
+  padding-bottom: var(--blog-body-content-padding-bottom);
+  padding-top: var(--blog-body-content-padding-top);
 }
 
 .intro {
@@ -203,7 +224,7 @@
 
 .contentSection {
   display: grid;
-  gap: 1rem;
+  gap: var(--blog-content-section-gap);
   padding-top: 0;
   width: min(100%, var(--blog-reading-width));
 }
@@ -246,15 +267,15 @@
 .contentList {
   color: var(--portfolio-semantic-body-color);
   display: grid;
-  gap: 0.625rem;
+  gap: var(--blog-content-list-gap);
   margin: 0;
   max-width: var(--blog-reading-width);
-  padding-left: 1.5rem;
+  padding-left: var(--blog-content-list-padding-left);
 }
 
 .contentList .contentList {
-  margin-top: 0.75rem;
-  padding-left: 1.25rem;
+  margin-top: var(--blog-content-list-nested-margin-top);
+  padding-left: var(--blog-content-list-nested-padding-left);
 }
 
 .contentListItem {
@@ -274,7 +295,7 @@
 }
 
 .contentImage {
-  border-radius: 1rem;
+  border-radius: var(--blog-content-image-radius);
   display: block;
   height: auto;
   width: 100%;
@@ -287,9 +308,9 @@
   border-radius: 0;
   border-right: 0;
   display: grid;
-  gap: 0.75rem;
+  gap: var(--blog-article-footer-gap);
   margin: 0 auto;
-  padding: 1.5rem 0 0;
+  padding: var(--blog-article-footer-padding-top) 0 0;
   width: min(100%, var(--blog-reading-width));
 }
 
@@ -314,7 +335,7 @@
   }
 
   .backLinkRow {
-    padding: 0.25rem 0 0.75rem;
+    padding: calc(var(--ds-space-2xs) * 1) 0 calc(var(--ds-space-2xs) * 3);
   }
 
   .detailFrame {
@@ -342,7 +363,7 @@
   }
 
   .heroImageWrap {
-    border-radius: 0.875rem;
+    border-radius: calc(var(--ds-space-2xs) * 3.5);
   }
 
   .intro,
@@ -351,6 +372,6 @@
   }
 
   .contentSection {
-    gap: 1rem;
+    gap: var(--blog-content-section-gap);
   }
 }

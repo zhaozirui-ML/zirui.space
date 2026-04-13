@@ -1,15 +1,21 @@
 .headingBlock {
+  --case-study-heading-gap: 0.75rem;
+  --case-study-heading-scroll-margin-top: 2rem;
+  --case-study-heading-one-padding-block: 0.3125rem;
+  --case-study-heading-pill-radius: 1.5rem;
+  --case-study-heading-pill-padding-inline: 0.5625rem;
+  --case-study-heading-pill-padding-block: 0.0625rem;
   display: grid;
-  gap: 0.75rem;
+  gap: var(--case-study-heading-gap);
   justify-self: center;
   margin: 0 auto;
   max-width: var(--portfolio-layout-content-width);
-  scroll-margin-top: 2rem;
+  scroll-margin-top: var(--case-study-heading-scroll-margin-top);
   width: 100%;
 }
 
 .headingOne {
-  padding-block: 0.3125rem;
+  padding-block: var(--case-study-heading-one-padding-block);
 }
 
 .headingOneTitle {
@@ -49,11 +55,13 @@
   align-items: center;
   background: var(--portfolio-color-surface);
   border: 1px solid var(--portfolio-color-border-light);
-  border-radius: 1.5rem;
+  border-radius: var(--case-study-heading-pill-radius);
   display: inline-flex;
   justify-content: center;
   min-height: 1.625rem;
-  padding: 0.0625rem 0.5625rem;
+  padding:
+    var(--case-study-heading-pill-padding-block)
+    var(--case-study-heading-pill-padding-inline);
   width: fit-content;
 }
 

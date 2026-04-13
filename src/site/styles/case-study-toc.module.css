@@ -1,4 +1,14 @@
 .tocWrap {
+  --case-study-toc-content-max-width: calc(52rem + 3rem);
+  --case-study-toc-desktop-inner-width: 12rem;
+  --case-study-toc-desktop-gap: 0.25rem;
+  --case-study-toc-back-link-gap: 0.25rem;
+  --case-study-toc-back-link-padding-left: 0.625rem;
+  --case-study-toc-link-radius: 0.875rem;
+  --case-study-toc-link-gap: 0.5rem;
+  --case-study-toc-link-padding-left: 0.625rem;
+  --case-study-toc-link-padding-inline-end: 0.75rem;
+  --case-study-toc-link-min-height: 1.875rem;
   position: relative;
   z-index: 18;
 }
@@ -6,7 +16,7 @@
 .tocContent {
   height: 100%;
   margin: 0 auto;
-  max-width: calc(52rem + 3rem);
+  max-width: var(--case-study-toc-content-max-width);
   position: relative;
   width: 100%;
 }
@@ -17,8 +27,8 @@
 
 .tocDesktopInner {
   display: grid;
-  gap: 0.25rem;
-  width: 12rem;
+  gap: var(--case-study-toc-desktop-gap);
+  width: var(--case-study-toc-desktop-inner-width);
 }
 
 .tocList {
@@ -37,14 +47,14 @@
   font-family: var(--portfolio-font-label);
   font-size: 0.9375rem;
   font-weight: 425;
-  gap: 0.25rem;
+  gap: var(--case-study-toc-back-link-gap);
   grid-template-columns: 0.5rem max-content;
   isolation: isolate;
   justify-content: start;
   letter-spacing: -0.015em;
   line-height: 1.25rem;
-  margin: 0 0 0.25rem;
-  padding: 0 0 0 0.625rem;
+  margin: 0 0 var(--case-study-toc-desktop-gap);
+  padding: 0 0 0 var(--case-study-toc-back-link-padding-left);
   position: relative;
   text-align: left;
   transition: color 180ms cubic-bezier(0.2, 0, 0, 1);
@@ -82,21 +92,21 @@
 }
 
 .tocLink {
-  --toc-cursor-origin: 0.75rem 50%;
+  --toc-cursor-origin: calc(var(--case-study-toc-link-padding-left) + 0.125rem) 50%;
   align-items: center;
-  border-radius: 0.875rem;
+  border-radius: var(--case-study-toc-link-radius);
   color: var(--case-study-toc-muted);
   display: grid;
   font-family: var(--portfolio-font-label);
   font-size: 0.8125rem;
   font-weight: 425;
-  gap: 0.5rem;
+  gap: var(--case-study-toc-link-gap);
   grid-template-columns: 0.5rem minmax(0, 1fr);
   isolation: isolate;
   line-height: 1.35;
-  min-height: 1.875rem;
+  min-height: var(--case-study-toc-link-min-height);
   overflow: hidden;
-  padding: 0.1875rem 0.75rem 0.1875rem 0.625rem;
+  padding: 0.1875rem var(--case-study-toc-link-padding-inline-end) 0.1875rem var(--case-study-toc-link-padding-left);
   position: relative;
   text-decoration: none;
   transition:

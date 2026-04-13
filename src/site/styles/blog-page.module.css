@@ -4,10 +4,28 @@
   --blog-grid-border-dashed: var(--portfolio-color-border-light);
   --blog-grid-border-ghost:
     color-mix(in srgb, var(--portfolio-color-border-strong) 45%, transparent);
+  --blog-page-margin-top: calc(var(--ds-space-2xs) * 15);
+  --blog-page-margin-top-md: calc(var(--ds-space-2xs) * 10);
+  --blog-page-margin-top-sm: calc(var(--ds-space-2xs) * 6);
+  --blog-page-width: 72rem;
+  --blog-rail-width: 6rem;
+  --blog-title-cell-padding: 1.5rem;
+  --blog-featured-card-gap: 1rem;
+  --blog-featured-card-padding: 1.5rem;
+  --blog-featured-body-gap: 0.75rem;
+  --blog-featured-body-padding: 2rem 1.5rem 2rem 0.5rem;
+  --blog-browse-card-gap: 0.75rem;
+  --blog-browse-card-padding: 1rem 1rem 0.75rem;
+  --blog-browse-body-gap: 0.25rem;
+  --blog-spacer-min-height: 6rem;
+  --blog-spacer-min-height-sm: 3rem;
+  --blog-section-title-cell-padding-sm: 2rem 1rem;
+  --blog-featured-body-padding-sm: 0 0 0.5rem;
+  --blog-browse-card-padding-sm: 1rem;
   background: var(--portfolio-color-bg-pure);
   margin: 0 auto;
-  margin-top: calc(var(--ds-space-2xs) * 15);
-  width: min(100%, 72rem);
+  margin-top: var(--blog-page-margin-top);
+  width: min(100%, var(--blog-page-width));
 }
 
 .sectionFrame,
@@ -21,7 +39,7 @@
 .sectionBodyRow,
 .spacerFrame {
   display: grid;
-  grid-template-columns: 6rem minmax(0, 1fr) 6rem;
+  grid-template-columns: var(--blog-rail-width) minmax(0, 1fr) var(--blog-rail-width);
 }
 
 .sectionTitleRow {
@@ -54,7 +72,7 @@
   align-items: center;
   display: flex;
   justify-content: center;
-  padding: 1.5rem;
+  padding: var(--blog-title-cell-padding);
 }
 
 .sectionTitle {
@@ -108,9 +126,9 @@
 .featuredCard {
   background: transparent;
   display: grid;
-  gap: 1rem;
+  gap: var(--blog-featured-card-gap);
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  padding: 1.5rem;
+  padding: var(--blog-featured-card-padding);
   position: relative;
   transition:
     background-color 200ms ease,
@@ -150,10 +168,10 @@
 .featuredBody {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--blog-featured-body-gap);
   justify-content: space-between;
   min-width: 0;
-  padding: 2rem 1.5rem 2rem 0.5rem;
+  padding: var(--blog-featured-body-padding);
 }
 
 .featuredBodyReverse {
@@ -163,7 +181,7 @@
 
 .featuredCopy {
   display: grid;
-  gap: 0.75rem;
+  gap: var(--blog-featured-body-gap);
 }
 
 .featuredTitle {
@@ -209,7 +227,7 @@
 }
 
 .spacerFrame {
-  min-height: 6rem;
+  min-height: var(--blog-spacer-min-height);
 }
 
 .spacerFrameDashed {
@@ -254,8 +272,8 @@
 
 .browseCard {
   display: grid;
-  gap: 0.75rem;
-  padding: 1rem 1rem 0.75rem;
+  gap: var(--blog-browse-card-gap);
+  padding: var(--blog-browse-card-padding);
   transition:
     background-color 200ms ease,
     border-color 200ms ease;
@@ -269,7 +287,7 @@
 
 .browseBody {
   display: grid;
-  gap: 0.25rem;
+  gap: var(--blog-browse-body-gap);
 }
 
 .browseTitle {
@@ -313,7 +331,7 @@
   }
 
   .blogPage {
-    margin-top: calc(var(--ds-space-2xs) * 10);
+    margin-top: var(--blog-page-margin-top-md);
   }
 
   .sectionTitleRow,
@@ -333,7 +351,7 @@
   }
 
   .sectionTitleCell {
-    padding: 2rem 1rem;
+    padding: var(--blog-section-title-cell-padding-sm);
   }
 
   .featuredCard {
@@ -347,7 +365,7 @@
 
   .featuredBody,
   .featuredBodyReverse {
-    padding: 0 0 0.5rem;
+    padding: var(--blog-featured-body-padding-sm);
   }
 
   .browseGrid {
@@ -355,13 +373,13 @@
   }
 
   .browseCard {
-    padding: 1rem;
+    padding: var(--blog-browse-card-padding-sm);
   }
 }
 
 @media (max-width: 640px) {
   .blogPage {
-    margin-top: calc(var(--ds-space-2xs) * 6);
+    margin-top: var(--blog-page-margin-top-sm);
   }
 
   .sectionTitle {
@@ -369,7 +387,7 @@
   }
 
   .featuredCard {
-    padding: 1rem;
+    padding: var(--blog-browse-card-padding-sm);
   }
 
   .featuredTitle {
@@ -390,10 +408,10 @@
   }
 
   .browseCard {
-    padding: 1rem;
+    padding: var(--blog-browse-card-padding-sm);
   }
 
   .spacerFrame {
-    min-height: 3rem;
+    min-height: var(--blog-spacer-min-height-sm);
   }
 }

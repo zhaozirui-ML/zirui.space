@@ -1,12 +1,14 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { siteNavigation } from "../data/navigation";
-import { getStorageAssetUrl } from "../lib/get-storage-asset-url";
 import styles from "../styles/site-shell.module.css";
+
+const brandAvatarSrc = "/site/header/header-avatar.png";
 
 function isNavigationItemActive(pathname, href) {
   if (href === "/") {
@@ -82,19 +84,27 @@ export default function SiteHeader({ colorTheme, onThemeToggle }) {
       <div className={styles.siteHeaderFrame}>
         <div className={styles.siteHeaderInner}>
           <div aria-hidden="true" className={styles.brandLink}>
-            <video
-              aria-hidden="true"
-              autoPlay
-              className={styles.brandMark}
-              height={20}
-              loop
-              muted
-              playsInline
-              preload="auto"
-              role="presentation"
-              src={getStorageAssetUrl("home/avatar/home-avatar.mp4")}
-              width={20}
-            />
+            <span className={styles.brandMarkFrame}>
+              <Image
+                alt=""
+                aria-hidden="true"
+                className={styles.brandMark}
+                height={1073}
+                style={{
+                  height: "113.69%",
+                  left: 0,
+                  maxWidth: "none",
+                  objectFit: "cover",
+                  objectPosition: "left top",
+                  position: "absolute",
+                  top: "-3.89%",
+                  width: "106.38%",
+                }}
+                src={brandAvatarSrc}
+                unoptimized
+                width={858}
+              />
+            </span>
           </div>
           <nav aria-label="主导航" className={styles.navigation} ref={navigationRef}>
             {siteNavigation.map((item) => {

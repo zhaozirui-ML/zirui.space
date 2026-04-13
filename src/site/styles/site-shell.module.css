@@ -13,7 +13,7 @@
 
 .siteShell {
   margin: 0 auto;
-  width: min(1200px, calc(100% - 2rem));
+  width: min(1200px, calc(100% - var(--ds-space-xl)));
 }
 
 .siteShellFullBleed {
@@ -29,7 +29,7 @@
   display: flex;
   justify-content: center;
   left: 0;
-  padding: 0 1rem;
+  padding: 0 var(--ds-space-md);
   pointer-events: none;
   position: fixed;
   right: 0;
@@ -67,18 +67,24 @@
   box-sizing: border-box;
   display: inline-flex;
   flex: 0 0 auto;
+  height: 100%;
   justify-content: flex-start;
-  padding-right: 0.5rem;
-  width: 2.75rem;
+  padding: 0.25rem 0.5rem 0.25rem 0;
+  width: fit-content;
+}
+
+.brandMarkFrame {
+  height: 36px;
+  overflow: hidden;
+  position: relative;
+  width: 30px;
 }
 
 .brandMark {
-  border-radius: 999px;
-  box-shadow: 0 2px 6px rgb(45 47 48 / 0.14);
   display: block;
-  height: 2.5rem;
   object-fit: cover;
-  width: 2.5rem;
+  object-position: left top;
+  max-width: none;
 }
 
 .navigation {
@@ -204,7 +210,10 @@
 
 .siteMain {
   /* 给底部浮动导航预留安全空间，避免最后一屏内容被压住。 */
-  padding: 3rem 0 calc(8rem + env(safe-area-inset-bottom, 0px));
+  padding:
+    var(--ds-space-2xl)
+    0
+    calc(var(--ds-space-xl) * 4 + env(safe-area-inset-bottom, 0px));
   position: relative;
   z-index: 1;
 }
@@ -224,7 +233,7 @@
       calc(var(--ds-space-2xs) * 5),
       env(safe-area-inset-bottom, 0px) + calc(var(--ds-space-2xs) * 4)
     );
-    padding: 0 0.75rem;
+    padding: 0 var(--ds-space-sm);
   }
 
   .siteHeaderFrame {
@@ -267,14 +276,26 @@
 
 .detailPage {
   /* 详情页正文统一走 Inter，后续新案例页接进来时可以直接复用这个页面级入口。 */
+  --detail-page-intro-gap: 0.75rem;
+  --detail-page-content-padding-inline: 1.5rem;
+  --detail-card-grid-gap: 1.5rem;
+  --detail-card-padding: 1.5rem;
+  --detail-card-body-gap: 1.25rem;
+  --detail-card-meta-gap: 0.75rem;
+  --detail-card-footer-gap: 1rem;
+  --detail-card-cta-radius: 0.75rem;
+  --detail-card-placeholder-gap: 1rem;
+  --detail-card-placeholder-list-gap: 0.75rem;
+  --detail-card-placeholder-list-padding: 1.25rem;
+  --detail-footer-padding-block: 3rem;
   font-family: var(--portfolio-font-body);
 }
 
 .pageIntro {
   display: grid;
-  gap: 0.75rem;
+  gap: var(--detail-page-intro-gap);
   max-width: var(--portfolio-layout-content-width);
-  padding: 0 1.5rem;
+  padding: 0 var(--detail-page-content-padding-inline);
 }
 
 .pageIntroHeading,
@@ -329,7 +350,7 @@
 
 .cardGrid {
   display: grid;
-  gap: 1.5rem;
+  gap: var(--detail-card-grid-gap);
 }
 
 .workCard {
@@ -338,8 +359,8 @@
   border-radius: var(--portfolio-radius-lg);
   color: inherit;
   display: grid;
-  gap: 1.25rem;
-  padding: 1.5rem;
+  gap: var(--detail-card-body-gap);
+  padding: var(--detail-card-padding);
   text-decoration: none;
 }
 
@@ -355,7 +376,7 @@
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: var(--detail-card-meta-gap);
 }
 
 .workCardMetaLabel {
@@ -396,7 +417,7 @@
   align-items: center;
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--detail-card-footer-gap);
 }
 
 .workCardPath {
@@ -409,7 +430,7 @@
 .workCardCta {
   align-items: center;
   background: var(--portfolio-semantic-title-color);
-  border-radius: 0.75rem;
+  border-radius: var(--detail-card-cta-radius);
   color: var(--portfolio-color-text-inverted);
   display: inline-flex;
   font-family: var(--portfolio-font-label);
@@ -424,8 +445,8 @@
   border: 1px solid var(--portfolio-color-border-light);
   border-radius: var(--portfolio-radius-lg);
   display: grid;
-  gap: 1rem;
-  padding: 1.5rem;
+  gap: var(--detail-card-placeholder-gap);
+  padding: var(--detail-card-padding);
 }
 
 .placeholderTitle {
@@ -440,9 +461,9 @@
 .placeholderList {
   color: var(--portfolio-semantic-body-color);
   display: grid;
-  gap: 0.75rem;
+  gap: var(--detail-card-placeholder-list-gap);
   margin: 0;
-  padding-left: 1.25rem;
+  padding-left: var(--detail-card-placeholder-list-padding);
 }
 
 .placeholderList li {
@@ -458,7 +479,7 @@
 
 .siteFooter {
   border-top: 1px solid var(--portfolio-color-border-light);
-  padding: 3rem 0;
+  padding: var(--detail-footer-padding-block) 0;
   position: relative;
   z-index: 1;
 }
@@ -495,19 +516,19 @@
 
 @media (max-width: 640px) {
   .siteHeaderFrame {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding-left: var(--ds-space-xs);
+    padding-right: var(--ds-space-xs);
   }
 
   .siteShell {
-    width: min(100%, calc(100% - 1rem));
+    width: min(100%, calc(100% - var(--ds-space-md)));
   }
 
   .pageIntro,
   .workCard,
   .placeholderPanel {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: var(--ds-space-md);
+    padding-right: var(--ds-space-md);
   }
 }
 

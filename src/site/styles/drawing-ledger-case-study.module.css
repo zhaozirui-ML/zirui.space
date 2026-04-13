@@ -1,4 +1,67 @@
 .caseStudy {
+  --drawing-ledger-hero-gap: var(--portfolio-space-md);
+  --drawing-ledger-hero-padding-inline: 1.5rem;
+  --drawing-ledger-hero-padding-top: 4.5rem;
+  --drawing-ledger-section-content-width: calc(52rem + 3rem);
+  --drawing-ledger-section-content-padding-inline: 1.5rem;
+  --drawing-ledger-section-content-padding-block: var(--portfolio-space-section-y);
+  --drawing-ledger-stack-gap-lg: var(--portfolio-space-lg);
+  --drawing-ledger-stack-gap-md: var(--portfolio-space-md);
+  --drawing-ledger-stack-gap-sm: var(--portfolio-space-sm);
+  --drawing-ledger-text-gap: 0.75rem;
+  --drawing-ledger-card-gap: 1.5rem;
+  --drawing-ledger-card-padding: 1.5rem;
+  --drawing-ledger-card-gap-tight: 0.75rem;
+  --drawing-ledger-card-gap-xsmall: 0.5rem;
+  --drawing-ledger-card-padding-sm: 1.25rem;
+  --drawing-ledger-pill-gap: 1rem;
+  --drawing-ledger-pill-radius: 1rem;
+  --drawing-ledger-pill-padding-inline: 0.5625rem;
+  --drawing-ledger-pill-padding-block: 0.0625rem;
+  --drawing-ledger-media-radius: var(--portfolio-radius-md);
+  --drawing-ledger-media-inner-radius: var(--portfolio-radius-sm);
+  --drawing-ledger-list-padding: 1.25rem;
+  --drawing-ledger-flow-gap: 1.25rem;
+  --drawing-ledger-flow-gap-wide: 2.5rem;
+  --drawing-ledger-flow-gap-xl: 3.75rem;
+  --drawing-ledger-flow-column-gap: 1.3125rem;
+  --drawing-ledger-flow-padding: 2.1875rem;
+  --drawing-ledger-flow-padding-top: 5.1875rem;
+  --drawing-ledger-flow-scroll-padding-left: 2.1875rem;
+  --drawing-ledger-panel-padding: 1rem;
+  --drawing-ledger-panel-padding-lg: 2.25rem;
+  --drawing-ledger-panel-padding-md: 1.5rem;
+  --drawing-ledger-panel-gap: 0.75rem;
+  --drawing-ledger-panel-gap-sm: 0.5rem;
+  --drawing-ledger-panel-gap-lg: 1rem;
+  --drawing-ledger-panel-gap-xl: 1.25rem;
+  --drawing-ledger-panel-gap-2xl: 1.875rem;
+  --drawing-ledger-panel-gap-3xl: 2rem;
+  --drawing-ledger-panel-gap-4xl: 3rem;
+  --drawing-ledger-panel-gap-5xl: 3.75rem;
+  --drawing-ledger-flow-card-gap: 0.75rem;
+  --drawing-ledger-flow-card-gap-tight: 0.5rem;
+  --drawing-ledger-flow-padding-block-lg: 2.25rem;
+  --drawing-ledger-flow-padding-block-md: 2rem;
+  --drawing-ledger-flow-padding-block-sm: 1.5rem;
+  --drawing-ledger-flow-padding-inline-lg: 2.25rem;
+  --drawing-ledger-flow-padding-inline-sm: 1rem;
+  --drawing-ledger-flow-padding-inline-xs: 0.75rem;
+  --drawing-ledger-flow-padding-inline-xxs: 0.5rem;
+  --drawing-ledger-flow-margin-top: 1.5rem;
+  --drawing-ledger-flow-margin-top-lg: 3rem;
+  --drawing-ledger-flow-scroll-margin-top: 6.5rem;
+  --drawing-ledger-mobile-grid-gap: 1.875rem;
+  --drawing-ledger-mobile-card-gap: 1.25rem;
+  --drawing-ledger-mobile-frame-padding: 3.25rem 3.1875rem 2.1875rem;
+  --drawing-ledger-mobile-frame-padding-sm: 1.5rem;
+  --drawing-ledger-mobile-frame-padding-lg: 4.5rem 1rem 1rem;
+  --drawing-ledger-task-table-padding: 1.25rem;
+  --drawing-ledger-task-table-task-padding-left: 1.4375rem;
+  --drawing-ledger-task-table-user-padding-left: 1.875rem;
+  --drawing-ledger-task-table-scenario-padding-left: 2.8125rem;
+  --drawing-ledger-mobile-badge-gap: 1rem;
+  --drawing-ledger-mobile-badge-gap-sm: 0.75rem;
   display: grid;
 }
 
@@ -35,17 +98,17 @@
 
 .heroInner {
   display: grid;
-  gap: var(--portfolio-space-md);
+  gap: var(--drawing-ledger-hero-gap);
   margin: 0 auto;
   max-width: calc(90rem + 3rem);
-  padding: 4.5rem 1.5rem 0;
+  padding: var(--drawing-ledger-hero-padding-top) var(--drawing-ledger-hero-padding-inline) 0;
   position: relative;
   z-index: 1;
 }
 
 .heroHeader {
   display: grid;
-  gap: 0.75rem;
+  gap: var(--drawing-ledger-text-gap);
   justify-items: center;
   margin: 0 auto;
   max-width: 44rem;
@@ -89,8 +152,10 @@
 .sectionContent {
   box-sizing: border-box;
   margin: 0 auto;
-  max-width: calc(52rem + 3rem);
-  padding: var(--portfolio-space-section-y) 1.5rem;
+  max-width: var(--drawing-ledger-section-content-width);
+  padding:
+    var(--drawing-ledger-section-content-padding-block)
+    var(--drawing-ledger-section-content-padding-inline);
   width: 100%;
 }
 
@@ -100,18 +165,18 @@
 
 .blockStack {
   display: grid;
-  gap: var(--portfolio-space-lg);
+  gap: var(--drawing-ledger-stack-gap-lg);
 }
 
 .sectionFlow,
 .footerStack {
   display: grid;
-  gap: var(--portfolio-space-md);
+  gap: var(--drawing-ledger-stack-gap-md);
 }
 
 .sectionCluster {
   display: grid;
-  gap: var(--portfolio-space-sm);
+  gap: var(--drawing-ledger-stack-gap-sm);
 }
 
 .sectionCluster > .caseSubheading + .caseSubheading {
@@ -129,7 +194,7 @@
 .richText {
   color: var(--portfolio-semantic-body-color);
   display: grid;
-  gap: 0.75rem;
+  gap: var(--drawing-ledger-text-gap);
   font-size: 1rem;
   letter-spacing: -0.011rem;
   line-height: 1.5rem;
@@ -141,11 +206,11 @@
 }
 
 .richText ul {
-  padding-left: 1.25rem;
+  padding-left: var(--portfolio-space-sm);
 }
 
 .richText li + li {
-  margin-top: 0.375rem;
+  margin-top: var(--drawing-ledger-card-gap-xsmall);
 }
 
 .richText strong {
@@ -160,8 +225,8 @@
   background: var(--portfolio-color-canvas);
   border-radius: var(--portfolio-radius-md);
   display: grid;
-  gap: 1.5rem;
-  padding: 1.5rem;
+  gap: var(--drawing-ledger-card-gap);
+  padding: var(--drawing-ledger-card-padding);
 }
 
 .chartCard {
@@ -319,7 +384,7 @@
 
 .figure {
   display: grid;
-  gap: 0.75rem;
+  gap: var(--drawing-ledger-text-gap);
   margin: 0;
   width: 100%;
 }
@@ -409,16 +474,16 @@
   background: var(--portfolio-color-surface-warm);
   border-radius: var(--portfolio-radius-md);
   display: grid;
-  gap: 0.75rem;
+  gap: var(--drawing-ledger-card-gap-tight);
   justify-items: center;
-  padding: 3rem 1.5rem;
+  padding: 3rem var(--drawing-ledger-card-padding);
 }
 
 .taskTableWrap {
   background: var(--portfolio-color-surface);
   border-radius: var(--portfolio-radius-sm);
   overflow: hidden;
-  padding: 1.25rem;
+  padding: var(--drawing-ledger-task-table-padding);
   width: 41.875rem;
 }
 
@@ -488,15 +553,15 @@
 }
 
 .taskCellUser {
-  padding-left: 1.875rem;
+  padding-left: var(--drawing-ledger-task-table-user-padding-left);
 }
 
 .taskCellScenario {
-  padding-left: 2.8125rem;
+  padding-left: var(--drawing-ledger-task-table-scenario-padding-left);
 }
 
 .taskCellTasks {
-  padding-left: 1.4375rem;
+  padding-left: var(--drawing-ledger-task-table-task-padding-left);
 }
 
 .compactList {
@@ -514,7 +579,7 @@
 
 .summaryGroup {
   display: grid;
-  gap: 0.5rem;
+  gap: var(--drawing-ledger-card-gap-xsmall);
 }
 
 .summaryLabel,
@@ -530,25 +595,25 @@
 .summaryList {
   color: var(--portfolio-semantic-body-color);
   margin: 0;
-  padding-left: 1.25rem;
+  padding-left: var(--drawing-ledger-list-padding);
 }
 
 .summaryList li + li {
-  margin-top: 0.5rem;
+  margin-top: var(--drawing-ledger-card-gap-xsmall);
 }
 
 .feedbackCard {
   background: var(--portfolio-color-canvas);
-  gap: 0.5rem;
+  gap: var(--drawing-ledger-card-gap-xsmall);
 }
 
 .emphasisList {
   margin: 0;
-  padding-left: 1.25rem;
+  padding-left: var(--drawing-ledger-list-padding);
 }
 
 .emphasisList li + li {
-  margin-top: 0.5rem;
+  margin-top: var(--drawing-ledger-card-gap-xsmall);
 }
 
 .roleScrollerSection {
@@ -573,12 +638,12 @@
 
 .roleScroller {
   display: grid;
-  gap: 1.25rem;
+  gap: var(--drawing-ledger-flow-gap);
   grid-auto-columns: 46rem;
   grid-auto-flow: column;
   -ms-overflow-style: none;
   overflow-x: auto;
-  padding: 5.1875rem 2.1875rem 2.1875rem;
+  padding: var(--drawing-ledger-flow-padding-top) var(--drawing-ledger-flow-padding) var(--drawing-ledger-flow-padding);
   position: relative;
   scrollbar-width: none;
   scroll-padding-left: 2.1875rem;
@@ -592,7 +657,7 @@
 
 .roleCard {
   display: grid;
-  gap: 0.75rem;
+  gap: var(--drawing-ledger-text-gap);
   scroll-snap-align: start;
   width: 46rem;
 }
@@ -622,9 +687,9 @@
   border-radius: 1rem;
   box-shadow: 0 20px 40px rgba(14, 18, 27, 0.08);
   display: grid;
-  gap: 0.5rem;
+  gap: var(--drawing-ledger-panel-gap-sm);
   max-width: 30rem;
-  padding: 1.25rem;
+  padding: var(--drawing-ledger-list-padding);
 }
 
 .pendingAssetEyebrow {
@@ -716,16 +781,16 @@
   border: 1px solid var(--portfolio-semantic-media-frame-border);
   border-radius: var(--portfolio-radius-md);
   display: grid;
-  gap: 0.75rem;
+  gap: var(--drawing-ledger-flow-card-gap);
   overflow: hidden;
-  padding: 2.25rem;
+  padding: var(--drawing-ledger-panel-padding-lg);
   position: relative;
 }
 
 .explorationGrid,
 .iterationGrid {
   display: grid;
-  gap: 2.5rem;
+  gap: var(--drawing-ledger-flow-gap-wide);
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
@@ -736,7 +801,7 @@
 }
 
 .explorationGrid {
-  gap: 3.75rem 2.5rem;
+  gap: var(--drawing-ledger-flow-gap-xl) var(--drawing-ledger-flow-gap-wide);
   grid-template-columns: repeat(2, 15rem);
   left: 50%;
   position: absolute;
@@ -755,7 +820,7 @@
 
 .iterationCard {
   display: grid;
-  gap: 0.75rem;
+  gap: var(--drawing-ledger-flow-card-gap);
 }
 
 .iterationFrame {
@@ -766,7 +831,7 @@
 
 .iterationLayout {
   display: grid;
-  gap: 3.75rem;
+  gap: var(--drawing-ledger-flow-gap-xl);
   left: 50%;
   position: absolute;
   top: 4.53125rem;
@@ -776,7 +841,7 @@
 
 .iterationRow {
   align-items: center;
-  column-gap: 1.3125rem;
+  column-gap: var(--drawing-ledger-flow-column-gap);
   display: grid;
   grid-template-columns: 3.75rem 32.5rem;
 }
@@ -790,7 +855,7 @@
 
 .iterationRowImages {
   display: grid;
-  gap: 2.5rem;
+  gap: var(--drawing-ledger-flow-gap-wide);
   grid-template-columns: repeat(2, 15rem);
 }
 
@@ -803,7 +868,7 @@
 
 .mobileLandingGrid {
   display: grid;
-  gap: 1.875rem;
+  gap: var(--drawing-ledger-mobile-grid-gap);
   grid-template-columns: repeat(4, 10rem);
   margin: 0 auto;
   position: relative;
@@ -813,7 +878,7 @@
 
 .mobileLandingCard {
   display: grid;
-  gap: 1.25rem;
+  gap: var(--drawing-ledger-mobile-card-gap);
   justify-items: center;
   width: 10rem;
 }
@@ -838,7 +903,7 @@
 
 .mobileLandingFrame {
   height: 29.3125rem;
-  padding: 3.25rem 3.1875rem 2.1875rem;
+  padding: var(--drawing-ledger-mobile-frame-padding);
   position: relative;
 }
 
@@ -877,8 +942,8 @@
   }
 
   .heroInner {
-    gap: 2rem;
-    padding-bottom: 2rem;
+    gap: var(--drawing-ledger-panel-gap-3xl);
+    padding-bottom: var(--drawing-ledger-panel-gap-3xl);
   }
 
   .heroHeader {
@@ -914,7 +979,7 @@
 
   .roleScroller {
     grid-auto-columns: minmax(100%, 100%);
-    padding: 1.5rem;
+    padding: var(--drawing-ledger-panel-padding-md);
   }
 
   .roleCardMedia {
@@ -922,11 +987,11 @@
   }
 
   .explorationGrid {
-    gap: 1rem;
+    gap: var(--drawing-ledger-panel-gap-lg);
   }
 
   .mobileCompareFrame {
-    padding: 4.5rem 1rem 1rem;
+    padding: var(--drawing-ledger-mobile-frame-padding-lg);
   }
 
   .mobileComparePhoneBefore,
@@ -973,7 +1038,7 @@
   .explorationGridFrame,
   .iterationFrame,
   .mobileLandingFrame {
-    padding: 1rem;
+    padding: var(--drawing-ledger-panel-padding);
   }
 
   .mediaFrame {
@@ -1009,11 +1074,11 @@
 
   .iterationFrame {
     height: auto;
-    padding: 1.5rem;
+    padding: var(--drawing-ledger-panel-padding-md);
   }
 
   .iterationLayout {
-    gap: 1.5rem;
+    gap: var(--drawing-ledger-panel-gap-lg);
     left: auto;
     position: relative;
     top: auto;
@@ -1022,12 +1087,12 @@
   }
 
   .iterationRow {
-    gap: 0.75rem;
+    gap: var(--drawing-ledger-panel-gap);
     grid-template-columns: 1fr;
   }
 
   .iterationRowImages {
-    gap: 1rem;
+    gap: var(--drawing-ledger-panel-gap-lg);
     grid-template-columns: 1fr;
   }
 
@@ -1038,11 +1103,11 @@
 
   .explorationGridFrame {
     height: auto;
-    padding: 1.5rem 1.5rem 3rem;
+    padding: var(--drawing-ledger-panel-padding-md) var(--drawing-ledger-panel-padding-md) var(--drawing-ledger-panel-padding-lg);
   }
 
   .explorationGrid {
-    gap: 1rem;
+    gap: var(--drawing-ledger-panel-gap-lg);
     left: auto;
     position: relative;
     top: auto;
@@ -1056,7 +1121,7 @@
 
   .mobileLandingFrame {
     height: auto;
-    padding: 1.5rem;
+    padding: var(--drawing-ledger-panel-padding-md);
   }
 
   .mobileLandingGrid {

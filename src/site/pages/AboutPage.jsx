@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 
 import {
@@ -63,13 +62,13 @@ export default function AboutPage() {
                           rel="noreferrer"
                           target="_blank"
                         >
-                          <Image
-                            alt=""
-                            aria-hidden="true"
+                          <span
                             className={styles.snsIcon}
-                            height={16}
-                            src={link.iconSrc}
-                            width={16}
+                            style={{
+                              WebkitMaskImage: `url(${link.iconSrc})`,
+                              maskImage: `url(${link.iconSrc})`,
+                            }}
+                            aria-hidden="true"
                           />
                         </Link>
                       );

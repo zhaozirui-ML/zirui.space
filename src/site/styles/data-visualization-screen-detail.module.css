@@ -37,8 +37,27 @@
   --data-vis-chart-neutral-fill-vertical: linear-gradient(180deg, #ffc38d, #ff9c67);
   --data-vis-legend-positive: #8bebb2;
   --data-vis-legend-neutral: #ffaf74;
+  --data-vis-page-gap: 0;
+  --data-vis-hero-padding-block-start: clamp(4.5rem, 8vw, 7.75rem);
+  --data-vis-hero-padding-inline: clamp(1rem, 3vw, 1.5rem);
+  --data-vis-hero-padding-block-end: clamp(1.5rem, 4vw, 3rem);
+  --data-vis-hero-content-gap: clamp(1.5rem, 3vw, 3rem);
+  --data-vis-content-stack-gap: 6rem;
+  --data-vis-content-stack-padding-block-start: clamp(4.5rem, 8vw, 8.25rem);
+  --data-vis-content-stack-padding-block-end: 6rem;
+  --data-vis-section-group-gap: 1.5rem;
+  --data-vis-card-gap: 1.5rem;
+  --data-vis-card-padding: 1.5rem;
+  --data-vis-body-group-gap: 0.5rem;
+  --data-vis-figure-gap: 0.75rem;
+  --data-vis-demo-stack-gap: 3rem;
+  --data-vis-indicator-grid-gap: 1.75rem;
+  --data-vis-panel-gap: 1rem;
+  --data-vis-panel-padding: 1rem;
+  --data-vis-chart-gap: 0.875rem;
+  --data-vis-chart-legend-gap: 1rem;
   display: grid;
-  gap: 0;
+  gap: var(--data-vis-page-gap);
 }
 
 :global([data-color-theme="dark"]) .page {
@@ -89,14 +108,14 @@
   background-size: cover;
   min-height: 67.5rem;
   padding:
-    clamp(4.5rem, 8vw, 7.75rem)
-    clamp(1rem, 3vw, 1.5rem)
-    clamp(1.5rem, 4vw, 3rem);
+    var(--data-vis-hero-padding-block-start)
+    var(--data-vis-hero-padding-inline)
+    var(--data-vis-hero-padding-block-end);
 }
 
 .heroContent {
   display: grid;
-  gap: clamp(1.5rem, 3vw, 3rem);
+  gap: var(--data-vis-hero-content-gap);
   justify-items: center;
   margin: 0 auto;
   max-width: 94.5rem;
@@ -151,14 +170,17 @@
 
 .contentStack {
   display: grid;
-  gap: 6rem;
+  gap: var(--data-vis-content-stack-gap);
   justify-items: center;
-  padding: clamp(4.5rem, 8vw, 8.25rem) 0 6rem;
+  padding:
+    var(--data-vis-content-stack-padding-block-start)
+    0
+    var(--data-vis-content-stack-padding-block-end);
 }
 
 .sectionGroup {
   display: grid;
-  gap: 1.5rem;
+  gap: var(--data-vis-section-group-gap);
   width: 100%;
 }
 
@@ -186,7 +208,7 @@
 
 .bodyGroup {
   display: grid;
-  gap: 0.5rem;
+  gap: var(--data-vis-body-group-gap);
 }
 
 .bulletList {
@@ -207,7 +229,7 @@
 
 .problemGrid {
   display: grid;
-  gap: 1.5rem;
+  gap: var(--data-vis-card-gap);
   grid-template-columns: repeat(2, minmax(0, 1fr));
   justify-self: center;
   margin: 0 auto;
@@ -247,7 +269,7 @@
 
 .goalGrid {
   display: grid;
-  gap: 1.5rem;
+  gap: var(--data-vis-card-gap);
   grid-template-columns: repeat(3, minmax(0, 1fr));
   justify-self: center;
   margin: 0 auto;
@@ -260,7 +282,7 @@
   border: 1px solid var(--portfolio-color-border-light);
   border-radius: 0.75rem;
   display: grid;
-  gap: 0.25rem;
+  gap: calc(var(--ds-space-2xs));
   padding: 0.8125rem;
 }
 
@@ -276,12 +298,12 @@
 
 .practiceSection {
   display: grid;
-  gap: 1.5rem;
+  gap: var(--data-vis-card-gap);
 }
 
 .figureBlock {
   display: grid;
-  gap: 0.75rem;
+  gap: var(--data-vis-figure-gap);
   justify-self: center;
   margin: 0 auto;
   max-width: 75rem;
@@ -446,7 +468,7 @@
 
 .demoStack {
   display: grid;
-  gap: 3rem;
+  gap: var(--data-vis-demo-stack-gap);
   justify-self: center;
   margin: 0 auto;
   max-width: 75rem;
@@ -522,7 +544,7 @@
 
 .indicatorGrid {
   display: grid;
-  gap: 1.75rem;
+  gap: var(--data-vis-indicator-grid-gap);
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
@@ -531,9 +553,9 @@
   border: 1px solid var(--data-vis-indicator-border);
   border-radius: 0.5rem;
   display: grid;
-  gap: 0.375rem;
+  gap: calc(var(--ds-space-2xs) * 1.5);
   min-height: 7.25rem;
-  padding: 1.5rem 1rem 1rem;
+  padding: var(--data-vis-card-padding) var(--data-vis-panel-padding) var(--data-vis-panel-padding);
   place-items: center;
   position: relative;
 }
@@ -591,12 +613,12 @@
 
 .chartPanel {
   display: grid;
-  gap: 1rem;
+  gap: var(--data-vis-panel-gap);
 }
 
 .chartPanelTop {
   display: grid;
-  gap: 1rem;
+  gap: var(--data-vis-panel-gap);
   grid-template-columns: 1fr 0.95fr;
 }
 
@@ -605,8 +627,8 @@
   border: 1px solid var(--data-vis-chart-inset-border);
   border-radius: 0.75rem;
   display: grid;
-  gap: 0.875rem;
-  padding: 1rem;
+  gap: var(--data-vis-chart-gap);
+  padding: var(--data-vis-panel-padding);
 }
 
 .tradeRows,
@@ -682,7 +704,7 @@
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: var(--data-vis-chart-legend-gap);
 }
 
 .legendItem {
