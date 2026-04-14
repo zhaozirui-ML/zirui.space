@@ -35,10 +35,13 @@ export default function BlogPage({ language }) {
             {featuredBlogPosts.map((post) => {
               const isDark = post.tone === "dark";
               const isReversed = post.layout === "imageEnd";
+              const title = getLocalizedValue(post.title, language);
+              const summary = getLocalizedValue(post.summary, language);
+              const imageAlt = getLocalizedValue(post.imageAlt, language);
 
               return (
                 <Link
-                  aria-label={`${getLocalizedValue(blogIndexDictionary.readArticleAriaLabel, language)}: ${post.title}`}
+                  aria-label={`${getLocalizedValue(blogIndexDictionary.readArticleAriaLabel, language)}: ${title}`}
                   className={[
                     styles.cardLink,
                     styles.featuredCard,
@@ -50,7 +53,7 @@ export default function BlogPage({ language }) {
                 >
                   <div className={styles.featuredMedia}>
                     <Image
-                      alt={post.imageAlt}
+                      alt={imageAlt}
                       className={styles.featuredImage}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 960px) 92vw, 448px"
@@ -72,7 +75,7 @@ export default function BlogPage({ language }) {
                           isDark ? styles.featuredTitleDark : "",
                         ].join(" ")}
                       >
-                        {post.title}
+                        {title}
                       </h2>
                       <p
                         className={[
@@ -88,7 +91,7 @@ export default function BlogPage({ language }) {
                           isDark ? styles.featuredSummaryDark : "",
                         ].join(" ")}
                       >
-                        {post.summary}
+                        {summary}
                       </p>
                     </div>
 
@@ -125,32 +128,37 @@ export default function BlogPage({ language }) {
           />
           <div className={styles.browseContent}>
             <div className={styles.browseGrid}>
-              {blogIndexPosts.map((post) => (
-                <Link
-                  aria-label={`${getLocalizedValue(blogIndexDictionary.readArticleAriaLabel, language)}: ${post.title}`}
-                  className={[styles.cardLink, styles.browseCard].join(" ")}
-                  href={`/blog/${post.slug}`}
-                  key={post.slug}
-                >
-                  <div className={styles.browseMedia}>
-                    <Image
-                      alt={post.imageAlt}
-                      className={styles.featuredImage}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, 287px"
-                      src={post.imageSrc}
-                      unoptimized
-                    />
-                  </div>
+              {blogIndexPosts.map((post) => {
+                const title = getLocalizedValue(post.title, language);
+                const imageAlt = getLocalizedValue(post.imageAlt, language);
 
-                  <div className={styles.browseBody}>
-                    <h3 className={styles.browseTitle}>{post.title}</h3>
-                    <p className={styles.blogMeta}>
-                      <span>{formatBlogDate(post.date, language)}</span>
-                    </p>
-                  </div>
-                </Link>
-              ))}
+                return (
+                  <Link
+                    aria-label={`${getLocalizedValue(blogIndexDictionary.readArticleAriaLabel, language)}: ${title}`}
+                    className={[styles.cardLink, styles.browseCard].join(" ")}
+                    href={`/blog/${post.slug}`}
+                    key={post.slug}
+                  >
+                    <div className={styles.browseMedia}>
+                      <Image
+                        alt={imageAlt}
+                        className={styles.featuredImage}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, 287px"
+                        src={post.imageSrc}
+                        unoptimized
+                      />
+                    </div>
+
+                    <div className={styles.browseBody}>
+                      <h3 className={styles.browseTitle}>{title}</h3>
+                      <p className={styles.blogMeta}>
+                        <span>{formatBlogDate(post.date, language)}</span>
+                      </p>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
           <div

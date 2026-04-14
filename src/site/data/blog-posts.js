@@ -1,22 +1,32 @@
 import { getBlogAssetUrl } from "../lib/get-blog-asset-url";
 
+const t = (zh, en) => ({ zh, en });
+
 // Blog 内容继续集中在数据层管理。
 // 这一版把 V1 站点上的真实文章内容迁入当前项目，页面只负责渲染，不在组件里散写正文。
 export const blogPosts = [
   {
     slug: "smartx-design-workflow",
     section: "featured",
-    title: "The SmartX Design Workflow",
-    summary:
+    title: t("SmartX 设计工作流", "The SmartX Design Workflow"),
+    summary: t(
+      "梳理我在 SmartX 的主线设计任务、支线协作与设计系统沉淀工作。",
       "An overview of core design work, supporting tracks, and design system responsibilities at SmartX.",
+    ),
     detailSummary:
       "在 SmartX 内，设计师接到的需求大致可分为主线任务和支线任务，而设计系统部分又能继续细分出不同类型的沉淀工作。",
     date: "2023年6月28日",
-    category: "DESIGN",
+    category: t("设计", "DESIGN"),
     imageSrc: getBlogAssetUrl("smartx-design-workflow", "cover.jpg"),
-    imageAlt: "Cover image for The SmartX Design Workflow",
+    imageAlt: t(
+      "SmartX 设计工作流文章封面",
+      "Cover image for The SmartX Design Workflow",
+    ),
     heroImageSrc: getBlogAssetUrl("smartx-design-workflow", "cover.jpg"),
-    heroImageAlt: "Banner image for The SmartX Design Workflow",
+    heroImageAlt: t(
+      "SmartX 设计工作流文章 banner",
+      "Banner image for The SmartX Design Workflow",
+    ),
     tone: "dark",
     layout: "imageStart",
     contentBlocks: [
@@ -97,17 +107,25 @@ export const blogPosts = [
   {
     slug: "communication-at-work",
     section: "featured",
-    title: "Better Communication at Work",
-    summary:
+    title: t("沟通的方法", "The Method of Communication"),
+    summary: t(
+      "从倾听、识别沟通模式到积极回应，整理一份更有效协作的实践笔记。",
       "From listening and recognizing communication patterns to responding proactively, a practical guide to more effective collaboration at work.",
+    ),
     detailSummary:
       "这篇文章来自于我在 23 年年中的一次组会分享，主要记录《沟通的方法》一书里对远程沟通、倾听和积极回应的阅读感悟。",
     date: "2023年2月10日",
-    category: "GUIDE",
+    category: t("指南", "GUIDE"),
     imageSrc: getBlogAssetUrl("communication-at-work", "cover.jpg"),
-    imageAlt: "Cover image for Better Communication at Work",
+    imageAlt: t(
+      "沟通的方法文章封面",
+      "Cover image for The Method of Communication",
+    ),
     heroImageSrc: getBlogAssetUrl("communication-at-work", "cover.jpg"),
-    heroImageAlt: "Banner image for Better Communication at Work",
+    heroImageAlt: t(
+      "沟通的方法文章 banner",
+      "Banner image for The Method of Communication",
+    ),
     tone: "light",
     layout: "imageEnd",
     contentBlocks: [
@@ -421,18 +439,30 @@ export const blogPosts = [
   {
     slug: "goals-activities-tasks-and-actions",
     section: "featured",
-    title: "设计中的目标、活动、任务、行为",
-    summary: "从目标、活动、任务、动作的层级关系出发，重新看产品设计应该围绕什么展开。",
+    title: t(
+      "设计中的目标、活动、任务、行为",
+      "Goals, Activities, Tasks, and Actions in Design",
+    ),
+    summary: t(
+      "从目标、活动、任务、动作的层级关系出发，重新看产品设计应该围绕什么展开。",
+      "A look at how goals, activities, tasks, and actions shape what product design should center on.",
+    ),
     detailSummary:
       "理解目标在设计中的指导意义。目标、活动、任务、动作，以不同层级为中心进行设计会产生完全不同的结果。",
     date: "2023年8月8日",
-    category: "GUIDE",
+    category: t("指南", "GUIDE"),
     imageSrc:
       "https://framerusercontent.com/images/InuNHIQ0GzOduJG7DthhRGJV8fY.jpg?width=1000&height=1334",
-    imageAlt: "设计中的目标、活动、任务、行为文章封面",
+    imageAlt: t(
+      "设计中的目标、活动、任务、行为文章封面",
+      "Cover image for Goals, Activities, Tasks, and Actions in Design",
+    ),
     heroImageSrc:
       "https://framerusercontent.com/images/InuNHIQ0GzOduJG7DthhRGJV8fY.jpg?width=1000&height=1334",
-    heroImageAlt: "设计中的目标、活动、任务、行为文章 banner",
+    heroImageAlt: t(
+      "设计中的目标、活动、任务、行为文章 banner",
+      "Banner image for Goals, Activities, Tasks, and Actions in Design",
+    ),
     tone: "light",
     layout: "imageStart",
     contentBlocks: [
@@ -465,16 +495,19 @@ export const blogPosts = [
   {
     slug: "hammer-and-nails",
     section: "browse",
-    title: "锤子与钉子",
-    summary: "从产品创新和需求识别的角度，讨论如何先找到问题，再让方案与问题真正对焦。",
+    title: t("锤子与钉子", "Hammer and Nail"),
+    summary: t(
+      "从产品创新和需求识别的角度，讨论如何先找到问题，再让方案与问题真正对焦。",
+      "A note on product innovation and need discovery: find the problem first, then align the solution to it.",
+    ),
     detailSummary:
       "这篇文章围绕产品创新的五要素、问题与解决方案的对焦过程，以及如何分辨真实用户需求展开整理。",
     date: "2022年4月20日",
-    category: "GUIDE",
+    category: t("指南", "GUIDE"),
     imageSrc: getBlogAssetUrl("hammer-and-nails", "cover.jpg"),
-    imageAlt: "锤子与钉子文章缩略图",
+    imageAlt: t("锤子与钉子文章缩略图", "Thumbnail for Hammer and Nail"),
     heroImageSrc: getBlogAssetUrl("hammer-and-nails", "cover.jpg"),
-    heroImageAlt: "锤子与钉子文章 banner",
+    heroImageAlt: t("锤子与钉子文章 banner", "Banner image for Hammer and Nail"),
     contentBlocks: [
       {
         type: "image",
@@ -688,16 +721,28 @@ export const blogPosts = [
   {
     slug: "obsidian-from-honeymoon-to-wakeup",
     section: "browse",
-    title: "Obsidian：从满心欢喜到梦醒时分",
-    summary: "记录从最初被 Obsidian 吸引，到逐渐看清它与自己真实需求之间差距的过程。",
+    title: t(
+      "Obsidian：从满心欢喜到梦醒时分",
+      "Obsidian: From Honeymoon to Wake-Up Call",
+    ),
+    summary: t(
+      "记录从最初被 Obsidian 吸引，到逐渐看清它与自己真实需求之间差距的过程。",
+      "A reflection on being drawn to Obsidian, then gradually seeing the gap between the tool and my real needs.",
+    ),
     detailSummary:
       "这是一篇关于笔记工具期待、蜜月期、使用痛点和后续取舍的复盘，重点不在工具神话，而在自己需求的变化。",
     date: "2024年1月15日",
-    category: "TOOLS",
+    category: t("工具", "TOOLS"),
     imageSrc: getBlogAssetUrl("obsidian-from-honeymoon-to-wakeup", "cover.jpg"),
-    imageAlt: "Obsidian：从满心欢喜到梦醒时分文章缩略图",
+    imageAlt: t(
+      "Obsidian：从满心欢喜到梦醒时分文章缩略图",
+      "Thumbnail for Obsidian: From Honeymoon to Wake-Up Call",
+    ),
     heroImageSrc: getBlogAssetUrl("obsidian-from-honeymoon-to-wakeup", "cover.jpg"),
-    heroImageAlt: "Obsidian：从满心欢喜到梦醒时分文章 banner",
+    heroImageAlt: t(
+      "Obsidian：从满心欢喜到梦醒时分文章 banner",
+      "Banner image for Obsidian: From Honeymoon to Wake-Up Call",
+    ),
     contentBlocks: [
       {
         type: "heading",
@@ -774,16 +819,19 @@ export const blogPosts = [
   {
     slug: "minimal-todos",
     section: "browse",
-    title: "简约 Todos",
-    summary: "从传统待办事项列表的问题出发，重新理解 Burner List 这种更专注的待办方式。",
+    title: t("简约 Todos", "Minimal Todos"),
+    summary: t(
+      "从传统待办事项列表的问题出发，重新理解 Burner List 这种更专注的待办方式。",
+      "A look at why traditional todo lists break down, and how the Burner List model helps focus attention.",
+    ),
     detailSummary:
       "这篇文章围绕传统 Todos 的问题、Burner List 系统的做法，以及它为什么能帮助人们重新聚焦最重要的任务。",
     date: "2025年10月23日",
-    category: "GUIDE",
+    category: t("指南", "GUIDE"),
     imageSrc: getBlogAssetUrl("minimal-todos", "cover.jpg"),
-    imageAlt: "简约 Todos 文章缩略图",
+    imageAlt: t("简约 Todos 文章缩略图", "Thumbnail for Minimal Todos"),
     heroImageSrc: getBlogAssetUrl("minimal-todos", "cover.jpg"),
-    heroImageAlt: "简约 Todos 文章 banner",
+    heroImageAlt: t("简约 Todos 文章 banner", "Banner image for Minimal Todos"),
     contentBlocks: [
       {
         type: "heading",

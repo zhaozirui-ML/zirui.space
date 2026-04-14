@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import DetailTranslationPlaceholder from "../components/DetailTranslationPlaceholder";
 import { untranslatedDetailDictionary } from "../i18n/dictionary";
+import { getLocalizedValue } from "../i18n/get-localized-value";
 import { getBlogBySlug } from "../lib/get-blog-by-slug";
 import { getReturnPath } from "../lib/get-return-path";
 import { formatBlogDate } from "../lib/format-blog-date";
@@ -120,6 +121,9 @@ export default function BlogDetailPage({ language = "zh", returnHref = "/blog", 
   }
 
   const safeReturnHref = getReturnPath(returnHref, "/blog");
+  const title = getLocalizedValue(post.title, language);
+  const summary = getLocalizedValue(post.summary, language);
+  const heroImageAlt = getLocalizedValue(post.heroImageAlt, language);
 
   if (language === "en") {
     return (
@@ -154,7 +158,7 @@ export default function BlogDetailPage({ language = "zh", returnHref = "/blog", 
             <div className={[shellStyles.pageStack, styles.headerStack].join(" ")}>
               <section className={[shellStyles.pageIntro, styles.articleIntro].join(" ")}>
                 <h1 className={[shellStyles.pageTitle, styles.articleTitle].join(" ")}>
-                  {post.title}
+                  {title}
                 </h1>
                 <p className={styles.metaRow}>
                   <span>{formatBlogDate(post.date, language)}</span>
@@ -175,7 +179,7 @@ export default function BlogDetailPage({ language = "zh", returnHref = "/blog", 
                 {/* 这里直接沿用 V1 站点的远程 banner，只替换内容，不改当前图片接入链路。 */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  alt={post.heroImageAlt}
+                  alt={heroImageAlt}
                   className={styles.heroImage}
                   src={post.heroImageSrc}
                 />
@@ -198,7 +202,7 @@ export default function BlogDetailPage({ language = "zh", returnHref = "/blog", 
           <div aria-hidden="true" className={styles.detailRail} />
           <div className={styles.bodyContent}>
             <div className={styles.body}>
-              <p className={styles.intro}>{post.summary}</p>
+              <p className={styles.intro}>{summary}</p>
 
               {contentGroups.map((group, groupIndex) => (
                 <section

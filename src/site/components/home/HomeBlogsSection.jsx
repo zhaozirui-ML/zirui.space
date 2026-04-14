@@ -31,40 +31,47 @@ export default function HomeBlogsSection({ language }) {
       </div>
 
       <div className={styles.blogList}>
-        {homeBlogPosts.map((post) => (
-          <Link
-            aria-label={`${getLocalizedValue(homePageDictionary.blogsSectionViewArticle, language)}: ${post.title}`}
-            className={styles.blogCard}
-            href={{ pathname: `/blog/${post.slug}`, query: { from: "/" } }}
-            key={post.slug}
-          >
-            <div className={styles.blogCardMediaFrame}>
-              <div className={styles.blogCardMedia}>
-                <Image
-                  alt={post.imageAlt}
-                  className={styles.blogCardImage}
-                  fill
-                  sizes="(max-width: 640px) 100vw, 180px"
-                  src={post.imageSrc}
-                  unoptimized
-                />
-              </div>
-            </div>
+        {homeBlogPosts.map((post) => {
+          const title = getLocalizedValue(post.title, language);
+          const summary = getLocalizedValue(post.summary, language);
+          const category = getLocalizedValue(post.category, language);
+          const imageAlt = getLocalizedValue(post.imageAlt, language);
 
-            <div className={styles.blogCardBody}>
-              <div className={styles.blogCardCopy}>
-                <h3 className={styles.blogCardTitle}>{post.title}</h3>
-                <p className={styles.blogCardSummary}>{post.summary}</p>
+          return (
+            <Link
+              aria-label={`${getLocalizedValue(homePageDictionary.blogsSectionViewArticle, language)}: ${title}`}
+              className={styles.blogCard}
+              href={{ pathname: `/blog/${post.slug}`, query: { from: "/" } }}
+              key={post.slug}
+            >
+              <div className={styles.blogCardMediaFrame}>
+                <div className={styles.blogCardMedia}>
+                  <Image
+                    alt={imageAlt}
+                    className={styles.blogCardImage}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 180px"
+                    src={post.imageSrc}
+                    unoptimized
+                  />
+                </div>
               </div>
 
-              <p className={styles.blogCardMeta}>
-                <span>{formatBlogDate(post.date, language)}</span>
-                <span aria-hidden="true">·</span>
-                <span>{post.category}</span>
-              </p>
-            </div>
-          </Link>
-        ))}
+              <div className={styles.blogCardBody}>
+                <div className={styles.blogCardCopy}>
+                  <h3 className={styles.blogCardTitle}>{title}</h3>
+                  <p className={styles.blogCardSummary}>{summary}</p>
+                </div>
+
+                <p className={styles.blogCardMeta}>
+                  <span>{formatBlogDate(post.date, language)}</span>
+                  <span aria-hidden="true">·</span>
+                  <span>{category}</span>
+                </p>
+              </div>
+            </Link>
+          );
+        })}
       </div>
     </section>
   );
