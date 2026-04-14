@@ -49,6 +49,44 @@ const practiceSectionIds = [
   "practice-collaboration",
 ];
 
+const sectionLabelMap = {
+  "项目背景": "Project background",
+  "问题定义": "Problem definition",
+  "设计洞察": "Design insight",
+  "官网定位": "Portal positioning",
+  "设计目标": "Design goal",
+  "设计探索": "Design exploration",
+  "消费链路": "Consumption journey",
+  "传播策略": "Information architecture",
+  "设计实践": "Design practice",
+  "首页设计": "Homepage design",
+  "设计与开发详情": "Design and development details",
+  "数据可视化": "Data visualization",
+  "团队协同": "Team collaboration",
+  "成果与复盘": "Results and reflection",
+};
+
+function resolveLocalizedValue(value, language) {
+  if (Array.isArray(value)) {
+    return value.map((item) => resolveLocalizedValue(item, language));
+  }
+
+  if (value && typeof value === "object") {
+    if ("zh" in value || "en" in value) {
+      return language === "en" ? value.en ?? value.zh : value.zh ?? value.en;
+    }
+
+    return Object.fromEntries(
+      Object.entries(value).map(([key, nestedValue]) => [
+        key,
+        resolveLocalizedValue(nestedValue, language),
+      ]),
+    );
+  }
+
+  return value;
+}
+
 function joinClassNames(...classNames) {
   return classNames.filter(Boolean).join(" ");
 }
@@ -230,7 +268,15 @@ export default function AxzoDesignSystemCaseStudyPage({
   work,
 }) {
   const content = axzoDesignSystemCaseStudy;
+  const localizedContent = resolveLocalizedValue(content, language);
   const workTitle = getLocalizedValue(work.title, language);
+  const localizedSections =
+    language === "en"
+      ? caseStudySections.map((item) => ({
+          ...item,
+          label: sectionLabelMap[item.label] ?? item.label,
+        }))
+      : caseStudySections;
   /** @type {import("react").CSSProperties & Record<string, string>} */
   const pageThemeStyles = {
     "--axzo-case-accent": headingAccentColor,
@@ -238,11 +284,12 @@ export default function AxzoDesignSystemCaseStudyPage({
   const tocTheme = {
     accentColor: "var(--axzo-case-accent)",
     backHref,
-    backLabel: "返回",
+    backLabel: language === "en" ? "Back" : "返回",
     desktopShiftX: "30.5rem",
     desktopTopOffset: "0rem",
     mutedColor: "var(--portfolio-color-text-muted)",
     preferHistoryBack: false,
+    navLabel: language === "en" ? "Page contents" : "页面目录",
     titleColor: "var(--portfolio-semantic-title-color)",
   };
 
@@ -260,46 +307,46 @@ export default function AxzoDesignSystemCaseStudyPage({
             fill
             priority
             sizes="100vw"
-            src={content.cover.backdropSrc}
-            unoptimized={shouldBypassNextImageOptimizer(content.cover.backdropSrc)}
+            src={localizedContent.cover.backdropSrc}
+            unoptimized={shouldBypassNextImageOptimizer(localizedContent.cover.backdropSrc)}
           />
         </div>
 
         <div className={styles.heroPanel}>
           <div className={styles.heroPanelFrame}>
             <Image
-              alt={content.cover.panelAlt}
+              alt={localizedContent.cover.panelAlt}
               className={styles.heroPanelImage}
               fill
               priority
               sizes="(max-width: 900px) 92vw, min(75vw, 1440px)"
-              src={content.cover.panelSrc}
-              unoptimized={shouldBypassNextImageOptimizer(content.cover.panelSrc)}
+              src={localizedContent.cover.panelSrc}
+              unoptimized={shouldBypassNextImageOptimizer(localizedContent.cover.panelSrc)}
             />
           </div>
         </div>
       </section>
 
       <div className={styles.caseBody}>
-        <CaseStudyToc items={caseStudySections} {...tocTheme} />
+        <CaseStudyToc items={localizedSections} {...tocTheme} />
 
         <div className={styles.contentStack}>
           <section className={styles.section}>
             <CaseStudyHeadingOne
               className={styles.sectionHeader}
               id="project-background"
-              descriptions={content.projectBackground.description}
-              title={content.projectBackground.title}
+              descriptions={localizedContent.projectBackground.description}
+              title={localizedContent.projectBackground.title}
             />
             <MediaPanel
-              alt={content.projectBackground.imageAlt}
-              caption={content.projectBackground.caption}
+              alt={localizedContent.projectBackground.imageAlt}
+              caption={localizedContent.projectBackground.caption}
               captionClassName={styles.projectBackgroundCaption}
-              crop={content.projectBackground.imageCrop}
+              crop={localizedContent.projectBackground.imageCrop}
               frameClassName={styles.projectBackgroundFrame}
-              imageSrc={content.projectBackground.imageSrc}
+              imageSrc={localizedContent.projectBackground.imageSrc}
               priority
-              ratio={content.projectBackground.ratio}
+              ratio={localizedContent.projectBackground.ratio}
             />
           </section>
 
@@ -307,11 +354,11 @@ export default function AxzoDesignSystemCaseStudyPage({
             <CaseStudyHeadingOne
               className={styles.sectionHeader}
               id="problem-definition"
-              descriptions={content.problemDefinition.description}
-              title={content.problemDefinition.title}
+              descriptions={localizedContent.problemDefinition.description}
+              title={localizedContent.problemDefinition.title}
             />
             <div className={styles.problemGrid}>
-              {content.problemDefinition.items.map((item) => (
+              {localizedContent.problemDefinition.items.map((item) => (
                 <article className={styles.problemCard} key={item.title}>
                   <Image
                     alt={item.imageAlt}
@@ -331,26 +378,26 @@ export default function AxzoDesignSystemCaseStudyPage({
             <CaseStudyHeadingOne
               className={styles.sectionHeader}
               id="design-insight"
-              descriptions={content.insight.description}
-              title={content.insight.title}
+              descriptions={localizedContent.insight.description}
+              title={localizedContent.insight.title}
             />
             <div className={styles.insightPanel}>
               <div className={styles.insightCanvas}>
                 <div className={styles.insightTop}>
-                  <OrbitDiagram orbit={content.insight.leftOrbit} variant="left" />
+                  <OrbitDiagram orbit={localizedContent.insight.leftOrbit} variant="left" />
                   <div aria-hidden="true" className={styles.insightArrowHorizontal}>
                     <ArrowRightSoftIcon className={styles.insightArrowIcon} />
                   </div>
-                  <OrbitDiagram orbit={content.insight.rightOrbit} variant="right" />
+                  <OrbitDiagram orbit={localizedContent.insight.rightOrbit} variant="right" />
                 </div>
 
                 <div className={styles.insightCaptionRow}>
                   <p className={joinClassNames(styles.orbitCaption, styles.orbitCaptionLeft)}>
-                    {content.insight.leftOrbit.caption}
+                    {localizedContent.insight.leftOrbit.caption}
                   </p>
                   <div aria-hidden="true" className={styles.insightCaptionSpacer} />
                   <p className={joinClassNames(styles.orbitCaption, styles.orbitCaptionRight)}>
-                    {content.insight.rightOrbit.caption}
+                    {localizedContent.insight.rightOrbit.caption}
                   </p>
                 </div>
 
@@ -365,14 +412,14 @@ export default function AxzoDesignSystemCaseStudyPage({
                   </div>
 
                   <div className={styles.insightBottomFlow}>
-                    <div className={styles.insightMessage}>{content.insight.message}</div>
+                    <div className={styles.insightMessage}>{localizedContent.insight.message}</div>
 
                     <div aria-hidden="true" className={styles.insightArrowVertical}>
                       <ArrowRightSoftIcon className={styles.insightArrowIcon} />
                     </div>
 
                     <div className={styles.insightConclusion}>
-                      {content.insight.conclusion}
+                      {localizedContent.insight.conclusion}
                     </div>
                   </div>
                 </div>
@@ -384,11 +431,11 @@ export default function AxzoDesignSystemCaseStudyPage({
             <CaseStudyHeadingOne
               className={styles.sectionHeader}
               id="portal-positioning"
-              descriptions={content.portalPositioning.description}
-              title={content.portalPositioning.title}
+              descriptions={localizedContent.portalPositioning.description}
+              title={localizedContent.portalPositioning.title}
             />
             <div className={styles.roleGrid}>
-              {content.portalPositioning.cards.map((card) => (
+              {localizedContent.portalPositioning.cards.map((card) => (
                 <article className={styles.roleCard} key={card.title}>
                   <div className={styles.roleBody}>
                     <h3 className={styles.roleTitle}>{card.title}</h3>
@@ -413,8 +460,8 @@ export default function AxzoDesignSystemCaseStudyPage({
             <CaseStudyHeadingOne
               className={styles.sectionHeader}
               id="design-goal"
-              descriptions={content.designGoal.description}
-              title={content.designGoal.title}
+              descriptions={localizedContent.designGoal.description}
+              title={localizedContent.designGoal.title}
             />
           </section>
 
@@ -422,8 +469,8 @@ export default function AxzoDesignSystemCaseStudyPage({
             <CaseStudyHeadingOne
               className={styles.sectionHeader}
               id="design-exploration"
-              descriptions={content.exploration.description}
-              title={content.exploration.title}
+              descriptions={localizedContent.exploration.description}
+              title={localizedContent.exploration.title}
             />
 
             <article className={styles.storyBlock}>
@@ -431,14 +478,14 @@ export default function AxzoDesignSystemCaseStudyPage({
                 accentColor="var(--axzo-case-accent)"
                 className={styles.storyHeader}
                 id="exploration-consumption-journey"
-                descriptions={content.exploration.sections[0].paragraphs}
-                title={content.exploration.sections[0].theme}
+                descriptions={localizedContent.exploration.sections[0].paragraphs}
+                title={localizedContent.exploration.sections[0].theme}
               />
 
               <MediaPanel
-                alt={content.exploration.sections[0].imageAlt}
-                imageSrc={content.exploration.sections[0].imageSrc}
-                ratio={content.exploration.sections[0].ratio}
+                alt={localizedContent.exploration.sections[0].imageAlt}
+                imageSrc={localizedContent.exploration.sections[0].imageSrc}
+                ratio={localizedContent.exploration.sections[0].ratio}
                 tone="soft"
               />
             </article>
@@ -448,12 +495,12 @@ export default function AxzoDesignSystemCaseStudyPage({
                 accentColor="var(--axzo-case-accent)"
                 className={styles.storyHeader}
                 id="exploration-information-architecture"
-                descriptions={content.exploration.sections[1].paragraphs}
-                title={content.exploration.sections[1].theme}
+                descriptions={localizedContent.exploration.sections[1].paragraphs}
+                title={localizedContent.exploration.sections[1].theme}
               />
 
               <ol className={styles.decisionList}>
-                {content.exploration.sections[1].decisions.map((decision) => (
+                {localizedContent.exploration.sections[1].decisions.map((decision) => (
                   <li className={styles.decisionItem} key={decision}>
                     {decision}
                   </li>
@@ -466,12 +513,12 @@ export default function AxzoDesignSystemCaseStudyPage({
             <CaseStudyHeadingOne
               className={styles.sectionHeader}
               id="design-practice"
-              descriptions={content.practice.description}
-              title={content.practice.title}
+              descriptions={localizedContent.practice.description}
+              title={localizedContent.practice.title}
             />
 
             <div className={styles.practiceStack}>
-              {content.practice.pages.map((page, index) => (
+              {localizedContent.practice.pages.map((page, index) => (
                 <article className={styles.practiceBlock} key={page.theme}>
                   <CaseStudyHeadingTwo
                     accentColor="var(--axzo-case-accent)"
@@ -495,14 +542,14 @@ export default function AxzoDesignSystemCaseStudyPage({
             <CaseStudyHeadingOne
               className={styles.sectionHeader}
               id="results-reflection"
-              title={content.reflection.title}
+              title={localizedContent.reflection.title}
             />
             <div className={styles.reflectionStack}>
-              <p className={styles.sectionDescription}>{content.reflection.intro}</p>
+              <p className={styles.sectionDescription}>{localizedContent.reflection.intro}</p>
 
               <div className={styles.resultPanel}>
                 <ul className={styles.resultList}>
-                  {content.reflection.bullets.map((bullet) => (
+                  {localizedContent.reflection.bullets.map((bullet) => (
                     <li className={styles.resultItem} key={bullet}>
                       {bullet}
                     </li>
@@ -510,8 +557,8 @@ export default function AxzoDesignSystemCaseStudyPage({
                 </ul>
               </div>
 
-              <p className={styles.storyParagraph}>{content.reflection.conclusion}</p>
-              <p className={styles.quote}>{content.reflection.quote}</p>
+              <p className={styles.storyParagraph}>{localizedContent.reflection.conclusion}</p>
+              <p className={styles.quote}>{localizedContent.reflection.quote}</p>
             </div>
           </section>
         </div>

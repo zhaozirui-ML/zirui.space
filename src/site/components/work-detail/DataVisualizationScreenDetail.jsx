@@ -9,37 +9,63 @@ import { dataVisualizationScreenDetail } from "../../data/data-visualization-scr
 import styles from "../../styles/data-visualization-screen-detail.module.css";
 
 const caseStudySections = [
-  { hierarchy: "primary", id: "project-background", label: "项目背景" },
-  { hierarchy: "primary", id: "problem-definition", label: "问题定义" },
-  { hierarchy: "primary", id: "design-goals", label: "设计目标" },
-  { hierarchy: "primary", id: "design-practice", label: "设计实践" },
+  { hierarchy: "primary", id: "project-background", label: { zh: "项目背景", en: "Project Background" } },
+  { hierarchy: "primary", id: "problem-definition", label: { zh: "问题定义", en: "Problem Definition" } },
+  { hierarchy: "primary", id: "design-goals", label: { zh: "设计目标", en: "Design Goals" } },
+  { hierarchy: "primary", id: "design-practice", label: { zh: "设计实践", en: "Design Practice" } },
   {
     hierarchy: "secondary",
     id: "practice-visual-language",
-    label: "图表视觉语言",
+    label: { zh: "图表视觉语言", en: "Chart Visual Language" },
   },
   {
     hierarchy: "secondary",
     id: "practice-visual-expansion",
-    label: "视觉语言扩展",
+    label: { zh: "视觉语言扩展", en: "Visual Language Expansion" },
   },
   {
     hierarchy: "secondary",
     id: "practice-systemization",
-    label: "组件化沉淀",
+    label: { zh: "组件化沉淀", en: "Componentization" },
   },
-  { hierarchy: "primary", id: "design-outcomes", label: "设计成果" },
-  { hierarchy: "primary", id: "project-retrospective", label: "项目复盘" },
+  { hierarchy: "primary", id: "design-outcomes", label: { zh: "设计成果", en: "Design Outcomes" } },
+  { hierarchy: "primary", id: "project-retrospective", label: { zh: "项目复盘", en: "Project Retrospective" } },
 ];
 
 function shouldBypassNextImageOptimizer(source) {
   return typeof source === "string" && source.startsWith("http");
 }
 
+function resolveLocalizedValue(value, language) {
+  if (Array.isArray(value)) {
+    return value.map((item) => resolveLocalizedValue(item, language));
+  }
+
+  if (value && typeof value === "object") {
+    if ("zh" in value || "en" in value) {
+      return language === "en" ? value.en ?? value.zh : value.zh ?? value.en;
+    }
+
+    return Object.fromEntries(
+      Object.entries(value).map(([key, nestedValue]) => [
+        key,
+        resolveLocalizedValue(nestedValue, language),
+      ]),
+    );
+  }
+
+  return value;
+}
+
 export default function DataVisualizationScreenDetail({
   backHref = "/work",
   headingAccentColor = "var(--portfolio-semantic-eyebrow-color)",
+  language = "zh",
 }) {
+  /** @type {any} */
+  const content = resolveLocalizedValue(dataVisualizationScreenDetail, language);
+  /** @type {any} */
+  const tocItems = resolveLocalizedValue(caseStudySections, language);
   const {
     background,
     goals,
@@ -48,7 +74,7 @@ export default function DataVisualizationScreenDetail({
     practice,
     problems,
     retrospective,
-  } = dataVisualizationScreenDetail;
+  } = content;
   /** @type {import("react").CSSProperties & Record<string, string>} */
   const pageThemeStyles = {
     "--data-vis-case-accent": headingAccentColor,
@@ -56,11 +82,12 @@ export default function DataVisualizationScreenDetail({
   const tocTheme = {
     accentColor: "var(--data-vis-case-accent)",
     backHref,
-    backLabel: "返回",
+    backLabel: language === "en" ? "Back" : "返回",
     desktopShiftX: "29rem",
     // 目录起点要和正文首个模块共享同一组顶部节奏，
     // 否则会出现 TOC 提前“飘”上去，而“项目背景”还没到的错位感。
     desktopTopOffset: "clamp(4.5rem, 8vw, 8.25rem)",
+    navLabel: language === "en" ? "Page contents" : "页面目录",
   };
 
   return (
@@ -94,7 +121,7 @@ export default function DataVisualizationScreenDetail({
       </section>
 
       <div className={styles.caseBody}>
-        <CaseStudyToc items={caseStudySections} {...tocTheme} />
+        <CaseStudyToc items={tocItems} {...tocTheme} />
 
         <div className={styles.contentStack}>
           <CaseStudyHeadingOne
