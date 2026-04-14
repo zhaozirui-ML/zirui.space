@@ -303,7 +303,7 @@ function MediaFigure({
       >
         {backgroundAsset?.src ? (
           <Image
-            alt=""
+            alt={backgroundAsset.alt}
             className={styles.mediaBackground}
             fill
             priority={priority}

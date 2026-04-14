@@ -11,7 +11,7 @@ const pendingSupabaseAssetPaths = new Set();
 
 const assetDefinitions = {
   coverBackground: {
-    alt: "",
+    alt: "图纸台账 2.0 封面背景图",
     localSrc: "/site/work/drawing-ledger-2-0/cover-background.png",
     storagePath: "work/drawing-ledger-2-0/cover-background.png",
   },
@@ -21,7 +21,7 @@ const assetDefinitions = {
     storagePath: "work/drawing-ledger-2-0/cover-hero.png",
   },
   problemBackground: {
-    alt: "",
+    alt: "问题定位区域背景图",
     localSrc: "/site/work/drawing-ledger-2-0/problem-background.png",
     storagePath: "work/drawing-ledger-2-0/problem-background.png",
   },
@@ -31,7 +31,7 @@ const assetDefinitions = {
     storagePath: "work/drawing-ledger-2-0/problem-ledger-v1.png",
   },
   round1OptionABackground: {
-    alt: "",
+    alt: "Round 1 Option A 背景图",
     localSrc: "/site/work/drawing-ledger-2-0/round1-option-a-background.png",
     storagePath: "work/drawing-ledger-2-0/round1-option-a-background.png",
   },
@@ -41,7 +41,7 @@ const assetDefinitions = {
     storagePath: "work/drawing-ledger-2-0/round1-option-a.png",
   },
   round1OptionBBackground: {
-    alt: "",
+    alt: "Round 1 Option B 背景图",
     localSrc: "/site/work/drawing-ledger-2-0/round1-option-b-background.png",
     storagePath: "work/drawing-ledger-2-0/round1-option-b-background.png",
   },
@@ -51,7 +51,7 @@ const assetDefinitions = {
     storagePath: "work/drawing-ledger-2-0/round1-option-b.png",
   },
   round1OverviewBackground: {
-    alt: "",
+    alt: "Round 1 探索方案总览背景图",
     localSrc: "/site/work/drawing-ledger-2-0/round1-overview-background.png",
     storagePath: "work/drawing-ledger-2-0/round1-overview-background.png",
   },
@@ -61,7 +61,7 @@ const assetDefinitions = {
     storagePath: "work/drawing-ledger-2-0/round1-overview.png",
   },
   round2OptionCBackground: {
-    alt: "",
+    alt: "Round 2 Option C 背景图",
     localSrc: "/site/work/drawing-ledger-2-0/round2-option-c-background.png",
     storagePath: "work/drawing-ledger-2-0/round2-option-c-background.png",
   },
@@ -71,7 +71,7 @@ const assetDefinitions = {
     storagePath: "work/drawing-ledger-2-0/round2-option-c.png",
   },
   round2FinalBackground: {
-    alt: "",
+    alt: "Round 2 最终视觉稿背景图",
     localSrc: "/site/work/drawing-ledger-2-0/round2-final-background.png",
     storagePath: "work/drawing-ledger-2-0/round2-final-background.png",
   },
@@ -81,7 +81,7 @@ const assetDefinitions = {
     storagePath: "work/drawing-ledger-2-0/round2-final-visual.png",
   },
   detailsAssignmentsBackground: {
-    alt: "",
+    alt: "代办区展示逻辑背景图",
     localSrc: "/site/work/drawing-ledger-2-0/details-assignments-background.png",
     storagePath: "work/drawing-ledger-2-0/details-assignments-background.png",
   },
@@ -112,7 +112,7 @@ const assetDefinitions = {
     storagePath: "work/drawing-ledger-2-0/workflow-demo.mp4",
   },
   detailsResponsiveBackground: {
-    alt: "",
+    alt: "响应式展示区域背景图",
     localSrc: "/site/work/drawing-ledger-2-0/details-responsive-background.png",
     storagePath: "work/drawing-ledger-2-0/details-responsive-background.png",
   },
@@ -123,7 +123,7 @@ const assetDefinitions = {
     storagePath: "work/drawing-ledger-2-0/responsive-demo.mp4",
   },
   mobileComparisonBackground: {
-    alt: "",
+    alt: "移动端改版对比背景图",
     localSrc: "/site/work/drawing-ledger-2-0/mobile-comparison-background.png",
     storagePath: "work/drawing-ledger-2-0/mobile-comparison-background.png",
   },

@@ -9,19 +9,26 @@ import { formatBlogDate } from "../lib/format-blog-date";
 import shellStyles from "../styles/site-shell.module.css";
 import styles from "../styles/blog-detail-page.module.css";
 
-function renderNestedList(items, ordered, keyPrefix) {
+function resolveLocalizedText(value, language) {
+  return typeof value === "string" ? value : getLocalizedValue(value, language);
+}
+
+function renderNestedList(items, ordered, keyPrefix, language) {
   const ListTag = ordered ? "ol" : "ul";
 
   return (
     <ListTag className={styles.contentList} key={keyPrefix}>
       {items.map((item, index) => (
         <li className={styles.contentListItem} key={`${keyPrefix}-${index}`}>
-          {item.text ? <p className={styles.contentParagraph}>{item.text}</p> : null}
+          {item.text ? (
+            <p className={styles.contentParagraph}>{resolveLocalizedText(item.text, language)}</p>
+          ) : null}
           {item.nested.map((nestedList, nestedIndex) =>
             renderNestedList(
               nestedList.items,
               nestedList.ordered,
               `${keyPrefix}-${index}-${nestedIndex}`,
+              language,
             ),
           )}
         </li>
@@ -30,19 +37,19 @@ function renderNestedList(items, ordered, keyPrefix) {
   );
 }
 
-function renderContentBlock(block, index) {
+function renderContentBlock(block, index, language) {
   if (block.type === "heading") {
     if (block.level === "h4") {
       return (
         <h3 className={styles.contentSubTitle} key={`${block.type}-${index}`}>
-          {block.text}
+          {resolveLocalizedText(block.text, language)}
         </h3>
       );
     }
 
     return (
       <h2 className={styles.contentSectionTitle} key={`${block.type}-${index}`}>
-        {block.text}
+        {resolveLocalizedText(block.text, language)}
       </h2>
     );
   }
@@ -50,13 +57,13 @@ function renderContentBlock(block, index) {
   if (block.type === "paragraph") {
     return (
       <p className={styles.contentParagraph} key={`${block.type}-${index}`}>
-        {block.text}
+        {resolveLocalizedText(block.text, language)}
       </p>
     );
   }
 
   if (block.type === "list") {
-    return renderNestedList(block.items, block.ordered, `${block.type}-${index}`);
+    return renderNestedList(block.items, block.ordered, `${block.type}-${index}`, language);
   }
 
   if (block.type === "image") {
@@ -65,7 +72,7 @@ function renderContentBlock(block, index) {
         {/* 这里直接消费旧站文章里的远程图片内容，先不改变当前图片接入链路。 */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          alt={block.alt}
+          alt={resolveLocalizedText(block.alt, language)}
           className={styles.contentImage}
           loading="lazy"
           src={block.src}
@@ -124,8 +131,9 @@ export default function BlogDetailPage({ language = "zh", returnHref = "/blog", 
   const title = getLocalizedValue(post.title, language);
   const summary = getLocalizedValue(post.summary, language);
   const heroImageAlt = getLocalizedValue(post.heroImageAlt, language);
+  const canShowEnglishDetail = post.supportsEnglishDetail === true;
 
-  if (language === "en") {
+  if (language === "en" && !canShowEnglishDetail) {
     return (
       <DetailTranslationPlaceholder
         backHref={safeReturnHref}
@@ -213,10 +221,12 @@ export default function BlogDetailPage({ language = "zh", returnHref = "/blog", 
                   key={`${post.slug}-group-${groupIndex}`}
                 >
                   {group.heading ? (
-                    <h2 className={styles.contentSectionTitle}>{group.heading.text}</h2>
+                    <h2 className={styles.contentSectionTitle}>
+                      {resolveLocalizedText(group.heading.text, language)}
+                    </h2>
                   ) : null}
                   {group.blocks.map((block, blockIndex) =>
-                    renderContentBlock(block, `${groupIndex}-${blockIndex}`),
+                    renderContentBlock(block, `${groupIndex}-${blockIndex}`, language),
                   )}
                 </section>
               ))}

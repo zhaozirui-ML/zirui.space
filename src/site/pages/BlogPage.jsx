@@ -37,6 +37,7 @@ export default function BlogPage({ language }) {
               const isReversed = post.layout === "imageEnd";
               const title = getLocalizedValue(post.title, language);
               const summary = getLocalizedValue(post.summary, language);
+              const category = getLocalizedValue(post.category, language);
               const imageAlt = getLocalizedValue(post.imageAlt, language);
 
               return (
@@ -84,6 +85,8 @@ export default function BlogPage({ language }) {
                         ].join(" ")}
                       >
                         <span>{formatBlogDate(post.date, language)}</span>
+                        <span aria-hidden="true">·</span>
+                        <span>{category}</span>
                       </p>
                       <p
                         className={[
@@ -130,6 +133,7 @@ export default function BlogPage({ language }) {
             <div className={styles.browseGrid}>
               {blogIndexPosts.map((post) => {
                 const title = getLocalizedValue(post.title, language);
+                const category = getLocalizedValue(post.category, language);
                 const imageAlt = getLocalizedValue(post.imageAlt, language);
 
                 return (
@@ -154,6 +158,8 @@ export default function BlogPage({ language }) {
                       <h3 className={styles.browseTitle}>{title}</h3>
                       <p className={styles.blogMeta}>
                         <span>{formatBlogDate(post.date, language)}</span>
+                        <span aria-hidden="true">·</span>
+                        <span>{category}</span>
                       </p>
                     </div>
                   </Link>
