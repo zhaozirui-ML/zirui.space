@@ -270,7 +270,7 @@
 
 .companyLink {
   color: var(--portfolio-semantic-title-color);
-  font-family: var(--portfolio-font-title);
+  font-family: var(--portfolio-font-title-serif);
   font-size: 1.5rem;
   font-weight: 600;
   line-height: var(--about-company-line-height);
@@ -347,7 +347,7 @@
 
 .educationHeading {
   color: var(--portfolio-semantic-title-color);
-  font-family: var(--portfolio-font-title);
+  font-family: var(--portfolio-font-title-serif);
   font-size: 1.5rem;
   font-weight: 600;
   line-height: var(--about-company-line-height);

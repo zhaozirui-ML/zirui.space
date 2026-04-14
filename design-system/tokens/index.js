@@ -27,6 +27,7 @@ const buildPortfolioColorVariables = (themeColors) => ({
 
 const portfolioSharedCssVariables = {
   "--portfolio-font-title": portfolio.typography.families.title,
+  "--portfolio-font-title-serif": portfolio.typography.families.titleSerif,
   "--portfolio-font-body": portfolio.typography.families.body,
   "--portfolio-font-label": portfolio.typography.families.label,
   "--portfolio-font-mono": portfolio.typography.families.mono,

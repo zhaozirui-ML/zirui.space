@@ -130,18 +130,11 @@
 }
 
 .heroTitle {
-  /* Figma 这里使用了单独的中文衬线标题字。
-   * 第一阶段先不引入新字体，只用现有站点标题变量 + 系统宋体兜底，
-   * 这样可以先把页面结构和节奏做对，后面再单独决定是否正式接入新字体。 */
   color: var(--data-vis-hero-title);
-  font-family:
-    var(--portfolio-font-title),
-    "Songti SC",
-    "STSong",
-    serif;
+  font-family: var(--portfolio-font-title-serif);
   font-size: clamp(2.25rem, 4vw, 3rem);
   font-weight: 400;
-  letter-spacing: -0.04em;
+  letter-spacing: 0;
   line-height: 1;
   margin: 0;
 }

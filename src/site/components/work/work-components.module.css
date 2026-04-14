@@ -5,7 +5,7 @@
 
 .pageTitle {
   color: var(--portfolio-semantic-title-color);
-  font-family: var(--portfolio-font-title);
+  font-family: var(--portfolio-font-title-serif);
   font-size: var(--portfolio-work-page-header-title-size);
   font-weight: 600;
   letter-spacing: var(--portfolio-work-page-header-title-letter-spacing);
@@ -140,7 +140,7 @@
 
 .projectTitle {
   color: var(--portfolio-semantic-title-color);
-  font-family: var(--portfolio-font-title);
+  font-family: var(--portfolio-font-title-serif);
   font-size: var(--portfolio-work-project-title-size);
   font-weight: 600;
   letter-spacing: -0.03em;

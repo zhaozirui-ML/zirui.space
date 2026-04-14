@@ -117,7 +117,7 @@
 
 .heroTitle {
   color: var(--portfolio-semantic-title-color);
-  font-family: var(--portfolio-font-title);
+  font-family: var(--portfolio-font-title-serif);
   font-size: clamp(2.75rem, 4vw, 3rem);
   font-weight: 400;
   letter-spacing: 0;
@@ -704,7 +704,7 @@
 
 .pendingAssetTitle {
   color: var(--portfolio-semantic-title-color);
-  font-family: var(--portfolio-font-title);
+  font-family: var(--portfolio-font-title-serif);
   font-size: 1.5rem;
   line-height: 1.2;
   margin: 0;

@@ -1,6 +1,6 @@
 .caseStudy {
   --axzo-case-accent: var(--portfolio-color-accent-moss);
-  --axzo-heading-font: var(--portfolio-font-title);
+  --axzo-heading-font: var(--portfolio-font-title-serif);
   --axzo-page-gap: clamp(4.5rem, 7vw, 8.25rem);
   --axzo-content-gap: clamp(4rem, 6vw, 6rem);
   --axzo-content-padding-inline: 1.5rem;

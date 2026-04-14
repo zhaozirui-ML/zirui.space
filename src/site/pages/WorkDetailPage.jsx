@@ -1,10 +1,16 @@
 import Link from "next/link";
 
 import { CaseStudyHeadingOne } from "../components/case-study/CaseStudyHeading";
+import LegacyCaseStudyPage from "../components/work/LegacyCaseStudyPage";
 import DrawingLedgerCaseStudy from "../components/work/DrawingLedgerCaseStudy";
 import DataVisualizationScreenDetail from "../components/work-detail/DataVisualizationScreenDetail";
 import { getWorkBySlug } from "../lib/get-work-by-slug";
 import AxzoDesignSystemCaseStudyPage from "./AxzoDesignSystemCaseStudyPage";
+import {
+  cloudtowerDesignSystemCaseStudy,
+  smtxElfVirtualizationCaseStudy,
+  vmFeaturesOptimizationCaseStudy,
+} from "../data/work-details/legacy-projects";
 import styles from "../styles/site-shell.module.css";
 
 export default function WorkDetailPage({ returnHref = "/work", slug }) {
@@ -34,6 +40,33 @@ export default function WorkDetailPage({ returnHref = "/work", slug }) {
         backHref={returnHref}
         headingAccentColor={work.detailTheme?.headingAccentColor}
         work={work}
+      />
+    );
+  }
+
+  if (slug === "cloudtower-design-system") {
+    return (
+      <LegacyCaseStudyPage
+        backHref={returnHref}
+        caseStudy={cloudtowerDesignSystemCaseStudy}
+      />
+    );
+  }
+
+  if (slug === "smtx-elf-virtualization") {
+    return (
+      <LegacyCaseStudyPage
+        backHref={returnHref}
+        caseStudy={smtxElfVirtualizationCaseStudy}
+      />
+    );
+  }
+
+  if (slug === "vm-features-optimization") {
+    return (
+      <LegacyCaseStudyPage
+        backHref={returnHref}
+        caseStudy={vmFeaturesOptimizationCaseStudy}
       />
     );
   }

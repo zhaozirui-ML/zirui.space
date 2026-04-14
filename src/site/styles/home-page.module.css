@@ -99,7 +99,7 @@
 
 .heroTitle {
   color: var(--portfolio-semantic-title-color);
-  font-family: var(--font-ivy-presto), var(--portfolio-font-title), serif;
+  font-family: var(--portfolio-font-title-serif);
   font-size: clamp(1.875rem, 1.78rem + 0.42vw, 2rem);
   font-weight: 300;
   letter-spacing: -0.00625rem;
@@ -123,7 +123,7 @@
 
 .sectionTitle {
   color: var(--portfolio-semantic-title-color);
-  font-family: var(--font-ivy-presto), var(--portfolio-font-title), serif;
+  font-family: var(--portfolio-font-title-serif);
   font-size: 2rem;
   font-weight: 300;
   letter-spacing: -0.07625rem;
@@ -383,7 +383,7 @@
 
 .workCardTitle {
   color: var(--portfolio-semantic-title-color);
-  font-family: var(--font-ivy-presto), var(--portfolio-font-title), serif;
+  font-family: var(--portfolio-font-title-serif);
   font-feature-settings: "calt" 0, "liga" 0;
   font-size: 3rem;
   font-weight: 600;

@@ -20,11 +20,7 @@
 
 .headingOneTitle {
   color: var(--portfolio-semantic-title-color);
-  font-family:
-    var(--portfolio-font-title),
-    "Songti SC",
-    "STSong",
-    serif;
+  font-family: var(--portfolio-font-title-serif);
   font-size: var(--portfolio-type-section-title-size);
   font-weight: var(--portfolio-type-section-title-weight);
   line-height: 1.2;

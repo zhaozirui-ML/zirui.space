@@ -316,7 +316,7 @@
 
 .articleFooterTitle {
   color: var(--portfolio-semantic-title-color);
-  font-family: var(--portfolio-font-title);
+  font-family: var(--portfolio-font-title-serif);
   font-size: 1.375rem;
   font-weight: 400;
   line-height: 1.2;

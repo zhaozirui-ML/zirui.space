@@ -21,6 +21,13 @@
   min-height: 20rem;
 }
 
+@media (min-width: 901px) {
+  .panel[data-active-tab="explorations"],
+  .panel[data-active-tab="side-projects"] {
+    min-height: 145.5rem;
+  }
+}
+
 .fullRow,
 .splitRow,
 .explorationSplitRow {

@@ -53,6 +53,9 @@ export const portfolio = Object.freeze({
       // 一级标题统一切到项目内托管的“方正清刻本悦宋”，避免继续依赖本机字体。
       title:
         'var(--font-fz-qingke-benyuesong), "Songti SC", "STSong", serif',
+      // 英文展示标题保留 Ivy Presto；fallback 写进 var() 内部，避免变量暂未挂载时整条 font-family 失效。
+      titleSerif:
+        'var(--font-ivy-presto, "Times New Roman"), serif',
       body:
         'var(--font-inter), var(--font-satoshi), "Noto Sans SC", "Noto Sans JP", sans-serif',
       label:

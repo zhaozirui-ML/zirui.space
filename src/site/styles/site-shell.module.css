@@ -331,7 +331,7 @@
 
 .pageTitle {
   color: var(--portfolio-semantic-title-color);
-  font-family: var(--portfolio-font-title);
+  font-family: var(--portfolio-font-title-serif);
   font-size: clamp(2rem, 3vw, 3rem);
   font-weight: 600;
   letter-spacing: -0.03em;
@@ -397,7 +397,7 @@
 
 .workCardTitle {
   color: var(--portfolio-semantic-title-color);
-  font-family: var(--portfolio-font-title);
+  font-family: var(--portfolio-font-title-serif);
   font-size: clamp(1.75rem, 2.4vw, 2.75rem);
   font-weight: 600;
   letter-spacing: -0.03em;
@@ -451,7 +451,7 @@
 
 .placeholderTitle {
   color: var(--portfolio-semantic-title-color);
-  font-family: var(--portfolio-font-title);
+  font-family: var(--portfolio-font-title-serif);
   font-size: 1.5rem;
   font-weight: 600;
   line-height: 1.2;

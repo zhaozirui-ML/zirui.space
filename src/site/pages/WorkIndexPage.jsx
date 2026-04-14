@@ -54,6 +54,7 @@ export default function WorkIndexPage() {
           aria-labelledby={`work-tab-${activeTabId}`}
           className={styles.panel}
           id={`work-panel-${activeTabId}`}
+          data-active-tab={activeTabId}
           role="tabpanel"
         >
           <div className={styles.rows}>
