@@ -1,8 +1,9 @@
 import { ArrowUpRight } from "lucide-react";
 
+import { getLocalizedValue } from "../../i18n/get-localized-value";
 import styles from "./work-components.module.css";
 
-export default function WorkSideProjectsPanel({ items }) {
+export default function WorkSideProjectsPanel({ items, language }) {
   return (
     <div className={styles.sideProjectsList}>
       {items.map((item) => {
@@ -19,7 +20,9 @@ export default function WorkSideProjectsPanel({ items }) {
           >
             <div className={styles.sideProjectCopy}>
               <h2 className={styles.sideProjectTitle}>{item.title}</h2>
-              <p className={styles.sideProjectSubtitle}>{item.subtitle}</p>
+              <p className={styles.sideProjectSubtitle}>
+                {getLocalizedValue(item.subtitle, language)}
+              </p>
             </div>
 
             <div className={styles.sideProjectLink}>

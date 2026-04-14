@@ -1,21 +1,30 @@
 import { getStorageAssetUrl } from "../lib/get-storage-asset-url";
 
+const t = (zh, en) => ({ zh, en });
+
 // 作品数据继续集中在这里，首页、/work 和详情页都从同一个数据源读取。
 // 首页只拿“精选项目”，Work 页再按 Figma 版式做分组渲染，避免后面维护两份 slug。
 export const workItems = [
   {
     slug: "drawing-ledger-2-0",
-    title: "Drawing Register 2.0",
-    homeTitle: "Drawing Register 2.0",
-    category: "Web + App",
-    homeCategory: "App & Web",
+    title: t("图纸台账 2.0", "Drawing Register 2.0"),
+    homeTitle: t("图纸台账 2.0", "Drawing Register 2.0"),
+    category: t("Web + App", "Web + App"),
+    homeCategory: t("App 与 Web", "App & Web"),
     year: "2025",
-    summary:
+    summary: t(
+      "重设计图纸登记、解析与协作的端到端流程",
       "Redesigning the end to end workflow for drawing registration, parsing, and collaboration",
-    homeSummary:
+    ),
+    homeSummary: t(
+      "重设计从上传、解析、登记到协作的复杂图纸工作流。",
       "Redesigned a complex drawing workflow across upload, parsing, registration, and collaboration.",
-    detailSummary:
+    ),
+    detailSummary: t(
+      "后续会在这里接入完整案例，包括流程重构、解析逻辑和协作决策。",
       "A detailed case study will be connected here next, including the workflow redesign, parsing logic, and collaboration decisions.",
+    ),
+    supportsEnglishDetail: true,
     showOnHome: true,
     homeCardVariant: "featured",
     homeMediaPosition: "end",
@@ -55,16 +64,23 @@ export const workItems = [
   },
   {
     slug: "axzo-design-system",
-    title: "Axzo Design Portal",
-    homeTitle: "Axzo Design System Portal",
-    category: "Web",
+    title: t("Axzo 设计系统门户", "Axzo Design Portal"),
+    homeTitle: t("Axzo 设计系统门户", "Axzo Design System Portal"),
+    category: t("Web", "Web"),
     year: "2025",
-    summary:
+    summary: t(
+      "设计一个设计系统如何被理解、访问和采用",
       "Designing how a design system is understood, accessed, and adopted",
-    homeSummary:
+    ),
+    homeSummary: t(
+      "设计一个设计系统如何被理解、访问和采用。",
       "Designing how a design system is understood, accessed, and adopted",
-    detailSummary:
+    ),
+    detailSummary: t(
+      "后续会在这里接入完整案例，包括门户结构、采用策略与设计系统落地。",
       "A detailed case study will be connected here next, including the portal structure, adoption strategy, and design system rollout.",
+    ),
+    supportsEnglishDetail: true,
     showOnHome: true,
     homeCardVariant: "standard",
     homeMediaPosition: "start",
@@ -108,17 +124,24 @@ export const workItems = [
   },
   {
     slug: "data-visualization-screen",
-    title: "Data Visualization System",
-    homeTitle: "Data Visualization System",
-    category: "Large Screen",
-    homeCategory: "Data Visualization",
+    title: t("数据可视化系统", "Data Visualization System"),
+    homeTitle: t("数据可视化系统", "Data Visualization System"),
+    category: t("大屏", "Large Screen"),
+    homeCategory: t("数据可视化", "Data Visualization"),
     year: "2025",
-    summary:
-      "Designing a portal for how a design system spreads",
-    homeSummary:
+    summary: t(
+      "为复杂大屏体验建立可复用的视觉语言",
+      "Defining a reusable visual language for complex large-screen experiences",
+    ),
+    homeSummary: t(
+      "为仪表盘和大屏数据体验定义可复用的视觉语言。",
       "Defined a reusable visual language for dashboards and large-screen data experiences.",
-    detailSummary:
+    ),
+    detailSummary: t(
       "将省、市、区三级建筑大屏设计整合为统一视觉语言，并把图表探索扩展到更复杂的大屏场景。",
+      "Consolidating provincial, city, and district construction dashboards into a unified visual language for more complex large-screen scenarios.",
+    ),
+    supportsEnglishDetail: true,
     showOnHome: true,
     homeCardVariant: "standard",
     homeMediaPosition: "end",
@@ -162,13 +185,18 @@ export const workItems = [
   },
   {
     slug: "cloudtower-design-system",
-    title: "CloudTower Design System",
-    category: "Web",
+    title: t("CloudTower 设计系统", "CloudTower Design System"),
+    category: t("Web", "Web"),
     year: "2023-2024",
-    summary:
+    summary: t(
+      "通过组件细化、可复用模式和 UI Map 文档系统化演进已有设计系统",
       "Systematically evolving an existing design system through component refinement, reusable patterns, and UI map documentation",
-    detailSummary:
+    ),
+    detailSummary: t(
+      "后续会在这里接入完整案例，包括组件细化、可复用模式和系统映射。",
       "A detailed case study will be connected here next, covering component refinement, reusable patterns, and system mapping.",
+    ),
+    supportsEnglishDetail: true,
     legacyUrl: "https://zirui.framer.website/design-system",
     showOnHome: false,
     workCardVariant: "featureTall",
@@ -182,13 +210,18 @@ export const workItems = [
   },
   {
     slug: "smtx-elf-virtualization",
-    title: "SMTX ELF Virtualization",
-    category: "Web",
+    title: t("SMTX ELF 虚拟化", "SMTX ELF Virtualization"),
+    category: t("Web", "Web"),
     year: "2023",
-    summary:
+    summary: t(
+      "为弹性资源扩展设计独立虚拟化产品",
       "Designing a standalone virtualization product for flexible resource expansion",
-    detailSummary:
+    ),
+    detailSummary: t(
+      "后续会在这里接入完整案例，包括虚拟化产品定位和资源管理决策。",
       "A detailed case study will be connected here next, including the virtualization product framing and resource management decisions.",
+    ),
+    supportsEnglishDetail: true,
     legacyUrl: "https://zirui.framer.website/smtx-elf",
     showOnHome: false,
     workCardVariant: "compact",
@@ -202,13 +235,18 @@ export const workItems = [
   },
   {
     slug: "vm-features-optimization",
-    title: "VM Features Optimization",
-    category: "Web",
+    title: t("虚拟机功能优化", "VM Features Optimization"),
+    category: t("Web", "Web"),
     year: "2023",
-    summary:
+    summary: t(
+      "通过更清晰的逻辑、更低错误率和更高效率优化批量创建虚拟机",
       "Improving batch VM creation with clearer logic, lower error rates, and better efficiency",
-    detailSummary:
+    ),
+    detailSummary: t(
+      "后续会在这里接入完整案例，重点说明交互逻辑与操作效率优化。",
       "A detailed case study will be connected here next, focusing on interaction logic and operational efficiency improvements.",
+    ),
+    supportsEnglishDetail: true,
     legacyUrl: "https://zirui.framer.website/vm-optimization",
     showOnHome: false,
     workCardVariant: "compact",
@@ -228,17 +266,17 @@ export const workTabs = [
   {
     id: "professional-work",
     iconName: "layoutGrid",
-    label: "Professional Work",
+    label: t("专业项目", "Professional Work"),
   },
   {
     id: "explorations",
     iconName: "layoutDashboard",
-    label: "Explorations",
+    label: t("探索", "Explorations"),
   },
   {
     id: "side-projects",
     iconName: "heart",
-    label: "Side Projects",
+    label: t("个人项目", "Side Projects"),
   },
 ];
 
@@ -316,7 +354,7 @@ const sideProjectItems = [
     href: "https://github.com/zhaozirui-ML/Lovers-weekly",
     id: "lovers-weekly",
     path: "/tools/report",
-    subtitle: "每周恋爱日志",
+    subtitle: t("每周恋爱日志", "Weekly relationship journal"),
     title: "Lovers-weekly",
   },
 ];

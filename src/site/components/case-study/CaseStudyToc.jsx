@@ -82,6 +82,7 @@ export default function CaseStudyToc({
   linkPaddingStart = "0.625rem",
   mutedColor = "var(--portfolio-color-text-muted)",
   preferHistoryBack = true,
+  navLabel = "页面目录",
   titleColor = "var(--portfolio-semantic-title-color)",
 }) {
   const [activeId, setActiveId] = useState(items[0]?.id ?? null);
@@ -145,7 +146,7 @@ export default function CaseStudyToc({
   return (
     <div className={joinClassNames(styles.tocWrap, className)} style={inlineStyles}>
       <div className={styles.tocContent}>
-        <nav aria-label="页面目录" className={styles.tocDesktopNav}>
+        <nav aria-label={navLabel} className={styles.tocDesktopNav}>
           <div className={styles.tocDesktopInner}>
             <button className={styles.tocBackLink} onClick={handleBack} type="button">
               <ArrowUpLeft aria-hidden="true" className={styles.tocBackIcon} />

@@ -7,7 +7,13 @@ import {
   aboutExperienceItems,
   aboutSkillGroups,
 } from "../data/about-content";
+import { aboutPageDictionary } from "../i18n/dictionary";
+import { getLocalizedValue } from "../i18n/get-localized-value";
 import styles from "../styles/about-page.module.css";
+
+function resolveLocalizedText(value, language) {
+  return typeof value === "string" ? value : getLocalizedValue(value, language);
+}
 
 function AboutSection({
   accent = "brand",
@@ -40,44 +46,51 @@ function AboutSection({
   );
 }
 
-export default function AboutPage() {
+/**
+ * About 页会根据语言切换主要结构文案和数据文案。
+ *
+ * @param {{ language: import("../i18n/config").SiteLanguage }} props
+ */
+export default function AboutPage({ language }) {
   return (
     <div className={styles.aboutPage}>
       <div className={styles.aboutFrame}>
         <section className={styles.topMetaGrid}>
           <div className={styles.rail} />
           <div className={styles.metaContent}>
-            {aboutContactItems.map((item) => (
-              <article className={styles.metaItem} key={item.label}>
-                <p className={styles.metaLabel}>{item.label}</p>
-                {Array.isArray(item.value) ? (
-                  <div className={styles.snsLinks}>
-                    {item.value.map((link) => {
-                      return (
-                        <Link
-                          aria-label={link.label}
-                          className={styles.snsLink}
-                          href={link.href}
-                          key={link.label}
-                          rel="noreferrer"
-                          target="_blank"
-                        >
-                          <span
-                            className={styles.snsIcon}
-                            style={{
-                              WebkitMaskImage: `url(${link.iconSrc})`,
-                              maskImage: `url(${link.iconSrc})`,
-                            }}
-                            aria-hidden="true"
-                          />
-                        </Link>
-                      );
-                    })}
-                  </div>
-                ) : (
-                  item.href ? (
+            {aboutContactItems.map((item) => {
+              const label = getLocalizedValue(item.label, language);
+
+              return (
+                <article className={styles.metaItem} key={label}>
+                  <p className={styles.metaLabel}>{label}</p>
+                  {Array.isArray(item.value) ? (
+                    <div className={styles.snsLinks}>
+                      {item.value.map((link) => {
+                        return (
+                          <Link
+                            aria-label={link.label}
+                            className={styles.snsLink}
+                            href={link.href}
+                            key={link.label}
+                            rel="noreferrer"
+                            target="_blank"
+                          >
+                            <span
+                              className={styles.snsIcon}
+                              style={{
+                                WebkitMaskImage: `url(${link.iconSrc})`,
+                                maskImage: `url(${link.iconSrc})`,
+                              }}
+                              aria-hidden="true"
+                            />
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  ) : item.href ? (
                     <Link
-                      aria-label={`Send email to ${item.value}`}
+                      aria-label={`${getLocalizedValue(aboutPageDictionary.contactEmailLabel, language)}: ${item.value}`}
                       className={styles.metaValueLink}
                       href={item.href}
                     >
@@ -86,15 +99,15 @@ export default function AboutPage() {
                     </Link>
                   ) : (
                     <p className={styles.metaValue}>{item.value}</p>
-                  )
-                )}
-              </article>
-            ))}
+                  )}
+                </article>
+              );
+            })}
           </div>
           <div className={styles.rail} />
         </section>
 
-        <AboutSection title="Experience">
+        <AboutSection title={getLocalizedValue(aboutPageDictionary.experienceTitle, language)}>
           <div className={styles.sectionBody}>
             <div className={styles.experienceList}>
               {aboutExperienceItems.map((item) => (
@@ -109,15 +122,18 @@ export default function AboutPage() {
                       >
                         {item.company}
                       </Link>
-                      <p className={styles.role}>{item.role}</p>
+                      <p className={styles.role}>{getLocalizedValue(item.role, language)}</p>
                     </div>
                     <p className={styles.dateRange}>{item.dateRange}</p>
                   </header>
 
                   <ul className={styles.bulletList}>
                     {item.responsibilities.map((responsibility) => (
-                      <li className={styles.bulletItem} key={responsibility}>
-                        {responsibility}
+                      <li
+                        className={styles.bulletItem}
+                        key={resolveLocalizedText(responsibility, language)}
+                      >
+                        {resolveLocalizedText(responsibility, language)}
                       </li>
                     ))}
                   </ul>
@@ -127,48 +143,73 @@ export default function AboutPage() {
           </div>
         </AboutSection>
 
-        <AboutSection accent="moss" title="Education">
+        <AboutSection
+          accent="moss"
+          title={getLocalizedValue(aboutPageDictionary.educationTitle, language)}
+        >
           <div className={styles.educationPanel}>
             <h3 className={styles.educationHeading}>
-              Nanjing University of the Arts
+              {language === "en" ? "Nanjing University of the Arts" : "南京艺术学院"}
             </h3>
             <ul className={styles.educationList}>
-              {aboutEducationItems.map((item) => (
-                <li className={styles.educationItem} key={item}>
-                  {item}
-                </li>
-              ))}
+              {aboutEducationItems.map((item) => {
+                const itemText = resolveLocalizedText(item, language);
+
+                return (
+                  <li className={styles.educationItem} key={itemText}>
+                    {itemText}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </AboutSection>
 
-        <AboutSection accent="blue" title="Skills">
+        <AboutSection
+          accent="blue"
+          title={getLocalizedValue(aboutPageDictionary.skillsTitle, language)}
+        >
           <div className={styles.skillsPanel}>
             <div className={styles.skillsGrid}>
-              {aboutSkillGroups.map((group) => (
-                <section className={styles.skillGroup} key={group.category}>
-                  <p className={styles.skillCategory}>{group.category}</p>
-                  <div className={styles.skillList}>
-                    {group.items.map((item) =>
-                      typeof item === "string" ? (
-                        <p className={styles.skillItem} key={item}>
-                          {item}
-                        </p>
-                      ) : (
-                        <Link
-                          className={[styles.skillItem, styles.skillLink].join(" ")}
-                          href={item.href}
-                          key={item.label}
-                          rel="noreferrer"
-                          target="_blank"
-                        >
-                          {item.label}
-                        </Link>
-                      ),
-                    )}
-                  </div>
-                </section>
-              ))}
+              {aboutSkillGroups.map((group) => {
+                const category = getLocalizedValue(group.category, language);
+
+                return (
+                  <section className={styles.skillGroup} key={category}>
+                    <p className={styles.skillCategory}>{category}</p>
+                    <div className={styles.skillList}>
+                      {group.items.map((item) => {
+                        const isLinkedItem =
+                          typeof item === "object" && "href" in item;
+
+                        if (isLinkedItem) {
+                          const label = getLocalizedValue(item.label, language);
+
+                          return (
+                          <Link
+                            className={[styles.skillItem, styles.skillLink].join(" ")}
+                            href={item.href}
+                              key={label}
+                            rel="noreferrer"
+                            target="_blank"
+                          >
+                              {label}
+                          </Link>
+                          );
+                        }
+
+                        const itemText = resolveLocalizedText(item, language);
+
+                        return (
+                          <p className={styles.skillItem} key={itemText}>
+                            {itemText}
+                          </p>
+                        );
+                      })}
+                    </div>
+                  </section>
+                );
+              })}
             </div>
           </div>
         </AboutSection>

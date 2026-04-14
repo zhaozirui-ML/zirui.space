@@ -5,6 +5,7 @@ import {
   getBlogBySlug,
 } from "../../../../src/site/lib/get-blog-by-slug";
 import { getReturnPath } from "../../../../src/site/lib/get-return-path";
+import { getServerLanguage } from "../../../../src/site/i18n/server";
 import BlogDetailPage from "../../../../src/site/pages/BlogDetailPage";
 
 export function generateStaticParams() {
@@ -15,6 +16,7 @@ export default async function BlogDetailRoutePage({ params, searchParams }) {
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
   const post = getBlogBySlug(resolvedParams.slug);
+  const language = await getServerLanguage();
 
   if (!post) {
     notFound();
@@ -22,5 +24,5 @@ export default async function BlogDetailRoutePage({ params, searchParams }) {
 
   const returnHref = getReturnPath(resolvedSearchParams?.from, "/blog");
 
-  return <BlogDetailPage returnHref={returnHref} slug={resolvedParams.slug} />;
+  return <BlogDetailPage language={language} returnHref={returnHref} slug={resolvedParams.slug} />;
 }

@@ -10,7 +10,7 @@ import WorkTabs from "../components/work/WorkTabs";
 import { workItems, workTabContent, workTabs } from "../data/work-items";
 import styles from "../styles/work-index-page.module.css";
 
-function ProjectsPanel({ rows }) {
+function ProjectsPanel({ language, rows }) {
   const itemsBySlug = new Map(workItems.map((item) => [item.slug, item]));
   const resolvedRows = rows
     .map((row) => row.map((slug) => itemsBySlug.get(slug)).filter(Boolean))
@@ -21,12 +21,12 @@ function ProjectsPanel({ rows }) {
       {resolvedRows.map((row, index) =>
         row.length === 1 ? (
           <div className={styles.fullRow} key={`row-${index}`}>
-            <WorkProjectCard item={row[0]} />
+            <WorkProjectCard item={row[0]} language={language} />
           </div>
         ) : (
           <div className={styles.splitRow} key={`row-${index}`}>
             {row.map((item) => (
-              <WorkProjectCard item={item} key={item.slug} />
+              <WorkProjectCard item={item} key={item.slug} language={language} />
             ))}
           </div>
         ),
@@ -35,17 +35,23 @@ function ProjectsPanel({ rows }) {
   );
 }
 
-export default function WorkIndexPage() {
+/**
+ * Work 索引页先接入列表级双语，详情页后续单独处理。
+ *
+ * @param {{ language: import("../i18n/config").SiteLanguage }} props
+ */
+export default function WorkIndexPage({ language }) {
   const [activeTabId, setActiveTabId] = useState(workTabs[0]?.id ?? "professional-work");
   const activePanel = workTabContent[activeTabId] ?? workTabContent["professional-work"];
 
   return (
     <div className={styles.page}>
-      <WorkPageHeader />
+      <WorkPageHeader language={language} />
 
       <section className={styles.pageContent}>
         <WorkTabs
           activeTabId={activeTabId}
+          language={language}
           onSelect={setActiveTabId}
           tabs={workTabs}
         />
@@ -59,7 +65,7 @@ export default function WorkIndexPage() {
         >
           <div className={styles.rows}>
             {activePanel.type === "projects" ? (
-              <ProjectsPanel rows={activePanel.rows} />
+              <ProjectsPanel language={language} rows={activePanel.rows} />
             ) : null}
 
             {activePanel.type === "explorations" ? (
@@ -71,7 +77,7 @@ export default function WorkIndexPage() {
             ) : null}
 
             {activePanel.type === "side-projects" ? (
-              <WorkSideProjectsPanel items={activePanel.items} />
+              <WorkSideProjectsPanel items={activePanel.items} language={language} />
             ) : null}
           </div>
         </div>
