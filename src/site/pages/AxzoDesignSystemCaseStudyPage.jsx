@@ -381,22 +381,24 @@ export default function AxzoDesignSystemCaseStudyPage({
             />
             <div className={styles.insightPanel}>
               <div className={styles.insightCanvas}>
-                <div className={styles.insightTop}>
-                  <OrbitDiagram orbit={localizedContent.insight.leftOrbit} variant="left" />
-                  <div aria-hidden="true" className={styles.insightArrowHorizontal}>
-                    <ArrowRightSoftIcon className={styles.insightArrowIcon} />
+                <div className={styles.insightTopGroup}>
+                  <div className={styles.insightTop}>
+                    <OrbitDiagram orbit={localizedContent.insight.leftOrbit} variant="left" />
+                    <div aria-hidden="true" className={styles.insightArrowHorizontal}>
+                      <ArrowRightSoftIcon className={styles.insightArrowIcon} />
+                    </div>
+                    <OrbitDiagram orbit={localizedContent.insight.rightOrbit} variant="right" />
                   </div>
-                  <OrbitDiagram orbit={localizedContent.insight.rightOrbit} variant="right" />
-                </div>
 
-                <div className={styles.insightCaptionRow}>
-                  <p className={joinClassNames(styles.orbitCaption, styles.orbitCaptionLeft)}>
-                    {localizedContent.insight.leftOrbit.caption}
-                  </p>
-                  <div aria-hidden="true" className={styles.insightCaptionSpacer} />
-                  <p className={joinClassNames(styles.orbitCaption, styles.orbitCaptionRight)}>
-                    {localizedContent.insight.rightOrbit.caption}
-                  </p>
+                  <div className={styles.insightCaptionRow}>
+                    <p className={joinClassNames(styles.orbitCaption, styles.orbitCaptionLeft)}>
+                      {localizedContent.insight.leftOrbit.caption}
+                    </p>
+                    <div aria-hidden="true" className={styles.insightCaptionSpacer} />
+                    <p className={joinClassNames(styles.orbitCaption, styles.orbitCaptionRight)}>
+                      {localizedContent.insight.rightOrbit.caption}
+                    </p>
+                  </div>
                 </div>
 
                 <div className={styles.insightBottomArea}>
