@@ -7,6 +7,8 @@
   --home-page-padding-top: calc(var(--ds-space-2xs) * 15);
   --home-work-list-gap: 1.5rem;
   --home-work-card-gap: 3rem;
+  --home-work-card-content-gap: 2rem;
+  --home-work-card-copy-gap: 1.5rem;
   --home-blog-list-gap: 1rem;
   --home-blog-card-gap: 1rem;
   --home-hero-gap: 1.25rem;
@@ -309,7 +311,7 @@
   border: 1px solid var(--portfolio-color-border-light);
   border-radius: var(--home-work-card-radius);
   display: grid;
-  gap: var(--home-work-card-gap);
+  gap: var(--home-work-card-content-gap);
   overflow: hidden;
   padding: var(--home-work-card-padding);
   transition: border-color 180ms ease;
@@ -322,12 +324,12 @@
 
 .workCardFeatured {
   grid-template-columns: 17.625rem minmax(0, 1fr);
-  min-height: 24.125rem;
+  height: 24.125rem;
 }
 
 .workCardStandard {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  min-height: 22.625rem;
+  height: 22.625rem;
 }
 
 .workCardStandard .workCardMedia {
@@ -346,7 +348,8 @@
 .workCardContent {
   display: grid;
   grid-template-rows: auto 1fr auto;
-  gap: var(--home-work-card-gap);
+  gap: var(--home-work-card-content-gap);
+  min-height: 0;
 }
 
 .workCardContentLeadAccent {
@@ -377,28 +380,37 @@
 
 .workCopyStack {
   display: grid;
-  gap: var(--home-section-gap);
+  gap: var(--home-work-card-copy-gap);
   align-content: start;
+  min-height: 0;
 }
 
 .workCardTitle {
   color: var(--portfolio-semantic-title-color);
   font-family: var(--portfolio-font-title-serif);
+  display: -webkit-box;
   font-feature-settings: "calt" 0, "liga" 0;
   font-size: 3rem;
   font-weight: 600;
   letter-spacing: -0.015rem;
   line-height: 1.3333333333;
   margin: 0;
+  overflow: hidden;
   text-wrap: balance;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .workCardSummary {
   color: var(--portfolio-color-text-subtle);
+  display: -webkit-box;
   font-size: 1rem;
   line-height: 1.5;
   margin: 0;
   max-width: 22rem;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 .workCardButton {
@@ -423,6 +435,7 @@
 
 .workCardMedia {
   border-radius: var(--home-work-card-media-radius);
+  height: 19.5rem;
   min-height: 19.5rem;
   overflow: hidden;
   position: relative;
@@ -607,12 +620,18 @@
     padding: var(--ds-space-md);
   }
 
+  .workCardFeatured,
+  .workCardStandard {
+    height: auto;
+  }
+
   .workCardTitle {
     font-size: clamp(2rem, 6vw + 0.75rem, 2.625rem);
   }
 
   .workCardMedia,
   .workCardFeatured .workCardMedia {
+    height: auto;
     min-height: 15rem;
   }
 

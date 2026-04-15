@@ -54,7 +54,7 @@
   gap: 1rem;
   justify-content: space-between;
   height: 3rem;
-  width: min(100%, 28.75rem);
+  max-width: min(100%, 25rem);
   padding: 0 0.875rem 0 1rem;
   transition:
     transform 220ms ease,
@@ -69,8 +69,45 @@
   flex: 0 0 auto;
   height: 100%;
   justify-content: flex-start;
+  outline: none;
   padding: 0.25rem 0.5rem 0.25rem 0;
+  position: relative;
+  text-decoration: none;
+  transition:
+    transform 180ms ease,
+    opacity 180ms ease;
   width: fit-content;
+}
+
+.brandLink::after {
+  background: color-mix(in srgb, var(--portfolio-color-accent-brand) 8%, transparent);
+  border-radius: 999px;
+  content: "";
+  inset: 0.1875rem 0.125rem;
+  opacity: 0;
+  position: absolute;
+  transition: opacity 180ms ease;
+}
+
+.brandLink:hover {
+  transform: translateY(-1px);
+}
+
+.brandLink:hover::after {
+  opacity: 1;
+}
+
+.brandLink:active {
+  transform: scale(0.97);
+}
+
+.brandLink:focus-visible {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--portfolio-color-accent-brand) 28%, transparent);
+  border-radius: 999px;
+}
+
+.brandLink:focus-visible::after {
+  opacity: 1;
 }
 
 .brandMarkFrame {
@@ -88,12 +125,14 @@
 }
 
 .navigation {
-  display: inline-flex;
+  display: grid;
   flex: 1 1 auto;
   gap: 0.0625rem;
-  justify-content: center;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
   min-width: 0;
   position: relative;
+  width: 13.5rem;
 }
 
 .siteHeaderControls {
@@ -113,23 +152,27 @@
 
 .navigationItem {
   align-items: center;
-  display: inline-flex;
+  display: flex;
   height: 100%;
   justify-content: center;
+  min-width: 0;
   position: relative;
 }
 
 .navigationLink {
   color: var(--portfolio-color-text-muted);
+  display: inline-flex;
   font-family: var(--portfolio-font-label);
   font-size: 0.875rem;
   font-weight: 500;
+  justify-content: center;
   letter-spacing: -0.01em;
   line-height: 1.25rem;
-  padding: 0.875rem 0.4375rem;
+  padding: 0.875rem 0.25rem;
   text-decoration: none;
   transition: color 180ms ease;
   white-space: nowrap;
+  width: 100%;
 }
 
 .navigationLink:hover {
@@ -331,7 +374,7 @@
 
   .navigationLink {
     font-size: 0.8125rem;
-    padding: 0.875rem 0.1875rem;
+    padding: 0.875rem 0.125rem;
   }
 
   .navigationIndicator {
@@ -343,6 +386,7 @@
 @media (prefers-reduced-motion: reduce) {
   .navigationLink,
   .navigationIndicator,
+  .brandLink,
   .navigationAction,
   .navigationActionIcon,
   .navigationActionGlyph,

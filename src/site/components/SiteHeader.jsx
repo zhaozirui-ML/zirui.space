@@ -87,7 +87,11 @@ export default function SiteHeader({ colorTheme, onThemeToggle }) {
     <header className={styles.siteHeader}>
       <div className={styles.siteHeaderFrame}>
         <div className={styles.siteHeaderInner}>
-          <div aria-hidden="true" className={styles.brandLink}>
+          <Link
+            aria-label={getLocalizedValue(siteShellDictionary.brandHomeLabel, language)}
+            className={styles.brandLink}
+            href="/"
+          >
             <span className={styles.brandMarkFrame}>
               <Image
                 alt=""
@@ -109,7 +113,7 @@ export default function SiteHeader({ colorTheme, onThemeToggle }) {
                 width={858}
               />
             </span>
-          </div>
+          </Link>
           <div className={styles.siteHeaderControls}>
             <nav
               aria-label={getLocalizedValue(

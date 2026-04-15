@@ -1,4 +1,8 @@
 export const siteShellDictionary = {
+  brandHomeLabel: {
+    zh: "返回首页",
+    en: "Back to home",
+  },
   languageSwitchToChineseLabel: {
     zh: "切换到中文",
     en: "Switch to Chinese",
