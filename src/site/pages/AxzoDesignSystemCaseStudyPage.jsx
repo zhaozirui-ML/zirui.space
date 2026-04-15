@@ -463,7 +463,7 @@ export default function AxzoDesignSystemCaseStudyPage({
             />
           </section>
 
-          <section className={styles.section}>
+          <section className={joinClassNames(styles.section, styles.explorationSection)}>
             <CaseStudyHeadingOne
               className={styles.sectionHeader}
               id="design-exploration"
@@ -507,7 +507,7 @@ export default function AxzoDesignSystemCaseStudyPage({
             </article>
           </section>
 
-          <section className={styles.section}>
+          <section className={joinClassNames(styles.section, styles.practiceSection)}>
             <CaseStudyHeadingOne
               className={styles.sectionHeader}
               id="design-practice"
@@ -536,7 +536,7 @@ export default function AxzoDesignSystemCaseStudyPage({
             </div>
           </section>
 
-          <section className={styles.section}>
+          <section className={joinClassNames(styles.section, styles.reflectionSection)}>
             <CaseStudyHeadingOne
               className={styles.sectionHeader}
               id="results-reflection"
@@ -560,6 +560,9 @@ export default function AxzoDesignSystemCaseStudyPage({
             </div>
           </section>
         </div>
+
+        {/* Figma 里底部还有一段固定收尾空白，这里补回相同的纵向节奏。 */}
+        <div aria-hidden="true" className={styles.pageSpacer} />
       </div>
     </article>
   );
