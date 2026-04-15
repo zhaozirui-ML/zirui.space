@@ -101,6 +101,7 @@ function MediaPanel({
   captionClassName = "",
   crop = null,
   frameClassName: frameClassNameProp = "",
+  fit = "cover",
   imageSrc,
   priority = false,
   ratio,
@@ -142,7 +143,10 @@ function MediaPanel({
             <div className={styles.mediaFill}>
               <Image
                 alt={alt}
-                className={styles.mediaImage}
+                className={joinClassNames(
+                  styles.mediaImage,
+                  fit === "contain" ? styles.mediaImageContain : null,
+                )}
                 fill
                 priority={priority}
                 sizes="(max-width: 900px) calc(100vw - 2.5rem), 832px"
@@ -489,6 +493,7 @@ export default function AxzoDesignSystemCaseStudyPage({
 
               <MediaPanel
                 alt={localizedContent.exploration.sections[0].imageAlt}
+                fit="contain"
                 imageSrc={localizedContent.exploration.sections[0].imageSrc}
                 ratio={localizedContent.exploration.sections[0].ratio}
                 tone="soft"

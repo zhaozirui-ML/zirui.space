@@ -61,6 +61,11 @@
   object-fit: cover;
 }
 
+.mediaImageContain {
+  object-fit: contain;
+  object-position: center;
+}
+
 .heroPanel {
   padding: 0;
   position: relative;
