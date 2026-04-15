@@ -232,25 +232,28 @@
   width: min(100%, 47.1875rem);
 }
 
+.insightTopGroup {
+  display: grid;
+  gap: 1.25rem;
+  width: 100%;
+}
+
 .insightTop {
   align-items: center;
-  display: grid;
-  gap: var(--axzo-orbit-gap-tight);
-  grid-template-columns: 18.5625rem 1.5rem 20.25rem;
-  justify-content: center;
+  display: flex;
+  justify-content: space-between;
   width: 100%;
 }
 
 .insightCaptionRow {
   align-items: start;
-  column-gap: 0;
-  display: grid;
-  grid-template-columns: 18.5625rem 1.5rem 20.25rem;
+  display: flex;
+  justify-content: space-between;
   width: 100%;
 }
 
 .insightCaptionSpacer {
-  width: 1.5rem;
+  display: none;
 }
 
 .insightArrowHorizontal,
@@ -415,7 +418,7 @@
 .orbitCenterText {
   color: var(--portfolio-semantic-body-color);
   display: grid;
-  font-family: var(--portfolio-font-label);
+  font-family: var(--portfolio-font-body);
   font-size: 1rem;
   font-weight: 500;
   gap: var(--axzo-orbit-gap-tight);
@@ -483,18 +486,20 @@
   color: var(--portfolio-semantic-body-color);
   font-family: var(--portfolio-font-body);
   font-size: var(--portfolio-type-body-sm-size);
+  flex: 0 0 auto;
   line-height: var(--portfolio-type-body-sm-line);
   margin: 0;
-  justify-self: center;
   text-align: center;
 }
 
 .orbitCaptionLeft {
-  max-width: 11.8125rem;
+  max-width: none;
+  width: 18.5625rem;
 }
 
 .orbitCaptionRight {
-  max-width: 11.625rem;
+  max-width: none;
+  width: 20.25rem;
 }
 
 .roleCard {
@@ -603,12 +608,14 @@
   }
 
   .insightTop {
+    display: grid;
     grid-template-columns: 1fr;
     justify-items: center;
     row-gap: var(--axzo-mobile-row-gap);
   }
 
   .insightCaptionRow {
+    display: grid;
     grid-template-columns: 1fr;
     justify-items: center;
     row-gap: var(--axzo-mobile-row-gap-tight);
