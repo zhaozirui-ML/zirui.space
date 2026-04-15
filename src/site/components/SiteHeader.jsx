@@ -12,6 +12,7 @@ import { useLanguage } from "../i18n/LanguageProvider";
 import styles from "../styles/site-shell.module.css";
 
 const brandAvatarSrc = "/site/header/header-avatar.png";
+const navigationIndicatorSize = 5;
 
 function isNavigationItemActive(pathname, href) {
   if (href === "/") {
@@ -53,7 +54,8 @@ export default function SiteHeader({ colorTheme, onThemeToggle }) {
 
       const navRect = navigationElement.getBoundingClientRect();
       const activeRect = activeElement.getBoundingClientRect();
-      const nextLeft = activeRect.left - navRect.left + activeRect.width / 2 - 3;
+      const nextLeft =
+        activeRect.left - navRect.left + activeRect.width / 2 - navigationIndicatorSize / 2;
 
       setIndicatorStyle({
         opacity: 1,
@@ -115,53 +117,57 @@ export default function SiteHeader({ colorTheme, onThemeToggle }) {
             </span>
           </Link>
           <div className={styles.siteHeaderControls}>
-            <nav
-              aria-label={getLocalizedValue(
-                siteShellDictionary.navigationAriaLabel,
-                language,
-              )}
-              className={styles.navigation}
-              ref={navigationRef}
-            >
-              {siteNavigation.map((item) => {
-                const isActive = isNavigationItemActive(pathname, item.href);
-                const linkClassName = [
-                  styles.navigationLink,
-                  isActive ? styles.navigationLinkActive : "",
-                ]
-                  .filter(Boolean)
-                  .join(" ");
+            <div className={styles.navigationGroup}>
+              <nav
+                aria-label={getLocalizedValue(
+                  siteShellDictionary.navigationAriaLabel,
+                  language,
+                )}
+                className={styles.navigation}
+                ref={navigationRef}
+              >
+                {siteNavigation.map((item) => {
+                  const isActive = isNavigationItemActive(pathname, item.href);
+                  const linkClassName = [
+                    styles.navigationLink,
+                    isActive ? styles.navigationLinkActive : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ");
 
-                return (
-                  <div
-                    className={styles.navigationItem}
-                    data-active={isActive ? "true" : "false"}
-                    key={item.href}
-                    ref={(element) => {
-                      if (element) {
-                        itemRefs.current.set(item.href, element);
-                        return;
-                      }
+                  return (
+                    <div
+                      className={styles.navigationItem}
+                      data-active={isActive ? "true" : "false"}
+                      key={item.href}
+                      ref={(element) => {
+                        if (element) {
+                          itemRefs.current.set(item.href, element);
+                          return;
+                        }
 
-                      itemRefs.current.delete(item.href);
-                    }}
-                  >
-                    <Link
-                      aria-current={isActive ? "page" : undefined}
-                      className={linkClassName}
-                      href={item.href}
+                        itemRefs.current.delete(item.href);
+                      }}
                     >
-                      {getLocalizedValue(item.label, language)}
-                    </Link>
-                  </div>
-                );
-              })}
-              <span
-                aria-hidden="true"
-                className={styles.navigationIndicator}
-                style={indicatorStyle}
-              />
-            </nav>
+                      <Link
+                        aria-current={isActive ? "page" : undefined}
+                        className={linkClassName}
+                        href={item.href}
+                      >
+                        {getLocalizedValue(item.label, language)}
+                      </Link>
+                    </div>
+                  );
+                })}
+                <span
+                  aria-hidden="true"
+                  className={styles.navigationIndicator}
+                  style={indicatorStyle}
+                />
+              </nav>
+            </div>
+          </div>
+          <div className={styles.siteHeaderActions}>
             <button
               aria-label={getLocalizedValue(
                 language === "zh"
@@ -185,8 +191,6 @@ export default function SiteHeader({ colorTheme, onThemeToggle }) {
                 </span>
               </span>
             </button>
-          </div>
-          <div className={styles.siteHeaderActions}>
             <button
               aria-label={colorTheme === "dark" ? "切换到浅色主题" : "切换到深色主题"}
               aria-pressed={colorTheme === "dark"}
