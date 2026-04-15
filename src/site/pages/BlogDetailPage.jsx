@@ -151,11 +151,8 @@ export default function BlogDetailPage({ language = "zh", returnHref = "/blog", 
   return (
     <div className={styles.articlePage}>
       <div className={styles.backLinkRow}>
-        <Link aria-label="Back to Blog" className={styles.backLink} href={safeReturnHref}>
-          <span aria-hidden="true" className={styles.backLinkIcon}>
-            ←
-          </span>
-          <span className={styles.backLinkLabel}>Back</span>
+        <Link aria-label="Back to Blog" className={shellStyles.backLink} href={safeReturnHref}>
+          Back
         </Link>
       </div>
 

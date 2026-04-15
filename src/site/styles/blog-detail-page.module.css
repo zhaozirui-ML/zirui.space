@@ -99,53 +99,8 @@
   width: min(100%, var(--blog-header-width));
 }
 
-.backLink {
-  align-items: center;
-  color: var(--portfolio-color-text-muted);
-  display: inline-flex;
-  font-family: var(--portfolio-font-body);
-  font-size: 0.875rem;
-  font-weight: 500;
-  gap: 0.25rem;
-  line-height: 1.2;
-  margin: 0;
-  min-height: auto;
-  padding: 0;
-  text-decoration: none;
-  transition:
-    color 180ms ease;
-  width: auto;
-}
-
-.backLinkIcon,
-.backLinkLabel {
-  align-items: center;
-  display: inline-flex;
-}
-
-.backLinkIcon {
-  font-size: 0.95em;
-  justify-content: center;
-  line-height: 1;
-}
-
-.backLinkLabel {
-  line-height: 1.1;
-}
-
-@media (hover: hover) {
-  .backLink:hover {
-    color: var(--portfolio-semantic-title-color);
-  }
-}
-
-.backLink:focus-visible {
-  outline: 2px solid var(--portfolio-color-accent-brand);
-  outline-offset: 2px;
-}
-
 .articleTitle {
-  font-family: var(--portfolio-font-body);
+  font-family: var(--portfolio-font-title-serif);
   font-size: 1.5rem;
   font-weight: 500;
   letter-spacing: 0;
@@ -240,7 +195,7 @@
 
 .contentSectionTitle {
   color: var(--portfolio-semantic-title-color);
-  font-family: var(--portfolio-font-body);
+  font-family: var(--portfolio-font-title-serif);
   font-size: 1.25rem;
   font-weight: 500;
   line-height: 1.4;
@@ -249,7 +204,7 @@
 
 .contentSubTitle {
   color: var(--portfolio-semantic-title-color);
-  font-family: var(--portfolio-font-body);
+  font-family: var(--portfolio-font-title-serif);
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.5;

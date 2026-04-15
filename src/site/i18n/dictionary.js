@@ -151,14 +151,14 @@ export const untranslatedDetailDictionary = {
  * @returns {{ title: string, description: string }}
  */
 export function getRootMetadata(language) {
-  return language === "en"
-    ? {
-        description:
+    return language === "en"
+      ? {
+          description:
           "A portfolio website built with a local design system and site-specific case studies.",
-        title: "Zirui Zhao Portfolio",
+        title: "Zhao Zirui Portfolio",
       }
     : {
         description: "一个基于本地设计系统与案例叙事搭建的产品设计作品集。",
-        title: "赵子锐作品集",
+        title: "赵子瑞作品集",
       };
 }

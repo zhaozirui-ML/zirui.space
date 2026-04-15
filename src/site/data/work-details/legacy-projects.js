@@ -1,13 +1,3 @@
-import { getStorageAssetUrl } from "../../lib/get-storage-asset-url";
-
-function createPreview(assetPath, alt, ratio) {
-  return {
-    alt,
-    ratio,
-    src: getStorageAssetUrl(assetPath),
-  };
-}
-
 export const cloudtowerDesignSystemCaseStudy = {
   accentColor: "#68715D",
   category: "Web",
@@ -20,11 +10,6 @@ export const cloudtowerDesignSystemCaseStudy = {
     { label: "Tool", value: "Figma" },
     { label: "Field", value: "Design System / Pattern / UI Map" },
   ],
-  preview: createPreview(
-    "work/cloudtower-design-system/work-preview.png",
-    "CloudTower Design System preview",
-    "782 / 505",
-  ),
   slug: "cloudtower-design-system",
   summary:
     "完善 CloudTower UI 1.5 的组件文档，并把 Design Patterns 和 UI Map 一起整理出来。",
@@ -176,11 +161,6 @@ export const smtxElfVirtualizationCaseStudy = {
     { label: "Tool", value: "Figma" },
     { label: "Field", value: "UI/UX / Interaction Design" },
   ],
-  preview: createPreview(
-    "work/smtx-elf-virtualization/work-preview.png",
-    "SMTX ELF Virtualization preview",
-    "354 / 240",
-  ),
   slug: "smtx-elf-virtualization",
   subtitle:
     "从资源池独立扩展的产品诉求出发，梳理一条新的虚拟化产品线应该怎么被理解和交付。",
@@ -294,11 +274,6 @@ export const vmFeaturesOptimizationCaseStudy = {
     { label: "Tool", value: "Figma" },
     { label: "Field", value: "UI/UX / Interaction Design" },
   ],
-  preview: createPreview(
-    "work/vm-features-optimization/work-preview.png",
-    "VM Features Optimization preview",
-    "354 / 240",
-  ),
   slug: "vm-features-optimization",
   subtitle:
     "把批量创建虚拟机时的命名和编辑流程，重构成更灵活、也更符合实际运维习惯的交互。",

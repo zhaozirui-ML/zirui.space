@@ -81,7 +81,6 @@ export default function CaseStudyToc({
   levelIndent = "0.875rem",
   linkPaddingStart = "0.625rem",
   mutedColor = "var(--portfolio-color-text-muted)",
-  preferHistoryBack = true,
   navLabel = "页面目录",
   titleColor = "var(--portfolio-semantic-title-color)",
 }) {
@@ -89,11 +88,6 @@ export default function CaseStudyToc({
   const router = useRouter();
 
   function handleBack() {
-    if (preferHistoryBack && window.history.length > 1) {
-      router.back();
-      return;
-    }
-
     router.push(backHref);
   }
 

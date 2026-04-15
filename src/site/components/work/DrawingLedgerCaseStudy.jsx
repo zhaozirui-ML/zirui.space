@@ -182,17 +182,17 @@ const tocItems = [
   {
     hierarchy: "secondary",
     id: "case-round-one",
-    label: "Round 1",
+    label: "第一轮探索",
   },
   {
     hierarchy: "secondary",
     id: "case-round-two",
-    label: "Round 2",
+    label: "第二轮方案",
   },
   {
     hierarchy: "secondary",
     id: "case-polish",
-    label: "Design Polish",
+    label: "设计打磨",
   },
   {
     hierarchy: "primary",
@@ -688,9 +688,9 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
               "设计目标": "Design Goals",
               "设计实践": "Design Practice",
               "设计分析": "Design Analysis",
-              "Round 1": "Round 1",
-              "Round 2": "Round 2",
-              "Design Polish": "Design Polish",
+              "第一轮探索": "Round 1",
+              "第二轮方案": "Round 2",
+              "设计打磨": "Design Polish",
               "细节展开": "Details",
               "代办区展示逻辑": "Task area logic",
               "联动逻辑": "Workflow logic",
@@ -706,13 +706,10 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
         }))
       : tocItems;
   const tocTheme = {
-    accentColor: "var(--portfolio-color-accent-brand)",
     backHref,
     backLabel: display("返回", "Back"),
     desktopTopOffset: "var(--portfolio-space-section-y)",
-    mutedColor: "var(--portfolio-color-text-muted)",
     navLabel: display("页面目录", "Page contents"),
-    titleColor: "var(--portfolio-semantic-title-color)",
   };
 
   return (
@@ -931,7 +928,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     accentColor="var(--portfolio-color-accent-brand)"
                     className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
                     id="case-round-one"
-                    title={display("Round 1: 激进重构与现实阻力", "Round 1: Bold redesign and real-world constraints")}
+                    title={display("第一轮：激进重构与现实阻力", "Round 1: Bold redesign and real-world constraints")}
                   >
                     <div className={styles.richText}>
                       <p>{display("明确了用户想完成的功能任务后，我最开始尝试引入“任务管理”范式，想把问题拆成「未处理 / 已处理」两种状态来重塑台账体验。", "After clarifying the user's functional needs, I first tried a task-management model and split the problem into pending vs. processed states to reshape the ledger experience.")}</p>
@@ -977,7 +974,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                   <MediaFigure
                     asset={assets.round1Overview}
                     backgroundAsset={assets.round1OverviewBackground}
-                    caption={display("探索方案概览 · Round 1", "Exploration overview · Round 1")}
+                    caption={display("探索方案概览 · 第一轮", "Exploration overview · Round 1")}
                     className={styles.figureSectionBreak}
                     frameHeight="29.25rem"
                     imageHeight="34.9375rem"
@@ -1008,7 +1005,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     accentColor="var(--portfolio-color-accent-brand)"
                     className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
                     id="case-round-two"
-                    title={display("Round 2: 务实的敏捷设计", "Round 2: Practical agile design")}
+                    title={display("第二轮：务实的敏捷设计", "Round 2: Practical agile design")}
                   >
                     <div className={styles.richText}>
                       <p>{display("基于第一轮反馈，我放弃“全盘推翻”，改成“渐进式增强”。通过“待办区 + 表格”的融合视图，在保留高密度表格的同时，把不同角色当前最重要的任务抬到顶部。", "Based on the first-round feedback, I abandoned the full rewrite and switched to incremental enhancement. A combined task-area + table view kept the dense table while surfacing each role's most important tasks at the top.")}</p>
@@ -1035,7 +1032,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     accentColor="var(--portfolio-color-accent-brand)"
                     className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
                     id="case-polish"
-                    title={display("Design Polish", "Design Polish")}
+                    title={display("设计打磨", "Design Polish")}
                   >
                     <div className={styles.richText}>
                       <p>{display("第二轮方案与团队同步时非常顺利地通过了内部评审。在这个基础上，我继续对页面的视觉层级、字段展示与操作项进行精细化打磨。", "The second-round solution passed internal review smoothly when shared with the team. From there, I kept refining the page hierarchy, field presentation, and actions.")}</p>

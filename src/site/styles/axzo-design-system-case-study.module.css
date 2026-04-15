@@ -40,11 +40,11 @@
   align-items: center;
   display: flex;
   justify-content: center;
-  margin-left: calc(50% - 50vw);
-  min-height: 67.5rem;
+  margin-inline: auto;
+  min-height: clamp(36rem, 47vw, 40rem);
   overflow: clip;
   position: relative;
-  width: 100vw;
+  width: min(100%, 67.5rem);
 }
 
 .heroBackdrop {
@@ -60,9 +60,9 @@
 }
 
 .heroPanel {
-  padding: clamp(1rem, 4vw, 2rem);
+  padding: clamp(1.5rem, 3.5vw, 2.5rem) 0 0;
   position: relative;
-  width: min(92vw, 90rem);
+  width: min(82%, 55rem);
   z-index: 1;
 }
 

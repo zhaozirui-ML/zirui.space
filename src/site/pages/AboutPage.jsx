@@ -9,6 +9,7 @@ import {
 } from "../data/about-content";
 import { aboutPageDictionary } from "../i18n/dictionary";
 import { getLocalizedValue } from "../i18n/get-localized-value";
+import shellStyles from "../styles/site-shell.module.css";
 import styles from "../styles/about-page.module.css";
 
 function resolveLocalizedText(value, language) {
@@ -91,11 +92,11 @@ export default function AboutPage({ language }) {
                   ) : item.href ? (
                     <Link
                       aria-label={`${getLocalizedValue(aboutPageDictionary.contactEmailLabel, language)}: ${item.value}`}
-                      className={styles.metaValueLink}
+                      className={shellStyles.arrowLink}
                       href={item.href}
                     >
-                      <span className={styles.metaValue}>{item.value}</span>
-                      <ArrowUpRight aria-hidden="true" className={styles.metaValueArrow} />
+                      <span className={shellStyles.arrowLinkText}>{item.value}</span>
+                      <ArrowUpRight aria-hidden="true" className={shellStyles.arrowLinkArrow} />
                     </Link>
                   ) : (
                     <p className={styles.metaValue}>{item.value}</p>

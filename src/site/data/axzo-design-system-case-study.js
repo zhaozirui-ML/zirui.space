@@ -61,7 +61,7 @@ export const axzoDesignSystemCaseStudy = {
     ],
   },
   insight: {
-    title: t("设计洞察 Insights", "Design insight"),
+    title: t("设计洞察", "Design insight"),
     description: t("A design system needs to be designed twice", "A design system needs to be designed twice"),
     leftOrbit: {
       centerLines: ["Design", "System"],

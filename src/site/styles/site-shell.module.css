@@ -384,18 +384,36 @@
   max-width: none;
 }
 
-.backLink {
+.backLink,
+.inlineLink {
   color: var(--portfolio-semantic-title-color);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.12em;
+  transition:
+    color 180ms ease,
+    text-decoration-thickness 180ms ease;
+}
+
+.backLink:hover,
+.backLink:focus-visible,
+.inlineLink:hover,
+.inlineLink:focus-visible {
+  color: var(--portfolio-color-accent-brand);
+  text-decoration-thickness: 2px;
+}
+
+.backLink:focus-visible,
+.inlineLink:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--portfolio-color-accent-brand) 42%, transparent);
+  outline-offset: 2px;
+}
+
+.backLink {
   font-family: var(--portfolio-font-label);
   font-size: 0.8125rem;
   font-weight: 700;
-  text-decoration: none;
   width: fit-content;
-}
-
-.backLink:hover {
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
 }
 
 .pageEyebrow {
@@ -550,10 +568,60 @@
 }
 
 .inlineLink {
-  color: var(--portfolio-semantic-title-color);
   font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
+}
+
+.arrowLink {
+  align-items: center;
+  color: var(--portfolio-semantic-title-color);
+  display: inline-flex;
+  font-family: var(--portfolio-font-label);
+  font-size: 0.875rem;
+  font-weight: 600;
+  gap: 0.375rem;
+  text-decoration: none;
+  touch-action: manipulation;
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
+  width: fit-content;
+}
+
+.arrowLink:hover,
+.arrowLink:focus-visible {
+  color: var(--portfolio-color-accent-brand);
+  transform: translateY(-1px);
+}
+
+.arrowLink:active {
+  transform: translateY(0);
+}
+
+.arrowLink:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--portfolio-color-accent-brand) 42%, transparent);
+  outline-offset: 2px;
+}
+
+.arrowLinkText {
+  color: inherit;
+  font-weight: 500;
+}
+
+.arrowLinkArrow {
+  flex: 0 0 auto;
+  height: 0.875rem;
+  opacity: 0;
+  transform: translate(-0.15rem, 0.1rem) scale(0.96);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+  width: 0.875rem;
+}
+
+.arrowLink:hover .arrowLinkArrow,
+.arrowLink:focus-visible .arrowLinkArrow {
+  opacity: 1;
+  transform: translate(0, 0);
 }
 
 @media (max-width: 900px) {

@@ -288,10 +288,7 @@ export default function AxzoDesignSystemCaseStudyPage({
     desktopShiftX: "30.5rem",
     desktopStickyTopOffset: "var(--axzo-page-gap)",
     desktopTopOffset: "0rem",
-    mutedColor: "var(--portfolio-color-text-muted)",
-    preferHistoryBack: false,
     navLabel: language === "en" ? "Page contents" : "页面目录",
-    titleColor: "var(--portfolio-semantic-title-color)",
   };
 
   return (

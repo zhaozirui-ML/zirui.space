@@ -8,8 +8,8 @@ import {
 } from "../../../design-system/tokens";
 import useMediaQuery from "../../../design-system/hooks/useMediaQuery";
 
-import { inter, ivyPresto, satoshi } from "../fonts/site-fonts";
-import { LanguageProvider } from "../i18n/LanguageProvider";
+import { inter, ivyPresto, satoshi, fzQingKeBenYueSong } from "../fonts/site-fonts";
+import { LanguageProvider, useLanguage } from "../i18n/LanguageProvider";
 import { isModuleHomePath } from "../lib/is-module-home-path";
 import SiteChromeFrame from "./SiteChromeFrame";
 import SiteSunnyBackground from "./SiteSunnyBackground";
@@ -53,6 +53,44 @@ function getThemePreferenceSnapshot() {
     : null;
 }
 
+function getTitleSerifFontFamily(language) {
+  // 标题展示字体按语言切换：中文模式用方正清刻本悦宋，英文模式用 Ivy Presto。
+  return language === "en"
+    ? 'var(--font-ivy-presto, "Times New Roman"), serif'
+    : 'var(--font-fz-qingke-benyuesong), "Songti SC", "STSong", serif';
+}
+
+function SiteLayoutFrame({
+  children,
+  colorTheme,
+  onThemeToggle,
+  rootClassName,
+  shouldShowSunnyBackground,
+}) {
+  const { language } = useLanguage();
+
+  const themeStyle = /** @type {any} */ ({
+    ...portfolioThemeCssVariables[colorTheme],
+    "--portfolio-font-title-serif": getTitleSerifFontFamily(language),
+    colorScheme: colorTheme,
+  });
+
+  return (
+    <div
+      className={rootClassName}
+      data-color-theme={colorTheme}
+      data-site-language={language}
+      style={themeStyle}
+    >
+      {/* 模块首页统一从壳层挂一层 Sunny Mode，避免首页自身和壳层重复渲染 video。 */}
+      {shouldShowSunnyBackground ? <SiteSunnyBackground /> : null}
+      <SiteChromeFrame colorTheme={colorTheme} onThemeToggle={onThemeToggle}>
+        {children}
+      </SiteChromeFrame>
+    </div>
+  );
+}
+
 export default function SiteLayout({ children, initialLanguage }) {
   const pathname = usePathname();
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
@@ -63,10 +101,6 @@ export default function SiteLayout({ children, initialLanguage }) {
     () => null,
   );
   const colorTheme = themePreference ?? (prefersDarkMode ? "dark" : "light");
-  const themeStyle = /** @type {any} */ ({
-    ...portfolioThemeCssVariables[colorTheme],
-    colorScheme: colorTheme,
-  });
   const isModuleHome = isModuleHomePath(pathname);
   // 暗色模式不展示顶部的 Sunny Mode / dappled light 背景，只保留模块首页在浅色模式下的氛围层。
   const shouldShowSunnyBackground = isModuleHome && colorTheme !== "dark";
@@ -76,6 +110,7 @@ export default function SiteLayout({ children, initialLanguage }) {
     inter.variable,
     satoshi.variable,
     ivyPresto.variable,
+    fzQingKeBenYueSong.variable,
   ]
     .filter(Boolean)
     .join(" ");
@@ -114,20 +149,14 @@ export default function SiteLayout({ children, initialLanguage }) {
 
   return (
     <LanguageProvider initialLanguage={initialLanguage}>
-      <div
-        className={rootClassName}
-        data-color-theme={colorTheme}
-        style={themeStyle}
+      <SiteLayoutFrame
+        colorTheme={colorTheme}
+        onThemeToggle={handleThemeToggle}
+        rootClassName={rootClassName}
+        shouldShowSunnyBackground={shouldShowSunnyBackground}
       >
-        {/* 模块首页统一从壳层挂一层 Sunny Mode，避免首页自身和壳层重复渲染 video。 */}
-        {shouldShowSunnyBackground ? <SiteSunnyBackground /> : null}
-        <SiteChromeFrame
-          colorTheme={colorTheme}
-          onThemeToggle={handleThemeToggle}
-        >
-          {children}
-        </SiteChromeFrame>
-      </div>
+        {children}
+      </SiteLayoutFrame>
     </LanguageProvider>
   );
 }

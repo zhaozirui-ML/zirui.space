@@ -10,6 +10,9 @@ const IMMERSIVE_PATHS = new Set([
   "/work/axzo-design-system",
   "/work/data-visualization-screen",
   "/work/drawing-ledger-2-0",
+  "/work/cloudtower-design-system",
+  "/work/smtx-elf-virtualization",
+  "/work/vm-features-optimization",
 ]);
 
 const FULL_BLEED_PATHS = new Set([
