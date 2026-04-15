@@ -286,6 +286,11 @@ export default function AxzoDesignSystemCaseStudyPage({
     backHref,
     backLabel: language === "en" ? "Back" : "返回",
     desktopShiftX: "30.5rem",
+    externalLink: {
+      href: "https://dev-axzo-design-web.axzo.cn/index.html?path=/docs/%E7%BB%84%E4%BB%B6-axzotree--readme#/",
+      label: language === "en" ? "Live link" : "作品链接",
+      title: language === "en" ? "Open Axzo Design Web" : "打开 Axzo Design Web",
+    },
     desktopStickyTopOffset: "var(--axzo-page-gap)",
     desktopTopOffset: "0rem",
     navLabel: language === "en" ? "Page contents" : "页面目录",
@@ -561,8 +566,6 @@ export default function AxzoDesignSystemCaseStudyPage({
           </section>
         </div>
 
-        {/* Figma 里底部还有一段固定收尾空白，这里补回相同的纵向节奏。 */}
-        <div aria-hidden="true" className={styles.pageSpacer} />
       </div>
     </article>
   );

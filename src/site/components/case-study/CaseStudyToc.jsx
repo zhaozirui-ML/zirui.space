@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowUpLeft } from "lucide-react";
+import { ArrowUpLeft, ArrowUpRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import styles from "../../styles/case-study-toc.module.css";
@@ -76,6 +76,7 @@ export default function CaseStudyToc({
   desktopShiftX = "33.5rem",
   desktopStickyTopOffset = undefined,
   desktopTopOffset = "6rem",
+  externalLink = null,
   hoverWashOpacity = 0,
   items,
   levelIndent = "0.875rem",
@@ -156,6 +157,20 @@ export default function CaseStudyToc({
                 />
               ))}
             </div>
+            {externalLink ? (
+              <div className={styles.tocSupplementary}>
+                <p className={styles.tocSupplementaryLabel}>{externalLink.label}</p>
+                <a
+                  className={styles.tocExternalLink}
+                  href={externalLink.href}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <span className={styles.tocExternalLinkText}>{externalLink.title}</span>
+                  <ArrowUpRight aria-hidden="true" className={styles.tocExternalLinkIcon} />
+                </a>
+              </div>
+            ) : null}
           </div>
         </nav>
       </div>
