@@ -7,6 +7,8 @@
   --axzo-content-padding-inline-mobile: 1rem;
   --axzo-section-gap: 1.5rem;
   --axzo-subsection-gap: 0.75rem;
+  --axzo-section-gap-lg: 3rem;
+  --axzo-stack-gap-lg: 4rem;
   --axzo-media-figure-gap: 0.75rem;
   --axzo-card-gap: 1rem;
   --axzo-card-gap-lg: 1.5rem;
@@ -36,12 +38,17 @@
   position: relative;
 }
 
+.pageSpacer {
+  height: 16.5rem;
+  width: 100%;
+}
+
 .hero {
   align-items: center;
   display: flex;
   justify-content: center;
-  margin-inline: auto;
-  min-height: clamp(22rem, 56vw, 42rem);
+  margin-left: calc(50% - 50vw);
+  min-height: 67.5rem;
   overflow: clip;
   position: relative;
   width: 100vw;
@@ -60,9 +67,9 @@
 }
 
 .heroPanel {
-  padding: clamp(1rem, 4vw, 2rem);
+  padding: 0;
   position: relative;
-  width: min(92vw, 90rem);
+  width: min(75vw, 90rem);
   z-index: 1;
 }
 
@@ -91,6 +98,17 @@
 .section {
   display: grid;
   gap: var(--axzo-section-gap);
+}
+
+.explorationSection,
+.practiceSection,
+.reflectionSection {
+  display: grid;
+}
+
+.practiceSection,
+.reflectionSection {
+  gap: var(--axzo-section-gap-lg);
 }
 
 .sectionHeader,
@@ -342,12 +360,12 @@
 }
 
 .orbitDiagramLeft {
-  height: 13.5rem;
+  height: 14rem;
   width: 18.5625rem;
 }
 
 .orbitDiagramRight {
-  height: 13.5rem;
+  height: 14rem;
   width: 20.25rem;
 }
 
@@ -516,9 +534,21 @@
 }
 
 .storyBlock,
-.practiceStack,
 .practiceBlock {
   display: grid;
+  gap: var(--axzo-card-gap-lg);
+}
+
+.explorationSection .storyBlock + .storyBlock {
+  margin-top: var(--axzo-section-gap);
+}
+
+.practiceStack {
+  display: grid;
+  gap: var(--axzo-stack-gap-lg);
+}
+
+.reflectionStack {
   gap: var(--axzo-card-gap-lg);
 }
 
@@ -557,6 +587,11 @@
 @media (max-width: 56rem) {
   .hero {
     min-height: auto;
+  }
+
+  .heroPanel {
+    padding: var(--axzo-content-padding-inline-mobile);
+    width: 100%;
   }
 
   .contentStack {
