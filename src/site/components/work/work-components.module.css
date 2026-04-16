@@ -310,6 +310,13 @@
   width: 100%;
 }
 
+.explorationFeatureImage {
+  aspect-ratio: var(--portfolio-work-exploration-ticket-aspect-ratio);
+  max-width: var(--portfolio-work-exploration-ticket-max-width);
+  position: relative;
+  width: 100%;
+}
+
 .explorationDeviceVisual :global(img),
 .explorationTicketVisual :global(img),
 .explorationTallImage :global(img),
@@ -317,10 +324,20 @@
   object-fit: cover;
 }
 
-.explorationCloudVisual {
+.explorationFeatureImage :global(img) {
+  object-fit: contain;
+}
+
+.explorationCloudVisual,
+.explorationCompactImage {
   aspect-ratio: 1;
-  height: var(--portfolio-work-exploration-cloud-frame-size);
+  max-width: var(--portfolio-work-exploration-list-size);
   position: relative;
+  width: 100%;
+}
+
+.explorationCloudVisual {
+  height: var(--portfolio-work-exploration-cloud-frame-size);
   width: var(--portfolio-work-exploration-cloud-frame-size);
 }
 
@@ -335,6 +352,21 @@
 
 .explorationCloudAsset :global(img) {
   object-fit: fill;
+}
+
+.explorationCompactImage :global(img) {
+  object-fit: contain;
+}
+
+.explorationCompactImageCloud :global(img) {
+  /* 轻微上提并放大云图，减少底部自带投影的可见面积。 */
+  object-position: center 40%;
+  transform: scale(1.04);
+}
+
+.explorationCompactImageOffsetDown {
+  /* 只微调右侧 list 卡片，让视觉中心更接近左侧云图。 */
+  transform: translateY(1rem);
 }
 
 .listIllustration {

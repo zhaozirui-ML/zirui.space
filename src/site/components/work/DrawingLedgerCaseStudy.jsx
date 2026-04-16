@@ -293,7 +293,7 @@ function resolveAssetAlt(asset, language) {
     "图纸台账 2.0 封面背景图": "Drawing Register 2.0 cover background",
     "图纸台账 2.0 封面主视觉": "Drawing Register 2.0 hero image",
     "问题定位区域背景图": "Problem definition section background",
-    "旧版图纸台账页截图": "Old ledger page screenshot",
+    "旧版图纸台账页截图": "Old register page screenshot",
     "Round 1 Option A 背景图": "Round 1 Option A background",
     "Round 1 Option A 方案截图": "Round 1 Option A screenshot",
     "Round 1 Option B 背景图": "Round 1 Option B background",
@@ -326,9 +326,9 @@ function resolveAssetAlt(asset, language) {
     "移动端视觉迭代版本 4": "Mobile visual iteration 4",
     "移动端 Tab 展开收起交互示意图": "Mobile tab expand/collapse demo",
     "项目图纸页面": "Project drawings page",
-    "台账首页页面": "Ledger home page",
-    "台账详情页面 1": "Ledger details page 1",
-    "台账详情页面 2": "Ledger details page 2",
+    "台账首页页面": "Register home page",
+    "台账详情页面 1": "Register details page 1",
+    "台账详情页面 2": "Register details page 2",
   };
 
   return altMap[alt] ?? alt;
@@ -482,7 +482,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
       "图纸台账 2.0 封面背景图": "Drawing Register 2.0 cover background",
       "图纸台账 2.0 封面主视觉": "Drawing Register 2.0 hero image",
       "问题定位区域背景图": "Problem definition section background",
-      "旧版图纸台账页截图": "Old ledger page screenshot",
+      "旧版图纸台账页截图": "Old register page screenshot",
       "Round 1 Option A 背景图": "Round 1 Option A background",
       "Round 1 Option A 方案截图": "Round 1 Option A screenshot",
       "Round 1 Option B 背景图": "Round 1 Option B background",
@@ -515,9 +515,9 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
       "移动端视觉迭代版本 4": "Mobile visual iteration 4",
       "移动端 Tab 展开收起交互示意图": "Mobile tab expand/collapse demo",
       "项目图纸页面": "Project drawings page",
-      "台账首页页面": "Ledger home page",
-      "台账详情页面 1": "Ledger details page 1",
-      "台账详情页面 2": "Ledger details page 2",
+      "台账首页页面": "Register home page",
+      "台账详情页面 1": "Register details page 1",
+      "台账详情页面 2": "Register details page 2",
     };
 
     return altMap[alt] ?? alt;
@@ -681,8 +681,8 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
       language === "en"
         ? {
             项目图纸: "Project drawings",
-            台账首页: "Ledger home",
-            台账详情: "Ledger details",
+            台账首页: "Register home",
+            台账详情: "Register details",
           }[item.label] ?? item.label
         : item.label,
   }));
@@ -834,7 +834,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                           <span className={styles.lifecycleLegendStem} />
                           <span className={styles.lifecycleLegendDot} />
                         </div>
-                        <p className={styles.chartLegend}>{display("图纸台账中涉及的状态", "States included in the drawing ledger")}</p>
+                        <p className={styles.chartLegend}>{display("图纸台账中涉及的状态", "States included in the drawing register")}</p>
                       </div>
                     </div>
                   </section>
@@ -847,7 +847,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     title={display("问题定位", "Problem Definition")}
                   >
                     <div className={styles.richText}>
-                      <p>{display("旧版台账是一个死的数据容器，主要存在以下 3 大问题：", "The old ledger was essentially a static data container, and it mainly had three problems:")}</p>
+                      <p>{display("旧版台账是一个死的数据容器，主要存在以下 3 大问题：", "The old register was essentially a static data container, and it mainly had three problems:")}</p>
                       <ul>
                         <li>{display("所有用户看到相同的数据，所以也会看到与自己不相关的专业、版本的图纸，给自己带来视觉干扰", "All users saw the same data, so they also saw unrelated disciplines and versions, which created visual noise.")}</li>
                         <li>{display("面对大量的图纸数据，各角色在查找关注的数据时，仿佛在一片数据海中捞针，效率低下", "With large amounts of drawing data, each role had to find what they cared about like searching for a needle in a haystack.")}</li>
@@ -858,7 +858,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                   <MediaFigure
                     asset={assets.problemLedgerV1}
                     backgroundAsset={assets.problemBackground}
-                    caption={display("旧版图纸台账页", "Old ledger page")}
+                    caption={display("旧版图纸台账页", "Old register page")}
                     language={language}
                   />
                 </div>
@@ -869,7 +869,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     title={display("设计目标", "Design Goals")}
                   >
                     <div className={styles.richText}>
-                    <p>{display("此次设计的核心目标，是把台账系统从「以数据为中心」转变为「以角色和任务为中心」。", "The core goal of this redesign was to shift the ledger system from being data-centered to being role- and task-centered.")}</p>
+                    <p>{display("此次设计的核心目标，是把台账系统从「以数据为中心」转变为「以角色和任务为中心」。", "The core goal of this redesign was to shift the register system from being data-centered to being role- and task-centered.")}</p>
                     </div>
                   </CaseStudyHeadingOne>
               </div>
@@ -881,7 +881,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     title={display("设计实践", "Design Practice")}
                   >
                     <div className={styles.richText}>
-                    <p>{display("在早期明确了图纸台账 2.0 改版要围绕细分用户角色和权限来重构体验之后，我在项目启动前就开始提前探索设计方案。", "Once it was clear that the v2 ledger needed to be reorganized around role-specific permissions, I started exploring solutions before the project officially kicked off.")}</p>
+                    <p>{display("在早期明确了图纸台账 2.0 改版要围绕细分用户角色和权限来重构体验之后，我在项目启动前就开始提前探索设计方案。", "Once it was clear that the v2 register needed to be reorganized around role-specific permissions, I started exploring solutions before the project officially kicked off.")}</p>
                     </div>
                   </CaseStudyHeadingOne>
 
@@ -893,7 +893,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     title={display("设计分析", "Design Analysis")}
                   >
                     <div className={styles.richText}>
-                      <p>{display("根据 JTBD 理论，用户不是在购买产品本身，而是在“雇佣”产品帮他们完成某项任务。那图纸台账模块本质上是在帮助哪些用户完成哪些任务？", "According to JTBD, users are not buying the product itself; they are hiring it to complete a task. So which users is the drawing ledger really helping, and what tasks are they trying to complete?")}</p>
+                      <p>{display("根据 JTBD 理论，用户不是在购买产品本身，而是在“雇佣”产品帮他们完成某项任务。那图纸台账模块本质上是在帮助哪些用户完成哪些任务？", "According to JTBD, users are not buying the product itself; they are hiring it to complete a task. So which users is the drawing register really helping, and what tasks are they trying to complete?")}</p>
                     </div>
                   </CaseStudyHeadingTwo>
 
@@ -948,7 +948,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     title={display("第一轮：激进重构与现实阻力", "Round 1: Bold redesign and real-world constraints")}
                   >
                     <div className={styles.richText}>
-                      <p>{display("明确了用户想完成的功能任务后，我最开始尝试引入“任务管理”范式，想把问题拆成「未处理 / 已处理」两种状态来重塑台账体验。", "After clarifying the user's functional needs, I first tried a task-management model and split the problem into pending vs. processed states to reshape the ledger experience.")}</p>
+                      <p>{display("明确了用户想完成的功能任务后，我最开始尝试引入“任务管理”范式，想把问题拆成「未处理 / 已处理」两种状态来重塑台账体验。", "After clarifying the user's functional needs, I first tried a task-management model and split the problem into pending vs. processed states to reshape the register experience.")}</p>
                       <ul>
                       <li>{display("未处理的任务：承接用户当前最关心的事项", "Pending tasks: cover what users care about most right now")}</li>
                       <li>{display("已处理的任务：承接用户次一级关注的历史内容", "Processed tasks: cover historical content users care about next")}</li>
@@ -1231,7 +1231,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     <p>
                       {display(
                         "与 Web 端不同，移动端图纸台账系统几乎是从 0 到 1 搭建的。这个项目的另一个目标，是补齐移动端能力，实现双端对齐。",
-                        "Unlike the web version, the mobile drawing ledger system was built almost entirely from scratch. Another goal of the project was to close the mobile feature gap and align both platforms.",
+                        "Unlike the web version, the mobile drawing register system was built almost entirely from scratch. Another goal of the project was to close the mobile feature gap and align both platforms.",
                       )}
                     </p>
                   </div>

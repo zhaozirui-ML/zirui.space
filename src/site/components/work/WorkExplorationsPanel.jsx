@@ -3,93 +3,20 @@ import Image from "next/image";
 import { joinClassNames } from "./join-class-names";
 import styles from "./work-components.module.css";
 
-function ExplorationEarningsVisual() {
-  return (
-    <div className={styles.earningsVisual}>
-      <div className={styles.earningsOrb}>
-        <Image
-          alt=""
-          aria-hidden="true"
-          fill
-          loading="eager"
-          sizes="(max-width: 900px) 100vw, 456px"
-          src="/site/work/explorations/exploration-orb.svg"
-          unoptimized
-        />
-      </div>
-
-      <div className={styles.earningsContent}>
-        <div className={styles.earningsHeader}>
-          <p className={styles.earningsLabel}>Total earnings</p>
-          <Image
-            alt=""
-            aria-hidden="true"
-            height={20}
-            src="/site/work/explorations/exploration-arrow.svg"
-            unoptimized
-            width={20}
-          />
-        </div>
-
-        <p className={styles.earningsAmount}>$1.720,43</p>
-      </div>
-    </div>
-  );
-}
-
-function ExplorationListIllustration() {
-  return (
-    <div className={styles.listIllustration}>
-      <div className={styles.listIllustrationShadowTop}>
-        <div className={styles.listIllustrationShadowTopAsset}>
-          <Image
-            alt=""
-            aria-hidden="true"
-            fill
-            sizes="260px"
-            src="/site/work/explorations/exploration-list-shadow-top.svg"
-            unoptimized
-          />
-        </div>
-      </div>
-
-      <div className={styles.listIllustrationPhone}>
-        <div className={styles.listIllustrationPhoneSurface} />
-
-        <div className={styles.listIllustrationItems}>
-          <span className={styles.listIllustrationLine} />
-          <span className={styles.listIllustrationLine} />
-          <span className={styles.listIllustrationLine} />
-          <span
-            className={joinClassNames(
-              styles.listIllustrationLine,
-              styles.listIllustrationButton,
-            )}
-          />
-        </div>
-      </div>
-
-      <div className={styles.listIllustrationShadowBottom}>
-        <div className={styles.listIllustrationShadowBottomAsset}>
-          <Image
-            alt=""
-            aria-hidden="true"
-            fill
-            sizes="260px"
-            src="/site/work/explorations/exploration-list-shadow-bottom.svg"
-            unoptimized
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function ExplorationCard({ card }) {
-  if (card.kind === "earnings") {
+  if (card.kind === "feature-image") {
     return (
       <article className={joinClassNames(styles.explorationCard, styles.explorationCardFeature)}>
-        <ExplorationEarningsVisual />
+        <div className={styles.explorationFeatureImage}>
+          <Image
+            alt={card.alt}
+            fill
+            loading="eager"
+            sizes="(max-width: 900px) min(100vw - 5rem, 500px), 500px"
+            src={card.src}
+            unoptimized
+          />
+        </div>
       </article>
     );
   }
@@ -128,29 +55,25 @@ function ExplorationCard({ card }) {
     );
   }
 
-  if (card.kind === "cloud-image") {
+      if (card.kind === "compact-image") {
     return (
       <article className={joinClassNames(styles.explorationCard, styles.explorationCardCompact)}>
-        <div className={styles.explorationCloudVisual}>
-          <div className={styles.explorationCloudAsset}>
-            <Image
-              alt={card.alt}
-              fill
-              loading="eager"
-              sizes="(max-width: 900px) min(100vw - 5rem, 260px), 260px"
-              src={card.src}
-              unoptimized
-            />
-          </div>
+        <div
+          className={joinClassNames(
+            styles.explorationCompactImage,
+            card.id === "cloud-icon-card" ? styles.explorationCompactImageCloud : "",
+            card.id === "list-icon-card" ? styles.explorationCompactImageOffsetDown : "",
+          )}
+        >
+          <Image
+            alt={card.alt}
+            fill
+            loading="eager"
+            sizes="(max-width: 900px) min(100vw - 5rem, 260px), 260px"
+            src={card.src}
+            unoptimized
+          />
         </div>
-      </article>
-    );
-  }
-
-  if (card.kind === "list-illustration") {
-    return (
-      <article className={joinClassNames(styles.explorationCard, styles.explorationCardCompact)}>
-        <ExplorationListIllustration />
       </article>
     );
   }

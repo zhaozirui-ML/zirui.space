@@ -10,7 +10,8 @@ export const workItems = [
     title: t("图纸台账 2.0", "Drawing Register 2.0"),
     homeTitle: t("图纸台账 2.0", "Drawing Register 2.0"),
     category: t("Web + App", "Web + App"),
-    homeCategory: t("App 与 Web", "App & Web"),
+    homeCategory: t("工作流", "Workflow"),
+    homeIconName: "network",
     year: "2025",
     summary: t(
       "重设计图纸登记、解析与协作的端到端流程",
@@ -67,6 +68,8 @@ export const workItems = [
     title: t("Axzo 设计系统门户", "Axzo Design Portal"),
     homeTitle: t("Axzo 设计系统门户", "Axzo Design System Portal"),
     category: t("Web", "Web"),
+    homeCategory: t("设计系统", "Design System"),
+    homeIconName: "blocks",
     year: "2025",
     summary: t(
       "设计一个设计系统如何被理解、访问和采用",
@@ -127,7 +130,8 @@ export const workItems = [
     title: t("数据可视化系统", "Data Visualization System"),
     homeTitle: t("数据可视化系统", "Data Visualization System"),
     category: t("大屏", "Large Screen"),
-    homeCategory: t("数据可视化", "Data Visualization"),
+    homeCategory: t("数据体验", "Data Experience"),
+    homeIconName: "layoutDashboard",
     year: "2025",
     summary: t(
       "为复杂大屏体验建立可复用的视觉语言",
@@ -285,8 +289,10 @@ export const workTabs = [
 const explorationsRows = [
   [
     {
+      alt: "An earnings exploration card with a dark gradient surface and a highlighted total.",
       id: "earnings-card",
-      kind: "earnings",
+      kind: "feature-image",
+      src: getStorageAssetUrl("work/explorations/exploration-earnings-card.png"),
     },
   ],
   [
@@ -294,19 +300,21 @@ const explorationsRows = [
       alt: "A device-style exploration showing a sunset scene and compact metrics.",
       id: "device-card",
       kind: "device-image",
-      src: "/site/work/explorations/exploration-hero-device.png",
+      src: getStorageAssetUrl("work/explorations/exploration-hero-device.png"),
     },
   ],
   [
     {
       alt: "A blue gradient app icon exploration with a white cloud symbol.",
       id: "cloud-icon-card",
-      kind: "cloud-image",
-      src: "/site/work/explorations/exploration-cloud-app.svg",
+      kind: "compact-image",
+      src: getStorageAssetUrl("work/explorations/exploration-cloud-card.png"),
     },
     {
+      alt: "A list-card exploration with a glowing top and bottom shadow.",
       id: "list-icon-card",
-      kind: "list-illustration",
+      kind: "compact-image",
+      src: getStorageAssetUrl("work/explorations/exploration-list-card.png"),
     },
   ],
   [
@@ -314,13 +322,13 @@ const explorationsRows = [
       alt: "A neon magenta light study on a dark background.",
       id: "gradient-magenta-card",
       kind: "full-image",
-      src: "/site/work/explorations/exploration-gradient-magenta.png",
+      src: getStorageAssetUrl("work/explorations/exploration-gradient-magenta.png"),
     },
     {
       alt: "A neon teal light study on a dark background.",
       id: "gradient-teal-card",
       kind: "full-image",
-      src: "/site/work/explorations/exploration-gradient-teal.png",
+      src: getStorageAssetUrl("work/explorations/exploration-gradient-teal.png"),
     },
   ],
   [
@@ -328,7 +336,7 @@ const explorationsRows = [
       alt: "A boarding-pass style ticket exploration in cool blue tones.",
       id: "ticket-card",
       kind: "ticket-image",
-      src: "/site/work/explorations/exploration-ticket.png",
+      src: getStorageAssetUrl("work/explorations/exploration-ticket.png"),
     },
   ],
   [
@@ -336,7 +344,7 @@ const explorationsRows = [
       alt: "A vertical line texture study with a soft purple glow.",
       id: "lines-card",
       kind: "immersive-image",
-      src: "/site/work/explorations/exploration-lines-purple.png",
+      src: getStorageAssetUrl("work/explorations/exploration-lines-purple.png"),
     },
   ],
   [
@@ -344,7 +352,7 @@ const explorationsRows = [
       alt: "An abstract blurred color study blending purple, cream, and pink.",
       id: "blur-card",
       kind: "immersive-image",
-      src: "/site/work/explorations/exploration-blur-pink.png",
+      src: getStorageAssetUrl("work/explorations/exploration-blur-pink.png"),
     },
   ],
 ];
