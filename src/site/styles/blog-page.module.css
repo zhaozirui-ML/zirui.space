@@ -214,10 +214,11 @@
   color: var(--portfolio-color-text-subtle);
   display: inline-flex;
   flex-wrap: wrap;
-  font-family: var(--portfolio-font-body);
+  font-family: var(--portfolio-font-label);
   font-size: 0.875rem;
+  font-weight: 400;
   gap: 0.25rem;
-  letter-spacing: 0.01em;
+  letter-spacing: normal;
   line-height: 1.4286;
   margin: 0;
 }
@@ -271,6 +272,7 @@
 }
 
 .browseCard {
+  align-content: start;
   display: grid;
   gap: var(--blog-browse-card-gap);
   padding: var(--blog-browse-card-padding);

@@ -46,6 +46,28 @@ export const ivyPresto = localFont({
   variable: "--font-ivy-presto",
 });
 
+export const domaineDisplayNarrow = localFont({
+  display: "swap",
+  src: [
+    {
+      path: "./files/DomaineDispNar-Regular.otf",
+      style: "normal",
+      weight: "400",
+    },
+    {
+      path: "./files/DomaineDispNar-Medium.otf",
+      style: "normal",
+      weight: "500",
+    },
+    {
+      path: "./files/DomaineDispNar-Semibold.otf",
+      style: "normal",
+      weight: "600",
+    },
+  ],
+  variable: "--font-domaine-display-narrow",
+});
+
 export const fzQingKeBenYueSong = localFont({
   display: "swap",
   src: [

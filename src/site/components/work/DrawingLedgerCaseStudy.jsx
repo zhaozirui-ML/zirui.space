@@ -12,13 +12,13 @@ import styles from "../../styles/drawing-ledger-case-study.module.css";
 const t = (zh, en) => ({ zh, en });
 
 const lifecycleStates = [
-  { dashed: true, label: "上传完成", width: 82 },
-  { label: "解析中", width: 68 },
-  { label: "待确认", width: 68 },
-  { label: "待下发", width: 68 },
-  { label: "可使用", width: 68 },
-  { label: "已过期", width: 68 },
-  { label: "已废弃", width: 68 },
+  { dashed: true, enWidth: 124, label: "上传完成", width: 82 },
+  { enWidth: 104, label: "解析中", width: 68 },
+  { enWidth: 176, label: "待确认", width: 68 },
+  { enWidth: 144, label: "待下发", width: 68 },
+  { enWidth: 104, label: "可使用", width: 68 },
+  { enWidth: 92, label: "已过期", width: 68 },
+  { enWidth: 112, label: "已废弃", width: 68 },
 ];
 
 const taskAnalysisRows = [
@@ -525,7 +525,16 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
   const localizedLifecycleStates = lifecycleStates.map((state) => ({
     ...state,
     label: language === "en" ? lifecycleStateLabels[state.label] ?? state.label : state.label,
+    width: language === "en" ? state.enWidth : state.width,
   }));
+  const lifecycleConnectorWidth = language === "en" ? 20 : 49;
+  const lifecycleFlowWidth =
+    localizedLifecycleStates.reduce((total, state) => total + state.width, 0) +
+    lifecycleConnectorWidth * (localizedLifecycleStates.length - 1);
+  /** @type {import("react").CSSProperties & Record<"--case-lifecycle-flow-width", string>} */
+  const lifecycleFigureStyle = {
+    "--case-lifecycle-flow-width": `${lifecycleFlowWidth}px`,
+  };
   const localizedTaskAnalysisRows = taskAnalysisRows.map((row) => ({
     ...row,
     scenario:
@@ -767,19 +776,27 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                   >
                     <div className={styles.richText}>
                       <p>
-                      图纸台账是图纸管理功能模块中，记录图纸从上传到废弃整个生命周期状态流转的空间。
-                      台账系统主要涉及上传人、确认人、下发人及多权限管理员 4 类用户角色。
+                        {display(
+                          "图纸台账是图纸管理功能模块中，记录图纸从上传到废弃整个生命周期状态流转的空间。台账系统主要涉及上传人、确认人、下发人及多权限管理员 4 类用户角色。",
+                          "The drawing register is the space within the drawing management module that records how drawings move through their full lifecycle, from upload to deprecation. The register mainly involves four user roles: uploader, confirmer, releaser, and multi-permission administrator."
+                        )}
                       </p>
                       <p>
-                      图纸台账 1.0 版本在我加入团队前已经完成。因为当时的核心目标是快速搭建核心功能并上线，
-                      所以没有针对不同角色做差异化设计，导致理解成本高、操作路径冗长，严重影响了图纸流转效率。
+                        {display(
+                          "图纸台账 1.0 版本在我加入团队前已经完成。因为当时的核心目标是快速搭建核心功能并上线，所以没有针对不同角色做差异化设计，导致理解成本高、操作路径冗长，严重影响了图纸流转效率。",
+                          "Version 1.0 of the drawing register had already been completed before I joined the team. At that stage, the core goal was to quickly build and launch the essential functionality, so the experience was not differentiated by role. As a result, the page was harder to understand, operation paths were longer, and drawing circulation efficiency was significantly affected."
+                        )}
                       </p>
                     </div>
                   </CaseStudyHeadingOne>
 
                   <section className={styles.chartCard}>
                     <h3 className={styles.chartTitle}>{display("图纸生命周期状态流转关系图", "Drawing lifecycle state flow")}</h3>
-                    <div className={styles.lifecycleFigure} aria-label={display("图纸状态流转图", "Drawing lifecycle state flow")}>
+                    <div
+                      className={styles.lifecycleFigure}
+                      aria-label={display("图纸状态流转图", "Drawing lifecycle state flow")}
+                      style={lifecycleFigureStyle}
+                    >
                       <div className={styles.lifecycleFlow}>
                         {localizedLifecycleStates.flatMap((state, index) => {
                           const items = [

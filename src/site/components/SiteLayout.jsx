@@ -8,7 +8,13 @@ import {
 } from "../../../design-system/tokens";
 import useMediaQuery from "../../../design-system/hooks/useMediaQuery";
 
-import { inter, ivyPresto, satoshi, fzQingKeBenYueSong } from "../fonts/site-fonts";
+import {
+  domaineDisplayNarrow,
+  fzQingKeBenYueSong,
+  inter,
+  ivyPresto,
+  satoshi,
+} from "../fonts/site-fonts";
 import { LanguageProvider, useLanguage } from "../i18n/LanguageProvider";
 import { isModuleHomePath } from "../lib/is-module-home-path";
 import SiteChromeFrame from "./SiteChromeFrame";
@@ -54,9 +60,9 @@ function getThemePreferenceSnapshot() {
 }
 
 function getTitleSerifFontFamily(language) {
-  // 标题展示字体按语言切换：中文模式用方正清刻本悦宋，英文模式用 Ivy Presto。
+  // 实验分支：中文模式保留方正清刻本悦宋，英文模式临时切到 Domaine Display Narrow。
   return language === "en"
-    ? 'var(--font-ivy-presto, "Times New Roman"), serif'
+    ? 'var(--font-domaine-display-narrow, "Times New Roman"), serif'
     : 'var(--font-fz-qingke-benyuesong), "Songti SC", "STSong", serif';
 }
 
@@ -110,6 +116,7 @@ export default function SiteLayout({ children, initialLanguage }) {
     inter.variable,
     satoshi.variable,
     ivyPresto.variable,
+    domaineDisplayNarrow.variable,
     fzQingKeBenYueSong.variable,
   ]
     .filter(Boolean)
