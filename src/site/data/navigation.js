@@ -17,8 +17,8 @@ export const siteNavigation = [
   {
     href: "/about",
     label: {
-      zh: "关于",
-      en: "About",
+      zh: "简历",
+      en: "Resume",
     },
   },
 ];
