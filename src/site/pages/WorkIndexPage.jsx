@@ -21,12 +21,21 @@ function ProjectsPanel({ language, rows }) {
       {resolvedRows.map((row, index) =>
         row.length === 1 ? (
           <div className={styles.fullRow} key={`row-${index}`}>
-            <WorkProjectCard item={row[0]} language={language} />
+            <WorkProjectCard
+              item={row[0]}
+              language={language}
+              prioritizeMedia={index === 0}
+            />
           </div>
         ) : (
           <div className={styles.splitRow} key={`row-${index}`}>
-            {row.map((item) => (
-              <WorkProjectCard item={item} key={item.slug} language={language} />
+            {row.map((item, itemIndex) => (
+              <WorkProjectCard
+                item={item}
+                key={item.slug}
+                language={language}
+                prioritizeMedia={index === 0 && itemIndex === 0}
+              />
             ))}
           </div>
         ),

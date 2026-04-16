@@ -55,6 +55,9 @@ function AboutSection({
 export default function AboutPage({ language }) {
   return (
     <div className={styles.aboutPage}>
+      {/* 补一个页面级 h1，保证语义结构完整，同时不打断当前已经定好的视觉排版。 */}
+      <h1 className="sr-only">{getLocalizedValue(aboutPageDictionary.pageTitle, language)}</h1>
+
       <div className={styles.aboutFrame}>
         <section className={styles.topMetaGrid}>
           <div className={styles.rail} />

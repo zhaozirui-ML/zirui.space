@@ -10,7 +10,7 @@ function WorkProjectTag({ text }) {
   return <span className={styles.tag}>{text}</span>;
 }
 
-function WorkProjectPreview({ item }) {
+function WorkProjectPreview({ item, prioritizeMedia = false }) {
   const preview = item.workPreview;
   const previewStyle = /** @type {any} */ ({
     "--work-preview-ratio": preview.ratio,
@@ -29,7 +29,7 @@ function WorkProjectPreview({ item }) {
           alt={preview.alt}
           className={styles.previewImage}
           fill
-          loading="eager"
+          loading={prioritizeMedia ? "eager" : undefined}
           sizes="(max-width: 900px) calc(100vw - 4rem), 354px"
           src={preview.backgroundSrc}
           unoptimized
@@ -40,7 +40,7 @@ function WorkProjectPreview({ item }) {
             aria-hidden="true"
             className={styles.previewOverlayImage}
             fill
-            loading="eager"
+            loading={prioritizeMedia ? "eager" : undefined}
             sizes="(max-width: 900px) calc((100vw - 4rem) * 0.85), 302px"
             src={preview.foregroundSrc}
             unoptimized
@@ -56,7 +56,7 @@ function WorkProjectPreview({ item }) {
         alt={preview.alt}
         className={styles.previewImage}
         fill
-        loading="eager"
+        loading={prioritizeMedia ? "eager" : undefined}
         sizes={
           item.workCardVariant === "compact"
             ? "(max-width: 900px) calc(100vw - 4rem), 354px"
@@ -69,7 +69,7 @@ function WorkProjectPreview({ item }) {
   );
 }
 
-export default function WorkProjectCard({ item, language }) {
+export default function WorkProjectCard({ item, language, prioritizeMedia = false }) {
   const title = getLocalizedValue(item.title, language);
 
   return (
@@ -82,7 +82,8 @@ export default function WorkProjectCard({ item, language }) {
       )}
       href={{ pathname: `/work/${item.slug}`, query: { from: "/work" } }}
     >
-      <WorkProjectPreview item={item} />
+      {/* 只让真正首屏的主案例图优先加载，避免后续卡片和它一起争抢带宽。 */}
+      <WorkProjectPreview item={item} prioritizeMedia={prioritizeMedia} />
 
       <div className={styles.projectContent}>
         <div className={styles.projectCopy}>

@@ -32,13 +32,14 @@ export default function BlogPage({ language }) {
         <div className={[styles.sectionBodyRow, styles.featuredBodyRow].join(" ")}>
           <div aria-hidden="true" className={[styles.sectionBodyRail, styles.featuredRail].join(" ")} />
           <div className={styles.featuredContent}>
-            {featuredBlogPosts.map((post) => {
+            {featuredBlogPosts.map((post, index) => {
               const isDark = post.tone === "dark";
               const isReversed = post.layout === "imageEnd";
               const title = getLocalizedValue(post.title, language);
               const summary = getLocalizedValue(post.summary, language);
               const category = getLocalizedValue(post.category, language);
               const imageAlt = getLocalizedValue(post.imageAlt, language);
+              const isLeadFeaturedPost = index === 0;
 
               return (
                 <Link
@@ -57,6 +58,8 @@ export default function BlogPage({ language }) {
                       alt={imageAlt}
                       className={styles.featuredImage}
                       fill
+                      // 首屏第一张 featured 图最容易被浏览器判定为 LCP，优先加载能减少首屏主内容等待。
+                      loading={isLeadFeaturedPost ? "eager" : undefined}
                       sizes="(max-width: 640px) 100vw, (max-width: 960px) 92vw, 448px"
                       src={post.imageSrc}
                       unoptimized

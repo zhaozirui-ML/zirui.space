@@ -5,11 +5,28 @@ import {
   getWorkBySlug,
 } from "../../../../src/site/lib/get-work-by-slug";
 import { getReturnPath } from "../../../../src/site/lib/get-return-path";
+import { getPageMetadata } from "../../../../src/site/i18n/dictionary";
 import { getServerLanguage } from "../../../../src/site/i18n/server";
 import WorkDetailPage from "../../../../src/site/pages/WorkDetailPage";
 
 export function generateStaticParams() {
   return getAllWorkSlugs().map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({ params }) {
+  const resolvedParams = await params;
+  const work = getWorkBySlug(resolvedParams.slug);
+  const language = await getServerLanguage();
+
+  if (!work) {
+    return {};
+  }
+
+  return getPageMetadata({
+    description: work.detailSummary ?? work.summary,
+    language,
+    title: work.title,
+  });
 }
 
 export default async function WorkDetailRoutePage({ params, searchParams }) {

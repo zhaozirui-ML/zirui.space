@@ -1,3 +1,5 @@
+import { getLocalizedValue } from "./get-localized-value";
+
 export const siteShellDictionary = {
   brandHomeLabel: {
     zh: "返回首页",
@@ -57,6 +59,14 @@ export const aboutPageDictionary = {
     zh: "邮箱",
     en: "Email",
   },
+  metadataDescription: {
+    zh: "查看赵子瑞的经历、教育背景、技能结构与联系方式。",
+    en: "Review Zhao Zirui's experience, education, skills, and contact details.",
+  },
+  pageTitle: {
+    zh: "简历",
+    en: "Resume",
+  },
   educationTitle: {
     zh: "教育",
     en: "Education",
@@ -72,6 +82,10 @@ export const aboutPageDictionary = {
 };
 
 export const workIndexDictionary = {
+  metadataDescription: {
+    zh: "浏览赵子瑞的产品设计案例、系统设计项目与探索作品。",
+    en: "Browse Zhao Zirui's product design case studies, systems work, and explorations.",
+  },
   metadataAriaLabel: {
     zh: "项目信息",
     en: "Project metadata",
@@ -98,6 +112,14 @@ export const blogIndexDictionary = {
   featuredHeading: {
     zh: "精选文章",
     en: "Featured",
+  },
+  metadataDescription: {
+    zh: "阅读赵子瑞关于设计系统、复杂业务流程和产品设计思考的文章。",
+    en: "Read Zhao Zirui's writing on design systems, complex workflows, and product design thinking.",
+  },
+  metadataTitle: {
+    zh: "博客",
+    en: "Blog",
   },
   readArticleAriaLabel: {
     zh: "阅读文章",
@@ -155,9 +177,9 @@ export const untranslatedDetailDictionary = {
  * @returns {{ title: string, description: string }}
  */
 export function getRootMetadata(language) {
-    return language === "en"
-      ? {
-          description:
+  return language === "en"
+    ? {
+        description:
           "A portfolio website built with a local design system and site-specific case studies.",
         title: "Zhao Zirui Portfolio",
       }
@@ -165,4 +187,27 @@ export function getRootMetadata(language) {
         description: "一个基于本地设计系统与案例叙事搭建的产品设计作品集。",
         title: "赵子瑞作品集",
       };
+}
+
+/**
+ * 为模块首页生成更具体的页面级 metadata，避免所有入口页共用同一份标题和描述。
+ *
+ * @param {{
+ *   description: import("./get-localized-value").LocalizedValue<string>,
+ *   language: import("./config").SiteLanguage,
+ *   title: import("./get-localized-value").LocalizedValue<string>,
+ * }} options
+ */
+export function getPageMetadata({ description, language, title }) {
+  const rootMetadata = getRootMetadata(language);
+  const resolvedTitle = getLocalizedValue(title, language);
+  const resolvedDescription = getLocalizedValue(description, language);
+
+  return {
+    description: resolvedDescription,
+    title:
+      language === "en"
+        ? `${resolvedTitle} | ${rootMetadata.title}`
+        : `${resolvedTitle}｜${rootMetadata.title}`,
+  };
 }
