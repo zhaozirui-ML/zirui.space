@@ -4,7 +4,8 @@
   --axzo-page-gap: clamp(4.5rem, 7vw, 8.25rem);
   --axzo-content-gap: clamp(4rem, 6vw, 6rem);
   --axzo-content-padding-inline: 1.5rem;
-  --axzo-content-padding-inline-mobile: 1rem;
+  --axzo-content-padding-inline-mobile: var(--portfolio-page-inline-padding-mobile, 1.25rem);
+  --axzo-hero-padding-inline-mobile: var(--portfolio-hero-inline-padding-mobile, 1.25rem);
   --axzo-section-gap: 1.5rem;
   --axzo-subsection-gap: 0.75rem;
   --axzo-section-gap-lg: 3rem;
@@ -595,12 +596,13 @@
   }
 
   .heroPanel {
-    padding: var(--axzo-content-padding-inline-mobile);
+    padding: var(--axzo-hero-padding-inline-mobile);
     width: 100%;
   }
 
   .contentStack {
-    padding: 0 var(--axzo-content-padding-inline-mobile);
+    /* 外层 site shell 已经提供统一的 20px 页面边距，这里不再重复叠加。 */
+    padding: 0;
   }
 
   .problemGrid,

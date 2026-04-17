@@ -158,7 +158,7 @@
 
 @media (max-width: 640px) {
   .heroInner {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: var(--portfolio-hero-inline-padding-mobile, 1.25rem);
+    padding-right: var(--portfolio-hero-inline-padding-mobile, 1.25rem);
   }
 }

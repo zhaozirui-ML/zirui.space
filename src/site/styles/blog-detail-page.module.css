@@ -286,6 +286,7 @@
 
 @media (max-width: 640px) {
   .articlePage {
+    --blog-header-side-padding: var(--portfolio-page-inline-padding-mobile, 1.25rem);
     width: 100%;
   }
 
@@ -309,8 +310,8 @@
   .headerContent,
   .heroContent,
   .bodyContent {
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: var(--blog-header-side-padding);
+    padding-right: var(--blog-header-side-padding);
   }
 
   .heroFrame {

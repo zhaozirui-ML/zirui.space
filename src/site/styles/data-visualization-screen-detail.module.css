@@ -933,8 +933,8 @@
   }
 
   .hero {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
+    padding-left: var(--portfolio-hero-inline-padding-mobile, 1.25rem);
+    padding-right: var(--portfolio-hero-inline-padding-mobile, 1.25rem);
   }
 
   .problemCard,
