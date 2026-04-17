@@ -272,6 +272,10 @@
   transform: scale(1);
 }
 
+.navigationAction[data-theme="dark"] .navigationActionGlyph[data-icon="moon"] {
+  transform: translate(-0.08rem, 0.07rem) scale(1);
+}
+
 .navigationAction:hover,
 .languageAction:hover {
   background: var(--portfolio-color-surface);
