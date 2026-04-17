@@ -358,34 +358,59 @@
   }
 
   .siteHeaderFrame {
-    width: 100%;
+    width: calc(100vw - var(--ds-space-lg) * 2);
   }
 
   .siteHeaderInner {
+    align-items: center;
+    border-radius: 999px;
     gap: 0.75rem;
+    height: 3.25rem;
     min-width: 0;
+    padding: 0 0.75rem 0 0.875rem;
     width: 100%;
   }
 
+  .brandLink {
+    padding-right: 0;
+  }
+
+  .brandMarkFrame {
+    height: 32px;
+    width: 28px;
+  }
+
   .navigation {
+    flex: 1 1 auto;
+    grid-auto-columns: 1fr;
     justify-content: space-evenly;
+    width: auto;
   }
 
   .siteHeaderControls {
+    flex: 1 1 auto;
     gap: 0.5rem;
   }
 
   .siteHeaderActions {
     gap: 0.125rem;
+    margin-left: 0;
   }
 
   .navigationLink {
     font-size: 0.8125rem;
-    padding: 0.875rem 0.125rem;
+    min-height: 2.75rem;
+    padding: 0.75rem 0.125rem;
   }
 
   .navigationIndicator {
     bottom: 0.375rem;
+  }
+
+  .navigationAction,
+  .languageAction {
+    height: 2.125rem;
+    width: 2.125rem;
   }
 
 }
@@ -676,7 +701,6 @@
 }
 
 @media (max-width: 900px) {
-  .siteHeaderInner,
   .workCardFooter {
     align-items: flex-start;
     flex-direction: column;
@@ -691,14 +715,21 @@
   }
 }
 
+@media (min-width: 641px) and (max-width: 1023px) {
+  .siteShell {
+    /* 平板宽度介于桌面和手机之间，这里把左右留白提升到 24px，避免版心贴边。 */
+    width: min(100%, calc(100% - var(--ds-space-xl) - var(--ds-space-md)));
+  }
+}
+
 @media (max-width: 640px) {
   .siteHeaderFrame {
-    padding-left: var(--ds-space-xs);
-    padding-right: var(--ds-space-xs);
+    padding-left: var(--ds-space-lg);
+    padding-right: var(--ds-space-lg);
   }
 
   .siteShell {
-    width: min(100%, calc(100% - var(--ds-space-md)));
+    width: min(100%, calc(100% - var(--ds-space-lg) * 2));
   }
 
   .pageIntro,
