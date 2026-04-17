@@ -25,6 +25,7 @@ export async function generateMetadata({ params }) {
   return getPageMetadata({
     description: post.detailSummary ?? post.summary,
     language,
+    pathname: `/blog/${resolvedParams.slug}`,
     title: post.title,
   });
 }

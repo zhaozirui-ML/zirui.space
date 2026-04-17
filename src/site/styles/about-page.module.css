@@ -113,7 +113,11 @@
 .snsLink {
   align-items: center;
   border-radius: 999px;
-  color: var(--portfolio-color-text-muted);
+  color: color-mix(
+    in srgb,
+    var(--portfolio-semantic-title-color) 88%,
+    var(--portfolio-color-text-muted)
+  );
   display: inline-flex;
   height: var(--about-sns-icon-size);
   justify-content: center;

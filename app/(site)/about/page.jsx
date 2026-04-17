@@ -11,6 +11,7 @@ export async function generateMetadata() {
   return getPageMetadata({
     description: aboutPageDictionary.metadataDescription,
     language,
+    pathname: "/about",
     title: aboutPageDictionary.pageTitle,
   });
 }

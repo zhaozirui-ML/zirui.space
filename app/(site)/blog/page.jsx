@@ -11,6 +11,7 @@ export async function generateMetadata() {
   return getPageMetadata({
     description: blogIndexDictionary.metadataDescription,
     language,
+    pathname: "/blog",
     title: blogIndexDictionary.metadataTitle,
   });
 }

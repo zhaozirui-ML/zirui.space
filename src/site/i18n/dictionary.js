@@ -1,4 +1,5 @@
 import { getLocalizedValue } from "./get-localized-value";
+import { getSiteUrl } from "../lib/get-site-url";
 
 export const siteShellDictionary = {
   brandHomeLabel: {
@@ -174,19 +175,44 @@ export const untranslatedDetailDictionary = {
 
 /**
  * @param {import("./config").SiteLanguage} language
- * @returns {{ title: string, description: string }}
+ * @returns {import("next").Metadata}
  */
 export function getRootMetadata(language) {
-  return language === "en"
-    ? {
-        description:
-          "A portfolio website built with a local design system and site-specific case studies.",
-        title: "Zhao Zirui Portfolio",
-      }
-    : {
-        description: "一个基于本地设计系统与案例叙事搭建的产品设计作品集。",
-        title: "赵子瑞作品集",
-      };
+  const metadataBase = new URL(getSiteUrl());
+  const resolvedTitle = language === "en" ? "Zhao Zirui Portfolio" : "赵子瑞作品集";
+  const resolvedDescription =
+    language === "en"
+      ? "A portfolio website built with a local design system and site-specific case studies."
+      : "一个基于本地设计系统与案例叙事搭建的产品设计作品集。";
+  const socialImage = {
+    alt: language === "en" ? "Share preview for Zhao Zirui Portfolio" : "赵子瑞作品集分享预览图",
+    height: 630,
+    url: "/opengraph-image",
+    width: 1200,
+  };
+
+  return {
+    alternates: {
+      canonical: "/",
+    },
+    description: resolvedDescription,
+    metadataBase,
+    openGraph: {
+      description: resolvedDescription,
+      images: [socialImage],
+      siteName: resolvedTitle,
+      title: resolvedTitle,
+      type: "website",
+      url: "/",
+    },
+    title: resolvedTitle,
+    twitter: {
+      card: "summary_large_image",
+      description: resolvedDescription,
+      images: [socialImage.url],
+      title: resolvedTitle,
+    },
+  };
 }
 
 /**
@@ -195,19 +221,39 @@ export function getRootMetadata(language) {
  * @param {{
  *   description: import("./get-localized-value").LocalizedValue<string>,
  *   language: import("./config").SiteLanguage,
+ *   pathname?: string,
  *   title: import("./get-localized-value").LocalizedValue<string>,
  * }} options
+ * @returns {import("next").Metadata}
  */
-export function getPageMetadata({ description, language, title }) {
+export function getPageMetadata({ description, language, pathname, title }) {
   const rootMetadata = getRootMetadata(language);
   const resolvedTitle = getLocalizedValue(title, language);
   const resolvedDescription = getLocalizedValue(description, language);
+  const pageTitle =
+    language === "en"
+      ? `${resolvedTitle} | ${rootMetadata.title}`
+      : `${resolvedTitle}｜${rootMetadata.title}`;
 
   return {
+    alternates: pathname
+      ? {
+          canonical: pathname,
+        }
+      : undefined,
     description: resolvedDescription,
-    title:
-      language === "en"
-        ? `${resolvedTitle} | ${rootMetadata.title}`
-        : `${resolvedTitle}｜${rootMetadata.title}`,
+    openGraph: {
+      description: resolvedDescription,
+      images: ["/opengraph-image"],
+      title: pageTitle,
+      url: pathname,
+    },
+    title: pageTitle,
+    twitter: {
+      card: "summary_large_image",
+      description: resolvedDescription,
+      images: ["/opengraph-image"],
+      title: pageTitle,
+    },
   };
 }

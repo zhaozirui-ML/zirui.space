@@ -11,6 +11,7 @@ export async function generateMetadata() {
   return getPageMetadata({
     description: workIndexDictionary.metadataDescription,
     language,
+    pathname: "/work",
     title: workIndexDictionary.pageTitle,
   });
 }
