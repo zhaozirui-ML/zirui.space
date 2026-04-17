@@ -8,7 +8,7 @@
   --about-page-gap: 0;
   --about-rail-width: 6rem;
   --about-rail-width-md: 1.5rem;
-  --about-rail-width-sm: 1rem;
+  --about-rail-width-sm: var(--portfolio-page-inline-padding-mobile, 1.25rem);
   --about-panel-padding: 1.25rem;
   --about-panel-padding-md: 2rem;
   --about-panel-padding-sm: 1.5rem;

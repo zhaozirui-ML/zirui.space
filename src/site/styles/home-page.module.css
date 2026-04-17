@@ -626,7 +626,7 @@
     --home-main-offset-top: 3rem;
     --home-page-gap: 3.5rem;
     --home-top-gap: 4rem;
-    --home-content-inline-padding: 0.75rem;
+    --home-content-inline-padding: var(--portfolio-page-inline-padding-mobile, 1.25rem);
     --home-page-padding-top: calc(var(--ds-space-2xs) * 6);
   }
 

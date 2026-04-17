@@ -1036,8 +1036,8 @@
   }
 
   .sectionContent {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: var(--portfolio-page-inline-padding-mobile, 1.25rem);
+    padding-right: var(--portfolio-page-inline-padding-mobile, 1.25rem);
   }
 
   .chartCard,

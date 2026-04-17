@@ -1,4 +1,10 @@
 .siteRoot {
+  /* 统一页面级移动端左右边距，作为全站手机端页面 gutter token。 */
+  --portfolio-page-inline-padding-mobile: 1.25rem;
+  /* Hero 封面区单独保留一条入口，避免和正文边距混在一起。 */
+  --portfolio-hero-inline-padding-mobile: 1.25rem;
+  /* 兼容实验阶段的旧命名，等引用全部迁移稳定后可以删除。 */
+  --site-mobile-inline-padding: var(--portfolio-page-inline-padding-mobile);
   background: var(--portfolio-color-canvas);
   color: var(--portfolio-semantic-body-color);
   font-family: var(--portfolio-font-body);
@@ -734,15 +740,19 @@
     padding-right: var(--ds-space-lg);
   }
 
+  .detailPage {
+    --detail-page-content-padding-inline: var(--portfolio-page-inline-padding-mobile);
+  }
+
   .siteShell {
-    width: min(100%, calc(100% - var(--ds-space-lg) * 2));
+    width: min(100%, calc(100% - var(--portfolio-page-inline-padding-mobile) * 2));
   }
 
   .pageIntro,
   .workCard,
   .placeholderPanel {
-    padding-left: var(--ds-space-md);
-    padding-right: var(--ds-space-md);
+    padding-left: var(--portfolio-page-inline-padding-mobile);
+    padding-right: var(--portfolio-page-inline-padding-mobile);
   }
 }
 
