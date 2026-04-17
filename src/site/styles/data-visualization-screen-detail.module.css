@@ -167,7 +167,7 @@
   justify-items: center;
   padding:
     var(--data-vis-content-stack-padding-block-start)
-    0
+    var(--portfolio-page-inline-padding-mobile, 1.25rem)
     var(--data-vis-content-stack-padding-block-end);
 }
 
