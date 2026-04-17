@@ -442,6 +442,9 @@
 }
 
 .workCardMedia {
+  /* 前景和背景需要同步响应式变化，所以把前景占比也暴露成变量给断点公式复用。 */
+  --work-card-foreground-width-ratio: 0.8501;
+  --work-card-foreground-height-ratio: 0.74;
   border-radius: var(--home-work-card-media-radius);
   height: 19.5rem;
   min-height: 19.5rem;
@@ -471,7 +474,9 @@
 }
 
 .workCardForegroundImage {
-  object-fit: cover;
+  /* 前景图优先完整展示；真正的尺寸由外层前景框负责约束。 */
+  object-fit: contain;
+  object-position: center;
   position: absolute;
 }
 
@@ -578,6 +583,11 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
+  .workCardFeatured,
+  .workCardStandard {
+    height: auto;
+  }
+
   .workCardMediaStart .workCardContent,
   .workCardMediaStart .workCardMedia {
     order: initial;
@@ -585,6 +595,17 @@
 
   .workCardContent {
     gap: var(--home-section-gap);
+  }
+
+  .workCardMedia,
+  .workCardFeatured .workCardMedia {
+    aspect-ratio: calc(
+      var(--work-card-foreground-aspect-ratio, 1.7778) *
+        var(--work-card-foreground-width-ratio, 0.8501) /
+        var(--work-card-foreground-height-ratio)
+    );
+    height: auto;
+    min-height: 0;
   }
 
   .blogCard {
@@ -609,7 +630,11 @@
     --home-page-padding-top: calc(var(--ds-space-2xs) * 6);
   }
 
-  .heroTitle,
+  .heroTitle {
+    /* 移动端长中文段落不适合 balance；让浏览器按自然换行铺满可用宽度。 */
+    text-wrap: pretty;
+  }
+
   .sectionTitle {
     text-wrap: balance;
   }
@@ -633,14 +658,56 @@
     height: auto;
   }
 
+  .workCardContent {
+    order: 2;
+  }
+
+  .workCardMedia {
+    order: 1;
+  }
+
+  .workCardMediaStart .workCardContent,
+  .workCardMediaStart .workCardMedia {
+    order: unset;
+  }
+
+  .workCardMediaStart .workCardContent {
+    order: 2;
+  }
+
+  .workCardMediaStart .workCardMedia {
+    order: 1;
+  }
+
   .workCardTitle {
     font-size: clamp(2rem, 6vw + 0.75rem, 2.625rem);
   }
 
   .workCardMedia,
   .workCardFeatured .workCardMedia {
-    height: auto;
-    min-height: 15rem;
+    --work-card-foreground-height-ratio: 0.78;
+    aspect-ratio: calc(
+      var(--work-card-foreground-aspect-ratio, 1.7778) *
+        var(--work-card-foreground-width-ratio, 0.8501) /
+        var(--work-card-foreground-height-ratio)
+    );
+    justify-self: stretch;
+    max-width: 100%;
+    min-height: 0;
+    width: 100%;
+  }
+
+  .workCardMedia[data-work-slug="drawing-ledger-2-0"] {
+    /* 第一张在手机端保持同样的媒体区尺寸，但把前景宽度再放大一档。 */
+    --work-card-foreground-width-ratio: 0.89;
+    height: 19.5rem;
+    min-height: 19.5rem;
+  }
+
+  .workCardMedia[data-work-slug="axzo-design-system"],
+  .workCardMedia[data-work-slug="data-visualization-screen"] {
+    /* 后两张在手机端把背景容器再放大一档，避免前景显得过于顶满。 */
+    --work-card-foreground-height-ratio: 0.88;
   }
 
   .blogCard {
