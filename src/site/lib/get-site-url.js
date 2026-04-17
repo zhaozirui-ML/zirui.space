@@ -1,4 +1,4 @@
-const DEFAULT_SITE_URL = "https://zirui.me";
+const DEFAULT_SITE_URL = "https://zirui.space";
 
 function normalizeSiteUrl(rawValue) {
   if (typeof rawValue !== "string" || rawValue.trim().length === 0) {
