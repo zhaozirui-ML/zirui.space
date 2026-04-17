@@ -1,5 +1,9 @@
-export const DEFAULT_SITE_LANGUAGE = "zh";
+// 默认首次进入展示英文。
+// 这里再加一层版本标记，用来让旧的中文 cookie 自动失效，但不影响之后的新切换。
+export const DEFAULT_SITE_LANGUAGE = "en";
 export const SITE_LANGUAGE_COOKIE_NAME = "site-language";
+export const SITE_LANGUAGE_COOKIE_VERSION_NAME = "site-language-version";
+export const SITE_LANGUAGE_COOKIE_VERSION = "2";
 export const SITE_LANGUAGE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 export const SITE_LANGUAGE_COOKIE_PATH = "/";
 

@@ -16,6 +16,8 @@ import {
   SITE_LANGUAGE_COOKIE_MAX_AGE,
   SITE_LANGUAGE_COOKIE_NAME,
   SITE_LANGUAGE_COOKIE_PATH,
+  SITE_LANGUAGE_COOKIE_VERSION,
+  SITE_LANGUAGE_COOKIE_VERSION_NAME,
 } from "./config";
 
 const LanguageContext = createContext(null);
@@ -53,6 +55,11 @@ export function LanguageProvider({
     setLanguageState(normalizedLanguage);
     document.cookie =
       `${SITE_LANGUAGE_COOKIE_NAME}=${normalizedLanguage}; ` +
+      `Path=${SITE_LANGUAGE_COOKIE_PATH}; ` +
+      `Max-Age=${SITE_LANGUAGE_COOKIE_MAX_AGE}; SameSite=Lax`;
+    // 版本标记单独写入，保证以后如果再调整默认语言，也能安全地让旧偏好失效。
+    document.cookie =
+      `${SITE_LANGUAGE_COOKIE_VERSION_NAME}=${SITE_LANGUAGE_COOKIE_VERSION}; ` +
       `Path=${SITE_LANGUAGE_COOKIE_PATH}; ` +
       `Max-Age=${SITE_LANGUAGE_COOKIE_MAX_AGE}; SameSite=Lax`;
 

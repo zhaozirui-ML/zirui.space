@@ -4,6 +4,8 @@ import {
   DEFAULT_SITE_LANGUAGE,
   normalizeSiteLanguage,
   SITE_LANGUAGE_COOKIE_NAME,
+  SITE_LANGUAGE_COOKIE_VERSION,
+  SITE_LANGUAGE_COOKIE_VERSION_NAME,
 } from "./config";
 
 /**
@@ -14,6 +16,12 @@ import {
  */
 export async function getServerLanguage() {
   const cookieStore = await cookies();
+  const cookieVersion = cookieStore.get(SITE_LANGUAGE_COOKIE_VERSION_NAME)?.value;
+
+  // 旧版本的语言 cookie 直接忽略，这样老用户不会继续被旧的中文偏好带回去。
+  if (cookieVersion !== SITE_LANGUAGE_COOKIE_VERSION) {
+    return DEFAULT_SITE_LANGUAGE;
+  }
 
   return normalizeSiteLanguage(
     cookieStore.get(SITE_LANGUAGE_COOKIE_NAME)?.value ?? DEFAULT_SITE_LANGUAGE,
