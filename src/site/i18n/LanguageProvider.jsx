@@ -23,6 +23,21 @@ import {
 const LanguageContext = createContext(null);
 
 /**
+ * 用数组拼接 cookie 片段，避免构建压缩后字符串连接边界被错误合并。
+ *
+ * @param {string} name
+ * @param {string} value
+ */
+function writeSiteCookie(name, value) {
+  document.cookie = [
+    `${name}=${value}`,
+    `Path=${SITE_LANGUAGE_COOKIE_PATH}`,
+    `Max-Age=${SITE_LANGUAGE_COOKIE_MAX_AGE}`,
+    "SameSite=Lax",
+  ].join("; ");
+}
+
+/**
  * @param {{
  *   children: import("react").ReactNode,
  *   initialLanguage: import("./config").SiteLanguage,
@@ -53,15 +68,12 @@ export function LanguageProvider({
     const normalizedLanguage = normalizeSiteLanguage(nextLanguage);
 
     setLanguageState(normalizedLanguage);
-    document.cookie =
-      `${SITE_LANGUAGE_COOKIE_NAME}=${normalizedLanguage}; ` +
-      `Path=${SITE_LANGUAGE_COOKIE_PATH}; ` +
-      `Max-Age=${SITE_LANGUAGE_COOKIE_MAX_AGE}; SameSite=Lax`;
+    writeSiteCookie(SITE_LANGUAGE_COOKIE_NAME, normalizedLanguage);
     // 版本标记单独写入，保证以后如果再调整默认语言，也能安全地让旧偏好失效。
-    document.cookie =
-      `${SITE_LANGUAGE_COOKIE_VERSION_NAME}=${SITE_LANGUAGE_COOKIE_VERSION}; ` +
-      `Path=${SITE_LANGUAGE_COOKIE_PATH}; ` +
-      `Max-Age=${SITE_LANGUAGE_COOKIE_MAX_AGE}; SameSite=Lax`;
+    writeSiteCookie(
+      SITE_LANGUAGE_COOKIE_VERSION_NAME,
+      SITE_LANGUAGE_COOKIE_VERSION,
+    );
 
     startTransition(() => {
       router.refresh();
