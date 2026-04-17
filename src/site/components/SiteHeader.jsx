@@ -99,20 +99,15 @@ export default function SiteHeader({ colorTheme, onThemeToggle }) {
                 alt=""
                 aria-hidden="true"
                 className={styles.brandMark}
-                height={1073}
                 style={{
-                  height: "113.69%",
-                  left: 0,
-                  maxWidth: "none",
-                  objectFit: "cover",
-                  objectPosition: "left top",
+                  inset: 0,
+                  objectFit: "contain",
+                  objectPosition: "center top",
                   position: "absolute",
-                  top: "-3.89%",
-                  width: "106.38%",
                 }}
+                fill
                 src={brandAvatarSrc}
                 unoptimized
-                width={858}
               />
             </span>
           </Link>

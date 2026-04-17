@@ -111,16 +111,18 @@
 }
 
 .brandMarkFrame {
+  aspect-ratio: 858 / 1073;
   height: 36px;
+  flex: none;
   overflow: hidden;
   position: relative;
-  width: 30px;
+  width: calc(36px * 858 / 1073);
 }
 
 .brandMark {
   display: block;
   object-fit: cover;
-  object-position: left top;
+  object-position: center top;
   max-width: none;
 }
 
@@ -377,7 +379,7 @@
 
   .brandMarkFrame {
     height: 32px;
-    width: 28px;
+    width: calc(32px * 858 / 1073);
   }
 
   .navigation {
