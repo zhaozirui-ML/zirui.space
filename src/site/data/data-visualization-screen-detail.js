@@ -7,14 +7,12 @@ const preferSupabaseAssets = true;
 const pendingSupabaseAssetPaths = new Set([]);
 
 function getStoragePathFromLocalSrc(localSrc) {
-  if (typeof localSrc !== "string" || !localSrc.startsWith("/site/")) {
+  if (typeof localSrc !== "string" || !localSrc.startsWith("/site/work/data-visualization/")) {
     return null;
   }
 
-  // 这页本地目录名是 data-visualization-screen，但你在 Supabase 里实际上传的是 data-visualization。
-  // 这里先把这层映射集中在数据层，后面即使要改目录名，也不用到组件里逐个替换。
-  return localSrc
-    .replace(/^\/site\/work\/data-visualization-screen\//, "work/data-visualization/");
+  // 这里直接让本地备份目录和 Supabase 路径保持同名，后面维护资源时不用再额外做目录映射转换。
+  return localSrc.replace(/^\/site\/work\/data-visualization\//, "work/data-visualization/");
 }
 
 function resolveAssetSource(localSrc) {
@@ -40,10 +38,10 @@ export const dataVisualizationScreenDetail = Object.freeze({
       "Expanding chart explorations from dashboard work into more complex large-screen scenarios",
     ),
     backgroundImageSrc: resolveAssetSource(
-      "/site/work/data-visualization-screen/hero-background.png"
+      "/site/work/data-visualization/hero-background.png"
     ),
     coverImageSrc: resolveAssetSource(
-      "/site/work/data-visualization-screen/hero-dashboard.png"
+      "/site/work/data-visualization/hero-dashboard.png"
     ),
     coverImageAlt: t(
       "广东省建筑工人管理服务信息平台的大屏主视觉预览图",
@@ -82,7 +80,7 @@ export const dataVisualizationScreenDetail = Object.freeze({
     items: Object.freeze([
       {
         iconSrc: resolveAssetSource(
-          "/site/work/data-visualization-screen/problem-1.png"
+          "/site/work/data-visualization/problem-1.png"
         ),
         iconAlt: t("问题定义卡片图标 1", "Problem definition card icon 1"),
         label: t(
@@ -92,7 +90,7 @@ export const dataVisualizationScreenDetail = Object.freeze({
       },
       {
         iconSrc: resolveAssetSource(
-          "/site/work/data-visualization-screen/problem-2.png"
+          "/site/work/data-visualization/problem-2.png"
         ),
         iconAlt: t("问题定义卡片图标 2", "Problem definition card icon 2"),
         label: t(
@@ -102,7 +100,7 @@ export const dataVisualizationScreenDetail = Object.freeze({
       },
       {
         iconSrc: resolveAssetSource(
-          "/site/work/data-visualization-screen/problem-3.png"
+          "/site/work/data-visualization/problem-3.png"
         ),
         iconAlt: t("问题定义卡片图标 3", "Problem definition card icon 3"),
         label: t(
@@ -112,7 +110,7 @@ export const dataVisualizationScreenDetail = Object.freeze({
       },
       {
         iconSrc: resolveAssetSource(
-          "/site/work/data-visualization-screen/problem-4.png"
+          "/site/work/data-visualization/problem-4.png"
         ),
         iconAlt: t("问题定义卡片图标 4", "Problem definition card icon 4"),
         label: t(
@@ -177,31 +175,31 @@ export const dataVisualizationScreenDetail = Object.freeze({
       gallery: Object.freeze({
         caption: t("CMS Dashboard Charts", "CMS Dashboard Charts"),
         mainImageSrc: resolveAssetSource(
-          "/site/work/data-visualization-screen/practice-main-chart.png"
+          "/site/work/data-visualization/practice-main-chart.png"
         ),
         mainImageAlt: t("CMS Dashboard Charts 主图", "Main CMS dashboard chart image"),
         thumbnails: Object.freeze([
           {
             imageSrc: resolveAssetSource(
-              "/site/work/data-visualization-screen/practice-thumb-4.png"
+              "/site/work/data-visualization/practice-thumb-4.png"
             ),
             imageAlt: t("果冻效果应用缩略图 1", "Jelly-style exploration thumbnail 1"),
           },
           {
             imageSrc: resolveAssetSource(
-              "/site/work/data-visualization-screen/practice-thumb-1.png"
+              "/site/work/data-visualization/practice-thumb-1.png"
             ),
             imageAlt: t("果冻效果应用缩略图 2", "Jelly-style exploration thumbnail 2"),
           },
           {
             imageSrc: resolveAssetSource(
-              "/site/work/data-visualization-screen/practice-thumb-2.png"
+              "/site/work/data-visualization/practice-thumb-2.png"
             ),
             imageAlt: t("果冻效果应用缩略图 3", "Jelly-style exploration thumbnail 3"),
           },
           {
             imageSrc: resolveAssetSource(
-              "/site/work/data-visualization-screen/practice-thumb-3.png"
+              "/site/work/data-visualization/practice-thumb-3.png"
             ),
             imageAlt: t("果冻效果应用缩略图 4", "Jelly-style exploration thumbnail 4"),
             presentation: "wide-bleed",
@@ -220,15 +218,15 @@ export const dataVisualizationScreenDetail = Object.freeze({
       gallery: Object.freeze({
         caption: t("果冻效果应用效果", "Jelly-style application result"),
         mainImageSrc: resolveAssetSource(
-          "/site/work/data-visualization-screen/expansion-main.png"
+          "/site/work/data-visualization/expansion-main.png"
         ),
         mainImageAlt: t("视觉语言扩展主图", "Main image for visual language expansion"),
         leftImageSrc: resolveAssetSource(
-          "/site/work/data-visualization-screen/expansion-thumb-left.png"
+          "/site/work/data-visualization/expansion-thumb-left.png"
         ),
         leftImageAlt: t("视觉语言扩展左侧缩略图", "Left thumbnail for visual language expansion"),
         rightImageSrc: resolveAssetSource(
-          "/site/work/data-visualization-screen/expansion-thumb-right.png"
+          "/site/work/data-visualization/expansion-thumb-right.png"
         ),
         rightImageAlt: t("视觉语言扩展右侧缩略图", "Right thumbnail for visual language expansion"),
       }),
@@ -250,14 +248,14 @@ export const dataVisualizationScreenDetail = Object.freeze({
           caption: t("异形数据指标卡", "Irregular metric card"),
           title: t("异形数据指标卡演示视频", "Irregular metric card demo video"),
           videoSrc: resolveAssetSource(
-            "/site/work/data-visualization-screen/metric-card.mp4"
+            "/site/work/data-visualization/metric-card.mp4"
           ),
         },
         {
           caption: t("响应式图表", "Responsive charts"),
           title: t("响应式图表演示视频", "Responsive charts demo video"),
           videoSrc: resolveAssetSource(
-            "/site/work/data-visualization-screen/charts.mp4"
+            "/site/work/data-visualization/charts.mp4"
           ),
         },
       ]),
@@ -270,7 +268,7 @@ export const dataVisualizationScreenDetail = Object.freeze({
       "The following section summarizes the full-page designs I was responsible for on the project homepage and quality/safety supervision module.",
     ),
     imageSrc: resolveAssetSource(
-      "/site/work/data-visualization-screen/outcomes-overview.png"
+      "/site/work/data-visualization/outcomes-overview.png"
     ),
     imageAlt: t("大屏数据可视化项目全部页面概览", "Overview of all pages in the large-screen data visualization project"),
     caption: t("全部页面概览", "All pages overview"),
@@ -289,7 +287,7 @@ export const dataVisualizationScreenDetail = Object.freeze({
           "Extended the chart style defined earlier into this provincial, city, and district dashboard project",
         ),
         imageSrc: resolveAssetSource(
-          "/site/work/data-visualization-screen/retrospective-1.png"
+          "/site/work/data-visualization/retrospective-1.png"
         ),
         imageAlt: t("延续视觉语言缩略图", "Thumbnail for extending the visual language"),
       },
@@ -300,7 +298,7 @@ export const dataVisualizationScreenDetail = Object.freeze({
           "Turned frequently used chart and metric modules into reusable design assets",
         ),
         imageSrc: resolveAssetSource(
-          "/site/work/data-visualization-screen/retrospective-2.png"
+          "/site/work/data-visualization/retrospective-2.png"
         ),
         imageAlt: t("协助组件沉淀缩略图", "Thumbnail for supporting componentization"),
       },
@@ -311,7 +309,7 @@ export const dataVisualizationScreenDetail = Object.freeze({
           "Helped the three dashboard levels achieve a more consistent visual expression at a larger scale",
         ),
         imageSrc: resolveAssetSource(
-          "/site/work/data-visualization-screen/retrospective-3.png"
+          "/site/work/data-visualization/retrospective-3.png"
         ),
         imageAlt: t("推动整体统一缩略图", "Thumbnail for improving overall consistency"),
       },
@@ -322,7 +320,7 @@ export const dataVisualizationScreenDetail = Object.freeze({
           "Reduced style drift through rules and reuse, improving team execution efficiency",
         ),
         imageSrc: resolveAssetSource(
-          "/site/work/data-visualization-screen/retrospective-4.png"
+          "/site/work/data-visualization/retrospective-4.png"
         ),
         imageAlt: t("支持多人协作缩略图", "Thumbnail for supporting team collaboration"),
       },
