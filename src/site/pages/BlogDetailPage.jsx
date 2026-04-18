@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import DetailBackLink from "../components/DetailBackLink";
 import DetailTranslationPlaceholder from "../components/DetailTranslationPlaceholder";
 import { untranslatedDetailDictionary } from "../i18n/dictionary";
 import { getLocalizedValue } from "../i18n/get-localized-value";
@@ -151,9 +152,11 @@ export default function BlogDetailPage({ language = "zh", returnHref = "/blog", 
   return (
     <div className={styles.articlePage}>
       <div className={styles.backLinkRow}>
-        <Link aria-label="Back to Blog" className={shellStyles.backLink} href={safeReturnHref}>
-          Back
-        </Link>
+        <DetailBackLink
+          ariaLabel={language === "en" ? "Back to Blog" : "返回博客"}
+          href={safeReturnHref}
+          label={language === "en" ? "Back" : "返回"}
+        />
       </div>
 
       <section className={[styles.detailFrame, styles.detailFrameDashedTop].join(" ")}>

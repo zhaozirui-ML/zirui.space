@@ -1,8 +1,14 @@
 import Link from "next/link";
+
+import DetailBackLink from "../DetailBackLink";
 import styles from "../../styles/legacy-case-study.module.css";
 import shellStyles from "../../styles/site-shell.module.css";
 
-export default function LegacyCaseStudyPage({ backHref = "/work", caseStudy }) {
+export default function LegacyCaseStudyPage({
+  backHref = "/work",
+  caseStudy,
+  language = "zh",
+}) {
   /** @type {import("react").CSSProperties & Record<string, string>} */
   const heroStyle = {
     "--legacy-case-study-accent": caseStudy.accentColor,
@@ -14,9 +20,11 @@ export default function LegacyCaseStudyPage({ backHref = "/work", caseStudy }) {
         <div className={styles.heroBackdrop} />
         <div className={styles.heroInner}>
           <div className={styles.heroCopy}>
-            <Link className={shellStyles.backLink} href={backHref}>
-              返回
-            </Link>
+            <DetailBackLink
+              ariaLabel={language === "en" ? "Back to Work" : "返回作品"}
+              href={backHref}
+              label={language === "en" ? "Back" : "返回"}
+            />
             <p className={styles.eyebrow}>{caseStudy.category}</p>
             <h1 className={styles.heroTitle}>{caseStudy.title}</h1>
             <p className={styles.heroSubtitle}>{caseStudy.subtitle}</p>

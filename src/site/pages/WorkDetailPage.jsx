@@ -76,6 +76,7 @@ export default function WorkDetailPage({ language = "zh", returnHref = "/work", 
       <LegacyCaseStudyPage
         backHref={returnHref}
         caseStudy={cloudtowerDesignSystemCaseStudy}
+        language={language}
       />
     );
   }
@@ -85,6 +86,7 @@ export default function WorkDetailPage({ language = "zh", returnHref = "/work", 
       <LegacyCaseStudyPage
         backHref={returnHref}
         caseStudy={smtxElfVirtualizationCaseStudy}
+        language={language}
       />
     );
   }
@@ -94,6 +96,7 @@ export default function WorkDetailPage({ language = "zh", returnHref = "/work", 
       <LegacyCaseStudyPage
         backHref={returnHref}
         caseStudy={vmFeaturesOptimizationCaseStudy}
+        language={language}
       />
     );
   }

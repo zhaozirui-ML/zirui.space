@@ -1,0 +1,44 @@
+.backLink {
+  align-items: center;
+  border-radius: 0.5rem;
+  color: var(--portfolio-color-text-muted);
+  display: inline-flex;
+  gap: 0.125rem;
+  padding: 0.25rem 0.5rem;
+  text-decoration: none;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease,
+    opacity 180ms ease;
+  width: fit-content;
+}
+
+.backIcon {
+  display: inline-flex;
+  flex: none;
+  justify-content: center;
+  align-items: center;
+  height: 0.875rem;
+  width: 0.875rem;
+}
+
+.backLabel {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--portfolio-font-body);
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.1;
+}
+
+.backLink:hover,
+.backLink:focus-visible {
+  background: color-mix(in srgb, var(--portfolio-color-surface) 90%, var(--portfolio-color-accent-brand) 10%);
+  color: var(--portfolio-semantic-title-color);
+}
+
+.backLink:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--portfolio-color-accent-brand) 32%, transparent);
+  outline-offset: 2px;
+}
