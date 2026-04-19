@@ -1,5 +1,5 @@
 export const cloudtowerDesignSystemCaseStudy = {
-  accentColor: "#68715D",
+  accentColor: "var(--portfolio-color-accent-moss)",
   category: "Web",
   framerUrl: "https://zirui.framer.website/design-system",
   showMigrationNote: false,
@@ -152,7 +152,7 @@ export const cloudtowerDesignSystemCaseStudy = {
 };
 
 export const smtxElfVirtualizationCaseStudy = {
-  accentColor: "#5E778C",
+  accentColor: "var(--portfolio-color-accent-blue)",
   category: "Web",
   framerUrl: "https://zirui.framer.website/smtx-elf",
   metadata: [
@@ -265,7 +265,7 @@ export const smtxElfVirtualizationCaseStudy = {
 };
 
 export const vmFeaturesOptimizationCaseStudy = {
-  accentColor: "#587496",
+  accentColor: "var(--portfolio-color-accent-blue)",
   category: "Web",
   framerUrl: "https://zirui.framer.website/vm-optimization",
   metadata: [

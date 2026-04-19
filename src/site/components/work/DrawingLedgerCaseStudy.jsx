@@ -393,7 +393,7 @@ function MediaFigure({
             className={styles.mediaBackground}
             fill
             priority={priority}
-            sizes="100vw"
+            sizes="(max-width: 900px) calc(100vw - 2rem), 832px"
             src={backgroundAsset.src}
             unoptimized={backgroundAsset.unoptimized}
           />
@@ -730,7 +730,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
             className={styles.heroBackdropImage}
             fill
             priority
-            sizes="100vw"
+            sizes="(max-width: 1600px) 100vw, 1440px"
             src={assets.coverBackground.src}
             unoptimized={assets.coverBackground.unoptimized}
           />
@@ -1106,7 +1106,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                       alt=""
                       className={styles.roleScrollerBackground}
                       fill
-                      sizes="100vw"
+                      sizes="(max-width: 900px) calc(100vw - 2rem), 832px"
                       src={assets.detailsAssignmentsBackground.src}
                       unoptimized={assets.detailsAssignmentsBackground.unoptimized}
                     />
@@ -1256,14 +1256,16 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
 
                   <figure className={styles.figure}>
                     <div className={joinClassNames(styles.mediaFrame, styles.mediaFrameWarm, styles.mobileCompareFrame)}>
-                      <Image
-                        alt=""
-                        className={styles.mediaBackground}
-                        fill
-                        sizes="100vw"
-                        src={assets.mobileComparisonBackground.src}
-                        unoptimized={assets.mobileComparisonBackground.unoptimized}
-                      />
+                      {assets.mobileComparisonBackground.src ? (
+                        <Image
+                          alt=""
+                          className={styles.mediaBackground}
+                          fill
+                          sizes="(max-width: 900px) calc(100vw - 2rem), 832px"
+                          src={assets.mobileComparisonBackground.src}
+                          unoptimized={assets.mobileComparisonBackground.unoptimized}
+                        />
+                      ) : null}
                       <div className={styles.mobileComparePhoneBefore}>
                         <Image
                           alt={resolveAlt(assets.mobileAfter)}
@@ -1443,14 +1445,16 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
 
                   <figure className={styles.figure}>
                     <div className={styles.mobileLandingFrame}>
-                      <Image
-                        alt=""
-                        className={styles.mobileLandingBackground}
-                        fill
-                        sizes="100vw"
-                        src={assets.mobileComparisonBackground.src}
-                        unoptimized={assets.mobileComparisonBackground.unoptimized}
-                      />
+                      {assets.mobileComparisonBackground.src ? (
+                        <Image
+                          alt=""
+                          className={styles.mobileLandingBackground}
+                          fill
+                          sizes="(max-width: 900px) calc(100vw - 2rem), 832px"
+                          src={assets.mobileComparisonBackground.src}
+                          unoptimized={assets.mobileComparisonBackground.unoptimized}
+                        />
+                      ) : null}
                       <div className={styles.mobileLandingGrid}>
                         {localizedMobileLandingAssets.map((item) => (
                           <article className={styles.mobileLandingCard} key={item.id}>

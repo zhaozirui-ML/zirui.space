@@ -1,10 +1,9 @@
 const t = (zh, en) => ({ zh, en });
 
-import { getStorageAssetUrl } from "../lib/get-storage-asset-url";
-
 export const homeIntro = {
   avatarMediaType: "video",
-  avatarSrc: getStorageAssetUrl("home/avatar/home-avatar.mp4"),
+  // 首页头像属于高频公开展示资源，优先走本地静态文件，避免继续消耗 Storage 出口流量。
+  avatarSrc: "/site/home/avatar/home-avatar.mp4",
   avatarAlt: t("赵子瑞的首页头像插图", "Portrait illustration of Zirui Zhao on the homepage"),
   title: t(
     "你好，我是赵子瑞。一名拥有 4 年经验的产品设计师，专注于为复杂业务流程、系统与界面设计真正能够落地的企业级产品。",

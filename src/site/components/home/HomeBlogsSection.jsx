@@ -52,7 +52,6 @@ export default function HomeBlogsSection({ language }) {
                     fill
                     sizes="(max-width: 640px) 100vw, 180px"
                     src={post.imageSrc}
-                    unoptimized
                   />
                 </div>
               </div>

@@ -62,7 +62,6 @@ export default function BlogPage({ language }) {
                       loading={isLeadFeaturedPost ? "eager" : undefined}
                       sizes="(max-width: 640px) 100vw, (max-width: 960px) 92vw, 448px"
                       src={post.imageSrc}
-                      unoptimized
                     />
                   </div>
 
@@ -153,7 +152,6 @@ export default function BlogPage({ language }) {
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, 287px"
                         src={post.imageSrc}
-                        unoptimized
                       />
                     </div>
 

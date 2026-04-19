@@ -267,7 +267,7 @@ function OrbitDiagram({ orbit, variant }) {
  */
 export default function AxzoDesignSystemCaseStudyPage({
   backHref = "/work",
-  headingAccentColor = "#647654",
+  headingAccentColor = "var(--portfolio-color-accent-moss)",
   language = "zh",
   work,
 }) {
@@ -313,7 +313,7 @@ export default function AxzoDesignSystemCaseStudyPage({
             className={styles.heroBackdropImage}
             fill
             priority
-            sizes="100vw"
+            sizes="(max-width: 1600px) 100vw, 1440px"
             src={localizedContent.cover.backdropSrc}
             unoptimized={shouldBypassNextImageOptimizer(localizedContent.cover.backdropSrc)}
           />

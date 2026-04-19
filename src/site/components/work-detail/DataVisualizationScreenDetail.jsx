@@ -315,7 +315,7 @@ export default function DataVisualizationScreenDetail({
 
             <section className={styles.practiceSection}>
               <CaseStudyHeadingTwo
-                accentColor="#5684AE"
+                accentColor="var(--portfolio-color-accent-blue)"
                 descriptions={practice.systemization.paragraphs}
                 id="practice-systemization"
                 title={practice.systemization.eyebrow}

@@ -27,7 +27,6 @@ export default function ResponsiveWorkCardMedia({ item }) {
         priority={item.slug === "drawing-ledger-2-0"}
         sizes="(max-width: 900px) 100vw, 460px"
         src={item.homeImageSrc}
-        unoptimized
       />
     </div>
   );

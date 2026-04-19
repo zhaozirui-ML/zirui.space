@@ -107,7 +107,6 @@ export default function SiteHeader({ colorTheme, onThemeToggle }) {
                 }}
                 fill
                 src={brandAvatarSrc}
-                unoptimized
               />
             </span>
           </Link>

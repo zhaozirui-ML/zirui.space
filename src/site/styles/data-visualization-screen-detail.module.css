@@ -2,12 +2,23 @@
   --data-vis-hero-title: var(--portfolio-color-text-inverted);
   --data-vis-hero-subtitle:
     color-mix(in srgb, var(--portfolio-color-text-inverted) 96%, var(--portfolio-color-accent-blue));
-  --data-vis-hero-media-frame: rgba(10, 31, 76, 0.36);
+  --data-vis-hero-media-frame:
+    color-mix(in srgb, var(--portfolio-color-accent-blue) 36%, transparent);
   --data-vis-demo-surface:
-    radial-gradient(circle at 20% 24%, rgba(66, 122, 241, 0.22), transparent 30%),
-    linear-gradient(180deg, #10264d 0%, #0d2144 100%);
-  --data-vis-demo-frame-border: rgba(50, 112, 255, 0.18);
-  --data-vis-demo-outline: rgba(69, 138, 255, 0.12);
+    radial-gradient(
+      circle at 20% 24%,
+      color-mix(in srgb, var(--portfolio-color-accent-blue) 22%, transparent),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--portfolio-color-accent-blue) 42%, var(--portfolio-color-text-title)) 0%,
+      color-mix(in srgb, var(--portfolio-color-accent-blue) 54%, var(--portfolio-color-text-title)) 100%
+    );
+  --data-vis-demo-frame-border:
+    color-mix(in srgb, var(--portfolio-color-accent-blue) 18%, transparent);
+  --data-vis-demo-outline:
+    color-mix(in srgb, var(--portfolio-color-accent-blue) 12%, transparent);
   --data-vis-demo-label:
     color-mix(in srgb, var(--portfolio-color-accent-blue) 88%, var(--portfolio-color-text-inverted));
   --data-vis-demo-text:
@@ -17,26 +28,55 @@
     color-mix(in srgb, var(--portfolio-color-text-inverted) 88%, var(--portfolio-color-accent-blue));
   --data-vis-demo-text-muted:
     color-mix(in srgb, var(--portfolio-color-text-inverted) 72%, var(--portfolio-color-accent-blue));
-  --data-vis-demo-positive: #8dd56a;
-  --data-vis-demo-neutral: #ffb648;
-  --data-vis-chart-inset-bg: rgba(18, 38, 79, 0.92);
-  --data-vis-chart-inset-border: rgba(58, 112, 214, 0.14);
-  --data-vis-chart-track: rgba(153, 181, 255, 0.12);
-  --data-vis-gallery-shadow-soft: 0 1px 2px rgba(10, 13, 20, 0.03);
-  --data-vis-gallery-shadow-float: 0 16px 32px -12px rgba(14, 18, 27, 0.1);
-  --data-vis-demo-video-bg: #0d2144;
-  --data-vis-demo-surface-shadow: 0 14px 24px rgba(11, 20, 37, 0.16);
+  --data-vis-demo-positive: var(--portfolio-color-accent-moss);
+  --data-vis-demo-neutral: var(--portfolio-color-accent-ochre);
+  --data-vis-chart-inset-bg:
+    color-mix(in srgb, var(--portfolio-color-accent-blue) 44%, var(--portfolio-color-text-title));
+  --data-vis-chart-inset-border:
+    color-mix(in srgb, var(--portfolio-color-accent-blue) 14%, transparent);
+  --data-vis-chart-track:
+    color-mix(in srgb, var(--portfolio-color-accent-blue) 12%, transparent);
+  --data-vis-gallery-shadow-soft:
+    0 1px 2px color-mix(in srgb, var(--portfolio-color-text-title) 3%, transparent);
+  --data-vis-gallery-shadow-float: var(--portfolio-shadow-card);
+  --data-vis-demo-video-bg:
+    color-mix(in srgb, var(--portfolio-color-accent-blue) 54%, var(--portfolio-color-text-title));
+  --data-vis-demo-surface-shadow: var(--portfolio-shadow-card);
   --data-vis-indicator-surface:
     radial-gradient(circle at 40% 36%, rgba(75, 131, 255, 0.32), transparent 40%),
     linear-gradient(180deg, rgba(19, 42, 84, 0.98), rgba(13, 32, 66, 0.98));
-  --data-vis-indicator-border: rgba(64, 138, 255, 0.3);
-  --data-vis-indicator-frame-border: rgba(87, 160, 255, 0.28);
-  --data-vis-chart-positive-fill: linear-gradient(90deg, #60d2a6, #71e1c7);
-  --data-vis-chart-neutral-fill: linear-gradient(90deg, #ffa86a, #ffb38b);
-  --data-vis-chart-positive-fill-vertical: linear-gradient(180deg, #b5f58b, #7ddb9a);
-  --data-vis-chart-neutral-fill-vertical: linear-gradient(180deg, #ffc38d, #ff9c67);
-  --data-vis-legend-positive: #8bebb2;
-  --data-vis-legend-neutral: #ffaf74;
+  --data-vis-indicator-border:
+    color-mix(in srgb, var(--portfolio-color-accent-blue) 30%, transparent);
+  --data-vis-indicator-frame-border:
+    color-mix(in srgb, var(--portfolio-color-accent-blue) 28%, transparent);
+  --data-vis-chart-positive-fill:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--portfolio-color-accent-moss) 82%, var(--portfolio-color-text-inverted)),
+      color-mix(in srgb, var(--portfolio-color-accent-moss) 62%, var(--portfolio-color-accent-blue))
+    );
+  --data-vis-chart-neutral-fill:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--portfolio-color-accent-ochre) 78%, var(--portfolio-color-text-inverted)),
+      color-mix(in srgb, var(--portfolio-color-accent-ochre) 88%, var(--portfolio-color-accent-brand))
+    );
+  --data-vis-chart-positive-fill-vertical:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--portfolio-color-accent-moss) 62%, var(--portfolio-color-text-inverted)),
+      color-mix(in srgb, var(--portfolio-color-accent-moss) 88%, var(--portfolio-color-accent-blue))
+    );
+  --data-vis-chart-neutral-fill-vertical:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--portfolio-color-accent-ochre) 58%, var(--portfolio-color-text-inverted)),
+      color-mix(in srgb, var(--portfolio-color-accent-ochre) 86%, var(--portfolio-color-accent-brand))
+    );
+  --data-vis-legend-positive:
+    color-mix(in srgb, var(--portfolio-color-accent-moss) 70%, var(--portfolio-color-text-inverted));
+  --data-vis-legend-neutral:
+    color-mix(in srgb, var(--portfolio-color-accent-ochre) 72%, var(--portfolio-color-text-inverted));
   --data-vis-page-gap: 0;
   --data-vis-hero-padding-block-start: clamp(4.5rem, 8vw, 7.75rem);
   --data-vis-hero-padding-inline: clamp(1rem, 3vw, 1.5rem);
@@ -61,34 +101,74 @@
 }
 
 :global([data-color-theme="dark"]) .page {
-  --data-vis-hero-media-frame: rgba(18, 41, 84, 0.46);
+  --data-vis-hero-media-frame:
+    color-mix(in srgb, var(--portfolio-color-accent-blue) 46%, transparent);
   --data-vis-demo-surface:
-    radial-gradient(circle at 20% 24%, rgba(90, 144, 255, 0.2), transparent 32%),
-    linear-gradient(180deg, #14315f 0%, #10284f 100%);
-  --data-vis-demo-frame-border: rgba(86, 150, 255, 0.2);
-  --data-vis-demo-outline: rgba(92, 156, 255, 0.16);
+    radial-gradient(
+      circle at 20% 24%,
+      color-mix(in srgb, var(--portfolio-color-accent-blue) 20%, transparent),
+      transparent 32%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--portfolio-color-accent-blue) 48%, var(--portfolio-color-bg-pure)) 0%,
+      color-mix(in srgb, var(--portfolio-color-accent-blue) 58%, var(--portfolio-color-bg-pure)) 100%
+    );
+  --data-vis-demo-frame-border:
+    color-mix(in srgb, var(--portfolio-color-accent-blue) 20%, transparent);
+  --data-vis-demo-outline:
+    color-mix(in srgb, var(--portfolio-color-accent-blue) 16%, transparent);
   --data-vis-demo-label:
     color-mix(in srgb, var(--portfolio-color-accent-blue) 92%, var(--portfolio-color-text-inverted));
   --data-vis-demo-text-body:
     color-mix(in srgb, var(--portfolio-color-text-inverted) 90%, var(--portfolio-color-accent-blue));
   --data-vis-demo-text-muted:
     color-mix(in srgb, var(--portfolio-color-text-inverted) 76%, var(--portfolio-color-accent-blue));
-  --data-vis-chart-inset-bg: rgba(20, 44, 90, 0.94);
-  --data-vis-chart-inset-border: rgba(74, 130, 230, 0.18);
-  --data-vis-chart-track: rgba(166, 194, 255, 0.16);
-  --data-vis-gallery-shadow-float: 0 18px 36px -14px rgba(4, 12, 26, 0.26);
-  --data-vis-demo-surface-shadow: 0 16px 30px rgba(5, 14, 29, 0.24);
+  --data-vis-chart-inset-bg:
+    color-mix(in srgb, var(--portfolio-color-accent-blue) 48%, var(--portfolio-color-bg-pure));
+  --data-vis-chart-inset-border:
+    color-mix(in srgb, var(--portfolio-color-accent-blue) 18%, transparent);
+  --data-vis-chart-track:
+    color-mix(in srgb, var(--portfolio-color-accent-blue) 16%, transparent);
+  --data-vis-gallery-shadow-float: var(--portfolio-shadow-card);
+  --data-vis-demo-video-bg:
+    color-mix(in srgb, var(--portfolio-color-accent-blue) 58%, var(--portfolio-color-bg-pure));
+  --data-vis-demo-surface-shadow: var(--portfolio-shadow-card);
   --data-vis-indicator-surface:
     radial-gradient(circle at 40% 36%, rgba(92, 152, 255, 0.34), transparent 40%),
     linear-gradient(180deg, rgba(23, 50, 99, 0.98), rgba(16, 39, 78, 0.98));
-  --data-vis-indicator-border: rgba(92, 156, 255, 0.34);
-  --data-vis-indicator-frame-border: rgba(112, 176, 255, 0.32);
-  --data-vis-chart-positive-fill: linear-gradient(90deg, #79e5bc, #8deed0);
-  --data-vis-chart-neutral-fill: linear-gradient(90deg, #ffba80, #ffc59d);
-  --data-vis-chart-positive-fill-vertical: linear-gradient(180deg, #c8ff9e, #8ae5aa);
-  --data-vis-chart-neutral-fill-vertical: linear-gradient(180deg, #ffd1a4, #ffae7a);
-  --data-vis-legend-positive: #a5f5c6;
-  --data-vis-legend-neutral: #ffc189;
+  --data-vis-indicator-border:
+    color-mix(in srgb, var(--portfolio-color-accent-blue) 34%, transparent);
+  --data-vis-indicator-frame-border:
+    color-mix(in srgb, var(--portfolio-color-accent-blue) 32%, transparent);
+  --data-vis-chart-positive-fill:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--portfolio-color-accent-moss) 72%, var(--portfolio-color-text-inverted)),
+      color-mix(in srgb, var(--portfolio-color-accent-moss) 54%, var(--portfolio-color-accent-blue))
+    );
+  --data-vis-chart-neutral-fill:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--portfolio-color-accent-ochre) 72%, var(--portfolio-color-text-inverted)),
+      color-mix(in srgb, var(--portfolio-color-accent-ochre) 82%, var(--portfolio-color-accent-brand))
+    );
+  --data-vis-chart-positive-fill-vertical:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--portfolio-color-accent-moss) 54%, var(--portfolio-color-text-inverted)),
+      color-mix(in srgb, var(--portfolio-color-accent-moss) 78%, var(--portfolio-color-accent-blue))
+    );
+  --data-vis-chart-neutral-fill-vertical:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--portfolio-color-accent-ochre) 54%, var(--portfolio-color-text-inverted)),
+      color-mix(in srgb, var(--portfolio-color-accent-ochre) 80%, var(--portfolio-color-accent-brand))
+    );
+  --data-vis-legend-positive:
+    color-mix(in srgb, var(--portfolio-color-accent-moss) 62%, var(--portfolio-color-text-inverted));
+  --data-vis-legend-neutral:
+    color-mix(in srgb, var(--portfolio-color-accent-ochre) 66%, var(--portfolio-color-text-inverted));
 }
 
 .caseBody {

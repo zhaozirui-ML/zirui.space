@@ -144,9 +144,22 @@ img {
 
 .preview-page {
   background:
-    radial-gradient(circle at 12% 8%, rgba(223, 241, 243, 0.9), transparent 28%),
-    radial-gradient(circle at 88% 6%, rgba(253, 236, 234, 0.9), transparent 22%),
-    linear-gradient(180deg, #ffffff 0%, #fcfcfb 30%, #f8f8f6 100%);
+    radial-gradient(
+      circle at 12% 8%,
+      color-mix(in srgb, var(--ds-color-accent-sky) 90%, transparent),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 88% 6%,
+      color-mix(in srgb, var(--ds-color-accent-blush) 90%, transparent),
+      transparent 22%
+    ),
+    linear-gradient(
+      180deg,
+      var(--ds-color-surface) 0%,
+      var(--ds-color-canvas) 30%,
+      color-mix(in srgb, var(--ds-color-canvas) 72%, var(--ds-color-accent-sand)) 100%
+    );
 }
 
 .preview-shell {
@@ -160,10 +173,10 @@ img {
 
 .preview-topbar {
   align-items: center;
-  background: rgba(255, 255, 255, 0.94);
-  border: 1px solid rgba(227, 229, 232, 0.9);
+  background: color-mix(in srgb, var(--ds-color-surface) 94%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ds-color-border) 90%, transparent);
   border-radius: var(--ds-radius-md);
-  box-shadow: 0 10px 30px rgba(20, 24, 27, 0.04);
+  box-shadow: 0 10px 30px color-mix(in srgb, var(--ds-color-ink) 4%, transparent);
   display: flex;
   gap: var(--ds-space-md);
   justify-content: space-between;
@@ -264,7 +277,7 @@ img {
 }
 
 .preview-chip {
-  background: rgba(255, 255, 255, 0.72);
+  background: color-mix(in srgb, var(--ds-color-surface) 72%, transparent);
 }
 
 .preview-section {
@@ -297,8 +310,8 @@ img {
 }
 
 .preview-panel {
-  background: rgba(255, 255, 255, 0.74);
-  border: 1px solid rgba(227, 229, 232, 0.9);
+  background: color-mix(in srgb, var(--ds-color-surface) 74%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ds-color-border) 90%, transparent);
   border-radius: var(--ds-radius-lg);
   display: grid;
   gap: var(--ds-space-md);
@@ -365,7 +378,7 @@ img {
 }
 
 .preview-swatch__chip {
-  border: 1px solid rgba(20, 24, 27, 0.08);
+  border: 1px solid color-mix(in srgb, var(--ds-color-ink) 8%, transparent);
   border-radius: 0.875rem;
   display: block;
   height: 2.25rem;
@@ -444,7 +457,7 @@ img {
 }
 
 .preview-footer__copy {
-  color: rgba(255, 255, 255, 0.64);
+  color: color-mix(in srgb, var(--ds-color-surface) 64%, transparent);
   margin-top: var(--ds-space-xs);
 }
 

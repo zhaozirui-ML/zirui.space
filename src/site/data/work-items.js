@@ -1,5 +1,3 @@
-import { getStorageAssetUrl } from "../lib/get-storage-asset-url";
-
 const t = (zh, en) => ({ zh, en });
 
 // 作品数据继续集中在这里，首页、/work 和详情页都从同一个数据源读取。
@@ -33,8 +31,8 @@ export const workItems = [
     detailTheme: Object.freeze({
       headingAccentColor: "var(--portfolio-color-accent-brand)",
     }),
-    // 首页卡片改用 Supabase 中已经合成好的单张展示图。
-    homeImageSrc: getStorageAssetUrl("home/work-drawing-ledger.png"),
+    // 首页卡片属于高频公开展示资源，正式单图已同步到本地，优先走静态资源。
+    homeImageSrc: "/site/home/work-drawing-ledger.png",
     homeImageAlt: "图纸台账 2.0 项目预览图",
     workCardVariant: "feature",
     workTags: ["2025", "Web + App", "UI/UX Design"],
@@ -42,7 +40,8 @@ export const workItems = [
       type: "plain",
       alt: "Drawing Register 2.0 preview",
       ratio: "782 / 440",
-      src: getStorageAssetUrl("work/drawing-ledger-2-0/work-preview.png"),
+      // 这里改成新的资源路径，强制浏览器放弃旧缓存，避免继续命中之前误接入的占位图。
+      src: "/site/work/drawing-ledger-2-0/work-preview-ledger.png",
     },
   },
   {
@@ -71,10 +70,10 @@ export const workItems = [
     homeMediaPosition: "start",
     // 首页卡片已经改成单张合成图，避免响应式阶段继续维护前景/背景双图定位。
     detailTheme: Object.freeze({
-      headingAccentColor: "#647654",
+      headingAccentColor: "var(--portfolio-color-accent-moss)",
     }),
-    // 首页卡片改用 Supabase 中已经合成好的单张展示图。
-    homeImageSrc: getStorageAssetUrl("home/work-axzo.png"),
+    // 首页卡片属于高频公开展示资源，正式单图已同步到本地，优先走静态资源。
+    homeImageSrc: "/site/home/work-axzo.png",
     homeImageAlt: "AXZO Design System 项目预览图",
     homeMediaAdapt: {
       // Axzo 这张合成图本身留白更大；平板只做很轻的补偿，手机端避免继续放大前景。
@@ -92,13 +91,9 @@ export const workItems = [
     workPreview: {
       type: "framed",
       alt: "Axzo Design Portal preview",
-      backgroundSrc: getStorageAssetUrl(
-        "work/axzo-design-system/work-background.png"
-      ),
-      foregroundSrc: getStorageAssetUrl(
-        "work/axzo-design-system/work-foreground.png"
-      ),
-      foregroundAspectRatio: "302 / 180",
+      backgroundSrc: "/site/work/axzo-design-system/cover-card.png",
+      foregroundSrc: "/site/work/axzo-design-system/cover-background.png",
+      foregroundAspectRatio: "2880 / 1760",
       foregroundWidth: "85.31%",
       ratio: "354 / 240",
       shadow: "none",
@@ -130,26 +125,22 @@ export const workItems = [
     homeMediaPosition: "end",
     // 首页卡片已经改成单张合成图，避免响应式阶段继续维护前景/背景双图定位。
     detailTheme: Object.freeze({
-      headingAccentColor: "#5684AE",
+      headingAccentColor: "var(--portfolio-color-accent-blue)",
     }),
-    // 首页卡片改用 Supabase 中已经合成好的单张展示图。
-    homeImageSrc: getStorageAssetUrl("home/work-data-viz.png"),
+    // 首页卡片属于高频公开展示资源，正式单图已同步到本地，优先走静态资源。
+    homeImageSrc: "/site/home/work-data-viz.png",
     homeImageAlt: "大屏数据可视化项目预览图",
     workCardVariant: "compact",
     workTags: ["2025", "Large Screen", "UI/UX Design"],
     workPreview: {
       type: "framed",
       alt: "Data Visualization System preview",
-      backgroundSrc: getStorageAssetUrl(
-        "work/data-visualization/work-background.png"
-      ),
-      foregroundSrc: getStorageAssetUrl(
-        "work/data-visualization/work-foreground.png"
-      ),
+      backgroundSrc: "/site/work/data-visualization/work-background.png",
+      foregroundSrc: "/site/work/data-visualization/work-foreground.png",
       foregroundAspectRatio: "302 / 170",
       foregroundWidth: "85.31%",
       ratio: "354 / 240",
-      shadow: "0 3.2px 6.4px -2.4px rgba(14, 18, 27, 0.1)",
+      shadow: "var(--portfolio-shadow-card)",
     },
   },
   {
@@ -174,7 +165,7 @@ export const workItems = [
       type: "plain",
       alt: "CloudTower Design System preview",
       ratio: "782 / 505",
-      src: getStorageAssetUrl("work/cloudtower-design-system/work-preview.png"),
+      src: "/site/work/cloudtower-design-system/work-preview.png",
     },
   },
   {
@@ -199,7 +190,7 @@ export const workItems = [
       type: "plain",
       alt: "SMTX ELF Virtualization preview",
       ratio: "354 / 240",
-      src: getStorageAssetUrl("work/smtx-elf-virtualization/work-preview.png"),
+      src: "/site/work/smtx-elf-virtualization/work-preview.png",
     },
   },
   {
@@ -224,7 +215,7 @@ export const workItems = [
       type: "plain",
       alt: "VM Features Optimization preview",
       ratio: "354 / 240",
-      src: getStorageAssetUrl("work/vm-features-optimization/work-preview.png"),
+      src: "/site/work/vm-features-optimization/work-preview.png",
     },
   },
 ];
@@ -257,7 +248,7 @@ const explorationsRows = [
       alt: "An earnings exploration card with a dark gradient surface and a highlighted total.",
       id: "earnings-card",
       kind: "feature-image",
-      src: getStorageAssetUrl("work/explorations/exploration-earnings-card.png"),
+      src: "/site/work/explorations/exploration-earnings-card.png",
     },
   ],
   [
@@ -265,7 +256,7 @@ const explorationsRows = [
       alt: "A device-style exploration showing a sunset scene and compact metrics.",
       id: "device-card",
       kind: "device-image",
-      src: getStorageAssetUrl("work/explorations/exploration-hero-device.png"),
+      src: "/site/work/explorations/exploration-hero-device.png",
     },
   ],
   [
@@ -273,13 +264,13 @@ const explorationsRows = [
       alt: "A blue gradient app icon exploration with a white cloud symbol.",
       id: "cloud-icon-card",
       kind: "compact-image",
-      src: getStorageAssetUrl("work/explorations/exploration-cloud-card.png"),
+      src: "/site/work/explorations/exploration-cloud-card.png",
     },
     {
       alt: "A list-card exploration with a glowing top and bottom shadow.",
       id: "list-icon-card",
       kind: "compact-image",
-      src: getStorageAssetUrl("work/explorations/exploration-list-card.png"),
+      src: "/site/work/explorations/exploration-list-card.png",
     },
   ],
   [
@@ -287,13 +278,13 @@ const explorationsRows = [
       alt: "A neon magenta light study on a dark background.",
       id: "gradient-magenta-card",
       kind: "full-image",
-      src: getStorageAssetUrl("work/explorations/exploration-gradient-magenta.png"),
+      src: "/site/work/explorations/exploration-gradient-magenta.png",
     },
     {
       alt: "A neon teal light study on a dark background.",
       id: "gradient-teal-card",
       kind: "full-image",
-      src: getStorageAssetUrl("work/explorations/exploration-gradient-teal.png"),
+      src: "/site/work/explorations/exploration-gradient-teal.png",
     },
   ],
   [
@@ -301,7 +292,7 @@ const explorationsRows = [
       alt: "A boarding-pass style ticket exploration in cool blue tones.",
       id: "ticket-card",
       kind: "ticket-image",
-      src: getStorageAssetUrl("work/explorations/exploration-ticket.png"),
+      src: "/site/work/explorations/exploration-ticket.png",
     },
   ],
   [
@@ -309,7 +300,7 @@ const explorationsRows = [
       alt: "A vertical line texture study with a soft purple glow.",
       id: "lines-card",
       kind: "immersive-image",
-      src: getStorageAssetUrl("work/explorations/exploration-lines-purple.png"),
+      src: "/site/work/explorations/exploration-lines-purple.png",
     },
   ],
   [
@@ -317,7 +308,7 @@ const explorationsRows = [
       alt: "An abstract blurred color study blending purple, cream, and pink.",
       id: "blur-card",
       kind: "immersive-image",
-      src: getStorageAssetUrl("work/explorations/exploration-blur-pink.png"),
+      src: "/site/work/explorations/exploration-blur-pink.png",
     },
   ],
 ];

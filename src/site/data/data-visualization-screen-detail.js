@@ -1,32 +1,9 @@
-import { getStorageAssetUrl } from "../lib/get-storage-asset-url";
-
 const t = (zh, en) => ({ zh, en });
 
-const preferSupabaseAssets = true;
-
-const pendingSupabaseAssetPaths = new Set([]);
-
-function getStoragePathFromLocalSrc(localSrc) {
-  if (typeof localSrc !== "string" || !localSrc.startsWith("/site/work/data-visualization/")) {
-    return null;
-  }
-
-  // 这里直接让本地备份目录和 Supabase 路径保持同名，后面维护资源时不用再额外做目录映射转换。
-  return localSrc.replace(/^\/site\/work\/data-visualization\//, "work/data-visualization/");
-}
-
 function resolveAssetSource(localSrc) {
-  const storagePath = getStoragePathFromLocalSrc(localSrc);
-
-  if (!preferSupabaseAssets || !storagePath) {
-    return localSrc;
-  }
-
-  if (pendingSupabaseAssetPaths.has(storagePath)) {
-    return localSrc;
-  }
-
-  return getStorageAssetUrl(storagePath);
+  // 这页当前引用到的公开展示图片和视频都已经补齐到本地目录，
+  // 所以这里直接返回本地静态路径，避免继续保留无效的远程切换逻辑。
+  return localSrc;
 }
 
 // 先把案例长页内容整理成单独数据对象，第二阶段继续补后半段时不需要把文案散落在组件里。

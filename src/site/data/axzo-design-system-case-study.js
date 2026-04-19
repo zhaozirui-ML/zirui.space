@@ -1,10 +1,9 @@
-import { getStorageAssetUrl } from "../lib/get-storage-asset-url";
-
 const t = (zh, en) => ({ zh, en });
 
-// 这页的资源正式走 Supabase，避免主分支继续停留在本地预览路径。
-const getAxzoAssetUrl = (fileName) =>
-  getStorageAssetUrl(`work/axzo-design-system/${fileName}`);
+// 这页当前全部是公开展示型图片资源，先统一切回本地静态目录。
+// 这样可以优先减少案例长页里的图片流量，后续如果要重新托管到远程，
+// 只需要改这里一层映射，不用改页面组件。
+const getAxzoAssetUrl = (fileName) => `/site/work/axzo-design-system/${fileName}`;
 
 export const axzoDesignSystemCaseStudy = {
   cover: {

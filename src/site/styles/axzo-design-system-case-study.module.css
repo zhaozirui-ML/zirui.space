@@ -76,7 +76,7 @@
 
 .heroPanelFrame {
   border-radius: var(--axzo-card-radius);
-  box-shadow: 0 32px 80px rgba(53, 65, 71, 0.12);
+  box-shadow: var(--portfolio-shadow-card);
   overflow: hidden;
   position: relative;
   width: 100%;
@@ -316,7 +316,7 @@
 
 .insightMessage,
 .insightConclusion {
-  background: #faf9f6;
+  background: var(--portfolio-color-bg-soft);
   border: 1px solid var(--portfolio-color-border-light);
   border-radius: var(--axzo-card-radius-sm);
   padding: 0.75rem 1.25rem;
@@ -397,7 +397,7 @@
 
 .orbitCenter {
   align-items: center;
-  background: #faf9f6;
+  background: var(--portfolio-color-bg-soft);
   border-radius: 999px;
   display: grid;
   height: 6.25rem;
@@ -433,7 +433,7 @@
 }
 
 .orbitTag {
-  background: #faf9f6;
+  background: var(--portfolio-color-bg-soft);
   border: 1px solid var(--portfolio-color-border-light);
   border-radius: 0.25rem;
   color: var(--portfolio-color-text-body);

@@ -12,8 +12,16 @@
 .heroBackdrop {
   background:
     radial-gradient(circle at 15% 20%, color-mix(in srgb, var(--legacy-case-study-accent) 18%, transparent), transparent 42%),
-    radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.88), transparent 36%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 245, 238, 0.9));
+    radial-gradient(
+      circle at 80% 10%,
+      color-mix(in srgb, var(--portfolio-color-bg-pure) 88%, transparent),
+      transparent 36%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--portfolio-color-bg-pure) 98%, transparent),
+      color-mix(in srgb, var(--portfolio-color-canvas) 72%, var(--portfolio-color-surface-warm)) 100%
+    );
   inset: 0;
   position: absolute;
 }
@@ -73,8 +81,8 @@
 }
 
 .metadataCard {
-  background: rgba(255, 255, 255, 0.82);
-  border: 1px solid rgba(24, 24, 24, 0.08);
+  background: color-mix(in srgb, var(--portfolio-color-bg-pure) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--portfolio-color-text-title) 8%, transparent);
   border-radius: 1rem;
   display: grid;
   gap: 0.35rem;
@@ -106,10 +114,10 @@
 
 .heroMediaFrame {
   aspect-ratio: 16 / 10;
-  background: #f3efe4;
-  border: 1px solid rgba(24, 24, 24, 0.08);
+  background: var(--portfolio-color-surface-warm);
+  border: 1px solid color-mix(in srgb, var(--portfolio-color-text-title) 8%, transparent);
   border-radius: 1.75rem;
-  box-shadow: 0 20px 60px rgba(24, 24, 24, 0.08);
+  box-shadow: var(--portfolio-shadow-card);
   overflow: hidden;
   position: relative;
 }

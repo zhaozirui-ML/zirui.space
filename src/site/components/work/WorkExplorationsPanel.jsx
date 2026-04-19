@@ -11,10 +11,8 @@ function ExplorationCard({ card }) {
           <Image
             alt={card.alt}
             fill
-            loading="eager"
             sizes="(max-width: 900px) min(100vw - 5rem, 500px), 500px"
             src={card.src}
-            unoptimized
           />
         </div>
       </article>
@@ -28,10 +26,8 @@ function ExplorationCard({ card }) {
           <Image
             alt={card.alt}
             fill
-            loading="eager"
             sizes="(max-width: 900px) min(100vw - 5rem, 456px), 456px"
             src={card.src}
-            unoptimized
           />
         </div>
       </article>
@@ -45,10 +41,8 @@ function ExplorationCard({ card }) {
           <Image
             alt={card.alt}
             fill
-            loading="eager"
             sizes="(max-width: 900px) min(100vw - 5rem, 500px), 500px"
             src={card.src}
-            unoptimized
           />
         </div>
       </article>
@@ -68,10 +62,8 @@ function ExplorationCard({ card }) {
           <Image
             alt={card.alt}
             fill
-            loading="eager"
             sizes="(max-width: 900px) min(100vw - 5rem, 260px), 260px"
             src={card.src}
-            unoptimized
           />
         </div>
       </article>
@@ -85,10 +77,8 @@ function ExplorationCard({ card }) {
           <Image
             alt={card.alt}
             fill
-            loading="eager"
             sizes="(max-width: 900px) calc(100vw - 4rem), 404px"
             src={card.src}
-            unoptimized
           />
         </div>
       </article>
@@ -106,10 +96,8 @@ function ExplorationCard({ card }) {
         <Image
           alt={card.alt}
           fill
-          loading="eager"
           sizes="(max-width: 900px) calc(100vw - 4rem), 830px"
           src={card.src}
-          unoptimized
         />
       </div>
     </article>

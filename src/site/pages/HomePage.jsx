@@ -40,7 +40,6 @@ export default function HomePage({ language }) {
               className={styles.heroAvatar}
               height={76}
               src={homeIntro.avatarSrc}
-              unoptimized
               width={76}
             />
           )}

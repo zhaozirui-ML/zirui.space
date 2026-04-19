@@ -32,7 +32,6 @@ function WorkProjectPreview({ item, prioritizeMedia = false }) {
           loading={prioritizeMedia ? "eager" : undefined}
           sizes="(max-width: 900px) calc(100vw - 4rem), 354px"
           src={preview.backgroundSrc}
-          unoptimized
         />
         <div className={styles.previewOverlay} style={overlayStyle}>
           <Image
@@ -43,7 +42,6 @@ function WorkProjectPreview({ item, prioritizeMedia = false }) {
             loading={prioritizeMedia ? "eager" : undefined}
             sizes="(max-width: 900px) calc((100vw - 4rem) * 0.85), 302px"
             src={preview.foregroundSrc}
-            unoptimized
           />
         </div>
       </div>
@@ -63,7 +61,6 @@ function WorkProjectPreview({ item, prioritizeMedia = false }) {
             : "(max-width: 900px) calc(100vw - 4rem), 782px"
         }
         src={preview.src}
-        unoptimized
       />
     </div>
   );

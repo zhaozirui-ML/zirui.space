@@ -1,5 +1,3 @@
-import { getBlogAssetUrl } from "../lib/get-blog-asset-url";
-
 const t = (zh, en) => ({ zh, en });
 
 // Blog 内容继续集中在数据层管理。
@@ -19,12 +17,12 @@ export const blogPosts = [
     ),
     date: "2023年6月28日",
     category: t("设计", "DESIGN"),
-    imageSrc: getBlogAssetUrl("smartx-design-workflow", "cover.jpg"),
+    imageSrc: "/site/blog/smartx-design-workflow/cover.jpg",
     imageAlt: t(
       "SmartX 设计工作流文章封面",
       "Cover image for The SmartX Design Workflow",
     ),
-    heroImageSrc: getBlogAssetUrl("smartx-design-workflow", "cover.jpg"),
+    heroImageSrc: "/site/blog/smartx-design-workflow/cover.jpg",
     heroImageAlt: t(
       "SmartX 设计工作流文章 banner",
       "Banner image for The SmartX Design Workflow",
@@ -110,7 +108,7 @@ export const blogPosts = [
       },
       {
         type: "image",
-        src: getBlogAssetUrl("smartx-design-workflow", "body-1.png"),
+        src: "/site/blog/smartx-design-workflow/body-1.png",
         alt: t(
           "SmartX 设计流程框架图",
           "Diagram of the SmartX design process framework",
@@ -125,7 +123,7 @@ export const blogPosts = [
       },
       {
         type: "image",
-        src: getBlogAssetUrl("smartx-design-workflow", "body-2.png"),
+        src: "/site/blog/smartx-design-workflow/body-2.png",
         alt: t(
           "SmartX 设计流程细化步骤图",
           "Diagram of the refined SmartX design workflow steps",
@@ -154,12 +152,12 @@ export const blogPosts = [
     ),
     date: "2023年2月10日",
     category: t("指南", "GUIDE"),
-    imageSrc: getBlogAssetUrl("communication-at-work", "cover.jpg"),
+    imageSrc: "/site/blog/communication-at-work/cover.jpg",
     imageAlt: t(
       "沟通的方法文章封面",
       "Cover image for The Method of Communication",
     ),
-    heroImageSrc: getBlogAssetUrl("communication-at-work", "cover.jpg"),
+    heroImageSrc: "/site/blog/communication-at-work/cover.jpg",
     heroImageAlt: t(
       "沟通的方法文章 banner",
       "Banner image for The Method of Communication",
@@ -266,7 +264,7 @@ export const blogPosts = [
       },
       {
         type: "image",
-        src: getBlogAssetUrl("communication-at-work", "body-1.png"),
+        src: "/site/blog/communication-at-work/body-1.png",
         alt: t("沟通模式图 1", "Communication styles diagram 1"),
       },
       {
@@ -298,7 +296,7 @@ export const blogPosts = [
       },
       {
         type: "image",
-        src: getBlogAssetUrl("communication-at-work", "body-2.png"),
+        src: "/site/blog/communication-at-work/body-2.png",
         alt: t("沟通模式图 2", "Communication styles diagram 2"),
       },
       {
@@ -614,15 +612,15 @@ export const blogPosts = [
     ),
     date: "2022年4月20日",
     category: t("指南", "GUIDE"),
-    imageSrc: getBlogAssetUrl("hammer-and-nails", "cover.jpg"),
+    imageSrc: "/site/blog/hammer-and-nails/cover.jpg",
     imageAlt: t("锤子与钉子文章缩略图", "Thumbnail for Hammer and Nail"),
-    heroImageSrc: getBlogAssetUrl("hammer-and-nails", "cover.jpg"),
+    heroImageSrc: "/site/blog/hammer-and-nails/cover.jpg",
     heroImageAlt: t("锤子与钉子文章 banner", "Banner image for Hammer and Nail"),
     supportsEnglishDetail: true,
     contentBlocks: [
       {
         type: "image",
-        src: getBlogAssetUrl("hammer-and-nails", "body-1.png"),
+        src: "/site/blog/hammer-and-nails/body-1.png",
         alt: t("锤子与钉子文章内容图 1", "Content image 1 for Hammer and Nail"),
       },
       {
@@ -813,7 +811,7 @@ export const blogPosts = [
       },
       {
         type: "image",
-        src: getBlogAssetUrl("hammer-and-nails", "body-2.png"),
+        src: "/site/blog/hammer-and-nails/body-2.png",
         alt: t("锤子与钉子文章内容图 2", "Content image 2 for Hammer and Nail"),
       },
       {
@@ -870,12 +868,12 @@ export const blogPosts = [
     ),
     date: "2024年1月15日",
     category: t("工具", "TOOLS"),
-    imageSrc: getBlogAssetUrl("obsidian-from-honeymoon-to-wakeup", "cover.jpg"),
+    imageSrc: "/site/blog/obsidian-from-honeymoon-to-wakeup/cover.jpg",
     imageAlt: t(
       "Obsidian：从满心欢喜到梦醒时分文章缩略图",
       "Thumbnail for Obsidian: From Honeymoon to Wake-Up Call",
     ),
-    heroImageSrc: getBlogAssetUrl("obsidian-from-honeymoon-to-wakeup", "cover.jpg"),
+    heroImageSrc: "/site/blog/obsidian-from-honeymoon-to-wakeup/cover.jpg",
     heroImageAlt: t(
       "Obsidian：从满心欢喜到梦醒时分文章 banner",
       "Banner image for Obsidian: From Honeymoon to Wake-Up Call",
@@ -979,7 +977,7 @@ export const blogPosts = [
       },
       {
         type: "image",
-        src: getBlogAssetUrl("obsidian-from-honeymoon-to-wakeup", "body-1.png"),
+        src: "/site/blog/obsidian-from-honeymoon-to-wakeup/body-1.png",
         alt: t(
           "Obsidian 笔记工具的相关配图",
           "Illustration related to the Obsidian note-taking app",
@@ -1001,9 +999,9 @@ export const blogPosts = [
     ),
     date: "2025年10月23日",
     category: t("指南", "GUIDE"),
-    imageSrc: getBlogAssetUrl("minimal-todos", "cover.jpg"),
+    imageSrc: "/site/blog/minimal-todos/cover.jpg",
     imageAlt: t("简约 Todos 文章缩略图", "Thumbnail for Minimal Todos"),
-    heroImageSrc: getBlogAssetUrl("minimal-todos", "cover.jpg"),
+    heroImageSrc: "/site/blog/minimal-todos/cover.jpg",
     heroImageAlt: t("简约 Todos 文章 banner", "Banner image for Minimal Todos"),
     supportsEnglishDetail: true,
     contentBlocks: [
