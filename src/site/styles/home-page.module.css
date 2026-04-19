@@ -442,9 +442,10 @@
 }
 
 .workCardMedia {
-  /* 前景和背景需要同步响应式变化，所以把前景占比也暴露成变量给断点公式复用。 */
-  --work-card-foreground-width-ratio: 0.8501;
-  --work-card-foreground-height-ratio: 0.74;
+  --work-card-image-position-y-tablet: 50%;
+  --work-card-image-position-y-mobile: 50%;
+  --work-card-image-scale-tablet: 1;
+  --work-card-image-scale-mobile: 1;
   border-radius: var(--home-work-card-media-radius);
   height: 19.5rem;
   min-height: 19.5rem;
@@ -460,24 +461,9 @@
 
 .workCardImage {
   object-fit: cover;
-}
-
-.workCardImageContain {
-  /* 验证阶段先完整展示远程测试图，方便观察资源是否正确加载。 */
-  object-fit: contain;
   object-position: center;
-}
-
-.workCardForeground {
-  overflow: hidden;
-  position: absolute;
-}
-
-.workCardForegroundImage {
-  /* 前景图优先完整展示；真正的尺寸由外层前景框负责约束。 */
-  object-fit: contain;
-  object-position: center;
-  position: absolute;
+  transform: scale(1);
+  transform-origin: center;
 }
 
 .blogList {
@@ -563,7 +549,7 @@
   margin: 0;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 767px) {
   .homePage {
     --home-main-offset-top: 3rem;
     --home-page-gap: 4.5rem;
@@ -599,13 +585,28 @@
 
   .workCardMedia,
   .workCardFeatured .workCardMedia {
-    aspect-ratio: calc(
-      var(--work-card-foreground-aspect-ratio, 1.7778) *
-        var(--work-card-foreground-width-ratio, 0.8501) /
-        var(--work-card-foreground-height-ratio)
-    );
+    /* 单列后沿用桌面端标准卡片的媒体框比例，而不是回到素材原始比例。 */
+    aspect-ratio: 367 / 312;
     height: auto;
+    justify-self: stretch;
+    max-width: 100%;
     min-height: 0;
+    width: 100%;
+  }
+
+  .workCardFeatured .workCardMedia {
+    /* 主项目在桌面端是更宽的媒体框，移动端保留这种“更横向”的视觉关系。 */
+    aspect-ratio: 452 / 336;
+  }
+
+  .workCardStandard .workCardMedia {
+    /* 平板端标准卡片媒体框稍微拉高，避免顶部显得过窄。 */
+    aspect-ratio: 367 / 332;
+  }
+
+  .workCardImage {
+    object-position: center var(--work-card-image-position-y-tablet);
+    transform: scale(var(--work-card-image-scale-tablet));
   }
 
   .blogCard {
@@ -685,29 +686,25 @@
 
   .workCardMedia,
   .workCardFeatured .workCardMedia {
-    --work-card-foreground-height-ratio: 0.78;
-    aspect-ratio: calc(
-      var(--work-card-foreground-aspect-ratio, 1.7778) *
-        var(--work-card-foreground-width-ratio, 0.8501) /
-        var(--work-card-foreground-height-ratio)
-    );
+    /* 手机端继续沿用桌面媒体框逻辑，但允许更紧凑地占满宽度。 */
+    aspect-ratio: 367 / 312;
     justify-self: stretch;
     max-width: 100%;
     min-height: 0;
     width: 100%;
   }
 
-  .workCardMedia[data-work-slug="drawing-ledger-2-0"] {
-    /* 第一张在手机端保持同样的媒体区尺寸，但把前景宽度再放大一档。 */
-    --work-card-foreground-width-ratio: 0.89;
-    height: 19.5rem;
-    min-height: 19.5rem;
+  .workCardFeatured .workCardMedia {
+    aspect-ratio: 452 / 336;
   }
 
-  .workCardMedia[data-work-slug="axzo-design-system"],
-  .workCardMedia[data-work-slug="data-visualization-screen"] {
-    /* 后两张在手机端把背景容器再放大一档，避免前景显得过于顶满。 */
-    --work-card-foreground-height-ratio: 0.88;
+  .workCardStandard .workCardMedia {
+    aspect-ratio: 367 / 312;
+  }
+
+  .workCardImage {
+    object-position: center var(--work-card-image-position-y-mobile);
+    transform: scale(var(--work-card-image-scale-mobile));
   }
 
   .blogCard {

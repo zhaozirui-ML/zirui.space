@@ -29,30 +29,12 @@ export const workItems = [
     showOnHome: true,
     homeCardVariant: "featured",
     homeMediaPosition: "end",
-    homeMediaFrame: {
-      backgroundSrc: getStorageAssetUrl(
-        "work/drawing-ledger-2-0/home-background.png"
-      ),
-      foregroundAspectRatio: "360 / 225",
-      foregroundHeight: "66.96%",
-      foregroundImageHeight: "119.56%",
-      foregroundLeft: "10.22%",
-      foregroundImageLeft: "-6.11%",
-      foregroundImageMaxWidth: "none",
-      foregroundRadius: "0",
-      foregroundShadow: "none",
-      foregroundSrc: getStorageAssetUrl(
-        "work/drawing-ledger-2-0/home-foreground.png"
-      ),
-      foregroundImageTop: "-5.33%",
-      foregroundImageWidth: "112.22%",
-      foregroundTop: "16.67%",
-      foregroundWidth: "80%",
-    },
+    // 首页卡片已经改成单张合成图，避免响应式阶段继续维护前景/背景双图定位。
     detailTheme: Object.freeze({
       headingAccentColor: "var(--portfolio-color-accent-brand)",
     }),
-    homeImageSrc: "/site/home/work-drawing-ledger.png",
+    // 首页卡片改用 Supabase 中已经合成好的单张展示图。
+    homeImageSrc: getStorageAssetUrl("home/work-drawing-ledger.png"),
     homeImageAlt: "图纸台账 2.0 项目预览图",
     workCardVariant: "feature",
     workTags: ["2025", "Web + App", "UI/UX Design"],
@@ -87,27 +69,24 @@ export const workItems = [
     showOnHome: true,
     homeCardVariant: "standard",
     homeMediaPosition: "start",
-    homeMediaFrame: {
-      backgroundSrc: getStorageAssetUrl(
-        "work/axzo-design-system/home-background.png"
-      ),
-      foregroundAspectRatio: "312 / 190.694",
-      foregroundHeight: "61.12%",
-      foregroundLeft: "50%",
-      foregroundRadius: "0.25rem",
-      foregroundShadow: "none",
-      foregroundSrc: getStorageAssetUrl(
-        "work/axzo-design-system/home-foreground.png"
-      ),
-      foregroundTop: "50%",
-      foregroundTransform: "translate(-50%, -50%)",
-      foregroundWidth: "85.01%",
-    },
+    // 首页卡片已经改成单张合成图，避免响应式阶段继续维护前景/背景双图定位。
     detailTheme: Object.freeze({
       headingAccentColor: "#647654",
     }),
-    homeImageSrc: "/site/home/work-axzo.png",
+    // 首页卡片改用 Supabase 中已经合成好的单张展示图。
+    homeImageSrc: getStorageAssetUrl("home/work-axzo.png"),
     homeImageAlt: "AXZO Design System 项目预览图",
+    homeMediaAdapt: {
+      // Axzo 这张合成图本身留白更大；平板只做很轻的补偿，手机端避免继续放大前景。
+      mobile: {
+        positionY: "48%",
+        scale: 1,
+      },
+      tablet: {
+        positionY: "48%",
+        scale: 1,
+      },
+    },
     workCardVariant: "compact",
     workTags: ["2025", "Web", "Visual Design"],
     workPreview: {
@@ -149,26 +128,12 @@ export const workItems = [
     showOnHome: true,
     homeCardVariant: "standard",
     homeMediaPosition: "end",
-    homeMediaFrame: {
-      backgroundSrc: getStorageAssetUrl(
-        "work/data-visualization/home-background.png"
-      ),
-      foregroundAspectRatio: "302.4 / 170.1",
-      foregroundHeight: "54.52%",
-      foregroundLeft: "50%",
-      foregroundRadius: "0.25rem",
-      foregroundShadow: "0 3.2px 6.4px -2.4px rgba(14, 18, 27, 0.1)",
-      foregroundSrc: getStorageAssetUrl(
-        "work/data-visualization/home-foreground.png"
-      ),
-      foregroundTop: "50%",
-      foregroundTransform: "translate(-50%, -50%)",
-      foregroundWidth: "82.40%",
-    },
+    // 首页卡片已经改成单张合成图，避免响应式阶段继续维护前景/背景双图定位。
     detailTheme: Object.freeze({
       headingAccentColor: "#5684AE",
     }),
-    homeImageSrc: "/site/home/work-data-viz.png",
+    // 首页卡片改用 Supabase 中已经合成好的单张展示图。
+    homeImageSrc: getStorageAssetUrl("home/work-data-viz.png"),
     homeImageAlt: "大屏数据可视化项目预览图",
     workCardVariant: "compact",
     workTags: ["2025", "Large Screen", "UI/UX Design"],
