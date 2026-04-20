@@ -11,43 +11,6 @@ import styles from "../../styles/drawing-ledger-case-study.module.css";
 
 const t = (zh, en) => ({ zh, en });
 
-const lifecycleStates = [
-  { dashed: true, enWidth: 124, label: "上传完成", width: 82 },
-  { enWidth: 104, label: "解析中", width: 68 },
-  { enWidth: 176, label: "待确认", width: 68 },
-  { enWidth: 144, label: "待下发", width: 68 },
-  { enWidth: 104, label: "可使用", width: 68 },
-  { enWidth: 92, label: "已过期", width: 68 },
-  { enWidth: 112, label: "已废弃", width: 68 },
-];
-
-const taskAnalysisRows = [
-  {
-    height: 84,
-    scenario: "上传图纸后",
-    tasks: ["查看刚上传的图纸", "查看历史上传记录", "了解图纸审批情况"],
-    user: "上传人",
-  },
-  {
-    height: 66,
-    scenario: "被推送确认待办",
-    tasks: ["对待确认的图纸进行查看和确认操作", "查看历史确认记录"],
-    user: "确认人",
-  },
-  {
-    height: 73,
-    scenario: "被推送下发待办",
-    tasks: ["对待下发的图纸进行查看和下发操作", "查看历史下发记录"],
-    user: "下发人",
-  },
-  {
-    height: 66,
-    scenario: "随时查看操作",
-    tasks: ["承担以上所有任务"],
-    user: "多权限管理员",
-  },
-];
-
 const optionAPros = [
   "待处理和已处理的内容非常清晰，一目了然。",
   "支持不同状态图纸按时间排序。",
@@ -102,56 +65,17 @@ const assignmentCards = [
   },
 ];
 
-const responsiveRules = [
-  "设 X = Viewport 宽度 - 侧边栏宽度 290px（64 + 226）。",
-  "当 X 在 [1024px, 1280px) 区间时，呈现 3 列。",
-  "当 X 在 [1280px, 1920px] 区间时，呈现 4 列。",
-  "当 X 在 (1920px, 2048px] 区间时，呈现 5 列。",
-  "当 X 宽度大于 2048px 时，以每张卡片 360px 计算，横向排列并自动换行。",
-  "卡片最小宽度 300px，高度固定 65px。",
-];
-
-const mobileExplorationAssets = [
-  assets.mobileExplore1,
-  assets.mobileExplore2,
-  assets.mobileExplore3,
-  assets.mobileExplore4,
-];
-
-const mobileIterationRows = [
-  {
-    label: "上线第一版",
-    assets: [assets.mobileIteration1, assets.mobileIteration2],
-  },
-  {
-    label: "上线第二版",
-    assets: [assets.mobileIteration3, assets.mobileIteration4],
-  },
-];
-
-const mobileLandingAssets = [
-  {
-    // 用稳定 id 作为 React key，避免展示文案重复时触发重复 key 报错。
-    id: "project-drawings",
-    asset: assets.mobileLanded1,
-    label: "项目图纸",
-  },
-  {
-    id: "ledger-home",
-    asset: assets.mobileLanded2,
-    label: "台账首页",
-  },
-  {
-    id: "ledger-detail-1",
-    asset: assets.mobileLanded3,
-    label: "台账详情",
-  },
-  {
-    id: "ledger-detail-2",
-    asset: assets.mobileLanded4,
-    label: "台账详情",
-  },
-];
+const responsiveRules = {
+  intro: "布局排列规则：",
+  lead: "设 X = Viewport 宽度 - 侧边栏宽度 290px（64 + 226）",
+  ranges: [
+    "当 X 在 [1024px, 1280px) 区间时，呈现 3 列",
+    "当 X 在 [1280px, 1920px] 区间时，呈现 4 列",
+    "当 X 在 (1920px, 2048px] 区间时，呈现 5 列",
+    "当 X 宽度大于 2048px 时，以每张卡片 360px 计算，横向排列并自动换行",
+  ],
+  cardSize: "卡片尺寸：最小宽度 300px，不设最大宽度；高度固定 65px",
+};
 
 const tocItems = [
   {
@@ -251,16 +175,6 @@ const tocItems = [
   },
 ];
 
-const lifecycleStateLabels = {
-  上传完成: "Upload complete",
-  解析中: "Processing",
-  待确认: "Awaiting confirmation",
-  待下发: "Awaiting release",
-  可使用: "Available",
-  已过期: "Expired",
-  已废弃: "Deprecated",
-};
-
 function resolveLocalizedValue(value, language) {
   if (Array.isArray(value)) {
     return value.map((item) => resolveLocalizedValue(item, language));
@@ -289,12 +203,14 @@ function resolveAssetAlt(asset, language) {
     return alt;
   }
 
-  const altMap = {
-    "图纸台账 2.0 封面背景图": "Drawing Register 2.0 cover background",
-    "图纸台账 2.0 封面主视觉": "Drawing Register 2.0 hero image",
-    "问题定位区域背景图": "Problem definition section background",
-    "旧版图纸台账页截图": "Old register page screenshot",
-    "Round 1 Option A 背景图": "Round 1 Option A background",
+    const altMap = {
+      "图纸台账 2.0 封面背景图": "Drawing Register 2.0 cover background",
+      "图纸台账 2.0 封面主视觉": "Drawing Register 2.0 hero image",
+      "问题定位区域背景图": "Problem definition section background",
+      "旧版图纸台账页截图": "Old register page screenshot",
+      "图纸生命周期状态流转关系图": "Drawing lifecycle state flow diagram",
+      "用户任务梳理图": "User task analysis diagram",
+      "Round 1 Option A 背景图": "Round 1 Option A background",
     "Round 1 Option A 方案截图": "Round 1 Option A screenshot",
     "Round 1 Option B 背景图": "Round 1 Option B background",
     "Round 1 Option B 方案截图": "Round 1 Option B screenshot",
@@ -502,74 +418,16 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
       "响应式展示区域背景图": "Responsive section background",
       "待办区响应式展示示意图": "Responsive task area demo",
       "移动端改版对比背景图": "Mobile redesign comparison background",
-      "移动端改版前页面": "Mobile before screenshot",
-      "移动端改版后页面": "Mobile after screenshot",
+      "移动端改版前后对比图": "Mobile before and after comparison",
       "移动端入口设计参考整理图": "Mobile entry reference board",
-      "移动端入口探索图 1": "Mobile entry exploration 1",
-      "移动端入口探索图 2": "Mobile entry exploration 2",
-      "移动端入口探索图 3": "Mobile entry exploration 3",
-      "移动端入口探索图 4": "Mobile entry exploration 4",
-      "移动端视觉迭代版本 1": "Mobile visual iteration 1",
-      "移动端视觉迭代版本 2": "Mobile visual iteration 2",
-      "移动端视觉迭代版本 3": "Mobile visual iteration 3",
-      "移动端视觉迭代版本 4": "Mobile visual iteration 4",
+      "移动端初版方案探索图": "Mobile initial concept exploration board",
+      "移动端视觉设计迭代图": "Mobile visual design iteration board",
       "移动端 Tab 展开收起交互示意图": "Mobile tab expand/collapse demo",
-      "项目图纸页面": "Project drawings page",
-      "台账首页页面": "Register home page",
-      "台账详情页面 1": "Register details page 1",
-      "台账详情页面 2": "Register details page 2",
+      "移动端全部核心页面展示图": "All mobile core pages showcase",
     };
 
     return altMap[alt] ?? alt;
   };
-  const localizedLifecycleStates = lifecycleStates.map((state) => ({
-    ...state,
-    label: language === "en" ? lifecycleStateLabels[state.label] ?? state.label : state.label,
-    width: language === "en" ? state.enWidth : state.width,
-  }));
-  const lifecycleConnectorWidth = language === "en" ? 20 : 49;
-  const lifecycleFlowWidth =
-    localizedLifecycleStates.reduce((total, state) => total + state.width, 0) +
-    lifecycleConnectorWidth * (localizedLifecycleStates.length - 1);
-  /** @type {import("react").CSSProperties & Record<"--case-lifecycle-flow-width", string>} */
-  const lifecycleFigureStyle = {
-    "--case-lifecycle-flow-width": `${lifecycleFlowWidth}px`,
-  };
-  const localizedTaskAnalysisRows = taskAnalysisRows.map((row) => ({
-    ...row,
-    scenario:
-      language === "en"
-        ? {
-            上传图纸后: "After uploading drawings",
-            被推送确认待办: "When a confirmation task is pushed",
-            被推送下发待办: "When a release task is pushed",
-            随时查看操作: "When a user needs to review tasks at any time",
-          }[row.scenario] ?? row.scenario
-        : row.scenario,
-    tasks: row.tasks.map((task) =>
-      language === "en"
-        ? {
-            查看刚上传的图纸: "View newly uploaded drawings",
-            查看历史上传记录: "View upload history",
-            了解图纸审批情况: "Check drawing approval status",
-            对待确认的图纸进行查看和确认操作: "Review and confirm drawings awaiting confirmation",
-            查看历史确认记录: "View confirmation history",
-            对待下发的图纸进行查看和下发操作: "Review and release drawings awaiting release",
-            查看历史下发记录: "View release history",
-            承担以上所有任务: "Handle all of the above tasks",
-          }[task] ?? task
-        : task,
-    ),
-    user:
-      language === "en"
-        ? {
-            上传人: "Uploader",
-            确认人: "Approver",
-            下发人: "Releaser",
-            多权限管理员: "Multi-role administrator",
-          }[row.user] ?? row.user
-        : row.user,
-  }));
   const localizedOptionAPros = optionAPros.map((item) =>
     language === "en"
       ? {
@@ -647,45 +505,21 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
           }[item.description] ?? item.description
         : item.description,
   }));
-  const localizedResponsiveRules = responsiveRules.map((item) =>
+  const localizedResponsiveRules =
     language === "en"
       ? {
-          "设 X = Viewport 宽度 - 侧边栏宽度 290px（64 + 226）。":
-            "Let X = viewport width - 290px sidebar width (64 + 226).",
-          "当 X 在 [1024px, 1280px) 区间时，呈现 3 列。":
+          intro: "Layout rules:",
+          lead: "Let X = viewport width - 290px sidebar width (64 + 226).",
+          ranges: [
             "When X is in the [1024px, 1280px) range, show 3 columns.",
-          "当 X 在 [1280px, 1920px] 区间时，呈现 4 列。":
             "When X is in the [1280px, 1920px] range, show 4 columns.",
-          "当 X 在 (1920px, 2048px] 区间时，呈现 5 列。":
             "When X is in the (1920px, 2048px] range, show 5 columns.",
-          "当 X 宽度大于 2048px 时，以每张卡片 360px 计算，横向排列并自动换行。":
             "When X is wider than 2048px, lay out cards horizontally at 360px each and wrap automatically.",
-          "卡片最小宽度 300px，高度固定 65px。":
-            "Each card has a minimum width of 300px and a fixed height of 65px.",
-        }[item] ?? item
-      : item,
-  );
-  const localizedMobileIterationRows = mobileIterationRows.map((row) => ({
-    ...row,
-    label:
-      language === "en"
-        ? {
-            上线第一版: "Version 1 launch",
-            上线第二版: "Version 2 launch",
-          }[row.label] ?? row.label
-        : row.label,
-  }));
-  const localizedMobileLandingAssets = mobileLandingAssets.map((item) => ({
-    ...item,
-    label:
-      language === "en"
-        ? {
-            项目图纸: "Project drawings",
-            台账首页: "Register home",
-            台账详情: "Register details",
-          }[item.label] ?? item.label
-        : item.label,
-  }));
+          ],
+          cardSize:
+            "Card size: minimum width 300px, no maximum width, fixed height 65px.",
+        }
+      : responsiveRules;
   const localizedTocItems =
     language === "en"
       ? tocItems.map((item) => ({
@@ -790,54 +624,19 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     </div>
                   </CaseStudyHeadingOne>
 
-                  <section className={styles.chartCard}>
-                    <h3 className={styles.chartTitle}>{display("图纸生命周期状态流转关系图", "Drawing lifecycle state flow")}</h3>
-                    <div
-                      className={styles.lifecycleFigure}
-                      aria-label={display("图纸状态流转图", "Drawing lifecycle state flow")}
-                      style={lifecycleFigureStyle}
-                    >
-                      <div className={styles.lifecycleFlow}>
-                        {localizedLifecycleStates.flatMap((state, index) => {
-                          const items = [
-                            <span
-                              className={joinClassNames(
-                                styles.lifecycleChip,
-                                state.dashed ? styles.lifecycleChipDashed : null
-                              )}
-                              key={`${state.label}-chip`}
-                              style={{ width: `${state.width}px` }}
-                            >
-                              {state.label}
-                            </span>,
-                          ];
-
-                          if (index < lifecycleStates.length - 1) {
-                            items.push(
-                              <span
-                                aria-hidden="true"
-                                className={styles.lifecycleConnector}
-                                key={`${state.label}-connector`}
-                              />
-                            );
-                          }
-
-                          return items;
-                        })}
-                      </div>
-
-                      <div className={styles.lifecycleLegendFigure}>
-                        <div aria-hidden="true" className={styles.lifecycleLegendTrack}>
-                          <span className={styles.lifecycleLegendStart} />
-                          <span className={styles.lifecycleLegendHorizontal} />
-                          <span className={styles.lifecycleLegendEnd} />
-                          <span className={styles.lifecycleLegendStem} />
-                          <span className={styles.lifecycleLegendDot} />
-                        </div>
-                        <p className={styles.chartLegend}>{display("图纸台账中涉及的状态", "States included in the drawing register")}</p>
-                      </div>
+                  <figure className={styles.figure}>
+                    <div className={styles.lifecycleFigure}>
+                      <Image
+                        alt={resolveAlt(assets.lifecycleFlow)}
+                        className={styles.lifecycleFigureImage}
+                        height={468}
+                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                        src={assets.lifecycleFlow.src}
+                        unoptimized={assets.lifecycleFlow.unoptimized}
+                        width={1664}
+                      />
                     </div>
-                  </section>
+                  </figure>
                 </div>
 
                 <div className={styles.sectionCluster}>
@@ -855,12 +654,20 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     </div>
                   </CaseStudyHeadingOne>
 
-                  <MediaFigure
-                    asset={assets.problemLedgerV1}
-                    backgroundAsset={assets.problemBackground}
-                    caption={display("旧版图纸台账页", "Old register page")}
-                    language={language}
-                  />
+                  <figure className={styles.figure}>
+                    <div className={styles.problemFigure}>
+                      <Image
+                        alt={resolveAlt(assets.problemLedgerV1)}
+                        className={styles.problemFigureImage}
+                        height={936}
+                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                        src={assets.problemLedgerV1.src}
+                        unoptimized={assets.problemLedgerV1.unoptimized}
+                        width={1664}
+                      />
+                    </div>
+                    <figcaption className={styles.caption}>{display("旧版图纸台账页", "Old register page")}</figcaption>
+                  </figure>
                 </div>
 
                   <CaseStudyHeadingOne
@@ -898,43 +705,16 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                   </CaseStudyHeadingTwo>
 
                   <figure className={styles.figure}>
-                    <div className={styles.taskPanel}>
-                      <p className={styles.taskPanelTitle}>{display("User Task Analysis", "User Task Analysis")}</p>
-                      <div className={styles.taskTableWrap}>
-                        <table className={styles.taskTable}>
-                          <colgroup>
-                            <col className={styles.taskColumnUser} />
-                            <col className={styles.taskColumnScenario} />
-                            <col className={styles.taskColumnTasks} />
-                          </colgroup>
-                          <thead>
-                            <tr>
-                              <th className={joinClassNames(styles.taskCellHead, styles.taskCellUser)}>{display("核心用户", "Core user")}</th>
-                              <th className={joinClassNames(styles.taskCellHead, styles.taskCellScenario)}>{display("主要场景", "Main scenario")}</th>
-                              <th className={joinClassNames(styles.taskCellHead, styles.taskCellTasks)}>{display("用户任务", "User tasks")}</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                        {localizedTaskAnalysisRows.map((row) => (
-                              <tr key={row.user} style={{ height: `${row.height}px` }}>
-                                <td className={joinClassNames(styles.taskCellBody, styles.taskCellUser)}>
-                                  {row.user}
-                                </td>
-                                <td className={joinClassNames(styles.taskCellBody, styles.taskCellScenario)}>
-                                  {row.scenario}
-                                </td>
-                                <td className={joinClassNames(styles.taskCellTasksBody, styles.taskCellTasks)}>
-                                  <ul className={styles.compactList}>
-                                    {row.tasks.map((task) => (
-                                      <li key={task}>{task}</li>
-                                    ))}
-                                  </ul>
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
+                    <div className={styles.taskTableFigure}>
+                      <Image
+                        alt={resolveAlt(assets.userTaskAnalysis)}
+                        className={styles.taskTableFigureImage}
+                        height={1018}
+                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                        src={assets.userTaskAnalysis.src}
+                        unoptimized={assets.userTaskAnalysis.unoptimized}
+                        width={1664}
+                      />
                     </div>
                     <figcaption className={styles.caption}>{display("用户任务梳理", "User task analysis")}</figcaption>
                   </figure>
@@ -957,12 +737,22 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     </div>
                   </CaseStudyHeadingTwo>
 
-                  <MediaFigure
-                    asset={assets.round1OptionA}
-                    backgroundAsset={assets.round1OptionABackground}
-                    caption={display("Option A：待处理和未处理模块上下布局，且支持展开收起", "Option A: pending and processed modules stacked vertically with expand/collapse")}
-                    language={language}
-                  />
+                  <figure className={styles.figure}>
+                    <div className={styles.singleMediaFigure}>
+                      <Image
+                        alt={resolveAlt(assets.round1OptionA)}
+                        className={styles.singleMediaFigureImage}
+                        height={938}
+                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                        src={assets.round1OptionA.src}
+                        unoptimized={assets.round1OptionA.unoptimized}
+                        width={1664}
+                      />
+                    </div>
+                    <figcaption className={styles.caption}>
+                      {display("Option A：待处理和未处理模块上下布局，且支持展开收起", "Option A: pending and processed modules stacked vertically with expand/collapse")}
+                    </figcaption>
+                  </figure>
 
                   <OptionSummary
                     cons={localizedOptionACons}
@@ -972,13 +762,22 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     title={display("Option A", "Option A")}
                   />
 
-                  <MediaFigure
-                    asset={assets.round1OptionB}
-                    backgroundAsset={assets.round1OptionBBackground}
-                    caption={display("Option B：待处理和已处理模块左右布局，用 Tab 组件区分", "Option B: pending and processed modules laid out side by side and separated by tabs")}
-                    className={styles.figureSectionBreak}
-                    language={language}
-                  />
+                  <figure className={joinClassNames(styles.figure, styles.figureSectionBreak)}>
+                    <div className={styles.singleMediaFigure}>
+                      <Image
+                        alt={resolveAlt(assets.round1OptionB)}
+                        className={styles.singleMediaFigureImage}
+                        height={938}
+                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                        src={assets.round1OptionB.src}
+                        unoptimized={assets.round1OptionB.unoptimized}
+                        width={1664}
+                      />
+                    </div>
+                    <figcaption className={styles.caption}>
+                      {display("Option B：待处理和已处理模块左右布局，用 Tab 组件区分", "Option B: pending and processed modules laid out side by side and separated by tabs")}
+                    </figcaption>
+                  </figure>
 
                   <OptionSummary
                     cons={localizedOptionBCons}
@@ -988,17 +787,22 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     title={display("Option B", "Option B")}
                   />
 
-                  <MediaFigure
-                    asset={assets.round1Overview}
-                    backgroundAsset={assets.round1OverviewBackground}
-                    caption={display("探索方案概览 · 第一轮", "Exploration overview · Round 1")}
-                    className={styles.figureSectionBreak}
-                    frameHeight="29.25rem"
-                    imageHeight="34.9375rem"
-                    imageInsetTop="2.1875rem"
-                    imageInsetX="2.1875rem"
-                    language={language}
-                  />
+                  <figure className={joinClassNames(styles.figure, styles.figureSectionBreak)}>
+                    <div className={styles.singleMediaFigure}>
+                      <Image
+                        alt={resolveAlt(assets.round1Overview)}
+                        className={styles.singleMediaFigureImage}
+                        height={938}
+                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                        src={assets.round1Overview.src}
+                        unoptimized={assets.round1Overview.unoptimized}
+                        width={1664}
+                      />
+                    </div>
+                    <figcaption className={styles.caption}>
+                      {display("探索方案概览 · 第一轮", "Exploration overview · Round 1")}
+                    </figcaption>
+                  </figure>
 
                   <article className={styles.feedbackCard}>
                     <h3 className={styles.feedbackTitle}>{display("内部评审反馈", "Internal review feedback")}</h3>
@@ -1036,12 +840,22 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     </div>
                   </CaseStudyHeadingTwo>
 
-                  <MediaFigure
-                    asset={assets.round2OptionC}
-                    backgroundAsset={assets.round2OptionCBackground}
-                    caption={display("Option C：待办区 + 表格的融合视图", "Option C: a blended task area + table view")}
-                    language={language}
-                  />
+                  <figure className={styles.figure}>
+                    <div className={styles.singleMediaFigure}>
+                      <Image
+                        alt={resolveAlt(assets.round2OptionC)}
+                        className={styles.singleMediaFigureImage}
+                        height={938}
+                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                        src={assets.round2OptionC.src}
+                        unoptimized={assets.round2OptionC.unoptimized}
+                        width={1664}
+                      />
+                    </div>
+                    <figcaption className={styles.caption}>
+                      {display("Option C：待办区 + 表格的融合视图", "Option C: a blended task area + table view")}
+                    </figcaption>
+                  </figure>
                 </div>
 
                 <div className={styles.sectionCluster}>
@@ -1056,14 +870,22 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     </div>
                   </CaseStudyHeadingTwo>
 
-                  <MediaFigure
-                    asset={assets.round2FinalVisual}
-                    backgroundAsset={assets.round2FinalBackground}
-                    caption={display("最终版视觉稿", "Final visual draft")}
-                    frameTone="surface"
-                    imageClassName={styles.shadowedInnerMedia}
-                    language={language}
-                  />
+                  <figure className={styles.figure}>
+                    <div className={styles.singleMediaFigure}>
+                      <Image
+                        alt={resolveAlt(assets.round2FinalVisual)}
+                        className={styles.singleMediaFigureImage}
+                        height={938}
+                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                        src={assets.round2FinalVisual.src}
+                        unoptimized={assets.round2FinalVisual.unoptimized}
+                        width={1664}
+                      />
+                    </div>
+                    <figcaption className={styles.caption}>
+                      {display("最终版视觉稿", "Final visual draft")}
+                    </figcaption>
+                  </figure>
                 </div>
               </div>
             </div>
@@ -1079,7 +901,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                 title={display("细节展开", "Details")}
               >
                 <div className={styles.richText}>
-                  <p>{display("设计就是在细节里见真章。", "Design is all about detail.")}</p>
+                  <p>Design is all about detail.</p>
                 </div>
               </CaseStudyHeadingOne>
 
@@ -1185,11 +1007,22 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                         "To create a smoother experience, I defined how the task area should behave at different screen widths.",
                       )}
                     </p>
-                    <ul>
-                      {localizedResponsiveRules.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
+                    <div className={styles.responsiveRulesBlock}>
+                      <p className={styles.responsiveRulesLabel}>
+                        {localizedResponsiveRules.intro}
+                      </p>
+                      <ul className={styles.responsiveRulesList}>
+                        <li>
+                          {localizedResponsiveRules.lead}
+                          <ul className={styles.responsiveRulesSublist}>
+                            {localizedResponsiveRules.ranges.map((item) => (
+                              <li key={item}>{item}</li>
+                            ))}
+                          </ul>
+                        </li>
+                        <li>{localizedResponsiveRules.cardSize}</li>
+                      </ul>
+                    </div>
                   </div>
                 </CaseStudyHeadingTwo>
 
@@ -1255,39 +1088,16 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                   </CaseStudyHeadingTwo>
 
                   <figure className={styles.figure}>
-                    <div className={joinClassNames(styles.mediaFrame, styles.mediaFrameWarm, styles.mobileCompareFrame)}>
-                      {assets.mobileComparisonBackground.src ? (
-                        <Image
-                          alt=""
-                          className={styles.mediaBackground}
-                          fill
-                          sizes="(max-width: 900px) calc(100vw - 2rem), 832px"
-                          src={assets.mobileComparisonBackground.src}
-                          unoptimized={assets.mobileComparisonBackground.unoptimized}
-                        />
-                      ) : null}
-                      <div className={styles.mobileComparePhoneBefore}>
-                        <Image
-                          alt={resolveAlt(assets.mobileAfter)}
-                          className={styles.phoneImage}
-                          fill
-                          sizes="245px"
-                          src={assets.mobileAfter.src}
-                          unoptimized={assets.mobileAfter.unoptimized}
-                        />
-                      </div>
-                      <div className={styles.mobileComparePhoneAfter}>
-                        <Image
-                          alt={resolveAlt(assets.mobileBefore)}
-                          className={styles.phoneImage}
-                          fill
-                          sizes="245px"
-                          src={assets.mobileBefore.src}
-                          unoptimized={assets.mobileBefore.unoptimized}
-                        />
-                      </div>
-                      <p className={styles.beforeAfterLabelLeft}>Before</p>
-                      <p className={styles.beforeAfterLabelRight}>After</p>
+                    <div className={styles.mobileCompareFigure}>
+                      <Image
+                        alt={resolveAlt(assets.mobileBeforeAfter)}
+                        className={styles.mobileCompareFigureImage}
+                        height={938}
+                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                        src={assets.mobileBeforeAfter.src}
+                        unoptimized={assets.mobileBeforeAfter.unoptimized}
+                        width={1664}
+                      />
                     </div>
                     <figcaption className={styles.caption}>{display("原版（左）VS 新版（右）", "Original (left) vs. redesigned (right)")}</figcaption>
                   </figure>
@@ -1321,33 +1131,34 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     </div>
                   </CaseStudyHeadingThree>
 
-                  <MediaFigure
-                    asset={assets.mobileReference}
-                    caption={display("产品收集参考", "Reference collection")}
-                    frameTone="warm"
-                    frameHeight="22.5rem"
-                    imageHeight="15.5rem"
-                    imageInsetTop="3.53125rem"
-                    imageInsetX="2.5rem"
-                    language={language}
-                  />
+                  <figure className={styles.figure}>
+                    <div className={styles.singleMediaFigure}>
+                      <Image
+                        alt={resolveAlt(assets.mobileReference)}
+                        className={styles.singleMediaFigureImage}
+                        height={938}
+                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                        src={assets.mobileReference.src}
+                        unoptimized={assets.mobileReference.unoptimized}
+                        width={1664}
+                      />
+                    </div>
+                    <figcaption className={styles.caption}>
+                      {display("产品收集参考", "Reference collection")}
+                    </figcaption>
+                  </figure>
 
                   <figure className={styles.figure}>
-                    <div className={styles.explorationGridFrame}>
-                      <div className={styles.explorationGrid}>
-                        {mobileExplorationAssets.map((asset) => (
-                          <div className={styles.explorationCell} key={asset.alt}>
-                            <Image
-                              alt={resolveAlt(asset)}
-                              className={styles.mediaImageCover}
-                              fill
-                              sizes="(max-width: 900px) calc(50vw - 2rem), 240px"
-                              src={asset.src}
-                              unoptimized={asset.unoptimized}
-                            />
-                          </div>
-                        ))}
-                      </div>
+                    <div className={styles.explorationFigure}>
+                      <Image
+                        alt={resolveAlt(assets.mobileExploration)}
+                        className={styles.explorationFigureImage}
+                        height={840}
+                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                        src={assets.mobileExploration.src}
+                        unoptimized={assets.mobileExploration.unoptimized}
+                        width={1664}
+                      />
                     </div>
                     <figcaption className={styles.caption}>{display("初版方案探索", "Initial concept exploration")}</figcaption>
                   </figure>
@@ -1365,28 +1176,16 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     </div>
                   </CaseStudyHeadingThree>
 
-                  <div className={styles.iterationFrame}>
-                    <div className={styles.iterationLayout}>
-                      {mobileIterationRows.map((row) => (
-                        <div className={styles.iterationRow} key={row.label}>
-                          <p className={styles.iterationRowLabel}>{row.label}</p>
-                          <div className={styles.iterationRowImages}>
-                            {row.assets.map((asset) => (
-                              <div className={styles.iterationImageWrap} key={asset.alt}>
-                                <Image
-                                  alt={resolveAlt(asset)}
-                                  className={styles.mediaImageCover}
-                                  fill
-                                  sizes="240px"
-                                  src={asset.src}
-                                  unoptimized={asset.unoptimized}
-                                />
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                  <div className={styles.iterationFigure}>
+                    <Image
+                      alt={resolveAlt(assets.mobileIteration)}
+                      className={styles.iterationFigureImage}
+                      height={936}
+                      sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                      src={assets.mobileIteration.src}
+                      unoptimized={assets.mobileIteration.unoptimized}
+                      width={1664}
+                    />
                   </div>
                   <p className={styles.caption}>{display("视觉设计迭代", "Visual design iteration")}</p>
                 </div>
@@ -1444,34 +1243,16 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                   </CaseStudyHeadingTwo>
 
                   <figure className={styles.figure}>
-                    <div className={styles.mobileLandingFrame}>
-                      {assets.mobileComparisonBackground.src ? (
-                        <Image
-                          alt=""
-                          className={styles.mobileLandingBackground}
-                          fill
-                          sizes="(max-width: 900px) calc(100vw - 2rem), 832px"
-                          src={assets.mobileComparisonBackground.src}
-                          unoptimized={assets.mobileComparisonBackground.unoptimized}
-                        />
-                      ) : null}
-                      <div className={styles.mobileLandingGrid}>
-                        {localizedMobileLandingAssets.map((item) => (
-                          <article className={styles.mobileLandingCard} key={item.id}>
-                            <div className={styles.mobileLandingPhone}>
-                              <Image
-                                alt={resolveAlt(item.asset)}
-                                className={joinClassNames(styles.phoneImage, styles.mobileLandingImage)}
-                                fill
-                                sizes="(max-width: 900px) calc(50vw - 2rem), 160px"
-                                src={item.asset.src}
-                                unoptimized={item.asset.unoptimized}
-                              />
-                            </div>
-                            <p className={styles.mobileLandingLabel}>{item.label}</p>
-                          </article>
-                        ))}
-                      </div>
+                    <div className={styles.mobileLandingFigure}>
+                      <Image
+                        alt={resolveAlt(assets.mobileLandedPages)}
+                        className={styles.mobileLandingFigureImage}
+                        height={938}
+                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                        src={assets.mobileLandedPages.src}
+                        unoptimized={assets.mobileLandedPages.unoptimized}
+                        width={1664}
+                      />
                     </div>
                     <figcaption className={styles.caption}>{display("全部核心页面", "All core pages")}</figcaption>
                   </figure>

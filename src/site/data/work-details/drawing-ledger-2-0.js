@@ -15,13 +15,21 @@ const assetDefinitions = {
     alt: "旧版图纸台账页截图",
     localSrc: "/site/work/drawing-ledger-2-0/problem-ledger-v1.png",
   },
+  lifecycleFlow: {
+    alt: "图纸生命周期状态流转关系图",
+    localSrc: "/site/work/drawing-ledger-2-0/lifecycle-flow.png",
+  },
+  userTaskAnalysis: {
+    alt: "用户任务梳理图",
+    localSrc: "/site/work/drawing-ledger-2-0/user-task-analysis.png",
+  },
   round1OptionABackground: {
     alt: "Round 1 Option A 背景图",
     localSrc: "/site/work/drawing-ledger-2-0/round1-option-a-background.png",
   },
   round1OptionA: {
     alt: "Round 1 Option A 方案截图",
-    localSrc: "/site/work/drawing-ledger-2-0/round1-option-a.png",
+    localSrc: "/site/work/drawing-ledger-2-0/round1-option-a-v2.png",
   },
   round1OptionBBackground: {
     alt: "Round 1 Option B 背景图",
@@ -29,7 +37,7 @@ const assetDefinitions = {
   },
   round1OptionB: {
     alt: "Round 1 Option B 方案截图",
-    localSrc: "/site/work/drawing-ledger-2-0/round1-option-b.png",
+    localSrc: "/site/work/drawing-ledger-2-0/round1-option-b-v2.png",
   },
   round1OverviewBackground: {
     alt: "Round 1 探索方案总览背景图",
@@ -37,7 +45,7 @@ const assetDefinitions = {
   },
   round1Overview: {
     alt: "Round 1 探索方案总览",
-    localSrc: "/site/work/drawing-ledger-2-0/round1-overview.png",
+    localSrc: "/site/work/drawing-ledger-2-0/round1-overview-v2.png",
   },
   round2OptionCBackground: {
     alt: "Round 2 Option C 背景图",
@@ -45,7 +53,7 @@ const assetDefinitions = {
   },
   round2OptionC: {
     alt: "Round 2 Option C 融合视图截图",
-    localSrc: "/site/work/drawing-ledger-2-0/round2-option-c.png",
+    localSrc: "/site/work/drawing-ledger-2-0/round2-option-c-v2.png",
   },
   round2FinalBackground: {
     alt: "Round 2 最终视觉稿背景图",
@@ -53,7 +61,7 @@ const assetDefinitions = {
   },
   round2FinalVisual: {
     alt: "图纸台账 2.0 最终视觉稿",
-    localSrc: "/site/work/drawing-ledger-2-0/round2-final-visual.png",
+    localSrc: "/site/work/drawing-ledger-2-0/round2-final-visual-v2.png",
   },
   detailsAssignmentsBackground: {
     alt: "代办区展示逻辑背景图",
@@ -93,70 +101,30 @@ const assetDefinitions = {
     alt: "移动端改版对比背景图",
     localSrc: "/site/work/drawing-ledger-2-0/mobile-comparison-background.png",
   },
-  mobileBefore: {
-    alt: "移动端改版前页面",
-    localSrc: "/site/work/drawing-ledger-2-0/mobile-before.png",
-  },
-  mobileAfter: {
-    alt: "移动端改版后页面",
-    localSrc: "/site/work/drawing-ledger-2-0/mobile-after.png",
+  mobileBeforeAfter: {
+    alt: "移动端改版前后对比图",
+    localSrc: "/site/work/drawing-ledger-2-0/mobile-before-after.png",
   },
   mobileReference: {
     alt: "移动端入口设计参考整理图",
     localSrc: "/site/work/drawing-ledger-2-0/mobile-reference.png",
   },
-  mobileExplore1: {
-    alt: "移动端入口探索图 1",
-    localSrc: "/site/work/drawing-ledger-2-0/mobile-explore-1.png",
+  mobileExploration: {
+    alt: "移动端初版方案探索图",
+    localSrc: "/site/work/drawing-ledger-2-0/mobile-exploration.png",
   },
-  mobileExplore2: {
-    alt: "移动端入口探索图 2",
-    localSrc: "/site/work/drawing-ledger-2-0/mobile-explore-2.png",
-  },
-  mobileExplore3: {
-    alt: "移动端入口探索图 3",
-    localSrc: "/site/work/drawing-ledger-2-0/mobile-explore-3.png",
-  },
-  mobileExplore4: {
-    alt: "移动端入口探索图 4",
-    localSrc: "/site/work/drawing-ledger-2-0/mobile-explore-4.png",
-  },
-  mobileIteration1: {
-    alt: "移动端视觉迭代版本 1",
-    localSrc: "/site/work/drawing-ledger-2-0/mobile-iteration-1.png",
-  },
-  mobileIteration2: {
-    alt: "移动端视觉迭代版本 2",
-    localSrc: "/site/work/drawing-ledger-2-0/mobile-iteration-2.png",
-  },
-  mobileIteration3: {
-    alt: "移动端视觉迭代版本 3",
-    localSrc: "/site/work/drawing-ledger-2-0/mobile-iteration-3.png",
-  },
-  mobileIteration4: {
-    alt: "移动端视觉迭代版本 4",
-    localSrc: "/site/work/drawing-ledger-2-0/mobile-iteration-4.png",
+  mobileIteration: {
+    alt: "移动端视觉设计迭代图",
+    localSrc: "/site/work/drawing-ledger-2-0/mobile-iteration.png",
   },
   mobileTabInteraction: {
     alt: "移动端 Tab 展开收起交互示意图",
     localSrc: "/site/work/drawing-ledger-2-0/mobile-tab-interaction.mp4",
     mediaType: "video",
   },
-  mobileLanded1: {
-    alt: "项目图纸页面",
-    localSrc: "/site/work/drawing-ledger-2-0/mobile-before.png",
-  },
-  mobileLanded2: {
-    alt: "台账首页页面",
-    localSrc: "/site/work/drawing-ledger-2-0/mobile-landed-2.png",
-  },
-  mobileLanded3: {
-    alt: "台账详情页面 1",
-    localSrc: "/site/work/drawing-ledger-2-0/mobile-landed-3.png",
-  },
-  mobileLanded4: {
-    alt: "台账详情页面 2",
-    localSrc: "/site/work/drawing-ledger-2-0/mobile-landed-4.png",
+  mobileLandedPages: {
+    alt: "移动端全部核心页面展示图",
+    localSrc: "/site/work/drawing-ledger-2-0/mobile-landed-pages.png",
   },
 };
 
