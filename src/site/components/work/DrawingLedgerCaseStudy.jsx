@@ -971,26 +971,33 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                   </div>
                 </CaseStudyHeadingTwo>
 
-                <MediaFigure
-                  asset={assets.workflowDemo}
-                  backgroundAsset={assets.detailsAssignmentsBackground}
-                  caption={display("图纸下发流程联动示意", "Drawing release workflow demo")}
-                  frameHeight="29.25rem"
-                  frameTone="surface"
-                  imageHeight="21.5rem"
-                  imageInsetTop="3.875rem"
-                  imageInsetX="2.5rem"
-                  language={language}
-                  placeholder={
-                    <PendingAssetNotice
-                      body={display(
-                        "这里已经预留好正式容器。后续你把流程演示图上传到 Supabase 后，只需要补资源映射，不用动布局。",
-                        "The final container is already reserved here. Once you upload the workflow demo to Supabase, you only need to wire up the asset mapping without changing the layout.",
-                      )}
-                      title={display("流程演示图待接入", "Workflow demo to be connected")}
+                <figure className={styles.figure}>
+                  <div className={styles.workflowDemoFrame}>
+                    <Image
+                      alt=""
+                      className={styles.workflowDemoBackground}
+                      fill
+                      sizes="(max-width: 900px) calc(100vw - 2rem), 832px"
+                      src={assets.detailsAssignmentsBackground.src}
+                      unoptimized={assets.detailsAssignmentsBackground.unoptimized}
                     />
-                  }
-                />
+                    <div className={styles.workflowDemoVideoWrap}>
+                      <video
+                        aria-label={resolveAssetAlt(assets.workflowDemo, language)}
+                        autoPlay
+                        className={styles.workflowDemoVideo}
+                        loop
+                        muted
+                        playsInline
+                        preload="metadata"
+                        src={assets.workflowDemo.src}
+                      />
+                    </div>
+                  </div>
+                  <figcaption className={styles.caption}>
+                    {display("图纸下发流程联动示意", "Drawing release workflow demo")}
+                  </figcaption>
+                </figure>
               </div>
 
               <div className={styles.sectionCluster}>
@@ -1026,26 +1033,33 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                   </div>
                 </CaseStudyHeadingTwo>
 
-                <MediaFigure
-                  asset={assets.responsiveDemo}
-                  backgroundAsset={assets.detailsResponsiveBackground}
-                  caption={display("待办区响应式展示示意", "Responsive task area demo")}
-                  frameHeight="29.25rem"
-                  frameTone="surface"
-                  imageHeight="21.5rem"
-                  imageInsetTop="3.875rem"
-                  imageInsetX="2.5rem"
-                  language={language}
-                  placeholder={
-                    <PendingAssetNotice
-                      body={display(
-                        "目前先保留外层媒体结构和说明文案。等你把响应式演示图上传后，这里会自动长成完整视觉。",
-                        "For now, the outer media structure and explanatory copy remain in place. Once you upload the responsive demo, this section will automatically grow into the full visual treatment.",
-                      )}
-                      title={display("响应式演示图待接入", "Responsive demo to be connected")}
+                <figure className={styles.figure}>
+                  <div className={styles.responsiveDemoFrame}>
+                    <Image
+                      alt=""
+                      className={styles.responsiveDemoBackground}
+                      fill
+                      sizes="(max-width: 900px) calc(100vw - 2rem), 832px"
+                      src={assets.detailsResponsiveBackground.src}
+                      unoptimized={assets.detailsResponsiveBackground.unoptimized}
                     />
-                  }
-                />
+                    <div className={styles.responsiveDemoVideoWrap}>
+                      <video
+                        aria-label={resolveAssetAlt(assets.responsiveDemo, language)}
+                        autoPlay
+                        className={styles.responsiveDemoVideo}
+                        loop
+                        muted
+                        playsInline
+                        preload="metadata"
+                        src={assets.responsiveDemo.src}
+                      />
+                    </div>
+                  </div>
+                  <figcaption className={styles.caption}>
+                    {display("待办区响应式展示示意", "Responsive task area demo")}
+                  </figcaption>
+                </figure>
               </div>
             </div>
           </div>
@@ -1207,27 +1221,23 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     </div>
                   </CaseStudyHeadingThree>
 
-                  <MediaFigure
-                    asset={assets.mobileTabInteraction}
-                    backgroundAsset={assets.mobileComparisonBackground}
-                    caption={display("Tab Bar 展开收起交互", "Tab bar expand/collapse interaction")}
-                    frameHeight="29.25rem"
-                    imageClassName={styles.mobileInteractionPhone}
-                    imageHeight="33.3125rem"
-                    imageInsetTop="5rem"
-                    imageInsetX="18.3125rem"
-                    language={language}
-                    placeholder={
-                      <PendingAssetNotice
-                        body={display(
-                          "交互演示图后续可以直接上传到 Supabase，并接到这个已经预留好的手机展示位里。",
-                          "You can upload the interaction demo to Supabase later and connect it to this reserved phone mockup slot.",
-                        )}
-                        eyebrow={display("待接入资源", "Pending asset")}
-                        title={display("移动端交互演示待接入", "Mobile interaction demo to be connected")}
+                  <figure className={styles.figure}>
+                    <div className={styles.singleMediaFigure}>
+                      <video
+                        aria-label={resolveAssetAlt(assets.mobileTabInteraction, language)}
+                        autoPlay
+                        className={styles.singleMediaFigureVideo}
+                        loop
+                        muted
+                        playsInline
+                        preload="metadata"
+                        src={assets.mobileTabInteraction.src}
                       />
-                    }
-                  />
+                    </div>
+                    <figcaption className={styles.caption}>
+                      {display("Tab Bar 展开收起交互", "Tab bar expand/collapse interaction")}
+                    </figcaption>
+                  </figure>
                 </div>
 
                 <div className={styles.sectionCluster}>

@@ -107,7 +107,7 @@ const assetDefinitions = {
   },
   mobileReference: {
     alt: "移动端入口设计参考整理图",
-    localSrc: "/site/work/drawing-ledger-2-0/mobile-reference.png",
+    localSrc: "/site/work/drawing-ledger-2-0/mobile-reference-v2.png",
   },
   mobileExploration: {
     alt: "移动端初版方案探索图",
@@ -119,7 +119,7 @@ const assetDefinitions = {
   },
   mobileTabInteraction: {
     alt: "移动端 Tab 展开收起交互示意图",
-    localSrc: "/site/work/drawing-ledger-2-0/mobile-tab-interaction.mp4",
+    localSrc: "/site/work/drawing-ledger-2-0/mobile-tab-interaction-v2.mp4",
     mediaType: "video",
   },
   mobileLandedPages: {

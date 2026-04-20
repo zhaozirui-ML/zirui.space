@@ -393,6 +393,77 @@
   width: 100%;
 }
 
+.singleMediaFigureVideo {
+  border-radius: var(--portfolio-radius-md);
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.responsiveDemoFrame {
+  background: var(--portfolio-semantic-media-frame-background);
+  border: 1px solid var(--portfolio-semantic-media-frame-border);
+  border-radius: var(--portfolio-radius-md);
+  display: grid;
+  min-height: 18rem;
+  overflow: hidden;
+  padding: clamp(1rem, 3vw, 2rem);
+  place-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.responsiveDemoBackground {
+  object-fit: cover;
+}
+
+.responsiveDemoVideoWrap {
+  border-radius: var(--portfolio-radius-md);
+  overflow: hidden;
+  position: relative;
+  width: min(100%, 44rem);
+  z-index: 1;
+}
+
+.responsiveDemoVideo {
+  border-radius: var(--portfolio-radius-md);
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.workflowDemoFrame {
+  background: var(--portfolio-semantic-media-frame-background);
+  border: 1px solid var(--portfolio-semantic-media-frame-border);
+  border-radius: var(--portfolio-radius-md);
+  display: grid;
+  min-height: 18rem;
+  overflow: hidden;
+  padding: clamp(1rem, 3vw, 2rem);
+  place-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.workflowDemoBackground {
+  object-fit: cover;
+}
+
+.workflowDemoVideoWrap {
+  border-radius: var(--portfolio-radius-md);
+  overflow: hidden;
+  position: relative;
+  width: min(100%, 44rem);
+  z-index: 1;
+}
+
+.workflowDemoVideo {
+  border-radius: var(--portfolio-radius-md);
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
 .chartLegend,
 .caption,
 .iterationCaption,
@@ -1029,17 +1100,33 @@
     top: auto;
   }
 
+  .roleScrollerSection {
+    overflow: visible;
+  }
+
   .roleScrollerFrame {
     height: auto;
+    overflow: visible;
   }
 
   .roleScroller {
-    grid-auto-columns: minmax(100%, 100%);
+    gap: var(--drawing-ledger-panel-gap-lg);
+    grid-auto-columns: auto;
+    grid-auto-flow: row;
+    overflow: visible;
     padding: var(--drawing-ledger-panel-padding-md);
+    scroll-padding-left: 0;
+    scroll-snap-type: none;
+  }
+
+  .roleCard {
+    max-width: none;
   }
 
   .roleCardMedia {
-    height: 11rem;
+    aspect-ratio: 736 / 216;
+    height: auto;
+    max-width: none;
   }
 
   .mobileCompareFrame {
