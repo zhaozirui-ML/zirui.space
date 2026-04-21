@@ -99,6 +99,9 @@ export default function SiteHeader({ colorTheme, onThemeToggle }) {
                 alt=""
                 aria-hidden="true"
                 className={styles.brandMark}
+                // 告诉 Next.js 这张头像在不同断点下只会以很小的固定宽度显示，
+                // 这样它就能选择更合适的图片尺寸，避免继续出现 fill + sizes 缺失警告。
+                sizes="(max-width: 640px) 26px, 29px"
                 style={{
                   inset: 0,
                   objectFit: "contain",

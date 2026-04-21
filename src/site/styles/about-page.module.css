@@ -128,11 +128,6 @@
   width: var(--about-sns-icon-size);
 }
 
-.snsLink:hover {
-  color: var(--portfolio-color-accent-brand);
-  transform: translateY(-1px);
-}
-
 .snsLink:focus-visible,
 .companyLink:focus-visible,
 .skillLink:focus-visible {
@@ -236,11 +231,6 @@
   transition:
     color 180ms ease,
     text-decoration-thickness 180ms ease;
-}
-
-.companyLink:hover {
-  color: var(--portfolio-color-accent-brand);
-  text-decoration-thickness: 2px;
 }
 
 .role {
@@ -390,11 +380,6 @@
     text-decoration-thickness 180ms ease;
 }
 
-.skillLink:hover {
-  color: var(--portfolio-color-accent-brand);
-  text-decoration-thickness: 2px;
-}
-
 .bottomSpacer {
   border-bottom: 1px dashed var(--about-grid-border-dashed);
   border-top: 1px dashed var(--about-grid-border-dashed);
@@ -419,6 +404,23 @@
 .sectionBodyRow > .rail:last-child,
 .bottomSpacer > .bottomSpacerInner:last-child {
   border-left: 1px dashed var(--about-grid-border-dashed);
+}
+
+@media (hover: hover) {
+  .snsLink:hover {
+    color: var(--portfolio-color-accent-brand);
+    transform: translateY(-1px);
+  }
+
+  .companyLink:hover {
+    color: var(--portfolio-color-accent-brand);
+    text-decoration-thickness: 2px;
+  }
+
+  .skillLink:hover {
+    color: var(--portfolio-color-accent-brand);
+    text-decoration-thickness: 2px;
+  }
 }
 
 @media (max-width: 900px) {

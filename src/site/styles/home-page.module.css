@@ -92,13 +92,6 @@
   will-change: transform, box-shadow;
 }
 
-.heroAvatar:hover {
-  box-shadow: 0 36px 72px rgba(132, 97, 48, 0.28);
-  cursor: zoom-in;
-  transform: scale(1.7);
-  z-index: 2;
-}
-
 .heroTitle {
   color: var(--portfolio-semantic-title-color);
   font-family: var(--portfolio-font-title-serif);
@@ -318,10 +311,6 @@
   width: 100%;
 }
 
-.workCard:hover {
-  border-color: var(--portfolio-color-border-strong);
-}
-
 .workCardFeatured {
   grid-template-columns: 17.625rem minmax(0, 1fr);
   height: 24.125rem;
@@ -442,8 +431,9 @@
   width: fit-content;
 }
 
-.workCardButton:hover {
-  opacity: 0.92;
+.workCardButton:focus-visible {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--portfolio-color-accent-brand) 30%, transparent);
+  outline: none;
 }
 
 .workCardMedia {
@@ -492,6 +482,11 @@
   width: 100%;
 }
 
+.blogCard:focus-visible {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--portfolio-color-accent-brand) 30%, transparent);
+  outline: none;
+}
+
 .blogCardMediaFrame {
   background: var(--portfolio-color-surface);
   border: 1px solid color-mix(in srgb, var(--portfolio-color-border-light) 68%, transparent);
@@ -535,6 +530,23 @@
   font-weight: 500;
   line-height: 1.5555555556;
   margin: 0;
+}
+
+@media (hover: hover) {
+  .heroAvatar:hover {
+    box-shadow: 0 36px 72px rgba(132, 97, 48, 0.28);
+    cursor: zoom-in;
+    transform: scale(1.7);
+    z-index: 2;
+  }
+
+  .workCard:hover {
+    border-color: var(--portfolio-color-border-strong);
+  }
+
+  .workCardButton:hover {
+    opacity: 0.92;
+  }
 }
 
 .blogCardSummary {
@@ -695,6 +707,11 @@
 
   .workCardTitle {
     font-size: clamp(2rem, 6vw + 0.75rem, 2.625rem);
+  }
+
+  .workCardButton {
+    min-height: 2.75rem;
+    padding: 0 0.9375rem;
   }
 
   .workCardMedia,
