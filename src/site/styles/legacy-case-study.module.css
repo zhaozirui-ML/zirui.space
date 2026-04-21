@@ -65,6 +65,11 @@
   text-wrap: balance;
 }
 
+.heroTitle:lang(zh) {
+  /* 这个模板当前多为英文案例名，但保留中文兜底，避免后续复用时再次出现过早断行。 */
+  text-wrap: pretty;
+}
+
 .heroSubtitle {
   color: var(--portfolio-color-text-muted);
   font-size: clamp(1rem, 1.5vw, 1.15rem);
@@ -143,18 +148,10 @@
 }
 
 .summaryBody {
-  color: var(--portfolio-semantic-body-color);
+  color: var(--portfolio-semantic-title-color);
   font-size: 1rem;
   line-height: 1.7;
   margin: 0;
-}
-
-.summaryCard {
-  align-items: start;
-}
-
-.summaryBody {
-  color: var(--portfolio-semantic-title-color);
   max-width: 42rem;
 }
 

@@ -88,11 +88,6 @@
     transform var(--portfolio-work-project-transition-duration) ease;
 }
 
-.projectCard:hover {
-  box-shadow: var(--portfolio-shadow-card);
-  transform: translateY(var(--portfolio-work-project-hover-translate-y));
-}
-
 .projectCardFeature {
   width: 100%;
 }
@@ -517,15 +512,10 @@
   cursor: inherit;
 }
 
-.sideProjectCard:hover {
-  border-color: var(--portfolio-color-border-strong);
-  box-shadow: var(--portfolio-shadow-card);
-  transform: translateY(var(--portfolio-work-side-project-hover-translate-y));
-}
-
 .sideProjectCopy {
   display: grid;
   gap: var(--ds-space-xs);
+  min-width: 0;
 }
 
 .sideProjectTitle {
@@ -535,6 +525,8 @@
   font-weight: 500;
   line-height: var(--portfolio-work-side-project-title-line-height);
   margin: 0;
+  min-width: 0;
+  text-wrap: pretty;
 }
 
 .sideProjectSubtitle,
@@ -545,6 +537,8 @@
   font-weight: var(--portfolio-type-body-sm-weight);
   line-height: var(--portfolio-work-side-project-body-line-height);
   margin: 0;
+  min-width: 0;
+  text-wrap: pretty;
 }
 
 .sideProjectLink {
@@ -567,16 +561,6 @@
     color var(--portfolio-work-side-project-transition-duration) ease;
 }
 
-.sideProjectCard:hover .sideProjectPath,
-.sideProjectCard:hover .sideProjectLinkIcon {
-  color: var(--portfolio-color-text-body);
-}
-
-.sideProjectCard:hover .sideProjectLinkIcon {
-  opacity: 1;
-  transform: translateX(0);
-}
-
 .sideProjectCard:focus-visible {
   border-radius: var(--ds-radius-pill);
   outline:
@@ -585,26 +569,40 @@
   outline-offset: var(--portfolio-work-side-project-focus-outline-offset);
 }
 
-@media (hover: none) {
+.sideProjectCard:focus-visible .sideProjectPath,
+.sideProjectCard:focus-visible .sideProjectLinkIcon {
+  color: var(--portfolio-color-text-body);
+}
+
+.sideProjectCard:focus-visible .sideProjectLinkIcon {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.sideProjectPath {
+  overflow-wrap: anywhere;
+}
+
+@media (hover: hover) {
   .projectCard:hover {
-    box-shadow: none;
-    transform: none;
+    box-shadow: var(--portfolio-shadow-card);
+    transform: translateY(var(--portfolio-work-project-hover-translate-y));
   }
 
   .sideProjectCard:hover {
-    border-color: var(--portfolio-color-border-light);
-    box-shadow: none;
-    transform: none;
+    border-color: var(--portfolio-color-border-strong);
+    box-shadow: var(--portfolio-shadow-card);
+    transform: translateY(var(--portfolio-work-side-project-hover-translate-y));
   }
 
   .sideProjectCard:hover .sideProjectPath,
   .sideProjectCard:hover .sideProjectLinkIcon {
-    color: var(--portfolio-color-text-muted);
+    color: var(--portfolio-color-text-body);
   }
 
   .sideProjectCard:hover .sideProjectLinkIcon {
-    opacity: 0;
-    transform: translateX(calc(var(--portfolio-work-side-project-hover-path-shift-x) * -1));
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 

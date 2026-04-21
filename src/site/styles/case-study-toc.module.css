@@ -112,12 +112,94 @@
     color 180ms cubic-bezier(0.2, 0, 0, 1);
 }
 
-.tocExternalLink:hover,
 .tocExternalLink:focus-visible {
   border-color: color-mix(in srgb, var(--case-study-toc-accent) 22%, var(--portfolio-color-border-light));
   box-shadow: 0 14px 28px -18px color-mix(in srgb, var(--case-study-toc-accent) 38%, transparent);
   color: var(--case-study-toc-accent);
   transform: translateY(-1px);
+}
+
+.tocExternalLink:focus-visible .tocExternalLinkIcon {
+  filter: blur(0);
+  opacity: 1;
+  transform: translate3d(1px, -0.05em, 0) scale(1);
+}
+
+.tocExternalLink:active .tocExternalLinkIcon {
+  transform: translate3d(0.5px, -0.05em, 0) scale(0.96);
+}
+
+.tocBackLink:focus-visible {
+  color: var(--case-study-toc-accent);
+}
+
+.tocBackLink:focus-visible .tocBackIcon {
+  filter: blur(0);
+  opacity: 1;
+  transform: translate3d(1px, -0.25em, 0) scale(1);
+}
+
+.tocBackLink:active .tocBackIcon {
+  transform: translate3d(0.5px, -0.25em, 0) scale(0.96);
+}
+
+.tocLink:focus-visible {
+  color: var(--case-study-toc-title);
+  transform: translateX(2px);
+}
+
+.tocLink:focus-visible::before {
+  opacity: var(--case-study-toc-hover-wash-opacity);
+  transform: scale(1);
+}
+
+.tocLink:focus-visible .tocLinkMarker {
+  background: color-mix(in srgb, var(--case-study-toc-accent) 45%, transparent);
+  filter: blur(0);
+  opacity: 0.66;
+  transform: scale(1);
+}
+
+@media (hover: hover) {
+  .tocExternalLink:hover {
+    border-color: color-mix(in srgb, var(--case-study-toc-accent) 22%, var(--portfolio-color-border-light));
+    box-shadow: 0 14px 28px -18px color-mix(in srgb, var(--case-study-toc-accent) 38%, transparent);
+    color: var(--case-study-toc-accent);
+    transform: translateY(-1px);
+  }
+
+  .tocExternalLink:hover .tocExternalLinkIcon {
+    filter: blur(0);
+    opacity: 1;
+    transform: translate3d(1px, -0.05em, 0) scale(1);
+  }
+
+  .tocBackLink:hover {
+    color: var(--case-study-toc-accent);
+  }
+
+  .tocBackLink:hover .tocBackIcon {
+    filter: blur(0);
+    opacity: 1;
+    transform: translate3d(1px, -0.25em, 0) scale(1);
+  }
+
+  .tocLink:hover {
+    color: var(--case-study-toc-title);
+    transform: translateX(2px);
+  }
+
+  .tocLink:hover::before {
+    opacity: var(--case-study-toc-hover-wash-opacity);
+    transform: scale(1);
+  }
+
+  .tocLink:hover .tocLinkMarker {
+    background: color-mix(in srgb, var(--case-study-toc-accent) 45%, transparent);
+    filter: blur(0);
+    opacity: 0.66;
+    transform: scale(1);
+  }
 }
 
 .tocExternalLinkText {
@@ -143,17 +225,6 @@
   width: 0.875rem;
 }
 
-.tocExternalLink:hover .tocExternalLinkIcon,
-.tocExternalLink:focus-visible .tocExternalLinkIcon {
-  filter: blur(0);
-  opacity: 1;
-  transform: translate3d(1px, -0.05em, 0) scale(1);
-}
-
-.tocExternalLink:active .tocExternalLinkIcon {
-  transform: translate3d(0.5px, -0.05em, 0) scale(0.96);
-}
-
 .tocBackIcon {
   filter: blur(0.8px);
   flex: none;
@@ -167,22 +238,6 @@
     filter 220ms cubic-bezier(0.2, 0, 0, 1),
     transform 220ms cubic-bezier(0.2, 0, 0, 1);
   width: 0.875rem;
-}
-
-.tocBackLink:hover,
-.tocBackLink:focus-visible {
-  color: var(--case-study-toc-accent);
-}
-
-.tocBackLink:hover .tocBackIcon,
-.tocBackLink:focus-visible .tocBackIcon {
-  filter: blur(0);
-  opacity: 1;
-  transform: translate3d(1px, -0.25em, 0) scale(1);
-}
-
-.tocBackLink:active .tocBackIcon {
-  transform: translate3d(0.5px, -0.25em, 0) scale(0.96);
 }
 
 .tocLink {
@@ -255,26 +310,6 @@
     background-color 180ms cubic-bezier(0.2, 0, 0, 1);
   will-change: opacity, transform, filter;
   width: 0.375rem;
-}
-
-.tocLink:hover,
-.tocLink:focus-visible {
-  color: var(--case-study-toc-title);
-  transform: translateX(2px);
-}
-
-.tocLink:hover::before,
-.tocLink:focus-visible::before {
-  opacity: var(--case-study-toc-hover-wash-opacity);
-  transform: scale(1);
-}
-
-.tocLink:hover .tocLinkMarker,
-.tocLink:focus-visible .tocLinkMarker {
-  background: color-mix(in srgb, var(--case-study-toc-accent) 45%, transparent);
-  filter: blur(0);
-  opacity: 0.66;
-  transform: scale(1);
 }
 
 .tocLinkActive {

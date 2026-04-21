@@ -32,7 +32,6 @@
   line-height: 1.1;
 }
 
-.backLink:hover,
 .backLink:focus-visible {
   background: color-mix(in srgb, var(--portfolio-color-surface) 90%, var(--portfolio-color-accent-brand) 10%);
   color: var(--portfolio-semantic-title-color);
@@ -41,4 +40,11 @@
 .backLink:focus-visible {
   outline: 2px solid color-mix(in srgb, var(--portfolio-color-accent-brand) 32%, transparent);
   outline-offset: 2px;
+}
+
+@media (hover: hover) {
+  .backLink:hover {
+    background: color-mix(in srgb, var(--portfolio-color-surface) 90%, var(--portfolio-color-accent-brand) 10%);
+    color: var(--portfolio-semantic-title-color);
+  }
 }

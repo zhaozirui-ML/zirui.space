@@ -521,6 +521,11 @@
   text-wrap: balance;
 }
 
+.pageTitle:lang(zh) {
+  /* 中文页级标题优先自然换行，避免共享标题在可用宽度充足时过早断行。 */
+  text-wrap: pretty;
+}
+
 .pageDescription {
   color: var(--portfolio-semantic-body-color);
   font-size: 1rem;
@@ -543,14 +548,6 @@
   gap: var(--detail-card-body-gap);
   padding: var(--detail-card-padding);
   text-decoration: none;
-}
-
-.workCard:hover {
-  box-shadow: var(--portfolio-shadow-card);
-  transform: translateY(-1px);
-  transition:
-    box-shadow 160ms ease,
-    transform 160ms ease;
 }
 
 .workCardMeta {
@@ -699,6 +696,14 @@
 }
 
 @media (hover: hover) {
+  .workCard:hover {
+    box-shadow: var(--portfolio-shadow-card);
+    transform: translateY(-1px);
+    transition:
+      box-shadow 160ms ease,
+      transform 160ms ease;
+  }
+
   .backLink:hover,
   .inlineLink:hover {
     color: var(--portfolio-color-accent-brand);
