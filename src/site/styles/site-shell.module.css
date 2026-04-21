@@ -95,14 +95,6 @@
   transition: opacity 180ms ease;
 }
 
-.brandLink:hover {
-  transform: translateY(-1px);
-}
-
-.brandLink:hover::after {
-  opacity: 1;
-}
-
 .brandLink:active {
   transform: scale(0.97);
 }
@@ -189,10 +181,6 @@
   transition: color 180ms ease;
   white-space: nowrap;
   width: 100%;
-}
-
-.navigationLink:hover {
-  color: var(--portfolio-semantic-title-color);
 }
 
 .navigationLinkActive {
@@ -282,13 +270,6 @@
   transform: translate(-0.08rem, 0.07rem) scale(1);
 }
 
-.navigationAction:hover,
-.languageAction:hover {
-  background: var(--portfolio-color-surface);
-  color: var(--portfolio-color-accent-brand);
-  transform: translateY(-1px);
-}
-
 .navigationAction:active,
 .languageAction:active {
   transform: scale(0.96);
@@ -358,6 +339,27 @@
 .pageStack {
   display: grid;
   gap: 1.5rem;
+}
+
+@media (hover: hover) {
+  .brandLink:hover {
+    transform: translateY(-1px);
+  }
+
+  .brandLink:hover::after {
+    opacity: 1;
+  }
+
+  .navigationLink:hover {
+    color: var(--portfolio-semantic-title-color);
+  }
+
+  .navigationAction:hover,
+  .languageAction:hover {
+    background: var(--portfolio-color-surface);
+    color: var(--portfolio-color-accent-brand);
+    transform: translateY(-1px);
+  }
 }
 
 @media (max-width: 640px) {
@@ -483,18 +485,12 @@
     text-decoration-thickness 180ms ease;
 }
 
-.backLink:hover,
 .backLink:focus-visible,
-.inlineLink:hover,
 .inlineLink:focus-visible {
   color: var(--portfolio-color-accent-brand);
-  text-decoration-thickness: 2px;
-}
-
-.backLink:focus-visible,
-.inlineLink:focus-visible {
   outline: 2px solid color-mix(in srgb, var(--portfolio-color-accent-brand) 42%, transparent);
   outline-offset: 2px;
+  text-decoration-thickness: 2px;
 }
 
 .backLink {
@@ -675,19 +671,15 @@
   width: fit-content;
 }
 
-.arrowLink:hover,
-.arrowLink:focus-visible {
-  color: var(--portfolio-color-accent-brand);
-  transform: translateY(-1px);
-}
-
 .arrowLink:active {
   transform: translateY(0);
 }
 
 .arrowLink:focus-visible {
+  color: var(--portfolio-color-accent-brand);
   outline: 2px solid color-mix(in srgb, var(--portfolio-color-accent-brand) 42%, transparent);
   outline-offset: 2px;
+  transform: translateY(-1px);
 }
 
 .arrowLinkText {
@@ -706,12 +698,28 @@
   width: 0.875rem;
 }
 
-.arrowLink:hover .arrowLinkArrow,
+@media (hover: hover) {
+  .backLink:hover,
+  .inlineLink:hover {
+    color: var(--portfolio-color-accent-brand);
+    text-decoration-thickness: 2px;
+  }
+
+  .arrowLink:hover {
+    color: var(--portfolio-color-accent-brand);
+    transform: translateY(-1px);
+  }
+
+  .arrowLink:hover .arrowLinkArrow {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
 .arrowLink:focus-visible .arrowLinkArrow {
   opacity: 1;
   transform: translate(0, 0);
 }
-
 @media (max-width: 900px) {
   .workCardFooter {
     align-items: flex-start;

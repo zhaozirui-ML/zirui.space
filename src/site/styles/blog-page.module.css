@@ -194,6 +194,11 @@
   text-wrap: balance;
 }
 
+.featuredTitle:lang(zh) {
+  /* 中文标题更适合自然换行，避免 balance 过早断行。 */
+  text-wrap: pretty;
+}
+
 .featuredTitleDark {
   color: var(--portfolio-color-text-title);
 }
@@ -299,6 +304,11 @@
   font-weight: 500;
   line-height: 1.5556;
   margin: 0;
+}
+
+.browseTitle:lang(zh) {
+  /* 中文卡片标题优先自然换行，避免和前面相同的提前断行问题。 */
+  text-wrap: pretty;
 }
 
 @media (hover: hover) {

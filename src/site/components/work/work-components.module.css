@@ -149,6 +149,11 @@
   text-wrap: balance;
 }
 
+.projectTitle:lang(zh) {
+  /* 中文项目标题不强制做平衡换行，避免右侧明明有空间却提前断行。 */
+  text-wrap: pretty;
+}
+
 .projectSummary {
   color: var(--portfolio-color-text-muted);
   font-family: var(--portfolio-font-body);
@@ -157,6 +162,11 @@
   line-height: var(--portfolio-work-project-summary-line-height);
   margin: 0;
   text-wrap: pretty;
+}
+
+.projectCard:focus-visible {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--portfolio-color-accent-brand) 32%, transparent);
+  outline: none;
 }
 
 .projectMeta {
@@ -575,6 +585,29 @@
   outline-offset: var(--portfolio-work-side-project-focus-outline-offset);
 }
 
+@media (hover: none) {
+  .projectCard:hover {
+    box-shadow: none;
+    transform: none;
+  }
+
+  .sideProjectCard:hover {
+    border-color: var(--portfolio-color-border-light);
+    box-shadow: none;
+    transform: none;
+  }
+
+  .sideProjectCard:hover .sideProjectPath,
+  .sideProjectCard:hover .sideProjectLinkIcon {
+    color: var(--portfolio-color-text-muted);
+  }
+
+  .sideProjectCard:hover .sideProjectLinkIcon {
+    opacity: 0;
+    transform: translateX(calc(var(--portfolio-work-side-project-hover-path-shift-x) * -1));
+  }
+}
+
 @media (max-width: 640px) {
   .pageTitle {
     font-size: var(--portfolio-work-page-header-mobile-title-size);
@@ -582,6 +615,10 @@
 
   .tabsList {
     gap: var(--portfolio-space-xs);
+  }
+
+  .tabChip {
+    min-height: 2.75rem;
   }
 
   .projectCard {

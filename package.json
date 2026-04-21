@@ -13,6 +13,8 @@
     "validate:homepage:playwright": "node scripts/validate-homepage-playwright.mjs"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^3.0.53",
+    "ai": "^6.0.168",
     "lucide-react": "^1.7.0",
     "next": "16.2.1",
     "react": "19.2.4",
