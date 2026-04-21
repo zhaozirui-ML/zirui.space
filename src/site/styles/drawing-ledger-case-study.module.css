@@ -163,6 +163,10 @@
   padding-bottom: 0;
 }
 
+.sectionContentDetail {
+  /* 仅用于细节展开这一节，方便在平板和手机端单独收顶部留白 */
+}
+
 .blockStack {
   display: grid;
   gap: var(--drawing-ledger-stack-gap-lg);
@@ -1060,6 +1064,10 @@
     padding-bottom: 6rem;
   }
 
+  .sectionContentDetail {
+    padding-top: 4rem;
+  }
+
   .mobileLandingGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     row-gap: var(--drawing-ledger-panel-gap-2xl);
@@ -1213,6 +1221,10 @@
     padding-right: var(--portfolio-page-inline-padding-mobile, 1.25rem);
   }
 
+  .sectionContentDetail {
+    padding-top: 3rem;
+  }
+
   .chartCard,
   .summaryCard,
   .feedbackCard,
@@ -1232,21 +1244,31 @@
   }
 
   .roleScrollerFrame {
-    overflow: visible;
+    height: 26.25rem;
+    overflow: hidden;
   }
 
   .roleScroller {
-    gap: var(--drawing-ledger-panel-gap-lg);
+    align-content: start;
+    gap: var(--drawing-ledger-panel-gap-xl);
     grid-auto-columns: auto;
     grid-auto-flow: row;
-    overflow: visible;
-    padding: var(--drawing-ledger-panel-padding);
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: var(--drawing-ledger-panel-padding-md);
     scroll-padding-left: 0;
     scroll-snap-type: none;
   }
 
   .roleCard {
+    gap: var(--drawing-ledger-panel-gap-lg);
     max-width: none;
+  }
+
+  .roleCardTitle {
+    font-size: 0.75rem;
+    line-height: 1rem;
   }
 
   .roleCardMedia {

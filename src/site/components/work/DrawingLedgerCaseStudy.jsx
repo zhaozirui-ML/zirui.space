@@ -893,7 +893,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
         </section>
 
         <section className={joinClassNames(styles.fullBleedSection, styles.sectionSurface)}>
-          <div className={joinClassNames(styles.sectionContent, styles.sectionContentTightBottom)}>
+          <div className={joinClassNames(styles.sectionContent, styles.sectionContentTightBottom, styles.sectionContentDetail)}>
             <div className={styles.sectionFlow}>
               <CaseStudyHeadingOne
                 className={styles.anchoredHeader}
