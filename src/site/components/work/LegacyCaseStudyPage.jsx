@@ -22,6 +22,7 @@ export default function LegacyCaseStudyPage({
           <div className={styles.heroCopy}>
             <DetailBackLink
               ariaLabel={language === "en" ? "Back to Work" : "返回作品"}
+              className={styles.heroBackLink}
               href={backHref}
               label={language === "en" ? "Back" : "返回"}
             />

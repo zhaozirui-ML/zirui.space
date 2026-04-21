@@ -44,6 +44,13 @@
   max-width: 54rem;
 }
 
+.heroBackLink {
+  /* 让文字起点和正文左边线对齐，箭头轻微悬挂到左侧，避免带图标按钮显得整体右偏。 */
+  background: transparent;
+  margin-left: calc((0.875rem + 0.125rem) * -1);
+  padding-left: 0;
+}
+
 .eyebrow {
   color: var(--portfolio-semantic-eyebrow-color);
   font-family: var(--portfolio-font-label);
@@ -162,6 +169,10 @@
 }
 
 @media (max-width: 640px) {
+  .heroBackLink {
+    margin-left: calc((0.875rem + 0.125rem) * -0.75);
+  }
+
   .heroInner {
     padding-left: var(--portfolio-hero-inline-padding-mobile, 1.25rem);
     padding-right: var(--portfolio-hero-inline-padding-mobile, 1.25rem);
