@@ -486,12 +486,16 @@
 }
 
 .sideProjectsList {
+  align-items: start;
+  align-self: start;
   display: grid;
   gap: var(--portfolio-space-sm);
+  grid-auto-rows: max-content;
 }
 
 .sideProjectCard {
   align-items: start;
+  align-self: start;
   color: inherit;
   display: grid;
   gap: var(--portfolio-space-sm);

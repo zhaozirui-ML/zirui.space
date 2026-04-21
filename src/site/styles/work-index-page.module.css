@@ -17,13 +17,8 @@
   gap: var(--portfolio-space-sm);
 }
 
-.panel {
-  min-height: 20rem;
-}
-
 @media (min-width: 901px) {
-  .panel[data-active-tab="explorations"],
-  .panel[data-active-tab="side-projects"] {
+  .panel[data-active-tab="explorations"] {
     min-height: 145.5rem;
   }
 }
