@@ -16,8 +16,8 @@ export const workItems = [
       "Redesigning the end to end workflow for drawing registration, parsing, and collaboration",
     ),
     homeSummary: t(
-      "重设计从上传、解析、登记到协作的复杂图纸工作流。",
-      "Redesigned a complex drawing workflow across upload, parsing, registration, and collaboration.",
+      "重设计从上传、解析、登记到协作的复杂图纸工作流",
+      "Redesigned a complex drawing workflow across upload, parsing, registration, and collaboration",
     ),
     detailSummary: t(
       "后续会在这里接入完整案例，包括流程重构、解析逻辑和协作决策。",
@@ -57,7 +57,7 @@ export const workItems = [
       "Designing how a design system is understood, accessed, and adopted",
     ),
     homeSummary: t(
-      "设计一个设计系统如何被理解、访问和采用。",
+      "设计一个设计系统如何被理解、访问和采用",
       "Designing how a design system is understood, accessed, and adopted",
     ),
     detailSummary: t(
@@ -112,8 +112,8 @@ export const workItems = [
       "Defining a reusable visual language for complex large-screen experiences",
     ),
     homeSummary: t(
-      "为仪表盘和大屏数据体验定义可复用的视觉语言。",
-      "Defined a reusable visual language for dashboards and large-screen data experiences.",
+      "为仪表盘和大屏数据体验定义可复用的视觉语言",
+      "Defined a reusable visual language for dashboards and large-screen data experiences",
     ),
     detailSummary: t(
       "将省、市、区三级建筑大屏设计整合为统一视觉语言，并把图表探索扩展到更复杂的大屏场景。",

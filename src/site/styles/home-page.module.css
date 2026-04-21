@@ -409,6 +409,11 @@
   -webkit-line-clamp: 2;
 }
 
+.workCardTitle:lang(zh) {
+  /* 中文标题更适合自然占满容器；balance 容易过早换行，显得右侧留白过多。 */
+  text-wrap: pretty;
+}
+
 .workCardSummary {
   color: var(--portfolio-color-text-subtle);
   display: -webkit-box;
@@ -555,6 +560,10 @@
     --home-page-gap: 4.5rem;
     --home-top-gap: 5rem;
     --home-page-padding-top: calc(var(--ds-space-2xs) * 10);
+    /* 移动端首页作品卡片需要独立节奏，避免内部层级被 section 通用 gap 压平。 */
+    --home-work-list-gap: 1.25rem;
+    --home-work-card-content-gap: 1.5rem;
+    --home-work-card-copy-gap: 1rem;
   }
 
   .homeTopMode::before {
@@ -577,10 +586,6 @@
   .workCardMediaStart .workCardContent,
   .workCardMediaStart .workCardMedia {
     order: initial;
-  }
-
-  .workCardContent {
-    gap: var(--home-section-gap);
   }
 
   .workCardMedia,
@@ -609,6 +614,10 @@
     transform: scale(var(--work-card-image-scale-tablet));
   }
 
+  .workCardSummary {
+    max-width: none;
+  }
+
   .blogCard {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -629,6 +638,10 @@
     --home-top-gap: 4rem;
     --home-content-inline-padding: var(--portfolio-page-inline-padding-mobile, 1.25rem);
     --home-page-padding-top: calc(var(--ds-space-2xs) * 6);
+    /* 手机端再收紧一档，让卡片之间与卡片内部节奏更接近设计稿。 */
+    --home-work-list-gap: 1rem;
+    --home-work-card-content-gap: 1.25rem;
+    --home-work-card-copy-gap: 0.875rem;
   }
 
   .heroTitle {

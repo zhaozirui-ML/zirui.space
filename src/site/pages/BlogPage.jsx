@@ -5,6 +5,7 @@ import { blogIndexPosts, featuredBlogPosts } from "../data/blog-posts";
 import { blogIndexDictionary } from "../i18n/dictionary";
 import { getLocalizedValue } from "../i18n/get-localized-value";
 import { formatBlogDate } from "../lib/format-blog-date";
+import { trimTrailingSentencePunctuation } from "../lib/trim-trailing-sentence-punctuation";
 import styles from "../styles/blog-page.module.css";
 
 /**
@@ -36,7 +37,8 @@ export default function BlogPage({ language }) {
               const isDark = post.tone === "dark";
               const isReversed = post.layout === "imageEnd";
               const title = getLocalizedValue(post.title, language);
-              const summary = getLocalizedValue(post.summary, language);
+              // Blog 列表卡片和首页保持同一展示规则：辅助文本不带句号，但不改共享数据源。
+              const summary = trimTrailingSentencePunctuation(getLocalizedValue(post.summary, language));
               const category = getLocalizedValue(post.category, language);
               const imageAlt = getLocalizedValue(post.imageAlt, language);
               const isLeadFeaturedPost = index === 0;

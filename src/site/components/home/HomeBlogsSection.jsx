@@ -5,6 +5,7 @@ import { featuredBlogPosts } from "../../data/blog-posts";
 import { homePageDictionary } from "../../i18n/dictionary";
 import { getLocalizedValue } from "../../i18n/get-localized-value";
 import { formatBlogDate } from "../../lib/format-blog-date";
+import { trimTrailingSentencePunctuation } from "../../lib/trim-trailing-sentence-punctuation";
 import styles from "../../styles/home-page.module.css";
 
 const homeBlogPosts = featuredBlogPosts.slice(0, 2);
@@ -33,7 +34,8 @@ export default function HomeBlogsSection({ language }) {
       <div className={styles.blogList}>
         {homeBlogPosts.map((post) => {
           const title = getLocalizedValue(post.title, language);
-          const summary = getLocalizedValue(post.summary, language);
+          // 首页卡片遵循展示文案不补句号的规则；这里只做首页展示层清理，不改共享数据源。
+          const summary = trimTrailingSentencePunctuation(getLocalizedValue(post.summary, language));
           const category = getLocalizedValue(post.category, language);
           const imageAlt = getLocalizedValue(post.imageAlt, language);
 

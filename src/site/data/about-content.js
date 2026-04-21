@@ -49,16 +49,16 @@ export const aboutExperienceItems = [
     role: t("高级 UX 设计师", "Senior UX Designer"),
     responsibilities: [
       t(
-        "负责 web 与 App 端绘图模块的端到端设计，重构了上传、解析与协作流程。",
-        "Led end to end design for the drawing module across web and app, redesigning upload, parsing, and collaboration workflows for the construction business line.",
+        "负责 web 与 App 端绘图模块的端到端设计，重构了上传、解析与协作流程",
+        "Led end to end design for the drawing module across web and app, redesigning upload, parsing, and collaboration workflows for the construction business line",
       ),
       t(
-        "从零搭建图纸与文档关联流程，提升了核心业务场景下的协作效率。",
-        "Built the drawing to document association workflow from the ground up, improving collaboration efficiency in core business scenarios.",
+        "从零搭建图纸与文档关联流程，提升了核心业务场景下的协作效率",
+        "Built the drawing to document association workflow from the ground up, improving collaboration efficiency in core business scenarios",
       ),
       t(
-        "协助统一 AXZO 组件库与交互标准，减少设计与研发协作成本约 30%。",
-        "Helped unify the AXZO component library and interaction standards, reducing design development coordination costs by about 30 percent.",
+        "协助统一 AXZO 组件库与交互标准，减少设计与研发协作成本约 30%",
+        "Helped unify the AXZO component library and interaction standards, reducing design development coordination costs by about 30 percent",
       ),
     ],
   },
@@ -69,16 +69,16 @@ export const aboutExperienceItems = [
     role: t("产品设计师", "Product Designer"),
     responsibilities: [
       t(
-        "负责虚拟化产品线核心企业流程的功能设计与体验优化。",
-        "Led functional design and optimization for the virtualization product line across key enterprise workflows.",
+        "负责虚拟化产品线核心企业流程的功能设计与体验优化",
+        "Led functional design and optimization for the virtualization product line across key enterprise workflows",
       ),
       t(
-        "设计 CloudTower 的内容库、集群迁移等核心功能，提升易用性与产品一致性。",
-        "Designed core features for CloudTower, including content library and cluster migration, to improve usability and product consistency.",
+        "设计 CloudTower 的内容库、集群迁移等核心功能，提升易用性与产品一致性",
+        "Designed core features for CloudTower, including content library and cluster migration, to improve usability and product consistency",
       ),
       t(
-        "搭建并持续完善设计系统，扩展关键业务场景下的组件覆盖，提升设计效率 20%。",
-        "Built and refined the design system, expanding component coverage for key business scenarios and improving design efficiency by 20 percent.",
+        "搭建并持续完善设计系统，扩展关键业务场景下的组件覆盖，提升设计效率 20%",
+        "Built and refined the design system, expanding component coverage for key business scenarios and improving design efficiency by 20 percent",
       ),
     ],
   },
@@ -89,12 +89,12 @@ export const aboutExperienceItems = [
     role: t("UX 设计师", "UX Designer"),
     responsibilities: [
       t(
-        "参与血压计、CGM 系统与家用呼吸机等医疗设备的 UX 设计。",
-        "Contributed to UX design for medical devices including blood pressure monitors, CGM systems, and home ventilators.",
+        "参与血压计、CGM 系统与家用呼吸机等医疗设备的 UX 设计",
+        "Contributed to UX design for medical devices including blood pressure monitors, CGM systems, and home ventilators",
       ),
       t(
-        "与工业设计师协作完成用户研究、交互设计、视觉设计与动效设计。",
-        "Collaborated with industrial designers on user research, interaction design, visual design, and motion design.",
+        "与工业设计师协作完成用户研究、交互设计、视觉设计与动效设计",
+        "Collaborated with industrial designers on user research, interaction design, visual design, and motion design",
       ),
     ],
   },
