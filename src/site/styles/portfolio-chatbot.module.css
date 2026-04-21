@@ -1,0 +1,312 @@
+.floatingTrigger {
+  align-items: center;
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--portfolio-color-surface) 92%, transparent),
+      color-mix(in srgb, var(--portfolio-color-surface-warm) 82%, transparent)
+    );
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: 999px;
+  bottom: max(
+    calc(var(--ds-space-2xs) * 5),
+    env(safe-area-inset-bottom, 0px) + var(--ds-space-md)
+  );
+  box-shadow: var(--portfolio-shadow-card);
+  color: var(--portfolio-semantic-title-color);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: var(--portfolio-font-label);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  gap: 0.625rem;
+  justify-content: center;
+  padding: 0.875rem 1rem;
+  position: fixed;
+  right: max(var(--ds-space-md), env(safe-area-inset-right, 0px) + var(--ds-space-sm));
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease;
+  z-index: 40;
+}
+
+.floatingTrigger:hover {
+  border-color: var(--portfolio-color-border-strong);
+  transform: translateY(-1px);
+}
+
+.chatPanel {
+  backdrop-filter: blur(18px);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--portfolio-color-surface) 96%, transparent),
+      color-mix(in srgb, var(--portfolio-color-surface-warm) 68%, transparent)
+    );
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: var(--portfolio-radius-lg);
+  bottom: calc(
+    max(calc(var(--ds-space-2xs) * 5), env(safe-area-inset-bottom, 0px) + var(--ds-space-md)) +
+      4.5rem
+  );
+  box-shadow: var(--portfolio-shadow-card);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  height: min(40rem, calc(100dvh - 8rem));
+  overflow: hidden;
+  position: fixed;
+  right: max(var(--ds-space-md), env(safe-area-inset-right, 0px) + var(--ds-space-sm));
+  width: min(25rem, calc(100vw - 2rem));
+  z-index: 40;
+}
+
+.chatPanelHeader {
+  align-items: flex-start;
+  border-bottom: 1px solid color-mix(in srgb, var(--portfolio-color-border-light) 88%, transparent);
+  display: flex;
+  gap: var(--portfolio-space-sm);
+  justify-content: space-between;
+  padding: 1rem 1rem 0.875rem;
+}
+
+.chatPanelHeading {
+  display: grid;
+  gap: 0.375rem;
+}
+
+.chatPanelEyebrow {
+  align-items: center;
+  color: var(--portfolio-color-accent-brand);
+  display: inline-flex;
+  font-family: var(--portfolio-font-label);
+  font-size: 0.75rem;
+  font-weight: 500;
+  gap: 0.375rem;
+  letter-spacing: 0.04em;
+}
+
+.chatPanelTitle {
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.iconButton {
+  align-items: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: var(--portfolio-color-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  flex: 0 0 auto;
+  height: 2rem;
+  justify-content: center;
+  transition:
+    color 180ms ease,
+    border-color 180ms ease;
+  width: 2rem;
+}
+
+.iconButton:hover {
+  border-color: var(--portfolio-color-border-light);
+  color: var(--portfolio-semantic-title-color);
+}
+
+.messageViewport {
+  display: grid;
+  gap: 0.875rem;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.messageBubble {
+  display: grid;
+  gap: 0.625rem;
+  max-width: 100%;
+}
+
+.assistantBubble {
+  justify-self: stretch;
+}
+
+.userBubble {
+  background: color-mix(in srgb, var(--portfolio-color-accent-brand) 10%, var(--portfolio-color-surface));
+  border: 1px solid color-mix(in srgb, var(--portfolio-color-accent-brand) 18%, var(--portfolio-color-border-light));
+  border-radius: 1.125rem;
+  justify-self: end;
+  max-width: 88%;
+  padding: 0.875rem;
+}
+
+.messageRole {
+  color: var(--portfolio-color-text-muted);
+  font-family: var(--portfolio-font-label);
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.messageText {
+  color: var(--portfolio-semantic-body-color);
+  font-family: var(--portfolio-font-body);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.relatedPages,
+.suggestedQuestions,
+.quickReplyList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.relatedPageLink,
+.suggestionButton,
+.quickReplyButton {
+  background: color-mix(in srgb, var(--portfolio-color-surface) 88%, var(--portfolio-color-surface-warm));
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: 999px;
+  color: var(--portfolio-semantic-title-color);
+  font-family: var(--portfolio-font-label);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.2;
+  padding: 0.5625rem 0.75rem;
+  text-decoration: none;
+}
+
+.suggestionButton,
+.quickReplyButton {
+  cursor: pointer;
+}
+
+.quickReplySection {
+  background: color-mix(in srgb, var(--portfolio-color-surface) 82%, var(--portfolio-color-surface-warm));
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: 1.125rem;
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.875rem;
+}
+
+.quickReplyHeading {
+  color: var(--portfolio-color-text-muted);
+  font-family: var(--portfolio-font-body);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.loadingRow {
+  align-items: center;
+  color: var(--portfolio-color-text-muted);
+  display: inline-flex;
+  font-family: var(--portfolio-font-label);
+  font-size: 0.8125rem;
+  gap: 0.5rem;
+}
+
+.loadingIcon {
+  animation: portfolio-chatbot-spin 900ms linear infinite;
+}
+
+.chatPanelFooter {
+  border-top: 1px solid color-mix(in srgb, var(--portfolio-color-border-light) 88%, transparent);
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem 1rem;
+}
+
+.statusMessage,
+.errorMessage {
+  font-family: var(--portfolio-font-body);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.statusMessage {
+  color: var(--portfolio-color-text-muted);
+}
+
+.errorMessage {
+  color: var(--portfolio-color-accent-brand);
+}
+
+.composer {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.composerField {
+  background: color-mix(in srgb, var(--portfolio-color-surface) 88%, transparent);
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: 1rem;
+  color: var(--portfolio-semantic-body-color);
+  font-family: var(--portfolio-font-body);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  min-height: 5.5rem;
+  padding: 0.875rem;
+  resize: vertical;
+  width: 100%;
+}
+
+.composerField::placeholder {
+  color: var(--portfolio-color-text-muted);
+}
+
+.sendButton {
+  align-items: center;
+  background: var(--portfolio-semantic-title-color);
+  border: 1px solid var(--portfolio-semantic-title-color);
+  border-radius: 999px;
+  color: var(--portfolio-color-surface);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: var(--portfolio-font-label);
+  font-size: 0.875rem;
+  font-weight: 500;
+  gap: 0.5rem;
+  justify-content: center;
+  justify-self: end;
+  min-height: 2.5rem;
+  padding: 0 1rem;
+}
+
+.sendButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+@keyframes portfolio-chatbot-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 767px) {
+  .floatingTrigger {
+    font-size: 0.875rem;
+    padding: 0.8125rem 0.9375rem;
+  }
+
+  .chatPanel {
+    bottom: max(var(--ds-space-md), env(safe-area-inset-bottom, 0px) + var(--ds-space-md));
+    height: min(34rem, calc(100dvh - 2rem));
+    left: 1rem;
+    right: 1rem;
+    width: auto;
+  }
+}
