@@ -371,7 +371,17 @@
 
 .practiceSection {
   display: grid;
-  gap: var(--data-vis-card-gap);
+  gap: var(--portfolio-spacing-md, 3rem);
+}
+
+.sectionGroup > section + .practiceSection {
+  /* 一级标题块到第一个蓝色二级标题块，补足到 48px。 */
+  margin-top: var(--portfolio-spacing-sm, 1.5rem);
+}
+
+.sectionGroup > .practiceSection + .practiceSection {
+  /* 父层 grid 先提供 24px 基础间距，这里再补 24px，让模块间总间距回到 48px。 */
+  margin-top: var(--portfolio-spacing-sm, 1.5rem);
 }
 
 .figureBlock {
@@ -847,15 +857,16 @@
 }
 
 .outcomesFrame {
-  padding: clamp(2rem, 4vw, 2.5rem);
+  padding:
+    clamp(1.25rem, 3vw, 2.5rem)
+    clamp(1.25rem, 5.5vw, 6.25rem)
+    clamp(1.25rem, 4.5vw, 5.5rem);
 }
 
 .outcomesInner {
-  border-radius: 0.75rem;
   margin: 0 auto;
-  max-width: 58.875rem;
-  overflow: hidden;
-  position: relative;
+  max-width: 62.5rem;
+  width: 100%;
 }
 
 .retrospectiveGrid {

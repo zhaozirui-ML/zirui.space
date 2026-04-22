@@ -245,7 +245,7 @@ export const dataVisualizationScreenDetail = Object.freeze({
       "The following section summarizes the full-page designs I was responsible for on the project homepage and quality/safety supervision module.",
     ),
     imageSrc: resolveAssetSource(
-      "/site/work/data-visualization/outcomes-overview.png"
+      "/site/work/data-visualization/outcomes-overview-v2.png"
     ),
     imageAlt: t("大屏数据可视化项目全部页面概览", "Overview of all pages in the large-screen data visualization project"),
     caption: t("全部页面概览", "All pages overview"),
