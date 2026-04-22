@@ -83,6 +83,10 @@ export const aboutPageDictionary = {
 };
 
 export const workIndexDictionary = {
+  explorationsNote: {
+    zh: "最近的一些探索，还在持续打磨中。",
+    en: "Recent explorations. Still cooking...",
+  },
   metadataDescription: {
     zh: "浏览赵子瑞的产品设计案例、系统设计项目与探索作品。",
     en: "Browse Zhao Zirui's product design case studies, systems work, and explorations.",

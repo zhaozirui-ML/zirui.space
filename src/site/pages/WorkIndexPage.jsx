@@ -8,6 +8,8 @@ import WorkProjectCard from "../components/work/WorkProjectCard";
 import WorkSideProjectsPanel from "../components/work/WorkSideProjectsPanel";
 import WorkTabs from "../components/work/WorkTabs";
 import { workItems, workTabContent, workTabs } from "../data/work-items";
+import { workIndexDictionary } from "../i18n/dictionary";
+import { getLocalizedValue } from "../i18n/get-localized-value";
 import styles from "../styles/work-index-page.module.css";
 
 function ProjectsPanel({ language, rows }) {
@@ -72,6 +74,12 @@ export default function WorkIndexPage({ language }) {
           data-active-tab={activeTabId}
           role="tabpanel"
         >
+          {activePanel.type === "explorations" ? (
+            <p className={styles.explorationsNote}>
+              {getLocalizedValue(workIndexDictionary.explorationsNote, language)}
+            </p>
+          ) : null}
+
           <div className={styles.rows}>
             {activePanel.type === "projects" ? (
               <ProjectsPanel language={language} rows={activePanel.rows} />

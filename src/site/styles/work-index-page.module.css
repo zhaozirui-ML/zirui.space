@@ -17,6 +17,20 @@
   gap: var(--portfolio-space-sm);
 }
 
+.panel {
+  display: grid;
+  gap: var(--portfolio-space-sm);
+  min-height: 20rem;
+}
+
+.explorationsNote {
+  color: var(--portfolio-color-text-body);
+  font-family: var(--portfolio-font-body);
+  font-size: var(--portfolio-type-body-sm-size);
+  font-weight: 400;
+  line-height: var(--portfolio-type-body-sm-line);
+  margin: 0;
+}
 @media (min-width: 901px) {
   .panel[data-active-tab="explorations"] {
     min-height: 145.5rem;

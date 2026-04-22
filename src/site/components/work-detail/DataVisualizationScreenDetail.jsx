@@ -83,7 +83,9 @@ export default function DataVisualizationScreenDetail({
     accentColor: "var(--data-vis-case-accent)",
     backHref,
     backLabel: language === "en" ? "Back" : "返回",
-    desktopShiftX: "29rem",
+    // 这一页的图片模块会比正文版心更宽，桌面端目录需要再往左退一点，
+    // 否则在大图场景里容易压到图片区。
+    desktopShiftX: "clamp(38rem, 26vw, 41rem)",
     // 目录起点要和正文首个模块共享同一组顶部节奏，
     // 否则会出现 TOC 提前“飘”上去，而“项目背景”还没到的错位感。
     desktopTopOffset: "clamp(4.5rem, 8vw, 8.25rem)",
@@ -374,12 +376,12 @@ export default function DataVisualizationScreenDetail({
                   <Image
                     alt={outcomes.imageAlt}
                     className={styles.figureImageStatic}
-                    height={541}
-                    sizes="(max-width: 900px) 100vw, 942px"
+                    height={514}
+                    sizes="(max-width: 900px) 100vw, 1000px"
                     src={outcomes.imageSrc}
                     style={{ height: "auto", width: "100%" }}
                     unoptimized={shouldBypassNextImageOptimizer(outcomes.imageSrc)}
-                    width={942}
+                    width={1000}
                   />
                 </div>
               </div>
