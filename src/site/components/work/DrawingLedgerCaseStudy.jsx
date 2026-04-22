@@ -646,7 +646,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     title={display("问题定位", "Problem Definition")}
                   >
                     <div className={styles.richText}>
-                      <p>{display("旧版台账是一个死的数据容器，主要存在以下 3 大问题：", "The old register was essentially a static data container, and it mainly had three problems:")}</p>
+                      <p>{display("旧版台账是一个死的数据容器，主要存在以下 2 大问题：", "The old register was essentially a static data container, and it mainly had two problems:")}</p>
                       <ul>
                         <li>{display("所有用户看到相同的数据，所以也会看到与自己不相关的专业、版本的图纸，给自己带来视觉干扰", "All users saw the same data, so they also saw unrelated disciplines and versions, which created visual noise.")}</li>
                         <li>{display("面对大量的图纸数据，各角色在查找关注的数据时，仿佛在一片数据海中捞针，效率低下", "With large amounts of drawing data, each role had to find what they cared about like searching for a needle in a haystack.")}</li>
