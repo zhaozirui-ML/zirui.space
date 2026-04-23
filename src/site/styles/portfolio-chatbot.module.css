@@ -94,6 +94,14 @@
   margin: 0;
 }
 
+.chatPanelContext {
+  color: var(--portfolio-color-text-muted);
+  font-family: var(--portfolio-font-label);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
 .iconButton {
   align-items: center;
   background: transparent;

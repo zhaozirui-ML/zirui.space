@@ -276,6 +276,11 @@ export const portfolioChatKnowledge = Object.freeze({
       prompt: t("你的工作经历是什么？", "What is your work experience?"),
     }),
     Object.freeze({
+      id: "skills",
+      label: t("你的技能结构是什么？", "What does your skill set look like?"),
+      prompt: t("你的技能结构是什么？", "What does your skill set look like?"),
+    }),
+    Object.freeze({
       id: "contact",
       label: t("怎么联系你？", "How can I contact you?"),
       prompt: t("怎么联系你？", "How can I contact you?"),

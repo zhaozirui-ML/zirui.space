@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   LoaderCircle,
   MessageCircleMore,
@@ -33,6 +34,8 @@ const CHATBOT_PAGE_LABELS = {
   "/work/data-visualization-screen": { zh: "数据可视化系统", en: "Data Visualization System" },
   "/work/drawing-ledger-2-0": { zh: "图纸台账 2.0", en: "Drawing Register 2.0" },
 };
+const MAX_GLOBAL_QUICK_REPLIES = 4;
+const MAX_PROJECT_QUICK_REPLIES = 3;
 
 /**
  * @param {"zh" | "en"} language
@@ -60,29 +63,143 @@ function getPageLabel(pathname, language) {
   return localizedLabel ? localizedLabel[language] : pathname;
 }
 
+function getProjectFromPathname(pathname, localizedKnowledge) {
+  if (!pathname.startsWith("/work/")) {
+    return null;
+  }
+
+  return localizedKnowledge.projects.find((project) =>
+    project.relatedPages.includes(pathname)
+  );
+}
+
+function pickQuickReplies(items, maxCount) {
+  return items.filter(Boolean).slice(0, maxCount);
+}
+
+function getContextualQuickReplies(pathname, localizedKnowledge, language) {
+  const project = getProjectFromPathname(pathname, localizedKnowledge);
+
+  if (project) {
+    return pickQuickReplies(
+      project.recommendedQuestions.map((question, index) => ({
+        id: `${project.slug}-recommended-${index}`,
+        label: question,
+        prompt: question,
+      })),
+      MAX_PROJECT_QUICK_REPLIES
+    );
+  }
+
+  if (pathname === "/work") {
+    return pickQuickReplies(
+      [
+        localizedKnowledge.quickReplies.find((item) => item.id === "featured-projects"),
+        localizedKnowledge.quickReplies.find((item) => item.id === "drawing-ledger"),
+        {
+          id: "axzo",
+          label:
+            language === "zh"
+              ? "讲讲 Axzo 设计系统门户"
+              : "Tell me about the Axzo Design Portal",
+          prompt:
+            language === "zh"
+              ? "讲讲 Axzo 设计系统门户"
+              : "Tell me about the Axzo Design System Portal.",
+        },
+        localizedKnowledge.quickReplies.find((item) => item.id === "contact"),
+      ],
+      MAX_GLOBAL_QUICK_REPLIES
+    );
+  }
+
+  if (pathname === "/about") {
+    return pickQuickReplies(
+      [
+        localizedKnowledge.quickReplies.find((item) => item.id === "intro"),
+        localizedKnowledge.quickReplies.find((item) => item.id === "experience"),
+        localizedKnowledge.quickReplies.find((item) => item.id === "skills"),
+        localizedKnowledge.quickReplies.find((item) => item.id === "contact"),
+      ],
+      MAX_GLOBAL_QUICK_REPLIES
+    );
+  }
+
+  return pickQuickReplies(
+    [
+      localizedKnowledge.quickReplies.find((item) => item.id === "intro"),
+      localizedKnowledge.quickReplies.find((item) => item.id === "featured-projects"),
+      localizedKnowledge.quickReplies.find((item) => item.id === "design-method"),
+      localizedKnowledge.quickReplies.find((item) => item.id === "contact"),
+    ],
+    MAX_GLOBAL_QUICK_REPLIES
+  );
+}
+
+function getContextualIntro(pathname, language, localizedKnowledge) {
+  const project = getProjectFromPathname(pathname, localizedKnowledge);
+
+  if (project) {
+    return language === "zh"
+      ? `你现在正在看 ${project.title}。如果你愿意，我可以直接展开这个项目的背景、我的角色、关键决策或结果。`
+      : `You're currently viewing ${project.title}. If you want, I can go straight into the background, my role, key decisions, or outcomes for this project.`;
+  }
+
+  if (pathname === "/work") {
+    return language === "zh"
+      ? "你现在在作品页。如果你想更快判断我的代表项目，可以直接问我某个项目的挑战、职责、决策或结果。"
+      : "You're on the Work page. If you want to evaluate my strongest case studies quickly, ask me about a project's challenge, role, decision-making, or outcome.";
+  }
+
+  if (pathname === "/about") {
+    return language === "zh"
+      ? "你现在在 About 页。如果你是在判断岗位匹配，可以直接问我经历、技能结构、设计方法或联系方式。"
+      : "You're on the About page. If you're evaluating role fit, you can ask about my experience, skill set, design approach, or contact information.";
+  }
+
+  return language === "zh"
+    ? "你好，我是这个作品集里的 Portfolio Chatbot。你可以问我关于赵子瑞的项目、经历、技能、设计方法或联系方式的问题。"
+    : "Hi, I'm the Portfolio Chatbot for this portfolio. You can ask me about Zirui Zhao's projects, experience, skills, design approach, or contact information.";
+}
+
 export default function PortfolioChatbot() {
+  const pathname = usePathname() || "/";
   const { language } = useLanguage();
   const localizedKnowledge = useMemo(
     () => getLocalizedChatValue(portfolioChatKnowledge, language),
     [language]
   );
-  const quickReplies = localizedKnowledge.quickReplies;
+  const quickReplies = useMemo(
+    () => getContextualQuickReplies(pathname, localizedKnowledge, language),
+    [language, localizedKnowledge, pathname]
+  );
+  const currentPageLabel = getPageLabel(pathname, language);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
   /** @type {[ChatMessage[], import("react").Dispatch<import("react").SetStateAction<ChatMessage[]>>]} */
-  const [messages, setMessages] = useState(() => [createInitialAssistantMessage(language)]);
+  const [messages, setMessages] = useState(() => [
+    createInitialAssistantMessage(language),
+  ]);
   const messageViewportRef = useRef(null);
 
   useEffect(() => {
     // 跟随站点语言时，直接重置会话可以避免中英文消息混杂在同一个面板里。
-    setMessages([createInitialAssistantMessage(language)]);
+    setMessages([
+      {
+        ...createInitialAssistantMessage(language),
+        content: getContextualIntro(pathname, language, localizedKnowledge),
+        relatedPages: [pathname, "/work", "/about"].filter(
+          (value, index, items) => items.indexOf(value) === index
+        ),
+      },
+    ]);
     setInputValue("");
     setErrorMessage("");
     setStatusMessage("");
-  }, [language]);
+  }, [language, localizedKnowledge, pathname]);
 
   useEffect(() => {
     const viewport = messageViewportRef.current;
@@ -118,6 +235,7 @@ export default function PortfolioChatbot() {
       const response = await fetch("/api/chat", {
         body: JSON.stringify({
           language,
+          pathname,
           question: trimmedQuestion,
         }),
         headers: {
@@ -178,6 +296,9 @@ export default function PortfolioChatbot() {
               <h2 className={styles.chatPanelTitle}>
                 {language === "zh" ? "问我作品集相关的问题" : "Ask me about the portfolio"}
               </h2>
+              <p className={styles.chatPanelContext}>
+                {language === "zh" ? "当前页面" : "Current page"}: {currentPageLabel}
+              </p>
             </div>
 
             <button

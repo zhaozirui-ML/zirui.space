@@ -104,10 +104,25 @@ function normalizeQuestion(question) {
   return question.trim().toLowerCase();
 }
 
+function normalizePathname(pathname) {
+  return typeof pathname === "string" && pathname ? pathname : "/";
+}
+
 function detectProject(projects, normalizedQuestion) {
   return projects.find((project) =>
     project.aliases.some((alias) => normalizedQuestion.includes(alias.toLowerCase()))
   );
+}
+
+function detectProjectByPathname(projects, pathname) {
+  const normalizedPathname = normalizePathname(pathname);
+  const isProjectDetailPage = normalizedPathname.startsWith("/work/");
+
+  if (!isProjectDetailPage) {
+    return null;
+  }
+
+  return projects.find((project) => project.relatedPages.includes(normalizedPathname));
 }
 
 function detectTopic(normalizedQuestion) {
@@ -170,6 +185,88 @@ function buildProjectAnswer(project, language) {
     `Key decisions: ${project.keyDecisions}`,
     `Outcome: ${project.outcome}`,
   ].join("\n");
+}
+
+function buildProjectChallengeAnswer(project, language) {
+  if (language === "zh") {
+    return [
+      `${project.title} 里最难的设计挑战，核心通常在这里：`,
+      "",
+      project.problem,
+      "",
+      `我当时的处理方式是：${project.process}`,
+    ].join("\n");
+  }
+
+  return [
+    `The hardest design challenge in ${project.title} was mainly this:`,
+    "",
+    project.problem,
+    "",
+    `My way of handling it was: ${project.process}`,
+  ].join("\n");
+}
+
+function buildProjectDecisionAnswer(project, language) {
+  if (language === "zh") {
+    return [
+      `${project.title} 里我做的关键决策，最重要的一层是：`,
+      "",
+      project.keyDecisions,
+      "",
+      `这些决策最终想解决的问题是：${project.problem}`,
+    ].join("\n");
+  }
+
+  return [
+    `One of the most important decisions I made in ${project.title} was this:`,
+    "",
+    project.keyDecisions,
+    "",
+    `Those decisions were meant to solve this problem: ${project.problem}`,
+  ].join("\n");
+}
+
+function buildProjectOutcomeAnswer(project, language) {
+  if (language === "zh") {
+    return [
+      `${project.title} 的结果可以概括成这样：`,
+      "",
+      project.outcome,
+      "",
+      `如果你愿意，我也可以继续展开我在这个项目里的具体职责和过程。`,
+    ].join("\n");
+  }
+
+  return [
+    `The outcome of ${project.title} can be summarized like this:`,
+    "",
+    project.outcome,
+    "",
+    "If you'd like, I can also go deeper into my role and the design process behind it.",
+  ].join("\n");
+}
+
+function detectProjectIntent(normalizedQuestion) {
+  if (
+    /最难|挑战|难点|challenge|hardest|difficult/.test(normalizedQuestion)
+  ) {
+    return "challenge";
+  }
+
+  if (
+    /关键决策|决策|decision|decisions/.test(normalizedQuestion)
+  ) {
+    return "decision";
+  }
+
+  if (
+    /结果|成果|outcome|result/.test(normalizedQuestion)
+  ) {
+    return "outcome";
+  }
+
+  return null;
 }
 
 function buildExperienceAnswer(knowledge, language) {
@@ -281,18 +378,49 @@ function buildRelatedPages(project) {
   return project?.relatedPages || ["/about", "/work"];
 }
 
-function buildSuggestedQuestions(project, knowledge, language) {
+function buildSuggestedQuestions(project, knowledge, language, pathname) {
   if (project) {
     return project.recommendedQuestions;
+  }
+
+  const quickReplyById = new Map(
+    knowledge.quickReplies.map((item) => [item.id, item.prompt])
+  );
+
+  if (pathname === "/work") {
+    return [
+      quickReplyById.get("featured-projects"),
+      quickReplyById.get("drawing-ledger"),
+      language === "zh"
+        ? "讲讲 Axzo 设计系统门户"
+        : "Tell me about the Axzo Design System Portal.",
+    ].filter(Boolean);
+  }
+
+  if (pathname === "/about") {
+    return [
+      quickReplyById.get("intro"),
+      quickReplyById.get("experience"),
+      quickReplyById.get("contact"),
+    ].filter(Boolean);
   }
 
   return knowledge.quickReplies.slice(0, 3).map((item) => item.prompt);
 }
 
-export function createPortfolioChatFallbackReply({ language, question }) {
+export function createPortfolioChatFallbackReply({ language, pathname, question }) {
+  // fallback 的职责是“稳定保底”，不是无限模拟聊天机器人。
+  // 这里优先保留正式版也一定需要的几类能力：固定信息、项目摘要、边界拒答和异常兜底。
   const localizedKnowledge = getLocalizedChatValue(portfolioChatKnowledge, language);
   const normalizedQuestion = normalizeQuestion(question);
-  const project = detectProject(localizedKnowledge.projects, normalizedQuestion);
+  const normalizedPathname = normalizePathname(pathname);
+  const explicitProject = detectProject(localizedKnowledge.projects, normalizedQuestion);
+  const projectFromPathname = detectProjectByPathname(
+    localizedKnowledge.projects,
+    normalizedPathname
+  );
+  const project = explicitProject || projectFromPathname || null;
+  const projectIntent = detectProjectIntent(normalizedQuestion);
   const topic = detectTopic(normalizedQuestion);
 
   if (!normalizedQuestion) {
@@ -301,27 +429,84 @@ export function createPortfolioChatFallbackReply({ language, question }) {
         language === "zh"
           ? "你可以问我关于项目、经历、技能、设计方法或联系方式的问题。"
           : "You can ask me about projects, experience, skills, design approach, or contact information.",
-      relatedPages: ["/work", "/about"],
+      relatedPages: projectFromPathname?.relatedPages || ["/work", "/about"],
       source: "fallback",
-      suggestedQuestions: buildSuggestedQuestions(null, localizedKnowledge, language),
+      suggestedQuestions: buildSuggestedQuestions(
+        projectFromPathname,
+        localizedKnowledge,
+        language,
+        normalizedPathname
+      ),
     };
   }
 
   if (isOutOfScope(normalizedQuestion)) {
     return {
       answer: buildRefusalAnswer(localizedKnowledge),
-      relatedPages: ["/work", "/about"],
+      relatedPages: projectFromPathname?.relatedPages || ["/work", "/about"],
       source: "guardrail",
-      suggestedQuestions: buildSuggestedQuestions(null, localizedKnowledge, language),
+      suggestedQuestions: buildSuggestedQuestions(
+        projectFromPathname,
+        localizedKnowledge,
+        language,
+        normalizedPathname
+      ),
     };
   }
 
   if (project) {
+    if (projectIntent === "challenge") {
+      return {
+        answer: buildProjectChallengeAnswer(project, language),
+        relatedPages: buildRelatedPages(project),
+        source: "fallback",
+        suggestedQuestions: buildSuggestedQuestions(
+          project,
+          localizedKnowledge,
+          language,
+          normalizedPathname
+        ),
+      };
+    }
+
+    if (projectIntent === "decision") {
+      return {
+        answer: buildProjectDecisionAnswer(project, language),
+        relatedPages: buildRelatedPages(project),
+        source: "fallback",
+        suggestedQuestions: buildSuggestedQuestions(
+          project,
+          localizedKnowledge,
+          language,
+          normalizedPathname
+        ),
+      };
+    }
+
+    if (projectIntent === "outcome") {
+      return {
+        answer: buildProjectOutcomeAnswer(project, language),
+        relatedPages: buildRelatedPages(project),
+        source: "fallback",
+        suggestedQuestions: buildSuggestedQuestions(
+          project,
+          localizedKnowledge,
+          language,
+          normalizedPathname
+        ),
+      };
+    }
+
     return {
       answer: buildProjectAnswer(project, language),
       relatedPages: buildRelatedPages(project),
       source: "fallback",
-      suggestedQuestions: buildSuggestedQuestions(project, localizedKnowledge, language),
+      suggestedQuestions: buildSuggestedQuestions(
+        project,
+        localizedKnowledge,
+        language,
+        normalizedPathname
+      ),
     };
   }
 
@@ -330,7 +515,12 @@ export function createPortfolioChatFallbackReply({ language, question }) {
       answer: buildProjectOverview(localizedKnowledge.projects, language),
       relatedPages: ["/work"],
       source: "fallback",
-      suggestedQuestions: buildSuggestedQuestions(null, localizedKnowledge, language),
+      suggestedQuestions: buildSuggestedQuestions(
+        projectFromPathname,
+        localizedKnowledge,
+        language,
+        normalizedPathname
+      ),
     };
   }
 
@@ -339,7 +529,12 @@ export function createPortfolioChatFallbackReply({ language, question }) {
       answer: buildExperienceAnswer(localizedKnowledge, language),
       relatedPages: ["/about"],
       source: "fallback",
-      suggestedQuestions: buildSuggestedQuestions(null, localizedKnowledge, language),
+      suggestedQuestions: buildSuggestedQuestions(
+        null,
+        localizedKnowledge,
+        language,
+        normalizedPathname
+      ),
     };
   }
 
@@ -348,7 +543,12 @@ export function createPortfolioChatFallbackReply({ language, question }) {
       answer: buildSkillsAnswer(localizedKnowledge, language),
       relatedPages: ["/about", "/"],
       source: "fallback",
-      suggestedQuestions: buildSuggestedQuestions(null, localizedKnowledge, language),
+      suggestedQuestions: buildSuggestedQuestions(
+        null,
+        localizedKnowledge,
+        language,
+        normalizedPathname
+      ),
     };
   }
 
@@ -357,7 +557,12 @@ export function createPortfolioChatFallbackReply({ language, question }) {
       answer: buildContactAnswer(localizedKnowledge, language),
       relatedPages: ["/about"],
       source: "fallback",
-      suggestedQuestions: buildSuggestedQuestions(null, localizedKnowledge, language),
+      suggestedQuestions: buildSuggestedQuestions(
+        null,
+        localizedKnowledge,
+        language,
+        normalizedPathname
+      ),
     };
   }
 
@@ -366,7 +571,12 @@ export function createPortfolioChatFallbackReply({ language, question }) {
       answer: buildMethodAnswer(language),
       relatedPages: ["/", "/work"],
       source: "fallback",
-      suggestedQuestions: buildSuggestedQuestions(null, localizedKnowledge, language),
+      suggestedQuestions: buildSuggestedQuestions(
+        projectFromPathname,
+        localizedKnowledge,
+        language,
+        normalizedPathname
+      ),
     };
   }
 
@@ -375,15 +585,25 @@ export function createPortfolioChatFallbackReply({ language, question }) {
       answer: buildProfileAnswer(localizedKnowledge, language),
       relatedPages: ["/about", "/"],
       source: "fallback",
-      suggestedQuestions: buildSuggestedQuestions(null, localizedKnowledge, language),
+      suggestedQuestions: buildSuggestedQuestions(
+        null,
+        localizedKnowledge,
+        language,
+        normalizedPathname
+      ),
     };
   }
 
   return {
     answer: buildRefusalAnswer(localizedKnowledge),
-    relatedPages: ["/work", "/about"],
+    relatedPages: projectFromPathname?.relatedPages || ["/work", "/about"],
     source: "guardrail",
-    suggestedQuestions: buildSuggestedQuestions(null, localizedKnowledge, language),
+    suggestedQuestions: buildSuggestedQuestions(
+      projectFromPathname,
+      localizedKnowledge,
+      language,
+      normalizedPathname
+    ),
   };
 }
 
@@ -407,11 +627,43 @@ function shouldUseModel(question, fallbackReply) {
   return fallbackReply.source !== "guardrail" && Boolean(question.trim());
 }
 
-export async function createPortfolioChatReply({ language, question }) {
-  const fallbackReply = createPortfolioChatFallbackReply({ language, question });
+function isInsufficientQuotaError(error) {
+  const errorText = String(error?.message || "");
 
-  if (!process.env.OPENAI_API_KEY || !shouldUseModel(question, fallbackReply)) {
+  if (errorText.toLowerCase().includes("insufficient_quota")) {
+    return true;
+  }
+
+  if (!Array.isArray(error?.errors)) {
+    return false;
+  }
+
+  return error.errors.some((nestedError) =>
+    String(nestedError?.responseBody || "").includes("insufficient_quota")
+  );
+}
+
+export async function createPortfolioChatReply({ language, pathname, question }) {
+  const fallbackReply = createPortfolioChatFallbackReply({
+    language,
+    pathname,
+    question,
+  });
+
+  if (!shouldUseModel(question, fallbackReply)) {
     return fallbackReply;
+  }
+
+  if (!process.env.OPENAI_API_KEY) {
+    return {
+      ...fallbackReply,
+      notice:
+        process.env.NODE_ENV === "production"
+          ? undefined
+          : language === "zh"
+            ? "当前未配置 OPENAI_API_KEY，聊天已使用站内知识库兜底回答。"
+            : "OPENAI_API_KEY is not configured, so the chat is currently using the on-site knowledge fallback mode.",
+    };
   }
 
   const localizedKnowledge = getLocalizedChatValue(portfolioChatKnowledge, language);
@@ -456,9 +708,13 @@ export async function createPortfolioChatReply({ language, question }) {
     return {
       ...fallbackReply,
       notice:
-        language === "zh"
-          ? "当前回答已切换为站内知识兜底模式。"
-          : "The reply fell back to the on-site knowledge mode.",
+        isInsufficientQuotaError(error)
+          ? language === "zh"
+            ? "当前 OPENAI API key 已接入，但账户额度不足，所以聊天已切换为站内知识库兜底回答。"
+            : "The OPENAI API key is connected, but the account has insufficient quota, so the chat fell back to the on-site knowledge mode."
+          : language === "zh"
+            ? "当前回答已切换为站内知识兜底模式。"
+            : "The reply fell back to the on-site knowledge mode.",
     };
   }
 }

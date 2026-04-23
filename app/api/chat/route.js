@@ -6,6 +6,7 @@ export async function POST(request) {
   try {
     const body = await request.json();
     const language = body?.language === "en" ? "en" : "zh";
+    const pathname = typeof body?.pathname === "string" ? body.pathname : "/";
     const question = typeof body?.question === "string" ? body.question : "";
 
     if (!question.trim()) {
@@ -19,6 +20,7 @@ export async function POST(request) {
 
     const reply = await createPortfolioChatReply({
       language,
+      pathname,
       question,
     });
 
