@@ -10,12 +10,12 @@ https://zirui.space
 
 <table width="100%">
   <tr>
-    <th width="33.33%">Drawing Ledger 2.0</th>
+    <th width="33.33%">Drawing Register 2.0</th>
     <th width="33.33%">AXZO Design System</th>
     <th width="33.33%">Data Visualization</th>
   </tr>
   <tr>
-    <td width="33.33%"><img src="public/site/home/work-drawing-ledger.png" alt="Drawing Ledger 2.0 preview" width="100%" /></td>
+    <td width="33.33%"><img src="public/site/home/work-drawing-ledger.png" alt="Drawing Register 2.0 preview" width="100%" /></td>
     <td width="33.33%"><img src="public/site/home/work-axzo.png" alt="AXZO Design System preview" width="100%" /></td>
     <td width="33.33%"><img src="public/site/home/work-data-viz.png" alt="Data Visualization preview" width="100%" /></td>
   </tr>
@@ -23,7 +23,7 @@ https://zirui.space
 
 ## Featured Work
 
-- Drawing Ledger 2.0
+- Drawing Register 2.0
 - AXZO Design System
 - Data Visualization Screen Design
 
