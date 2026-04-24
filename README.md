@@ -8,11 +8,9 @@ https://zirui.space
 
 ## Screenshots
 
-![AXZO Design System preview](public/site/home/work-axzo.png)
-
-![Drawing Ledger 2.0 preview](public/site/home/work-drawing-ledger.png)
-
-![Data Visualization preview](public/site/home/work-data-viz.png)
+| AXZO Design System | Drawing Ledger 2.0 | Data Visualization |
+| --- | --- | --- |
+| <img src="public/site/home/work-axzo.png" alt="AXZO Design System preview" width="240" /> | <img src="public/site/home/work-drawing-ledger.png" alt="Drawing Ledger 2.0 preview" width="240" /> | <img src="public/site/home/work-data-viz.png" alt="Data Visualization preview" width="240" /> |
 
 ## Featured Work
 
