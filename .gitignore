@@ -7,6 +7,8 @@ dist
 .DS_Store
 .codex-temp
 .codex
+.codex-artifacts
 tsconfig.tsbuildinfo
 test-results
 .vercel
+src/site/fonts/files

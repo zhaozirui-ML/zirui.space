@@ -50,16 +50,13 @@ export const portfolio = Object.freeze({
   defaultColorTheme: "light",
   typography: Object.freeze({
     families: Object.freeze({
-      // 一级标题统一切到项目内托管的“方正清刻本悦宋”，避免继续依赖本机字体。
-      title:
-        'var(--font-fz-qingke-benyuesong), "Songti SC", "STSong", serif',
-      // 实验分支：英文展示标题临时切到 Domaine Display Narrow，用于和 Ivy Presto Headline 对比。
-      titleSerif:
-        'var(--font-domaine-display-narrow, "Times New Roman"), serif',
+      // 公开仓库不分发授权字体文件，默认使用系统字体保证项目可运行。
+      title: '"Songti SC", "STSong", "Noto Serif SC", serif',
+      titleSerif: '"Times New Roman", Times, serif',
       body:
-        'var(--font-inter), var(--font-satoshi), "Noto Sans SC", "Noto Sans JP", sans-serif',
+        'var(--font-inter), "Noto Sans SC", "Noto Sans JP", sans-serif',
       label:
-        'var(--font-satoshi), var(--font-inter), "Noto Sans SC", "Noto Sans JP", sans-serif',
+        'var(--font-inter), "Noto Sans SC", "Noto Sans JP", sans-serif',
       mono: 'var(--font-ibm-plex-mono, "IBM Plex Mono", monospace)',
     }),
     scales: Object.freeze({

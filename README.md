@@ -1,49 +1,61 @@
-# Zirui.me
+# zirui.space
 
-一个基于 Next.js 构建的个人作品集网站项目，包含：
+zirui.space is a personal portfolio website built with Next.js. It presents product design work through case studies, design system practice, writing, visual explorations, and interactive prototypes.
 
-- 个人作品集主页
-- 本地设计系统与组件预览页
+## Live Site
 
-## 技术栈
+https://zirui.space
+
+## Screenshots
+
+![AXZO Design System preview](public/site/home/work-axzo.png)
+
+![Drawing Ledger 2.0 preview](public/site/home/work-drawing-ledger.png)
+
+![Data Visualization preview](public/site/home/work-data-viz.png)
+
+## Featured Work
+
+- AXZO Design System
+- Drawing Ledger 2.0
+- Data Visualization Screen Design
+
+## Design Focus
+
+Product design, design systems, enterprise workflows, data visualization, bilingual content structure, and interaction prototyping.
+
+## Overview
+
+- Portfolio homepage
+- Work / Blog / About pages
+- Design system preview
+- Bilingual experience
+- Theme-aware responsive design
+
+## Tech Stack
 
 - Next.js
 - React
+- TypeScript type checking
+- ESLint
 - pnpm
 
-## 本地启动
-
-```bash
-pnpm install
-pnpm dev
-```
-
-启动后可访问：
-
-- 首页：`http://localhost:3000`
-- 设计系统预览：`http://localhost:3000/design-system`
-
-如果 `3000` 端口被占用，Next.js 会自动切换到其他可用端口。
-
-## 常用命令
-
-```bash
-pnpm dev
-pnpm typecheck
-pnpm lint
-pnpm build
-pnpm start
-```
-
-## 项目结构
+## Project Structure
 
 ```text
-app/            Next.js 路由入口
-design-system/  本地设计系统组件与 tokens
-src/            页面内容与预览模块
-public/         静态资源
+app/             Next.js app routes
+design-system/   Local design system components and tokens
+docs/            Design context and project documentation
+scripts/         Development and validation scripts
+src/             Site content, components, data, and preview modules
+public/          Static assets for the portfolio experience
 ```
 
-## 说明
+## Note
 
-当前项目默认使用 `pnpm` 作为包管理工具。
+This repository is maintained as the source code for my personal portfolio. The best way to experience the work is through the live site.
+
+- LinkedIn: [Zirui Zhao](https://www.linkedin.com/in/zirui-zhao-509306246/)
+- Email: [Zhaozirui721@gmail.com](mailto:Zhaozirui721@gmail.com)
+- X: [@atc12138](https://x.com/atc12138)
+- Instagram: [@atc12138](https://www.instagram.com/atc12138/)
