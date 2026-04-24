@@ -1,5 +1,5 @@
+import { createOpenAI } from "@ai-sdk/openai";
 import { generateText } from "ai";
-import { openai } from "@ai-sdk/openai";
 
 import {
   getLocalizedChatValue,
@@ -623,8 +623,24 @@ function buildPromptKnowledge(localizedKnowledge) {
   );
 }
 
-function shouldUseModel(question, fallbackReply) {
-  return fallbackReply.source !== "guardrail" && Boolean(question.trim());
+function hasConversationContext(messages) {
+  return Array.isArray(messages) && messages.length >= 3;
+}
+
+function shouldUseModel(question, fallbackReply, messages) {
+  if (!question.trim()) {
+    return false;
+  }
+
+  if (isOutOfScope(normalizeQuestion(question))) {
+    return false;
+  }
+
+  if (fallbackReply.source !== "guardrail") {
+    return true;
+  }
+
+  return hasConversationContext(messages);
 }
 
 function isInsufficientQuotaError(error) {
@@ -643,14 +659,206 @@ function isInsufficientQuotaError(error) {
   );
 }
 
-export async function createPortfolioChatReply({ language, pathname, question }) {
+function isInvalidApiKeyError(error) {
+  const errorText = String(error?.message || "").toLowerCase();
+
+  if (
+    errorText.includes("invalid_api_key") ||
+    errorText.includes("incorrect api key provided")
+  ) {
+    return true;
+  }
+
+  if (!Array.isArray(error?.errors)) {
+    return false;
+  }
+
+  return error.errors.some((nestedError) =>
+    String(nestedError?.responseBody || "")
+      .toLowerCase()
+      .includes("invalid_api_key")
+  );
+}
+
+function createPortfolioModel() {
+  const baseURL = process.env.OPENAI_BASE_URL?.trim();
+
+  // 这里让项目既能直连 OpenAI 官方接口，也能在需要时切到兼容的中转站。
+  const provider = createOpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+    ...(baseURL ? { baseURL } : {}),
+  });
+
+  return provider.responses("gpt-5.4");
+}
+
+function getSystemPrompt(language) {
+  return language === "zh"
+    ? [
+        "你是作品集网站里的 Portfolio Chatbot，只能回答这个作品集相关的问题。",
+        "允许回答的话题只有：个人介绍、项目介绍、工作经历、设计方法、技能、联系方式。",
+        "如果问题超出范围，必须礼貌拒答，并把话题引回作品集。",
+        "只能基于提供的知识回答，不要编造没有给出的事实。",
+        "如果知识里没有明确答案，要坦诚说明这个作品集里没有公开写到。",
+        "回答语气要冷静、可信、简洁，像作品集里的本人分身，而不是客服。",
+        "默认用 3 到 6 句完成回答；只有在列举经历或技能时才适度使用列表。",
+      ].join("\n")
+    : [
+        "You are the Portfolio Chatbot inside a portfolio website and may only answer portfolio-related questions.",
+        "Allowed topics are only: profile, projects, experience, design approach, skills, and contact.",
+        "If the question is out of scope, politely refuse and steer the conversation back to the portfolio.",
+        "Answer only from the provided knowledge and do not invent facts.",
+        "If the answer is not clearly covered by the knowledge, say that it is not publicly specified in the portfolio.",
+        "Keep the tone calm, credible, and concise, like the portfolio owner speaking directly, not a customer support bot.",
+        "Default to 3 to 6 sentences unless a short list is genuinely clearer for experience or skills.",
+      ].join("\n");
+}
+
+function formatChatHistory(messages, language) {
+  if (!Array.isArray(messages) || !messages.length) {
+    return language === "zh" ? "暂无历史对话。" : "No prior conversation.";
+  }
+
+  return messages
+    .slice(-8)
+    .map((message) => {
+      const speaker =
+        message.role === "assistant"
+          ? language === "zh"
+            ? "助手"
+            : "Assistant"
+          : language === "zh"
+            ? "用户"
+            : "User";
+
+      return `${speaker}: ${message.content}`;
+    })
+    .join("\n");
+}
+
+function getUserPrompt(language, localizedKnowledge, pathname, messages, question) {
+  const conversationHistory = formatChatHistory(messages, language);
+
+  return language === "zh"
+    ? [
+        `以下是作品集知识库：\n${buildPromptKnowledge(localizedKnowledge)}`,
+        `当前页面：${pathname}`,
+        `最近对话：\n${conversationHistory}`,
+        `当前用户问题：${question}`,
+        "请结合最近对话理解指代关系，例如“这个项目”“刚才那个”“继续展开”。",
+        "请直接给出最终回答。",
+      ].join("\n\n")
+    : [
+        `Here is the portfolio knowledge base:\n${buildPromptKnowledge(localizedKnowledge)}`,
+        `Current page: ${pathname}`,
+        `Recent conversation:\n${conversationHistory}`,
+        `Current user question: ${question}`,
+        'Use the recent conversation to resolve references like "this project", "that one", or "go deeper".',
+        "Return only the final answer.",
+      ].join("\n\n");
+}
+
+function buildResponsesUrl(baseURL) {
+  return `${baseURL.replace(/\/$/, "")}/responses`;
+}
+
+function createProxyRequestError(message, details = {}) {
+  return Object.assign(new Error(message), details);
+}
+
+function extractResponseText(data) {
+  if (typeof data?.output_text === "string" && data.output_text.trim()) {
+    return data.output_text.trim();
+  }
+
+  if (!Array.isArray(data?.output)) {
+    return "";
+  }
+
+  const textParts = data.output.flatMap((item) =>
+    Array.isArray(item?.content)
+      ? item.content
+          .map((contentItem) =>
+            contentItem?.type === "output_text" ? contentItem.text : null
+          )
+          .filter(Boolean)
+      : []
+  );
+
+  return textParts.join("\n").trim();
+}
+
+async function generateTextWithCompatibleProxy({
+  apiKey,
+  baseURL,
+  language,
+  localizedKnowledge,
+  messages,
+  pathname,
+  question,
+}) {
+  const response = await fetch(buildResponsesUrl(baseURL), {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model: "gpt-5.4",
+      instructions: getSystemPrompt(language),
+      input: getUserPrompt(
+        language,
+        localizedKnowledge,
+        pathname,
+        messages,
+        question
+      ),
+      store: false,
+      text: {
+        format: {
+          type: "text",
+        },
+      },
+    }),
+  });
+
+  const rawText = await response.text();
+  let data;
+
+  try {
+    data = JSON.parse(rawText);
+  } catch {
+    throw createProxyRequestError("Proxy provider returned invalid JSON.", {
+      responseBody: rawText,
+    });
+  }
+
+  if (!response.ok) {
+    throw createProxyRequestError(
+      data?.error?.message || `Proxy provider request failed with status ${response.status}.`,
+      {
+        responseBody: rawText,
+        statusCode: response.status,
+      }
+    );
+  }
+
+  return extractResponseText(data);
+}
+
+export async function createPortfolioChatReply({
+  language,
+  messages = [],
+  pathname,
+  question,
+}) {
   const fallbackReply = createPortfolioChatFallbackReply({
     language,
     pathname,
     question,
   });
 
-  if (!shouldUseModel(question, fallbackReply)) {
+  if (!shouldUseModel(question, fallbackReply, messages)) {
     return fallbackReply;
   }
 
@@ -667,39 +875,38 @@ export async function createPortfolioChatReply({ language, pathname, question })
   }
 
   const localizedKnowledge = getLocalizedChatValue(portfolioChatKnowledge, language);
+  const baseURL = process.env.OPENAI_BASE_URL?.trim();
+  const systemPrompt = getSystemPrompt(language);
+  const userPrompt = getUserPrompt(
+    language,
+    localizedKnowledge,
+    pathname,
+    messages,
+    question
+  );
 
   try {
-    const result = await generateText({
-      model: openai.responses("gpt-5.4"),
-      system:
-        language === "zh"
-          ? [
-              "你是作品集网站里的 Portfolio Chatbot，只能回答这个作品集相关的问题。",
-              "允许回答的话题只有：个人介绍、项目介绍、工作经历、设计方法、技能、联系方式。",
-              "如果问题超出范围，必须礼貌拒答，并把话题引回作品集。",
-              "只能基于提供的知识回答，不要编造没有给出的事实。",
-              "如果知识里没有明确答案，要坦诚说明这个作品集里没有公开写到。",
-              "回答语气要冷静、可信、简洁，像作品集里的本人分身，而不是客服。",
-              "默认用 3 到 6 句完成回答；只有在列举经历或技能时才适度使用列表。",
-            ].join("\n")
-          : [
-              "You are the Portfolio Chatbot inside a portfolio website and may only answer portfolio-related questions.",
-              "Allowed topics are only: profile, projects, experience, design approach, skills, and contact.",
-              "If the question is out of scope, politely refuse and steer the conversation back to the portfolio.",
-              "Answer only from the provided knowledge and do not invent facts.",
-              "If the answer is not clearly covered by the knowledge, say that it is not publicly specified in the portfolio.",
-              "Keep the tone calm, credible, and concise, like the portfolio owner speaking directly, not a customer support bot.",
-              "Default to 3 to 6 sentences unless a short list is genuinely clearer for experience or skills.",
-            ].join("\n"),
-      prompt:
-        (language === "zh"
-          ? `以下是作品集知识库：\n${buildPromptKnowledge(localizedKnowledge)}\n\n用户问题：${question}\n\n请直接给出最终回答。`
-          : `Here is the portfolio knowledge base:\n${buildPromptKnowledge(localizedKnowledge)}\n\nUser question: ${question}\n\nReturn only the final answer.`),
-    });
+    const answer = baseURL
+      ? await generateTextWithCompatibleProxy({
+          apiKey: process.env.OPENAI_API_KEY,
+          baseURL,
+          language,
+          localizedKnowledge,
+          messages,
+          pathname,
+          question,
+        })
+      : (
+          await generateText({
+            model: createPortfolioModel(),
+            system: systemPrompt,
+            prompt: userPrompt,
+          })
+        ).text.trim();
 
     return {
       ...fallbackReply,
-      answer: result.text.trim() || fallbackReply.answer,
+      answer: answer || fallbackReply.answer,
       source: "model",
     };
   } catch (error) {
@@ -712,6 +919,10 @@ export async function createPortfolioChatReply({ language, pathname, question })
           ? language === "zh"
             ? "当前 OPENAI API key 已接入，但账户额度不足，所以聊天已切换为站内知识库兜底回答。"
             : "The OPENAI API key is connected, but the account has insufficient quota, so the chat fell back to the on-site knowledge mode."
+          : isInvalidApiKeyError(error)
+            ? language === "zh"
+              ? "当前 API key 或 provider 配置无效，所以聊天已切换为站内知识库兜底回答。请检查 OPENAI_API_KEY 和 OPENAI_BASE_URL 是否匹配。"
+              : "The current API key or provider configuration is invalid, so the chat fell back to the on-site knowledge mode. Please verify that OPENAI_API_KEY and OPENAI_BASE_URL match."
           : language === "zh"
             ? "当前回答已切换为站内知识兜底模式。"
             : "The reply fell back to the on-site knowledge mode.",

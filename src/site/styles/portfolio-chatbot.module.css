@@ -255,16 +255,22 @@
 
 .composerField {
   background: color-mix(in srgb, var(--portfolio-color-surface) 88%, transparent);
-  border: 1px solid var(--portfolio-color-border-light);
+  border: 1px solid transparent;
   border-radius: 1rem;
   color: var(--portfolio-semantic-body-color);
   font-family: var(--portfolio-font-body);
   font-size: 0.9375rem;
   line-height: 1.6;
   min-height: 5.5rem;
+  outline: none;
   padding: 0.875rem;
   resize: vertical;
   width: 100%;
+}
+
+.composerField:focus {
+  border-color: transparent;
+  outline: none;
 }
 
 .composerField::placeholder {

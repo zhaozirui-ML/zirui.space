@@ -57,6 +57,13 @@ function createMessageId(prefix) {
   return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
+function serializeChatHistory(messages) {
+  return messages.map((message) => ({
+    role: message.role,
+    content: message.content,
+  }));
+}
+
 function getPageLabel(pathname, language) {
   const localizedLabel = CHATBOT_PAGE_LABELS[pathname];
 
@@ -235,6 +242,7 @@ export default function PortfolioChatbot() {
       const response = await fetch("/api/chat", {
         body: JSON.stringify({
           language,
+          messages: serializeChatHistory([...messages, userMessage]),
           pathname,
           question: trimmedQuestion,
         }),
@@ -274,6 +282,15 @@ export default function PortfolioChatbot() {
   }
 
   function handleSubmit(event) {
+    event.preventDefault();
+    void sendQuestion(inputValue);
+  }
+
+  function handleComposerKeyDown(event) {
+    if (event.key !== "Enter" || event.shiftKey) {
+      return;
+    }
+
     event.preventDefault();
     void sendQuestion(inputValue);
   }
@@ -322,15 +339,11 @@ export default function PortfolioChatbot() {
                   .join(" ")}
                 key={message.id}
               >
-                <p className={styles.messageRole}>
-                  {message.role === "user"
-                    ? language === "zh"
-                      ? "你"
-                      : "You"
-                    : language === "zh"
-                      ? "Portfolio Chatbot"
-                      : "Portfolio Chatbot"}
-                </p>
+                {message.role === "assistant" ? (
+                  <p className={styles.messageRole}>
+                    {language === "zh" ? "Portfolio Chatbot" : "Portfolio Chatbot"}
+                  </p>
+                ) : null}
 
                 <p className={styles.messageText}>{message.content}</p>
 
@@ -403,6 +416,7 @@ export default function PortfolioChatbot() {
                 className={styles.composerField}
                 id="portfolio-chat-input"
                 onChange={(event) => setInputValue(event.target.value)}
+                onKeyDown={handleComposerKeyDown}
                 placeholder={
                   language === "zh"
                     ? "例如：讲讲图纸台账 2.0 这个项目"
