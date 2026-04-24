@@ -26,7 +26,11 @@ export default function WorkSideProjectsPanel({ items, language }) {
             </div>
 
             <div className={styles.sideProjectLink}>
-              <span className={styles.sideProjectPath}>{item.path}</span>
+              <span className={styles.sideProjectMeta}>
+                <span>{item.category}</span>
+                <span aria-hidden="true">/</span>
+                <span>{item.metadata}</span>
+              </span>
               <ArrowUpRight
                 aria-hidden="true"
                 className={styles.sideProjectLinkIcon}

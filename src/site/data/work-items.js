@@ -315,11 +315,28 @@ const explorationsRows = [
 
 const sideProjectItems = [
   {
+    category: "Brand",
+    href: "https://github.com/zhaozirui-ML/zirui.space",
+    id: "zirui-space",
+    metadata: "Portfolio",
+    subtitle: t("Zirui’s 作品集", "Zirui’s portfolio"),
+    title: "zirui.space",
+  },
+  {
+    category: "Tools",
     href: "https://github.com/zhaozirui-ML/Lovers-weekly",
     id: "lovers-weekly",
-    path: "/tools/report",
+    metadata: "Report",
     subtitle: t("每周恋爱日志", "Weekly relationship journal"),
     title: "Lovers-weekly",
+  },
+  {
+    category: "Tools",
+    href: "https://github.com/zhaozirui-ML/ai-content-detector",
+    id: "ai-content-detector",
+    metadata: "AI Detector",
+    subtitle: t("AI 内容检测工具", "AI content detection tool"),
+    title: "ai-content-detector",
   },
 ];
 
