@@ -1,19 +1,20 @@
-import { homeSkillHighlight, homeSkills } from "../../data/home-content";
-import HomeSkillsReveal from "./HomeSkillsReveal";
 import styles from "../../styles/home-page.module.css";
 
 export default function HomeSkillsSection() {
   return (
     <section className={styles.section}>
-      <div className={styles.sectionHeader}>
-        <h2 className={styles.sectionTitle}>Skills</h2>
-        <p className={styles.sectionSubtitle}>See what I can do</p>
+      <div className={styles.skillManifestoBlock}>
+        <p className={styles.skillManifestoLabel}>How I Work</p>
+        <p className={styles.skillManifestoText}>
+          I <span className={styles.skillManifestoEmphasis}>structure complexity</span>,{" "}
+          <span className={styles.skillManifestoEmphasis}>
+            validate critical interactions early
+          </span>
+          , and <span className={styles.skillManifestoEmphasis}>design for delivery</span> so
+          teams can ship systems that are clearer to use, easier to build, and stronger in
+          the long run.
+        </p>
       </div>
-      <HomeSkillsReveal
-        fallbackImageAlt={homeSkillHighlight.imageAlt}
-        fallbackImageSrc={homeSkillHighlight.imageSrc}
-        skills={homeSkills}
-      />
     </section>
   );
 }

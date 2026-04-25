@@ -172,8 +172,36 @@
   font-weight: 300;
   letter-spacing: -0.00625rem;
   line-height: 1.2;
+  display: grid;
+  gap: 0.2rem;
   margin: 0;
   max-width: 100%;
+}
+
+.heroPrimaryLine {
+  display: block;
+  max-width: 42rem;
+  text-wrap: balance;
+}
+
+.heroPrimaryLine:last-child {
+  color: rgba(54, 50, 44, 0.92);
+  font-size: 0.96em;
+  letter-spacing: -0.0075rem;
+  line-height: 1.28;
+}
+
+.heroManifestoEmphasis {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(192, 170, 133, 0) 0%,
+      rgba(192, 170, 133, 0) 54%,
+      rgba(192, 170, 133, 0.18) 54%,
+      rgba(192, 170, 133, 0.18) 100%
+    );
+  color: rgba(39, 36, 31, 0.96);
+  padding: 0 0.08em;
 }
 
 .section {
@@ -666,7 +694,6 @@
   }
 
   .heroSection,
-  .sectionHeader,
   .skillsLayout {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
@@ -674,6 +701,10 @@
 
   .heroTitle,
   .sectionTitle {
+    text-wrap: balance;
+  }
+
+  .heroManifesto {
     text-wrap: balance;
   }
 
