@@ -3,7 +3,7 @@ import Image from "next/image";
 import HomeBlogsSection from "../components/home/HomeBlogsSection";
 import HomeSkillsSection from "../components/home/HomeSkillsSection";
 import HomeWorksSection from "../components/home/HomeWorksSection";
-import { homeIntro } from "../data/home-content";
+import { homeIntro, homeSectionVisibility } from "../data/home-content";
 import { getLocalizedValue } from "../i18n/get-localized-value";
 import styles from "../styles/home-page.module.css";
 
@@ -44,7 +44,7 @@ export default function HomePage({ language }) {
         </section>
       </div>
 
-      <HomeSkillsSection language={language} />
+      {homeSectionVisibility.skills ? <HomeSkillsSection language={language} /> : null}
       <HomeWorksSection language={language} />
       <HomeBlogsSection language={language} />
     </div>

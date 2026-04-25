@@ -27,6 +27,9 @@ export default function SiteHeader({ colorTheme, onThemeToggle }) {
   const pathname = usePathname();
   const navigationRef = useRef(null);
   const itemRefs = useRef(new Map());
+  const lastScrollYRef = useRef(0);
+  const scrollFrameRef = useRef(0);
+  const [isHeaderHidden, setIsHeaderHidden] = useState(false);
   const [indicatorStyle, setIndicatorStyle] = useState({
     opacity: 0,
     transform: "translate3d(0, 0, 0)",
@@ -85,8 +88,75 @@ export default function SiteHeader({ colorTheme, onThemeToggle }) {
     };
   }, [pathname, language]);
 
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+
+    const mobileQuery = window.matchMedia("(max-width: 640px)");
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const topRevealOffset = 80;
+    const scrollDeltaThreshold = 8;
+
+    const updateHeaderVisibility = () => {
+      scrollFrameRef.current = 0;
+
+      if (!mobileQuery.matches || reducedMotionQuery.matches) {
+        setIsHeaderHidden(false);
+        lastScrollYRef.current = window.scrollY;
+        return;
+      }
+
+      const currentScrollY = Math.max(window.scrollY, 0);
+      const scrollDelta = currentScrollY - lastScrollYRef.current;
+
+      if (currentScrollY < topRevealOffset) {
+        setIsHeaderHidden(false);
+      } else if (scrollDelta > scrollDeltaThreshold) {
+        setIsHeaderHidden(true);
+      } else if (scrollDelta < -scrollDeltaThreshold) {
+        setIsHeaderHidden(false);
+      }
+
+      if (Math.abs(scrollDelta) > scrollDeltaThreshold) {
+        lastScrollYRef.current = currentScrollY;
+      }
+    };
+
+    const requestHeaderVisibilityUpdate = () => {
+      if (scrollFrameRef.current !== 0) {
+        return;
+      }
+
+      scrollFrameRef.current = window.requestAnimationFrame(updateHeaderVisibility);
+    };
+
+    lastScrollYRef.current = window.scrollY;
+
+    window.addEventListener("scroll", requestHeaderVisibilityUpdate, { passive: true });
+    mobileQuery.addEventListener("change", updateHeaderVisibility);
+    reducedMotionQuery.addEventListener("change", updateHeaderVisibility);
+
+    return () => {
+      window.removeEventListener("scroll", requestHeaderVisibilityUpdate);
+      mobileQuery.removeEventListener("change", updateHeaderVisibility);
+      reducedMotionQuery.removeEventListener("change", updateHeaderVisibility);
+
+      if (scrollFrameRef.current !== 0) {
+        window.cancelAnimationFrame(scrollFrameRef.current);
+      }
+    };
+  }, []);
+
+  const headerClassName = [
+    styles.siteHeader,
+    isHeaderHidden ? styles.siteHeaderHidden : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <header className={styles.siteHeader}>
+    <header className={headerClassName}>
       <div className={styles.siteHeaderFrame}>
         <div className={styles.siteHeaderInner}>
           <Link

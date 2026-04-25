@@ -1,5 +1,10 @@
 const t = (zh, en) => ({ zh, en });
 
+export const homeSectionVisibility = {
+  // 想临时隐藏首页 Skills 模块时，把这里改成 false 即可。
+  skills: true,
+};
+
 export const homeIntro = {
   avatarMediaType: "video",
   // 首页头像属于高频公开展示资源，优先走本地静态文件，避免继续消耗 Storage 出口流量。
