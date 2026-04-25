@@ -1,6 +1,5 @@
-import Image from "next/image";
-
 import HomeBlogsSection from "../components/home/HomeBlogsSection";
+import HomeHeroAvatar from "../components/home/HomeHeroAvatar";
 import HomeSkillsSection from "../components/home/HomeSkillsSection";
 import HomeWorksSection from "../components/home/HomeWorksSection";
 import { homeIntro, homeSectionVisibility } from "../data/home-content";
@@ -17,29 +16,11 @@ export default function HomePage({ language }) {
     <div className={styles.homePage}>
       <div className={styles.homeTopMode}>
         <section className={styles.heroSection}>
-          {homeIntro.avatarMediaType === "video" ? (
-            <video
-              aria-label={getLocalizedValue(homeIntro.avatarAlt, language)}
-              autoPlay
-              className={styles.heroAvatar}
-              height={76}
-              loop
-              muted
-              playsInline
-              preload="auto"
-              role="img"
-              src={homeIntro.avatarSrc}
-              width={76}
-            />
-          ) : (
-            <Image
-              alt={getLocalizedValue(homeIntro.avatarAlt, language)}
-              className={styles.heroAvatar}
-              height={76}
-              src={homeIntro.avatarSrc}
-              width={76}
-            />
-          )}
+          <HomeHeroAvatar
+            alt={getLocalizedValue(homeIntro.avatarAlt, language)}
+            mediaType={homeIntro.avatarMediaType}
+            src={homeIntro.avatarSrc}
+          />
           <h1 className={styles.heroTitle}>{getLocalizedValue(homeIntro.title, language)}</h1>
         </section>
       </div>

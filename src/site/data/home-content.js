@@ -6,9 +6,9 @@ export const homeSectionVisibility = {
 };
 
 export const homeIntro = {
-  avatarMediaType: "video",
-  // 首页头像属于高频公开展示资源，优先走本地静态文件，避免继续消耗 Storage 出口流量。
-  avatarSrc: "/site/home/avatar/home-avatar.mp4",
+  avatarMediaType: /** @type {"image" | "video"} */ ("image"),
+  // 当前首页使用透明背景的静态头像图；原来的 mp4 动画资源和之前的 png 版本都继续保留，后续如果要恢复只改回这里即可。
+  avatarSrc: "/site/home/avatar/home-avatar-cutout.png",
   avatarAlt: t("赵子瑞的首页头像插图", "Portrait illustration of Zirui Zhao on the homepage"),
   title: t(
     "你好，我是赵子瑞。一名拥有 4 年经验的产品设计师，专注于为复杂业务流程、系统与界面设计真正能够落地的企业级产品。",

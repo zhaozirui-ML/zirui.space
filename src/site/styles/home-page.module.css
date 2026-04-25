@@ -79,17 +79,86 @@
   content: none;
 }
 
+.heroAvatarButton {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  cursor: zoom-in;
+  display: inline-flex;
+  justify-content: center;
+  padding: 0;
+  width: fit-content;
+}
+
+.heroAvatarButton:focus-visible {
+  border-radius: 0.75rem;
+  outline: 2px solid color-mix(in srgb, var(--portfolio-color-accent-brand) 32%, transparent);
+  outline-offset: 4px;
+}
+
 .heroAvatar {
   border-radius: 0.375rem;
-  box-shadow: 0 12px 24px rgba(132, 97, 48, 0.08);
   display: block;
   object-fit: cover;
   position: relative;
-  transition:
-    transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 180ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
   transform-origin: center left;
-  will-change: transform, box-shadow;
+  will-change: transform;
+}
+
+.heroAvatarButton:hover .heroAvatar {
+  transform: scale(1.04);
+}
+
+.heroAvatarOverlay {
+  align-items: center;
+  animation: home-avatar-overlay-in 180ms cubic-bezier(0.22, 1, 0.36, 1);
+  background: color-mix(in srgb, var(--portfolio-color-text-title) 18%, transparent);
+  backdrop-filter: blur(4px);
+  cursor: zoom-out;
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 2rem;
+  position: fixed;
+  z-index: 200;
+}
+
+.heroAvatarOverlayCard {
+  animation: home-avatar-card-in 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: default;
+  max-width: min(72vw, 40rem);
+  width: 100%;
+}
+
+.heroAvatarExpanded {
+  display: block;
+  height: auto;
+  max-height: 84vh;
+  object-fit: contain;
+  width: 100%;
+}
+
+@keyframes home-avatar-overlay-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes home-avatar-card-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .heroTitle {
@@ -541,13 +610,6 @@
 }
 
 @media (hover: hover) {
-  .heroAvatar:hover {
-    box-shadow: 0 36px 72px rgba(132, 97, 48, 0.28);
-    cursor: zoom-in;
-    transform: scale(1.7);
-    z-index: 2;
-  }
-
   .workCard:hover {
     border-color: var(--portfolio-color-border-strong);
   }
@@ -666,6 +728,14 @@
   .heroTitle {
     /* 移动端长中文段落不适合 balance；让浏览器按自然换行铺满可用宽度。 */
     text-wrap: pretty;
+  }
+
+  .heroAvatarOverlay {
+    padding: 1.25rem;
+  }
+
+  .heroAvatarOverlayCard {
+    max-width: min(92vw, 28rem);
   }
 
   .sectionTitle {
