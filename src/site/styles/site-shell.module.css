@@ -28,7 +28,7 @@
 
 .siteHeader {
   --site-header-enter-duration: 320ms;
-  --site-header-exit-duration: 180ms;
+  --site-header-exit-duration: 240ms;
   --site-header-motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
   /* 参考目标稿把底部悬浮导航再上提一档，同时继续复用基础 spacing token。 */
   bottom: max(
