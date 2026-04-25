@@ -96,6 +96,7 @@ export default function HomeSkillsReveal({
   const canvasRef = useRef(null);
   const rowRefs = useRef([]);
   const activeIndexRef = useRef(0);
+  const selectSkillRef = useRef(null);
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [iconFading, setIconFading] = useState(false);
@@ -135,6 +136,7 @@ export default function HomeSkillsReveal({
     let iconTimer = null;
     let idleStopTimer = null;
     let observer = null;
+    let supportsHover = false;
 
     let gl = null;
     let program = null;
@@ -194,6 +196,21 @@ export default function HomeSkillsReveal({
         setActiveIndex(index);
         setIconFading(false);
       }, TIMING.iconSwap);
+    }
+
+    function selectSkill(index) {
+      const safeIndex = clamp(index, 0, skills.length - 1);
+      isInside = false;
+      interactionTarget = 0;
+      targetIndex = safeIndex;
+      activeFloat = safeIndex;
+      currentIndex = safeIndex;
+      disturbance.target = 0;
+      disturbance.current = 0;
+      setPalette(safeIndex);
+      announceActive(safeIndex);
+      renderFrame();
+      startLoop();
     }
 
     function draw(time) {
@@ -470,6 +487,8 @@ export default function HomeSkillsReveal({
 
     initializeWebGL();
     renderFrame();
+    selectSkillRef.current = selectSkill;
+    supportsHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
     if ("IntersectionObserver" in window) {
       observer = new IntersectionObserver(
@@ -491,12 +510,16 @@ export default function HomeSkillsReveal({
       observer.observe(rootEl);
     }
 
-    rootEl.addEventListener("pointerenter", onPointerEnter);
-    rootEl.addEventListener("pointerleave", onPointerLeave);
-    rootEl.addEventListener("pointermove", onPointerMove);
+    if (supportsHover) {
+      rootEl.addEventListener("pointerenter", onPointerEnter);
+      rootEl.addEventListener("pointerleave", onPointerLeave);
+      rootEl.addEventListener("pointermove", onPointerMove);
+    }
     window.addEventListener("resize", onWindowResize);
 
     return () => {
+      selectSkillRef.current = null;
+
       if (iconTimer) {
         window.clearTimeout(iconTimer);
       }
@@ -505,9 +528,11 @@ export default function HomeSkillsReveal({
         window.clearTimeout(idleStopTimer);
       }
 
-      rootEl.removeEventListener("pointerenter", onPointerEnter);
-      rootEl.removeEventListener("pointerleave", onPointerLeave);
-      rootEl.removeEventListener("pointermove", onPointerMove);
+      if (supportsHover) {
+        rootEl.removeEventListener("pointerenter", onPointerEnter);
+        rootEl.removeEventListener("pointerleave", onPointerLeave);
+        rootEl.removeEventListener("pointermove", onPointerMove);
+      }
       window.removeEventListener("resize", onWindowResize);
       observer?.disconnect();
       stopLoop();
@@ -520,6 +545,25 @@ export default function HomeSkillsReveal({
 
   const activeSkill = skills[activeIndex] ?? skills[0];
   const ActiveIcon = skillIcons[activeSkill.iconName] || Orbit;
+
+  function handleSkillSelect(index) {
+    if (selectSkillRef.current) {
+      selectSkillRef.current(index);
+      return;
+    }
+
+    activeIndexRef.current = index;
+    setActiveIndex(index);
+  }
+
+  function handleSkillKeyDown(event, index) {
+    if (event.key !== "Enter" && event.key !== " ") {
+      return;
+    }
+
+    event.preventDefault();
+    handleSkillSelect(index);
+  }
 
   return (
     <div ref={rootRef} className={styles.skillsLayout}>
@@ -534,6 +578,7 @@ export default function HomeSkillsReveal({
               ref={(node) => {
                 rowRefs.current[index] = node;
               }}
+              aria-pressed={isActive}
               className={[
                 styles.skillItem,
                 styles.skillItemInteractive,
@@ -541,6 +586,10 @@ export default function HomeSkillsReveal({
               ]
                 .filter(Boolean)
                 .join(" ")}
+              onClick={() => handleSkillSelect(index)}
+              onKeyDown={(event) => handleSkillKeyDown(event, index)}
+              role="button"
+              tabIndex={0}
             >
               <span
                 className={[
