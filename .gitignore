@@ -12,4 +12,3 @@ tsconfig.tsbuildinfo
 test-results
 .vercel
 supabase/.temp
-src/site/fonts/files

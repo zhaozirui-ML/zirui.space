@@ -8,7 +8,13 @@ import {
 } from "../../../design-system/tokens";
 import useMediaQuery from "../../../design-system/hooks/useMediaQuery";
 
-import { inter } from "../fonts/site-fonts";
+import {
+  domaineDisplayNarrow,
+  fzQingKeBenYueSong,
+  inter,
+  ivyPresto,
+  satoshi,
+} from "../fonts/site-fonts";
 import { LanguageProvider, useLanguage } from "../i18n/LanguageProvider";
 import { isModuleHomePath } from "../lib/is-module-home-path";
 import SiteChromeFrame from "./SiteChromeFrame";
@@ -54,10 +60,10 @@ function getThemePreferenceSnapshot() {
 }
 
 function getTitleSerifFontFamily(language) {
-  // 公开仓库不包含授权字体文件，因此标题使用系统 serif 字体兜底。
+  // 中文模式使用方正清刻本悦宋，英文模式使用 Domaine Display Narrow。
   return language === "en"
-    ? '"Times New Roman", Times, serif'
-    : '"Songti SC", "STSong", "Noto Serif SC", serif';
+    ? 'var(--font-domaine-display-narrow, "Times New Roman"), serif'
+    : 'var(--font-fz-qingke-benyuesong), "Songti SC", "STSong", serif';
 }
 
 function SiteLayoutFrame({
@@ -108,6 +114,10 @@ export default function SiteLayout({ children, initialLanguage }) {
     styles.siteRoot,
     isModuleHome ? styles.siteRootModuleHome : "",
     inter.variable,
+    satoshi.variable,
+    ivyPresto.variable,
+    domaineDisplayNarrow.variable,
+    fzQingKeBenYueSong.variable,
   ]
     .filter(Boolean)
     .join(" ");
