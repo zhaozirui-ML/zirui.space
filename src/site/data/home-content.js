@@ -22,7 +22,7 @@ export const homeSkills = [
     iconName: "network",
     iconAlt: t("复杂系统设计图标", "Complex System Design icon"),
     caption: t(
-      "我设计跨角色、状态、权限与多端协作的企业级工作流",
+      "梳理跨角色、状态、权限与多端协作的企业级工作流",
       "I design enterprise workflows across roles, states, permissions, and multi-platform collaboration",
     ),
     palette: [
@@ -37,7 +37,7 @@ export const homeSkills = [
     iconName: "pointer",
     iconAlt: t("方法驱动推进图标", "Method-driven Progress icon"),
     caption: t(
-      "我用结构化拆解、原型与验证，把模糊问题推进到清晰决策",
+      "通过结构化拆解、原型验证，把模糊问题推进为清晰决策",
       "I use structure, prototyping, and validation to move ambiguous problems toward clear decisions",
     ),
     palette: [
@@ -52,7 +52,7 @@ export const homeSkills = [
     iconName: "badgeCheck",
     iconAlt: t("系统化交付图标", "Systemized Delivery icon"),
     caption: t(
-      "我把设计决策沉淀成可复用模式、组件与可交付系统",
+      "将设计决策沉淀为可复用模式、组件与可交付系统",
       "I turn design decisions into reusable patterns, components, and delivery-ready systems",
     ),
     palette: [
@@ -67,7 +67,7 @@ export const homeSkills = [
     iconName: "aiSparkles",
     iconAlt: t("AI 设计工程图标", "AI Design Engineering icon"),
     caption: t(
-      "我使用 AI 代理与编码工具，把设计连接到前端实现与可运行原型",
+      "借助 AI 代理与编码工具，连接设计、前端实现与可运行原型",
       "I use AI agents and coding tools to bridge design with frontend implementation and working prototypes",
     ),
     palette: [
@@ -85,7 +85,7 @@ export const homeSkillHighlight = {
   iconName: "orbit",
   iconAlt: t("能力中心图标", "Skill centerpiece icon"),
   caption: t(
-    "我把复杂问题转化为能够落地的产品系统",
+    "把复杂问题转化为能够落地的产品系统",
     "I turn complexity into shippable product systems",
   ),
 };
