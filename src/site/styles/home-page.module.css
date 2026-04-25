@@ -172,36 +172,8 @@
   font-weight: 300;
   letter-spacing: -0.00625rem;
   line-height: 1.2;
-  display: grid;
-  gap: 0.2rem;
   margin: 0;
   max-width: 100%;
-}
-
-.heroPrimaryLine {
-  display: block;
-  max-width: 42rem;
-  text-wrap: balance;
-}
-
-.heroPrimaryLine:last-child {
-  color: rgba(54, 50, 44, 0.92);
-  font-size: 0.96em;
-  letter-spacing: -0.0075rem;
-  line-height: 1.28;
-}
-
-.heroManifestoEmphasis {
-  background:
-    linear-gradient(
-      180deg,
-      rgba(192, 170, 133, 0) 0%,
-      rgba(192, 170, 133, 0) 54%,
-      rgba(192, 170, 133, 0.18) 54%,
-      rgba(192, 170, 133, 0.18) 100%
-    );
-  color: rgba(39, 36, 31, 0.96);
-  padding: 0 0.08em;
 }
 
 .section {
@@ -238,8 +210,8 @@
 .skillsLayout {
   align-items: start;
   display: grid;
-  gap: 4rem;
-  grid-template-columns: 11.5625rem 15rem;
+  gap: 3rem;
+  grid-template-columns: 14.5rem 15rem;
   padding: 0 1.5rem;
   width: 100%;
 }
@@ -267,6 +239,7 @@
   min-height: 2.375rem;
   opacity: var(--skill-tone);
   padding: 0.5625rem 0.8125rem;
+  white-space: nowrap;
   transform: translateX(calc(var(--skill-push) * 1px));
   transition:
     transform 120ms linear,
@@ -635,7 +608,6 @@
     top: calc(-1 * var(--home-background-offset-top) + 1.5rem);
   }
 
-  .skillsLayout,
   .workCard,
   .workCardFeatured,
   .workCardStandard {
@@ -694,6 +666,7 @@
   }
 
   .heroSection,
+  .sectionHeader,
   .skillsLayout {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
@@ -704,12 +677,12 @@
     text-wrap: balance;
   }
 
-  .heroManifesto {
-    text-wrap: balance;
-  }
-
   .skillItem {
     min-height: 2.5rem;
+  }
+
+  .skillsLayout {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .heroSection::before {

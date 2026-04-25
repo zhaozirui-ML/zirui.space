@@ -2,8 +2,9 @@ import Image from "next/image";
 
 import HomeBlogsSection from "../components/home/HomeBlogsSection";
 import HomeSunnyShadow from "../components/home/HomeSunnyShadow";
+import HomeSkillsSection from "../components/home/HomeSkillsSection";
 import HomeWorksSection from "../components/home/HomeWorksSection";
-import { homeHeroManifesto, homeIntro } from "../data/home-content";
+import { homeIntro } from "../data/home-content";
 import styles from "../styles/home-page.module.css";
 
 export default function HomePage() {
@@ -23,23 +24,11 @@ export default function HomePage() {
             unoptimized
             width={76}
           />
-          <h1 className={styles.heroTitle}>
-            <span className={styles.heroPrimaryLine}>{homeIntro.title}</span>
-            <span className={styles.heroPrimaryLine}>
-              {homeHeroManifesto.before}
-              <span className={styles.heroManifestoEmphasis}>
-                {homeHeroManifesto.emphasisOne}
-              </span>
-              {homeHeroManifesto.middle}
-              <span className={styles.heroManifestoEmphasis}>
-                {homeHeroManifesto.emphasisTwo}
-              </span>
-              {homeHeroManifesto.after}
-            </span>
-          </h1>
+          <h1 className={styles.heroTitle}>{homeIntro.title}</h1>
         </section>
       </div>
 
+      <HomeSkillsSection />
       <HomeWorksSection />
       <HomeBlogsSection />
     </div>
