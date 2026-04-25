@@ -13,9 +13,6 @@ import styles from "../styles/home-page.module.css";
  * @param {{ language: import("../i18n/config").SiteLanguage }} props
  */
 export default function HomePage({ language }) {
-  // 通过开关控制是否显示 Skills 模块，后续若要恢复展示，改成 true 即可。
-  const showSkillsSection = false;
-
   return (
     <div className={styles.homePage}>
       <div className={styles.homeTopMode}>
@@ -47,8 +44,8 @@ export default function HomePage({ language }) {
         </section>
       </div>
 
+      <HomeSkillsSection language={language} />
       <HomeWorksSection language={language} />
-      {showSkillsSection ? <HomeSkillsSection language={language} /> : null}
       <HomeBlogsSection language={language} />
     </div>
   );

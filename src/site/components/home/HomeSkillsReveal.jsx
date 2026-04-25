@@ -15,6 +15,7 @@ import styles from "../../styles/home-page.module.css";
 import { createProgram } from "./skill-reveal-shader";
 
 const skillIcons = {
+  aiSparkles: AiSparklesIcon,
   badgeCheck: BadgeCheck,
   blocks: Blocks,
   network: Network,
@@ -22,6 +23,46 @@ const skillIcons = {
   pointer: Pointer,
   sparkles: Sparkles,
 };
+
+function AiSparklesIcon({
+  className,
+  size = 24,
+  strokeWidth = 1.5,
+  ...props
+}) {
+  return (
+    <svg
+      className={className}
+      fill="none"
+      height={size}
+      viewBox="0 0 24 24"
+      width={size}
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g transform="translate(7.75 7.75) scale(0.90625)">
+        <path
+          clipRule="evenodd"
+          d="M15.25 8C10.2153 8 8 10.2153 8 15.25C8 10.2153 5.78472 8 0.75 8C5.78472 8 8 5.78472 8 0.75C8 5.78472 10.2153 8 15.25 8Z"
+          fillRule="evenodd"
+          stroke="currentColor"
+          strokeLinejoin="round"
+          strokeWidth={strokeWidth}
+        />
+      </g>
+      <g transform="translate(1.75 1.75) scale(0.863636)">
+        <path
+          clipRule="evenodd"
+          d="M10.25 5.5C6.95139 5.5 5.5 6.95139 5.5 10.25C5.5 6.95139 4.04861 5.5 0.75 5.5C4.04861 5.5 5.5 4.04861 5.5 0.75C5.5 4.04861 6.95139 5.5 10.25 5.5Z"
+          fillRule="evenodd"
+          stroke="currentColor"
+          strokeLinejoin="round"
+          strokeWidth={strokeWidth}
+        />
+      </g>
+    </svg>
+  );
+}
 
 const TIMING = {
   iconSwap: 110,

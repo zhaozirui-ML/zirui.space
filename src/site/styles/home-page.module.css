@@ -13,7 +13,7 @@
   --home-blog-card-gap: 1rem;
   --home-hero-gap: 1.25rem;
   --home-section-header-gap: 0.5rem;
-  --home-skills-layout-gap: 4rem;
+  --home-skills-layout-gap: 3rem;
   --home-skill-list-gap: 0.75rem;
   --home-skill-item-gap: 0.375rem;
   --home-skill-item-radius: 1rem;
@@ -138,7 +138,7 @@
   align-items: start;
   display: grid;
   gap: var(--home-skills-layout-gap);
-  grid-template-columns: 11.5625rem 15rem;
+  grid-template-columns: 14.5rem 15rem;
   padding: 0 var(--home-content-inline-padding);
   width: 100%;
 }
@@ -166,6 +166,7 @@
   min-height: 2.375rem;
   opacity: var(--skill-tone);
   padding: 0.5625rem 0.8125rem;
+  white-space: nowrap;
   transform: translateX(calc(var(--skill-push) * 1px));
   transition:
     transform 120ms linear,
@@ -583,7 +584,6 @@
     top: calc(-1 * var(--home-main-offset-top) + 1.5rem);
   }
 
-  .skillsLayout,
   .workCard,
   .workCardFeatured,
   .workCardStandard {
@@ -667,6 +667,10 @@
 
   .skillItem {
     min-height: 2.5rem;
+  }
+
+  .skillsLayout {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .heroSection::before {

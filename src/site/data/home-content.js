@@ -13,10 +13,13 @@ export const homeIntro = {
 
 export const homeSkills = [
   {
-    label: t("系统化思维", "Systematic Thinking"),
+    label: t("复杂系统设计", "Complex System Design"),
     iconName: "network",
-    iconAlt: t("系统化思维图标", "Systematic Thinking icon"),
-    caption: t("我把复杂业务关系整理成清晰一致的系统", "I turn complex business structures into coherent systems"),
+    iconAlt: t("复杂系统设计图标", "Complex System Design icon"),
+    caption: t(
+      "我设计跨角色、状态、权限与多端协作的企业级工作流。",
+      "I design enterprise workflows across roles, states, permissions, and multi-platform collaboration.",
+    ),
     palette: [
       [66 / 255, 108 / 255, 201 / 255],
       [33 / 255, 70 / 255, 119 / 255],
@@ -25,22 +28,28 @@ export const homeSkills = [
     active: true,
   },
   {
-    label: t("原型逻辑", "Prototype Logic"),
-    iconName: "blocks",
-    iconAlt: t("原型逻辑图标", "Prototype Logic icon"),
-    caption: t("我会用原型验证关键交互决策", "I validate key interaction decisions through prototypes"),
+    label: t("方法驱动推进", "Method-driven Progress"),
+    iconName: "pointer",
+    iconAlt: t("方法驱动推进图标", "Method-driven Progress icon"),
+    caption: t(
+      "我用结构化拆解、原型与验证，把模糊问题推进到清晰决策。",
+      "I use structure, prototyping, and validation to move ambiguous problems toward clear decisions.",
+    ),
     palette: [
-      [93 / 255, 82 / 255, 215 / 255],
-      [56 / 255, 51 / 255, 161 / 255],
-      [133 / 255, 123 / 255, 1],
+      [202 / 255, 139 / 255, 67 / 255],
+      [132 / 255, 86 / 255, 43 / 255],
+      [238 / 255, 182 / 255, 112 / 255],
     ],
     active: false,
   },
   {
-    label: t("交互设计", "Interaction Design"),
-    iconName: "pointer",
-    iconAlt: t("交互设计图标", "Interaction Design icon"),
-    caption: t("交互应该帮助用户理解，而不是制造噪音", "Interaction should clarify logic, not add noise"),
+    label: t("系统化交付", "Systemized Delivery"),
+    iconName: "badgeCheck",
+    iconAlt: t("系统化交付图标", "Systemized Delivery icon"),
+    caption: t(
+      "我把设计决策沉淀成可复用模式、组件与可交付系统。",
+      "I turn design decisions into reusable patterns, components, and delivery-ready systems.",
+    ),
     palette: [
       [42 / 255, 170 / 255, 209 / 255],
       [26 / 255, 107 / 255, 146 / 255],
@@ -49,10 +58,13 @@ export const homeSkills = [
     active: false,
   },
   {
-    label: t("创意工程", "Creative Engineering"),
-    iconName: "sparkles",
-    iconAlt: t("创意工程图标", "Creative Engineering icon"),
-    caption: t("我把有表现力的设计连接到真正可交付的前端实现", "I bridge expressive design and production frontend"),
+    label: t("AI 设计工程", "AI Design Engineering"),
+    iconName: "aiSparkles",
+    iconAlt: t("AI 设计工程图标", "AI Design Engineering icon"),
+    caption: t(
+      "我使用 AI 代理与编码工具，把设计连接到前端实现与可运行原型。",
+      "I use AI agents and coding tools to bridge design with frontend implementation and working prototypes.",
+    ),
     palette: [
       [96 / 255, 47 / 255, 208 / 255],
       [57 / 255, 38 / 255, 143 / 255],
@@ -60,24 +72,15 @@ export const homeSkills = [
     ],
     active: false,
   },
-  {
-    label: t("交付严谨性", "Delivery Rigor"),
-    iconName: "badgeCheck",
-    iconAlt: t("交付严谨性图标", "Delivery Rigor icon"),
-    caption: t("最终标准是可交付、可维护、也能持续迭代", "The final bar is deliverable, maintainable, and iterative"),
-    palette: [
-      [42 / 255, 170 / 255, 209 / 255],
-      [26 / 255, 107 / 255, 146 / 255],
-      [104 / 255, 237 / 255, 1],
-    ],
-    active: false,
-  },
 ];
 
 export const homeSkillHighlight = {
   imageSrc: "/site/home/skill-orb.png",
-  imageAlt: t("技能亮点抽象插图", "Abstract illustration for the skills highlight"),
+  imageAlt: t("能力亮点抽象插图", "Abstract illustration for the skills highlight"),
   iconName: "orbit",
-  iconAlt: t("技能中心图标", "Skill centerpiece icon"),
-  caption: t("我用系统化思维处理复杂业务关系", "I use systematic thinking to structure complex business relationships."),
+  iconAlt: t("能力中心图标", "Skill centerpiece icon"),
+  caption: t(
+    "我把复杂问题转化为能够落地的产品系统。",
+    "I turn complexity into shippable product systems.",
+  ),
 };
