@@ -112,31 +112,28 @@ export const aboutSkillGroups = [
       t("信息架构", "Information Architecture"),
       t("系统级产品设计", "System-Level Product Design"),
       t("设计系统", "Design System"),
-      t("交互原型", "Interactive Prototyping"),
-      {
-        href: "https://layers.to/atc12138",
-        label: t("动效设计", "Motion Design"),
-      },
-    ],
-  },
-  {
-    category: t("工具与实现", "Tools & Implementation"),
-    items: [
-      t("AI 编码工具", "AI Coding Tools"),
-      "Figma",
-      "Framer",
-      "Gemini",
-      "Rive",
-    ],
-  },
-  {
-    category: t("方法与 AI 工作流", "Methods & AI Workflow"),
-    items: [
-      t("AI 辅助设计流程", "AI-Assisted Design Workflow"),
-      t("Spec Coding", "Spec Coding"),
-      t("竞品分析", "Competitive Analysis"),
+      t("交互设计", "Interaction Design"),
       t("可用性测试", "Usability Testing"),
-      t("用户访谈", "User Interview"),
+    ],
+  },
+  {
+    category: t("AI 辅助工作流", "AI-Assisted Workflow"),
+    items: [
+      t("研究综合", "Research Synthesis"),
+      t("竞品分析", "Competitive Analysis"),
+      t("Spec Coding", "Spec Coding"),
+      t("AI 辅助原型", "AI-Assisted Prototyping"),
+      t("设计迭代", "Design Iteration"),
+    ],
+  },
+  {
+    category: t("设计工程理解力", "Design Engineering Literacy"),
+    items: [
+      t("React / Next.js 结构", "React / Next.js Structure"),
+      t("Tailwind CSS 样式", "Tailwind CSS Styling"),
+      t("设计到代码审查", "Design-to-Code Review"),
+      t("UI 实现走查", "UI Implementation Review"),
+      t("前端协作", "Frontend Collaboration"),
     ],
   },
 ];
