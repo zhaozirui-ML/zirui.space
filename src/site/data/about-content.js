@@ -127,7 +127,7 @@ export const aboutSkillGroups = [
     ],
   },
   {
-    category: t("设计工程理解力", "Design Engineering Literacy"),
+    category: t("设计工程素养", "Design Engineering Literacy"),
     items: [
       t("React / Next.js 结构", "React / Next.js Structure"),
       t("Tailwind CSS 样式", "Tailwind CSS Styling"),
