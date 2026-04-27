@@ -14,6 +14,30 @@ export const siteShellDictionary = {
     zh: "切换到英文",
     en: "Switch to English",
   },
+  languageTooltipChineseLabel: {
+    zh: "中文",
+    en: "Chinese",
+  },
+  languageTooltipEnglishLabel: {
+    zh: "English",
+    en: "English",
+  },
+  themeSwitchToDarkLabel: {
+    zh: "切换到深色主题",
+    en: "Switch to dark theme",
+  },
+  themeSwitchToLightLabel: {
+    zh: "切换到浅色主题",
+    en: "Switch to light theme",
+  },
+  themeTooltipMoonlightLabel: {
+    zh: "月光模式",
+    en: "Moonlight",
+  },
+  themeTooltipSunlightLabel: {
+    zh: "阳光模式",
+    en: "Sunlight",
+  },
   navigationAriaLabel: {
     zh: "主导航",
     en: "Primary navigation",
