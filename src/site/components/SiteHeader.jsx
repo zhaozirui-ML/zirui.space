@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -25,6 +25,20 @@ function isNavigationItemActive(pathname, href) {
 export default function SiteHeader({ colorTheme, onThemeToggle }) {
   const { isPending, language, setLanguage } = useLanguage();
   const pathname = usePathname();
+  const languageTooltipId = useId();
+  const themeTooltipId = useId();
+  const languageTooltipLabel = getLocalizedValue(
+    language === "zh"
+      ? siteShellDictionary.languageTooltipChineseLabel
+      : siteShellDictionary.languageTooltipEnglishLabel,
+    language,
+  );
+  const themeTooltipLabel = getLocalizedValue(
+    colorTheme === "dark"
+      ? siteShellDictionary.themeTooltipMoonlightLabel
+      : siteShellDictionary.themeTooltipSunlightLabel,
+    language,
+  );
   const navigationRef = useRef(null);
   const itemRefs = useRef(new Map());
   const lastScrollYRef = useRef(0);
@@ -148,6 +162,55 @@ export default function SiteHeader({ colorTheme, onThemeToggle }) {
     };
   }, []);
 
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+
+    const isEditableTarget = (target) => {
+      if (!(target instanceof HTMLElement)) {
+        return false;
+      }
+
+      return (
+        target.isContentEditable ||
+        target instanceof HTMLInputElement ||
+        target instanceof HTMLSelectElement ||
+        target instanceof HTMLTextAreaElement
+      );
+    };
+
+    const onShortcutKeyDown = (event) => {
+      if (
+        event.repeat ||
+        event.altKey ||
+        event.ctrlKey ||
+        event.metaKey ||
+        isEditableTarget(event.target)
+      ) {
+        return;
+      }
+
+      const normalizedKey = event.key.toLowerCase();
+
+      if (normalizedKey === "l" && !isPending) {
+        event.preventDefault();
+        setLanguage(language === "zh" ? "en" : "zh");
+      }
+
+      if (normalizedKey === "t") {
+        event.preventDefault();
+        onThemeToggle();
+      }
+    };
+
+    window.addEventListener("keydown", onShortcutKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", onShortcutKeyDown);
+    };
+  }, [isPending, language, onThemeToggle, setLanguage]);
+
   const headerClassName = [
     styles.siteHeader,
     isHeaderHidden ? styles.siteHeaderHidden : "",
@@ -236,12 +299,14 @@ export default function SiteHeader({ colorTheme, onThemeToggle }) {
           </div>
           <div className={styles.siteHeaderActions}>
             <button
+              aria-describedby={languageTooltipId}
               aria-label={getLocalizedValue(
                 language === "zh"
                   ? siteShellDictionary.languageSwitchToEnglishLabel
                   : siteShellDictionary.languageSwitchToChineseLabel,
                 language,
               )}
+              aria-keyshortcuts="L"
               aria-pressed={language === "en"}
               className={styles.languageAction}
               data-language={language}
@@ -257,9 +322,22 @@ export default function SiteHeader({ colorTheme, onThemeToggle }) {
                   EN
                 </span>
               </span>
+              <span className={styles.actionTooltip} id={languageTooltipId} role="tooltip">
+                <span>{languageTooltipLabel}</span>
+                <kbd aria-hidden="true" className={styles.actionTooltipKey}>
+                  L
+                </kbd>
+              </span>
             </button>
             <button
-              aria-label={colorTheme === "dark" ? "切换到浅色主题" : "切换到深色主题"}
+              aria-describedby={themeTooltipId}
+              aria-label={getLocalizedValue(
+                colorTheme === "dark"
+                  ? siteShellDictionary.themeSwitchToLightLabel
+                  : siteShellDictionary.themeSwitchToDarkLabel,
+                language,
+              )}
+              aria-keyshortcuts="T"
               aria-pressed={colorTheme === "dark"}
               className={styles.navigationAction}
               data-theme={colorTheme}
@@ -314,6 +392,12 @@ export default function SiteHeader({ colorTheme, onThemeToggle }) {
                     />
                   </svg>
                 </span>
+              </span>
+              <span className={styles.actionTooltip} id={themeTooltipId} role="tooltip">
+                <span>{themeTooltipLabel}</span>
+                <kbd aria-hidden="true" className={styles.actionTooltipKey}>
+                  T
+                </kbd>
               </span>
             </button>
           </div>

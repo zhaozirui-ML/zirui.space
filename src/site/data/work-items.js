@@ -159,13 +159,13 @@ export const workItems = [
     supportsEnglishDetail: true,
     legacyUrl: "https://zirui.framer.website/design-system",
     showOnHome: false,
-    workCardVariant: "featureTall",
+    workCardVariant: "compact",
     workTags: ["2023-2024", "Web", "Design System"],
     workPreview: {
       type: "plain",
       alt: "CloudTower Design System preview",
-      ratio: "782 / 505",
-      src: "/site/work/cloudtower-design-system/work-preview.png",
+      ratio: "354 / 240",
+      src: "/site/work/cloudtower-design-system/work-preview-card-soft-v3.png",
     },
   },
   {
@@ -184,7 +184,7 @@ export const workItems = [
     supportsEnglishDetail: true,
     legacyUrl: "https://zirui.framer.website/smtx-elf",
     showOnHome: false,
-    workCardVariant: "compact",
+    workCardVariant: "featureTall",
     workTags: ["2023", "Web", "UI/UX Design"],
     workPreview: {
       type: "plain",
@@ -345,8 +345,8 @@ export const workTabContent = {
     rows: [
       ["drawing-ledger-2-0"],
       ["axzo-design-system", "data-visualization-screen"],
-      ["cloudtower-design-system"],
-      ["smtx-elf-virtualization", "vm-features-optimization"],
+      ["smtx-elf-virtualization"],
+      ["cloudtower-design-system", "vm-features-optimization"],
     ],
     type: "projects",
   },
