@@ -127,6 +127,10 @@ export const portfolio = Object.freeze({
     sectionBackground: "var(--portfolio-color-surface, #ffffff)",
     mediaFrameBackground: "var(--portfolio-color-surface-warm, #f0ede8)",
     mediaFrameBorder: "var(--portfolio-color-border-light, #ece9e4)",
+    // Moonlight 需要比常规 dark canvas 更深，但仍然要留在作品集既有的暖灰黑色系里。
+    // 这里用 bgPure 和 canvas 混出一个更克制的夜景底色，避免引入突兀的外来纯黑。
+    moonlightBackground:
+      "color-mix(in srgb, var(--portfolio-color-bg-pure) 82%, var(--portfolio-color-canvas) 18%)",
     eyebrowColor: "var(--portfolio-color-accent-brand, #b36a5e)",
     captionColor: "var(--portfolio-color-text-muted, #7a7e80)",
     bodyColor: "var(--portfolio-color-text-body, #4a4d4e)",

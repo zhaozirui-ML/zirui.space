@@ -72,10 +72,10 @@ function SiteLayoutFrame({
   colorTheme,
   onThemeToggle,
   rootClassName,
+  shouldShowMoonlightBackground,
   shouldShowSunnyBackground,
 }) {
   const { language } = useLanguage();
-  const shouldShowMoonlightBackground = colorTheme === "dark";
 
   const themeStyle = /** @type {any} */ ({
     ...portfolioThemeCssVariables[colorTheme],
@@ -113,6 +113,8 @@ export default function SiteLayout({ children, initialLanguage }) {
   const isModuleHome = isModuleHomePath(pathname);
   // 暗色模式不展示顶部的 Sunny Mode / dappled light 背景，只保留模块首页在浅色模式下的氛围层。
   const shouldShowSunnyBackground = isModuleHome && colorTheme !== "dark";
+  // Moonlight 只属于模块首页氛围层，详情页保持沉浸式内容阅读，不挂载这些装饰背景。
+  const shouldShowMoonlightBackground = isModuleHome && colorTheme === "dark";
   const rootClassName = [
     styles.siteRoot,
     isModuleHome ? styles.siteRootModuleHome : "",
@@ -163,6 +165,7 @@ export default function SiteLayout({ children, initialLanguage }) {
         colorTheme={colorTheme}
         onThemeToggle={handleThemeToggle}
         rootClassName={rootClassName}
+        shouldShowMoonlightBackground={shouldShowMoonlightBackground}
         shouldShowSunnyBackground={shouldShowSunnyBackground}
       >
         {children}
