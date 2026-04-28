@@ -202,6 +202,13 @@
   margin-top: var(--drawing-ledger-subsection-gap);
 }
 
+.mobileSectionFlow > .sectionCluster + .sectionCluster,
+.mobileSectionFlow > .sectionCluster + .mobileDetailsStack,
+.mobileSectionFlow > .mobileDetailsStack + .sectionCluster,
+.mobileSectionFlow > .mobileDetailsStack + .mobileDetailsStack {
+  margin-top: var(--drawing-ledger-subsection-gap);
+}
+
 .footerStack {
   gap: var(--drawing-ledger-stack-gap-md);
 }
@@ -224,12 +231,84 @@
   gap: var(--drawing-ledger-stack-gap-sm);
 }
 
+.mobileExplorationStack {
+  display: grid;
+  gap: var(--drawing-ledger-stack-gap-md);
+}
+
+.mobileExplorationCluster {
+  gap: var(--drawing-ledger-stack-gap-md);
+}
+
+.mobileDetailsStack {
+  display: grid;
+  gap: var(--drawing-ledger-subsection-gap);
+}
+
+.mobileGoalsGrid {
+  display: grid;
+  gap: var(--drawing-ledger-stack-gap-md);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.mobileGoalCard {
+  align-items: stretch;
+  background: var(--portfolio-color-bg-pure);
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: var(--ds-radius-sm);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 7.5rem;
+  height: 6.394375rem;
+  overflow: hidden;
+}
+
+.mobileGoalBody {
+  display: grid;
+  gap: 0.25rem;
+  padding: 1rem;
+}
+
+.mobileGoalTitle {
+  color: var(--portfolio-semantic-body-color);
+  font-family: var(--portfolio-font-label);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.011rem;
+  line-height: 1.5rem;
+  margin: 0;
+}
+
+.mobileGoalDescription {
+  color: var(--portfolio-color-text-muted);
+  font-size: 0.875rem;
+  letter-spacing: -0.00525rem;
+  line-height: 1.25rem;
+  margin: 0;
+}
+
+.mobileGoalVisual {
+  align-items: center;
+  display: flex;
+  height: 6.269375rem;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.mobileGoalImage {
+  display: block;
+  height: 7.5rem;
+  position: relative;
+  top: -0.6153125rem;
+  width: 7.5rem;
+}
+
 .sectionCluster > .caseSubheading + .caseSubheading {
   margin-top: 1.5rem;
 }
 
 .reflectionHeader {
-  margin-top: 3rem;
+  margin-top: var(--drawing-ledger-stack-gap-lg);
 }
 
 .anchoredHeader {
@@ -307,6 +386,12 @@
 .richText strong {
   color: var(--portfolio-semantic-title-color);
   font-weight: 600;
+}
+
+.inlineLink {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.125rem;
 }
 
 .chartCard,
@@ -1407,6 +1492,10 @@
   }
 
   .mobileCompareFrame {
+    grid-template-columns: 1fr;
+  }
+
+  .mobileGoalsGrid {
     grid-template-columns: 1fr;
   }
 

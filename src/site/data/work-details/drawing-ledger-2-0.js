@@ -125,6 +125,14 @@ const assetDefinitions = {
     alt: "移动端改版前后对比图",
     localSrc: "/site/work/drawing-ledger-2-0/mobile-before-after.png",
   },
+  mobileGoalVisual: {
+    alt: "移动端设计目标卡片插图：视觉体验升级",
+    localSrc: "/site/work/drawing-ledger-2-0/mobile-goal-visual.png",
+  },
+  mobileGoalCapability: {
+    alt: "移动端设计目标卡片插图：移动能力补全",
+    localSrc: "/site/work/drawing-ledger-2-0/mobile-goal-capability.png",
+  },
   mobileReference: {
     alt: "移动端入口设计参考整理图",
     localSrc: "/site/work/drawing-ledger-2-0/mobile-reference-v2.png",

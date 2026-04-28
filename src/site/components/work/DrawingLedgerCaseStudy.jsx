@@ -145,18 +145,18 @@ const tocItems = [
   },
   {
     hierarchy: "secondary",
-    id: "case-mobile-revamp",
-    label: "视觉化改版",
+    id: "case-mobile-goals",
+    label: "设计目标",
   },
   {
     hierarchy: "secondary",
-    id: "case-mobile-ai",
-    label: "AI 辅助设计",
+    id: "case-mobile-exploration",
+    label: "设计探索",
   },
   {
     hierarchy: "secondary",
     id: "case-mobile-iteration",
-    label: "同步、反馈与迭代",
+    label: "设计迭代",
   },
   {
     hierarchy: "secondary",
@@ -589,9 +589,9 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
               "响应式设计": "Responsive design",
               "落地成果": "Results",
               "移动端设计": "Mobile design",
-              "视觉化改版": "Visual revamp",
-              "AI 辅助设计": "AI-assisted design",
-              "同步、反馈与迭代": "Sync, feedback, and iteration",
+              "设计目标": "Design goals",
+              "设计探索": "Design exploration",
+              "设计迭代": "Design iteration",
               "上滑交互": "Swipe-up interaction",
               "落地效果": "Final delivery",
               "复盘与反思": "Reflection",
@@ -1506,38 +1506,22 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
         <section className={joinClassNames(styles.fullBleedSection, styles.canvasSurface)}>
           <div className={styles.sectionContent}>
             <div className={styles.footerStack}>
-              <div className={styles.sectionFlow}>
-                <CaseStudyHeadingOne
-                  className={styles.anchoredHeader}
-                  id="case-mobile"
-                  title={display("移动端设计", "Mobile design")}
-                >
-                  <div className={styles.richText}>
-                    <p>
-                      {display(
-                        "与 Web 端不同，移动端图纸台账系统几乎是从 0 到 1 搭建的。这个项目的另一个目标，是补齐移动端能力，实现双端对齐。",
-                        "Unlike the web version, the mobile drawing register system was built almost entirely from scratch. Another goal of the project was to close the mobile feature gap and align both platforms.",
-                      )}
-                    </p>
-                  </div>
-                </CaseStudyHeadingOne>
-
+              <div className={joinClassNames(styles.sectionFlow, styles.mobileSectionFlow)}>
                 <div className={styles.sectionCluster}>
-                  <CaseStudyHeadingTwo
-                    accentColor="var(--portfolio-color-accent-brand)"
-                    className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
-                    id="case-mobile-revamp"
-                  title={display("视觉化改版", "Visual revamp")}
-                >
+                  <CaseStudyHeadingOne
+                    className={styles.anchoredHeader}
+                    id="case-mobile"
+                    title={display("移动端设计", "Mobile design")}
+                  >
                     <div className={styles.richText}>
                       <p>
                         {display(
-                          "在前期沟通里，PM 提出借这次补齐产品能力的机会，把图纸模块整体从“毛坯房”升级到“精装修”，提升视觉品质感。",
-                          "In early discussions, the PM suggested using this opportunity to upgrade the drawing module from a 'rough shell' to a more polished experience and improve its visual quality.",
+                          "图纸台账早期以 Web 端为核心，移动端功能长期滞后。随着现场查看、图纸确认、任务跟进等场景增加，本次 2.0 设计需要补全移动端关键能力，并建立与 Web 端一致的使用体验。",
+                          "In its early stage, the drawing register focused on the web experience while mobile capabilities lagged behind for a long time. As on-site viewing, drawing confirmation, and task follow-up scenarios increased, the 2.0 redesign needed to complete key mobile capabilities and create a consistent experience across web and mobile.",
                         )}
                       </p>
                     </div>
-                  </CaseStudyHeadingTwo>
+                  </CaseStudyHeadingOne>
 
                   <figure className={styles.figure}>
                     <div className={styles.mobileCompareFigure}>
@@ -1556,77 +1540,189 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                 </div>
 
                 <div className={styles.sectionCluster}>
-                  <CaseStudyHeadingThree
-                    className={styles.caseSubheading}
-                    descriptions={[
-                      display("根据图纸工具类的业务属性，快速排除商品内容型入口，从线性图标和轻拟物风格开始做探索。", "Given the product category, I quickly ruled out shopping-style entry points and started exploring linear icons and soft skeuomorphic directions."),
-                      display("探索轻拟物图标入口时，恰逢 OpenAI 刚推出了 GTP4o 的模型，吉普力风格刷屏社交网络。结合 4o 的生图能力，参考夸克入口的现代轻拟物图标设计，我快速完成了轻拟物风格入口的视觉探索。", "While exploring soft skeuomorphic entries, OpenAI had just released GPT-4o and Ghibli-style visuals were everywhere on social media. Combining 4o's image generation with the modern skeuomorphic style used in Quark, I quickly completed the visual exploration for that direction."),
-                    ]}
-                    hideLabel
-                    label={display("探索", "Exploration")}
+                  <CaseStudyHeadingTwo
+                    accentColor="var(--portfolio-color-accent-brand)"
+                    className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                    id="case-mobile-goals"
+                    title={display("设计目标", "Design goals")}
                   />
 
-                  <CaseStudyHeadingThree
-                    className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
-                    id="case-mobile-ai"
-                    label={display("AI 辅助设计", "AI-assisted design")}
-                    labelAs="h4"
-                  >
-                    <div className={styles.richText}>
-                      <p>{display("概念设计前，我先收集了主流 App 的功能入口设计，发现主要有 3 类典型表达：", "Before concept design, I collected common entry patterns from mainstream apps and found three typical directions:")}</p>
-                      <ul>
-                        <li>{display("简约现代的线性图标", "Minimal modern line icons")}</li>
-                        <li>{display("现代轻拟物风格图标", "Modern soft skeuomorphic icons")}</li>
-                        <li>{display("以产品图或实物图为核心识别元素的商品内容型入口", "Product-content entries centered on product or real-world imagery")}</li>
-                      </ul>
-                      <p>{display("结合图纸业务属性，我快速排除了商品内容型入口，转而从线性图标和轻拟物风格开始探索。", "Given the drawing-oriented nature of the product, I ruled out product-content entries and moved on to line icons and soft skeuomorphic directions.")}</p>
+                  <div className={styles.mobileGoalsGrid}>
+                    <div className={styles.mobileGoalCard}>
+                      <div className={styles.mobileGoalBody}>
+                        <h4 className={styles.mobileGoalTitle}>
+                          {display("视觉体验升级", "Visual experience upgrade")}
+                        </h4>
+                        <p className={styles.mobileGoalDescription}>
+                          {display(
+                            "在保证效率的前提下，提升界面质感与图纸信息可读性",
+                            "Improve interface quality and drawing readability while preserving efficiency.",
+                          )}
+                        </p>
+                      </div>
+                      <div className={styles.mobileGoalVisual}>
+                        <Image
+                          alt={resolveAlt(assets.mobileGoalVisual)}
+                          className={styles.mobileGoalImage}
+                          height={120}
+                          sizes="120px"
+                          src={assets.mobileGoalVisual.src}
+                          unoptimized={assets.mobileGoalVisual.unoptimized}
+                          width={120}
+                        />
+                      </div>
                     </div>
-                  </CaseStudyHeadingThree>
 
-                  <figure className={styles.figure}>
-                    <div className={styles.singleMediaFigure}>
-                      <Image
-                        alt={resolveAlt(assets.mobileReference)}
-                        className={styles.singleMediaFigureImage}
-                        height={938}
-                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
-                        src={assets.mobileReference.src}
-                        unoptimized={assets.mobileReference.unoptimized}
-                        width={1664}
-                      />
+                    <div className={styles.mobileGoalCard}>
+                      <div className={styles.mobileGoalBody}>
+                        <h4 className={styles.mobileGoalTitle}>
+                          {display("移动能力补全", "Complete mobile capability")}
+                        </h4>
+                        <p className={styles.mobileGoalDescription}>
+                          {display(
+                            "支持移动端完成确认、下发、查看等关键任务",
+                            "Support key mobile tasks such as confirmation, release, and viewing.",
+                          )}
+                        </p>
+                      </div>
+                      <div className={styles.mobileGoalVisual}>
+                        <Image
+                          alt={resolveAlt(assets.mobileGoalCapability)}
+                          className={styles.mobileGoalImage}
+                          height={120}
+                          sizes="120px"
+                          src={assets.mobileGoalCapability.src}
+                          unoptimized={assets.mobileGoalCapability.unoptimized}
+                          width={120}
+                        />
+                      </div>
                     </div>
-                    <figcaption className={styles.caption}>
-                      {display("产品收集参考", "Reference collection")}
-                    </figcaption>
-                  </figure>
+                  </div>
+                </div>
 
-                  <figure className={styles.figure}>
-                    <div className={styles.explorationFigure}>
-                      <Image
-                        alt={resolveAlt(assets.mobileExploration)}
-                        className={styles.explorationFigureImage}
-                        height={840}
-                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
-                        src={assets.mobileExploration.src}
-                        unoptimized={assets.mobileExploration.unoptimized}
-                        width={1664}
-                      />
+                <div className={styles.mobileDetailsStack}>
+                  <div className={joinClassNames(styles.sectionCluster, styles.mobileExplorationCluster)}>
+                    <CaseStudyHeadingTwo
+                      accentColor="var(--portfolio-color-accent-brand)"
+                      className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                      id="case-mobile-exploration"
+                      title={display("设计探索", "Design exploration")}
+                    >
+                      <div className={styles.richText}>
+                        <p>
+                          {display(
+                            "图纸模块下包含「项目图纸、图纸台账、批注评论和设计变更」 4 大子功能模块。设计探索阶段的核心任务便是明确每个模块视觉入口方案。",
+                            "The drawing module contains four major subfunctions: Project Drawings, Drawing Register, Comment Markups, and Design Changes. The core task during exploration was to define a visual entry pattern for each module.",
+                          )}
+                        </p>
+                      </div>
+                    </CaseStudyHeadingTwo>
+
+                    <div className={styles.mobileExplorationStack}>
+                      <div className={styles.sectionCluster}>
+                        <CaseStudyHeadingThree
+                          className={styles.caseSubheading}
+                          label={display("竞品分析", "Competitive analysis")}
+                          labelAs="h4"
+                        >
+                          <div className={styles.richText}>
+                            <p>{display("概念设计前，我收集了市面上主流 App 的功能入口设计做案例分析。主要呈现出 3 类典型表达：", "Before concept design, I collected mainstream app entry patterns as case studies. Three typical expressions stood out:")}</p>
+                            <ul>
+                              <li>{display("简约现代的线性图标", "Minimal modern line icons")}</li>
+                              <li>{display("现代轻拟物风格图标", "Modern soft skeuomorphic icons")}</li>
+                              <li>{display("产品实物图图标", "Product-photo icons")}</li>
+                            </ul>
+                          </div>
+                        </CaseStudyHeadingThree>
+
+                        <figure className={styles.figure}>
+                          <div className={styles.singleMediaFigure}>
+                            <Image
+                              alt={resolveAlt(assets.mobileReference)}
+                              className={styles.singleMediaFigureImage}
+                              height={720}
+                              sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                              src={assets.mobileReference.src}
+                              unoptimized={assets.mobileReference.unoptimized}
+                              width={1664}
+                            />
+                          </div>
+                          <figcaption className={styles.caption}>
+                            {display("产品收集参考", "Reference collection")}
+                          </figcaption>
+                        </figure>
+                      </div>
+
+                      <div className={styles.sectionCluster}>
+                        <CaseStudyHeadingThree
+                          className={styles.caseSubheading}
+                          label={display("AI 辅助设计", "AI-assisted design")}
+                          labelAs="h4"
+                        >
+                          <div className={styles.richText}>
+                            <p>
+                              {display(
+                                "根据图纸工具类的业务属性，快速排除商品内容型入口，从线性图标和轻拟物风格开始做探索。",
+                                "Given the drawing-oriented nature of the product, I quickly ruled out product-content entries and started exploring line-icon and soft skeuomorphic directions.",
+                              )}
+                            </p>
+                            <p>
+                              {display(
+                                "探索轻拟物图标入口时，恰逢 OpenAI 刚推出了 GTP4o 的模型，吉普力风格刷屏社交网络。结合 4o 的生图能力，参考夸克入口的现代轻拟物图标设计，我快速完成了轻拟物风格入口的视觉探索。",
+                                "While exploring soft skeuomorphic entries, OpenAI had just released GTP4o and Ghibli-style visuals were everywhere on social media. Combining 4o's image-generation ability with the modern soft-skeuomorphic icon style used in Quark, I quickly finished this exploration direction.",
+                              )}
+                            </p>
+                          </div>
+                        </CaseStudyHeadingThree>
+
+                        <figure className={styles.figure}>
+                          <div className={styles.explorationFigure}>
+                            <Image
+                              alt={resolveAlt(assets.mobileExploration)}
+                              className={styles.explorationFigureImage}
+                              height={840}
+                              sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                              src={assets.mobileExploration.src}
+                              unoptimized={assets.mobileExploration.unoptimized}
+                              width={1664}
+                            />
+                          </div>
+                          <figcaption className={styles.caption}>{display("初版方案探索", "Initial concept exploration")}</figcaption>
+                        </figure>
+                      </div>
                     </div>
-                    <figcaption className={styles.caption}>{display("初版方案探索", "Initial concept exploration")}</figcaption>
-                  </figure>
+                  </div>
                 </div>
 
                 <div className={styles.sectionCluster}>
-                  <CaseStudyHeadingThree
+                  <CaseStudyHeadingTwo
+                    accentColor="var(--portfolio-color-accent-brand)"
                     className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
                     id="case-mobile-iteration"
-                    label={display("同步、反馈与迭代", "Sync, feedback, and iteration")}
-                    labelAs="h4"
+                    title={display("设计迭代", "Design iteration")}
                   >
                     <div className={styles.richText}>
-                      <p>{display("第一版视觉上线后，有用户反馈选中效果在室外强光环境下不够清晰，因此我继续迭代了第二版视觉方案。", "After the first version went live, some users reported that the selected state was not clear enough in bright outdoor light, so I iterated on a second version.")}</p>
+                      <p>
+                        {display(
+                          "初步同步后，团队迅速定下了 ",
+                          "After the first sync, the team quickly decided on ",
+                        )}
+                        <a
+                          className={styles.inlineLink}
+                          href="https://chatgpt.com/s/m_69b7d046c9f08191a63cfabfba9817d6"
+                          rel="noreferrer"
+                          target="_blank"
+                        >
+                          {display("GPT4o 生成的轻拟物风格", "the GPT-4o-generated soft skeuomorphic direction")}
+                        </a>
+                        {display(
+                          "。但当时 GPT4o 的输出一致性太差，再多次尝试“抽奖”无果后，我尝试以项目图纸为参照，手绘剩下的图标。",
+                          ". But GPT-4o's output consistency was still too poor at the time. After multiple failed tries, I used the project drawings as reference and hand-drew the remaining icons.",
+                        )}
+                      </p>
+                      <p>{display("第一版视觉上线后，有用户反馈选中效果在室外强光环境下看得不是很清楚，因此继续迭代了第二版视觉方案。", "After the first visual version launched, users reported that the selected state was still not very clear under bright outdoor light, so I iterated on a second version.")}</p>
                     </div>
-                  </CaseStudyHeadingThree>
+                  </CaseStudyHeadingTwo>
 
                   <div className={styles.iterationFigure}>
                     <Image
@@ -1643,21 +1739,21 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                 </div>
 
                 <div className={styles.sectionCluster}>
-                  <CaseStudyHeadingThree
+                  <CaseStudyHeadingTwo
+                    accentColor="var(--portfolio-color-accent-brand)"
                     className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
                     id="case-mobile-interaction"
-                    label={display("上滑交互", "Swipe-up interaction")}
-                    labelAs="h4"
+                    title={display("上滑交互", "Swipe-up interaction")}
                   >
                     <div className={styles.richText}>
                       <p>
                         {display(
-                          "默认情况下，视觉化 Tab 会占用较高屏效，因此我设计了顶部 Tab 与代办区的展开收起交互：列表上滑时收起，向下滑动时再次展开。",
-                          "By default, the visual tab takes up a lot of screen space, so I designed a collapse/expand interaction between the top tab and the task area: it collapses when the list scrolls upward and expands again when scrolling down.",
-                        )}
+                          "默认情况下，视觉化的 Tab 样式会影响到下面的内容展示。为了提升每个功能模块首页内容展示的屏效比，我设计了顶部 Tab 展开收起的交互：当监测到卡片列表向上滚动后，顶部 Tab 和代办区进入收起状态；向下滑动时，顶部 Tab 会再次展开。",
+                          "By default, the visual tab style affects the content shown below. To improve content efficiency on each module homepage, I designed a top-tab expand/collapse interaction: when the card list scrolls upward, the top tab and task area collapse; when the user scrolls downward, the top tab expands again.",
+                          )}
                       </p>
                     </div>
-                  </CaseStudyHeadingThree>
+                  </CaseStudyHeadingTwo>
 
                   <figure className={styles.figure}>
                     <div className={styles.singleMediaFigure}>
@@ -1686,7 +1782,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     title={display("落地效果", "Final delivery")}
                   >
                     <div className={styles.richText}>
-                      <p>{display("图纸模块 App 端核心页面如下。", "The core pages of the drawing module app are shown below.")}</p>
+                      <p>{display("图纸模块 App 端核心页面", "Core app pages of the drawing module")}</p>
                     </div>
                   </CaseStudyHeadingTwo>
 
@@ -1705,6 +1801,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     <figcaption className={styles.caption}>{display("全部核心页面", "All core pages")}</figcaption>
                   </figure>
                 </div>
+                </div>
               </div>
 
               <CaseStudyHeadingOne
@@ -1714,15 +1811,14 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
               >
                 <div className={styles.richText}>
                   <p>
-                  {display(
-                    "好的 B 端设计不一定是颠覆性的重构。这个项目让我更确定，真正有效的设计往往是在不打破原有心智模型的前提下，用更克制、更聪明的方式解决复杂痛点，并同时为研发团队节省资源。",
-                    "Good B2B design is not necessarily a disruptive rewrite. This project made me even more certain that effective design often solves complex pain points in a more restrained and intelligent way without breaking existing mental models, while also saving engineering resources.",
-                  )}
+                    {display(
+                      "好的 B 端设计不一定是颠覆性的重构。这个项目让我深刻体会到，如何在不打破用户原有心智模型的前提下，通过巧妙的「外挂式」设计解决复杂痛点，并为研发团队省下宝贵的开发资源。",
+                      "Good B2B design is not necessarily a disruptive rewrite. This project showed me how to solve complex pain points through clever add-on design without breaking users' existing mental models, while also saving valuable engineering resources.",
+                    )}
                   </p>
                 </div>
               </CaseStudyHeadingOne>
             </div>
-          </div>
         </section>
       </div>
     </article>
