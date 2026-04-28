@@ -229,9 +229,9 @@ function buildStars(count, palette) {
     return {
       x: Math.random() * 100,
       y: Math.random() * 64,
-      baseRadius: isBright ? 1 + Math.random() * 1.1 : 0.36 + Math.random() * 0.72,
+      baseRadius: isBright ? 1.2 + Math.random() * 1.25 : 0.48 + Math.random() * 0.92,
       color: colors[Math.floor(Math.random() * colors.length)],
-      baseAlpha: isBright ? 0.28 + Math.random() * 0.2 : 0.08 + Math.random() * 0.14,
+      baseAlpha: isBright ? 0.38 + Math.random() * 0.24 : 0.14 + Math.random() * 0.18,
       phase: Math.random() * Math.PI * 2,
       speed: 0.24 + Math.random() * 0.48,
       flickerAmplitude: isBright ? 0.09 + Math.random() * 0.12 : 0.04 + Math.random() * 0.08,
@@ -262,13 +262,13 @@ function drawStars(context, stars, width, height, time, isReducedMotion) {
     context.fillStyle = colorWithAlpha(star.color, alpha);
     context.fill();
 
-    if (star.isBright && alpha > 0.28) {
-      const glow = context.createRadialGradient(x, y, 0, x, y, radius * 3.2);
-      glow.addColorStop(0, colorWithAlpha(star.color, alpha * 0.2));
+    if (star.isBright && alpha > 0.24) {
+      const glow = context.createRadialGradient(x, y, 0, x, y, radius * 3.8);
+      glow.addColorStop(0, colorWithAlpha(star.color, alpha * 0.26));
       glow.addColorStop(1, "transparent");
 
       context.beginPath();
-      context.arc(x, y, radius * 3.2, 0, Math.PI * 2);
+      context.arc(x, y, radius * 3.8, 0, Math.PI * 2);
       context.fillStyle = glow;
       context.fill();
     }
