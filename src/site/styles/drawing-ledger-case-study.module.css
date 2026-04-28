@@ -96,6 +96,13 @@
   object-fit: cover;
 }
 
+:global([data-color-theme="dark"]) .heroBackdropImage {
+  /* 这张天空背景图本来是偏亮的，浅色底下用 multiply 能压进页面里；
+     但到了深色主题，multiply 会把整张图压黑，所以这里切换成 screen。 */
+  mix-blend-mode: screen;
+  opacity: 0.7;
+}
+
 .heroInner {
   display: grid;
   gap: var(--drawing-ledger-hero-gap);
@@ -130,6 +137,19 @@
   font-size: clamp(1rem, 1.5vw, 1.25rem);
   line-height: 1.5;
   margin: 0;
+}
+
+:global([data-color-theme="dark"]) .heroTitle {
+  /* 这块封面在 dark theme 下仍然是浅天空背景，所以标题不能继续吃全局浅色标题语义。 */
+  color: var(--portfolio-color-text-inverted);
+}
+
+:global([data-color-theme="dark"]) .heroSubtitle {
+  color: color-mix(
+    in srgb,
+    var(--portfolio-color-text-inverted) 78%,
+    var(--portfolio-color-text-body)
+  );
 }
 
 .heroMedia {

@@ -81,6 +81,8 @@ const portfolioSharedCssVariables = {
     portfolio.semantics.mediaFrameBackground,
   "--portfolio-semantic-media-frame-border":
     portfolio.semantics.mediaFrameBorder,
+  "--portfolio-semantic-moonlight-background":
+    portfolio.semantics.moonlightBackground,
   "--portfolio-semantic-eyebrow-color": portfolio.semantics.eyebrowColor,
   "--portfolio-semantic-caption-color": portfolio.semantics.captionColor,
   "--portfolio-semantic-body-color": portfolio.semantics.bodyColor,

@@ -1,4 +1,5 @@
 .moonlightBackground {
+  background: var(--portfolio-semantic-moonlight-background);
   height: 100svh;
   inset: 0;
   overflow: hidden;
