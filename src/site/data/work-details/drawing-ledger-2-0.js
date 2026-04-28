@@ -23,6 +23,26 @@ const assetDefinitions = {
     alt: "用户任务梳理图",
     localSrc: "/site/work/drawing-ledger-2-0/user-task-analysis.png",
   },
+  webDesignAnalysis: {
+    alt: "图纸台账 Web 端设计分析图",
+    localSrc: "/site/work/drawing-ledger-2-0/web-design-analysis.png",
+  },
+  webStrategyVisual: {
+    alt: "图纸台账 Web 端视觉层级重塑策略图",
+    localSrc: "/site/work/drawing-ledger-2-0/web-strategy-visual.png",
+  },
+  webStrategyRole: {
+    alt: "图纸台账 Web 端场景化设计策略图",
+    localSrc: "/site/work/drawing-ledger-2-0/web-strategy-role.png",
+  },
+  webStrategyRules: {
+    alt: "图纸台账 Web 端统一交互规范策略图",
+    localSrc: "/site/work/drawing-ledger-2-0/web-strategy-rules.png",
+  },
+  webResults: {
+    alt: "图纸台账 Web 端落地成果拼图",
+    localSrc: "/site/work/drawing-ledger-2-0/web-results.png",
+  },
   round1OptionABackground: {
     alt: "Round 1 Option A 背景图",
     localSrc: "/site/work/drawing-ledger-2-0/round1-option-a-background.png",

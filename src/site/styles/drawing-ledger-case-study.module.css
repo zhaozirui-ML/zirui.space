@@ -5,6 +5,8 @@
   --drawing-ledger-section-content-width: calc(52rem + 3rem);
   --drawing-ledger-section-content-padding-inline: 1.5rem;
   --drawing-ledger-section-content-padding-block: var(--portfolio-space-section-y);
+  --drawing-ledger-web-section-gap: var(--portfolio-space-lg);
+  --drawing-ledger-subsection-gap: var(--portfolio-space-subsection);
   --drawing-ledger-stack-gap-lg: var(--portfolio-space-lg);
   --drawing-ledger-stack-gap-md: var(--portfolio-space-md);
   --drawing-ledger-stack-gap-sm: var(--portfolio-space-sm);
@@ -167,15 +169,54 @@
   /* 仅用于细节展开这一节，方便在平板和手机端单独收顶部留白 */
 }
 
+.legacyWebContent {
+  display: none;
+}
+
 .blockStack {
   display: grid;
   gap: var(--drawing-ledger-stack-gap-lg);
 }
 
+.webCaseStack {
+  display: grid;
+  gap: var(--drawing-ledger-web-section-gap);
+}
+
 .sectionFlow,
 .footerStack {
   display: grid;
+}
+
+.sectionFlow {
+  gap: 0;
+}
+
+.sectionFlow > .figure,
+.sectionFlow > .sectionCluster {
+  margin-top: var(--drawing-ledger-stack-gap-sm);
+}
+
+.sectionFlow > .figure + .sectionCluster,
+.sectionFlow > .sectionCluster + .sectionCluster {
+  margin-top: var(--drawing-ledger-subsection-gap);
+}
+
+.footerStack {
   gap: var(--drawing-ledger-stack-gap-md);
+}
+
+.problemSectionFlow {
+  gap: 0;
+}
+
+.problemSectionFlow > .sectionCluster {
+  margin-top: var(--drawing-ledger-stack-gap-sm);
+}
+
+.problemSectionFlow > .figure + .sectionCluster,
+.problemSectionFlow > .sectionCluster + .sectionCluster {
+  margin-top: var(--drawing-ledger-subsection-gap);
 }
 
 .sectionCluster {
@@ -492,6 +533,10 @@
   width: 100%;
 }
 
+.problemLeadFigure {
+  margin-top: 1.5rem;
+}
+
 .figureSectionBreak {
   margin-top: 1.5rem;
 }
@@ -570,6 +615,81 @@
   inset: 2.5rem;
   justify-content: center;
   position: absolute;
+}
+
+.resultMetricsGrid {
+  display: grid;
+  gap: var(--portfolio-space-sm);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr);
+}
+
+.resultMetricCard {
+  background: var(--portfolio-color-surface-warm);
+  border-radius: var(--portfolio-radius-sm);
+  display: grid;
+  gap: 0.625rem;
+  min-height: 10.625rem;
+  padding: 1.25rem;
+}
+
+.resultMetricCardWide {
+  grid-column: span 1;
+}
+
+.resultMetricTitle {
+  color: var(--portfolio-semantic-body-color);
+  font-family: var(--portfolio-font-label);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.011rem;
+  line-height: 1.5rem;
+  margin: 0;
+}
+
+.resultMetricValues {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+}
+
+.resultMetricValue {
+  align-items: center;
+  background: var(--portfolio-color-surface);
+  border-radius: var(--portfolio-radius-sm);
+  display: grid;
+  gap: 0.5rem;
+  justify-items: center;
+  min-height: 5.75rem;
+  padding: 1rem;
+}
+
+.resultMetricLabel {
+  color: var(--portfolio-color-text-muted);
+  font-family: var(--portfolio-font-label);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  margin: 0;
+}
+
+.resultMetricNumber {
+  align-items: end;
+  color: var(--portfolio-semantic-title-color);
+  display: flex;
+  gap: 0.375rem;
+  font-family: var(--portfolio-font-label);
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.0225rem;
+  line-height: 2rem;
+  margin: 0;
+}
+
+.resultMetricNumber span {
+  color: var(--portfolio-color-accent-brand);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  padding-bottom: 0.25rem;
 }
 
 .taskPanel {
@@ -668,15 +788,6 @@
 
 .taskCellTasks {
   padding-left: var(--drawing-ledger-task-table-task-padding-left);
-}
-
-.compactList {
-  margin: 0;
-  padding-left: 1.3125rem;
-}
-
-.compactList li + li {
-  margin-top: 0;
 }
 
 .summaryCard {
@@ -1081,6 +1192,14 @@
 }
 
 @media (max-width: 900px) {
+  .webCaseStack {
+    gap: var(--drawing-ledger-stack-gap-md);
+  }
+
+  .resultMetricsGrid {
+    grid-template-columns: 1fr;
+  }
+
   .heroSection {
     min-height: auto;
   }

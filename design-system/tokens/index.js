@@ -65,6 +65,7 @@ const portfolioSharedCssVariables = {
   "--portfolio-space-xs": portfolio.spacing.xs,
   "--portfolio-space-sm": portfolio.spacing.sm,
   "--portfolio-space-md": portfolio.spacing.md,
+  "--portfolio-space-subsection": portfolio.spacing.subsection,
   "--portfolio-space-lg": portfolio.spacing.lg,
   "--portfolio-space-section-y": portfolio.spacing.sectionPaddingY,
   "--portfolio-radius-sm": portfolio.radius.sm,

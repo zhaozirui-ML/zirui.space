@@ -149,8 +149,14 @@
 - `portfolioSpaceXs`: `12px`
 - `portfolioSpaceSm`: `24px`
 - `portfolioSpaceMd`: `48px`
+- `portfolioSpaceSubsection`: `64px`
 - `portfolioSpaceLg`: `96px`
 - `portfolioSectionPaddingY`: `132px`
+
+补充规则：
+
+- `portfolioSpaceSubsection` 用于案例页里“上一张图 / 上一个内容分组”到“下一个二级标题”的加强间距
+- 当前它显式复用 base spacing 的 `3xl = 4rem = 64px`
 
 ### 3.4 Radius
 
