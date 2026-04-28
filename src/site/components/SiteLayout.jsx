@@ -18,6 +18,7 @@ import {
 import { LanguageProvider, useLanguage } from "../i18n/LanguageProvider";
 import { isModuleHomePath } from "../lib/is-module-home-path";
 import SiteChromeFrame from "./SiteChromeFrame";
+import SiteMoonlightBackground from "./SiteMoonlightBackground";
 import SiteSunnyBackground from "./SiteSunnyBackground";
 import styles from "../styles/site-shell.module.css";
 
@@ -74,6 +75,7 @@ function SiteLayoutFrame({
   shouldShowSunnyBackground,
 }) {
   const { language } = useLanguage();
+  const shouldShowMoonlightBackground = colorTheme === "dark";
 
   const themeStyle = /** @type {any} */ ({
     ...portfolioThemeCssVariables[colorTheme],
@@ -90,6 +92,7 @@ function SiteLayoutFrame({
     >
       {/* 模块首页统一从壳层挂一层 Sunny Mode，避免首页自身和壳层重复渲染 video。 */}
       {shouldShowSunnyBackground ? <SiteSunnyBackground /> : null}
+      {shouldShowMoonlightBackground ? <SiteMoonlightBackground /> : null}
       <SiteChromeFrame colorTheme={colorTheme} onThemeToggle={onThemeToggle}>
         {children}
       </SiteChromeFrame>

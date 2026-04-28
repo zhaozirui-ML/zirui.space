@@ -1,0 +1,127 @@
+.moonlightBackground {
+  height: 100svh;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: fixed;
+  width: 100vw;
+  z-index: 0;
+}
+
+.moonlightBackground::before {
+  background:
+    radial-gradient(
+      ellipse 72% 52% at 86% 6%,
+      color-mix(in srgb, var(--portfolio-color-accent-blue) 12%, transparent) 0%,
+      color-mix(in srgb, var(--portfolio-color-accent-blue) 4%, transparent) 42%,
+      transparent 72%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--portfolio-color-bg-pure) 58%, transparent) 0%,
+      color-mix(in srgb, var(--portfolio-color-canvas) 18%, transparent) 54%,
+      transparent 100%
+    );
+  content: "";
+  inset: 0;
+  position: absolute;
+}
+
+.moonlightBeam {
+  background: radial-gradient(
+    ellipse 58% 48% at 86% 8%,
+    color-mix(in srgb, var(--portfolio-color-accent-blue) 10%, transparent) 0%,
+    color-mix(in srgb, var(--portfolio-color-accent-blue) 4%, transparent) 38%,
+    transparent 72%
+  );
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 58%;
+}
+
+.starsCanvas {
+  height: 100%;
+  inset: 0;
+  opacity: 0.58;
+  position: absolute;
+  width: 100%;
+}
+
+.moonWrap {
+  height: clamp(3.5rem, 6vw, 4.75rem);
+  position: absolute;
+  right: clamp(2rem, 8vw, 7rem);
+  top: clamp(1.25rem, 3vw, 2rem);
+  width: clamp(3.5rem, 6vw, 4.75rem);
+}
+
+.moonWrap::before {
+  animation: moonlightHaloPulse 14s ease-in-out infinite;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--portfolio-color-accent-blue) 12%, transparent) 0%,
+    color-mix(in srgb, var(--portfolio-color-accent-blue) 4%, transparent) 44%,
+    transparent 72%
+  );
+  border-radius: 50%;
+  content: "";
+  inset: -58%;
+  position: absolute;
+}
+
+.moonCanvas {
+  border-radius: 50%;
+  filter:
+    drop-shadow(0 0 0.9rem color-mix(in srgb, var(--portfolio-color-accent-blue) 22%, transparent))
+    drop-shadow(0 0 2.8rem color-mix(in srgb, var(--portfolio-color-accent-blue) 12%, transparent));
+  height: 100%;
+  opacity: 0.94;
+  position: relative;
+  width: 100%;
+}
+
+@keyframes moonlightHaloPulse {
+  0%,
+  100% {
+    opacity: 0.72;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+@media (max-width: 1024px) {
+  .starsCanvas {
+    opacity: 0.48;
+  }
+
+  .moonWrap {
+    right: clamp(1.5rem, 8vw, 4rem);
+    top: clamp(1.25rem, 4vw, 2.5rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .moonlightBeam {
+    opacity: 0.5;
+    width: 76%;
+  }
+
+  .moonWrap {
+    height: 3.35rem;
+    right: 1.35rem;
+    top: 2.25rem;
+    width: 3.35rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moonWrap::before {
+    animation: none;
+  }
+}
