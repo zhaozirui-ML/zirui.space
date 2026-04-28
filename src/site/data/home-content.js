@@ -11,8 +11,8 @@ export const homeIntro = {
   avatarSrc: "/site/home/avatar/home-avatar-cutout.png",
   avatarAlt: t("赵子瑞的首页头像插图", "Portrait illustration of Zirui Zhao on the homepage"),
   title: t(
-    "你好，我是赵子瑞。一名拥有 4 年经验的产品设计师，专注于为复杂业务流程、系统与界面设计真正能够落地的企业级产品。",
-    "Hey, I'm Zirui Zhao! A Product Designer with 4 years of experience. I design enterprise products across workflows, systems, and interfaces that teams can actually ship.",
+    "你好，我是赵子瑞。一名拥有 4 年多经验的产品设计师，专注于为复杂业务流程、系统与界面设计真正能够落地的企业级产品。",
+    "Hey, I'm Zirui Zhao! A Product Designer with 4+ years of experience. I design enterprise products across workflows, systems, and interfaces that teams can actually ship.",
   ),
 };
 
