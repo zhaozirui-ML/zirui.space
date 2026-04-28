@@ -5,6 +5,8 @@
   --drawing-ledger-section-content-width: calc(52rem + 3rem);
   --drawing-ledger-section-content-padding-inline: 1.5rem;
   --drawing-ledger-section-content-padding-block: var(--portfolio-space-section-y);
+  --drawing-ledger-web-section-gap: var(--portfolio-space-lg);
+  --drawing-ledger-subsection-gap: var(--portfolio-space-subsection);
   --drawing-ledger-stack-gap-lg: var(--portfolio-space-lg);
   --drawing-ledger-stack-gap-md: var(--portfolio-space-md);
   --drawing-ledger-stack-gap-sm: var(--portfolio-space-sm);
@@ -187,15 +189,61 @@
   /* 仅用于细节展开这一节，方便在平板和手机端单独收顶部留白 */
 }
 
+.legacyWebContent {
+  display: none;
+}
+
 .blockStack {
   display: grid;
   gap: var(--drawing-ledger-stack-gap-lg);
 }
 
+.webCaseStack {
+  display: grid;
+  gap: var(--drawing-ledger-web-section-gap);
+}
+
 .sectionFlow,
 .footerStack {
   display: grid;
+}
+
+.sectionFlow {
+  gap: 0;
+}
+
+.sectionFlow > .figure,
+.sectionFlow > .sectionCluster {
+  margin-top: var(--drawing-ledger-stack-gap-sm);
+}
+
+.sectionFlow > .figure + .sectionCluster,
+.sectionFlow > .sectionCluster + .sectionCluster {
+  margin-top: var(--drawing-ledger-subsection-gap);
+}
+
+.mobileSectionFlow > .sectionCluster + .sectionCluster,
+.mobileSectionFlow > .sectionCluster + .mobileDetailsStack,
+.mobileSectionFlow > .mobileDetailsStack + .sectionCluster,
+.mobileSectionFlow > .mobileDetailsStack + .mobileDetailsStack {
+  margin-top: var(--drawing-ledger-subsection-gap);
+}
+
+.footerStack {
   gap: var(--drawing-ledger-stack-gap-md);
+}
+
+.problemSectionFlow {
+  gap: 0;
+}
+
+.problemSectionFlow > .sectionCluster {
+  margin-top: var(--drawing-ledger-stack-gap-sm);
+}
+
+.problemSectionFlow > .figure + .sectionCluster,
+.problemSectionFlow > .sectionCluster + .sectionCluster {
+  margin-top: var(--drawing-ledger-subsection-gap);
 }
 
 .sectionCluster {
@@ -203,12 +251,84 @@
   gap: var(--drawing-ledger-stack-gap-sm);
 }
 
+.mobileExplorationStack {
+  display: grid;
+  gap: var(--drawing-ledger-stack-gap-md);
+}
+
+.mobileExplorationCluster {
+  gap: var(--drawing-ledger-stack-gap-md);
+}
+
+.mobileDetailsStack {
+  display: grid;
+  gap: var(--drawing-ledger-subsection-gap);
+}
+
+.mobileGoalsGrid {
+  display: grid;
+  gap: var(--drawing-ledger-stack-gap-md);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.mobileGoalCard {
+  align-items: stretch;
+  background: var(--portfolio-color-bg-pure);
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: var(--ds-radius-sm);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 7.5rem;
+  height: 6.394375rem;
+  overflow: hidden;
+}
+
+.mobileGoalBody {
+  display: grid;
+  gap: 0.25rem;
+  padding: 1rem;
+}
+
+.mobileGoalTitle {
+  color: var(--portfolio-semantic-body-color);
+  font-family: var(--portfolio-font-label);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.011rem;
+  line-height: 1.5rem;
+  margin: 0;
+}
+
+.mobileGoalDescription {
+  color: var(--portfolio-color-text-muted);
+  font-size: 0.875rem;
+  letter-spacing: -0.00525rem;
+  line-height: 1.25rem;
+  margin: 0;
+}
+
+.mobileGoalVisual {
+  align-items: center;
+  display: flex;
+  height: 6.269375rem;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.mobileGoalImage {
+  display: block;
+  height: 7.5rem;
+  position: relative;
+  top: -0.6153125rem;
+  width: 7.5rem;
+}
+
 .sectionCluster > .caseSubheading + .caseSubheading {
   margin-top: 1.5rem;
 }
 
 .reflectionHeader {
-  margin-top: 3rem;
+  margin-top: var(--drawing-ledger-stack-gap-lg);
 }
 
 .anchoredHeader {
@@ -286,6 +406,12 @@
 .richText strong {
   color: var(--portfolio-semantic-title-color);
   font-weight: 600;
+}
+
+.inlineLink {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.125rem;
 }
 
 .chartCard,
@@ -425,13 +551,13 @@
 }
 
 .responsiveDemoFrame {
+  aspect-ratio: 832 / 468;
   background: var(--portfolio-semantic-media-frame-background);
   border: 1px solid var(--portfolio-semantic-media-frame-border);
   border-radius: var(--portfolio-radius-md);
   display: grid;
-  min-height: 18rem;
   overflow: hidden;
-  padding: clamp(1rem, 3vw, 2rem);
+  padding: 3.875rem 2.5rem;
   place-items: center;
   position: relative;
   width: 100%;
@@ -442,28 +568,30 @@
 }
 
 .responsiveDemoVideoWrap {
-  border-radius: var(--portfolio-radius-md);
+  aspect-ratio: 752 / 344;
+  border-radius: var(--portfolio-radius-sm);
   overflow: hidden;
   position: relative;
-  width: min(100%, 44rem);
+  width: 100%;
   z-index: 1;
 }
 
 .responsiveDemoVideo {
-  border-radius: var(--portfolio-radius-md);
+  border-radius: var(--portfolio-radius-sm);
   display: block;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   width: 100%;
 }
 
 .workflowDemoFrame {
+  aspect-ratio: 832 / 468;
   background: var(--portfolio-semantic-media-frame-background);
   border: 1px solid var(--portfolio-semantic-media-frame-border);
   border-radius: var(--portfolio-radius-md);
   display: grid;
-  min-height: 18rem;
   overflow: hidden;
-  padding: clamp(1rem, 3vw, 2rem);
+  padding: 3.875rem 2.5rem;
   place-items: center;
   position: relative;
   width: 100%;
@@ -474,17 +602,19 @@
 }
 
 .workflowDemoVideoWrap {
-  border-radius: var(--portfolio-radius-md);
+  aspect-ratio: 752 / 344;
+  border-radius: var(--portfolio-radius-sm);
   overflow: hidden;
   position: relative;
-  width: min(100%, 44rem);
+  width: 100%;
   z-index: 1;
 }
 
 .workflowDemoVideo {
-  border-radius: var(--portfolio-radius-md);
+  border-radius: var(--portfolio-radius-sm);
   display: block;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   width: 100%;
 }
 
@@ -510,6 +640,10 @@
   gap: var(--drawing-ledger-text-gap);
   margin: 0;
   width: 100%;
+}
+
+.problemLeadFigure {
+  margin-top: 1.5rem;
 }
 
 .figureSectionBreak {
@@ -590,6 +724,88 @@
   inset: 2.5rem;
   justify-content: center;
   position: absolute;
+}
+
+.resultMetricsGrid {
+  display: grid;
+  gap: var(--portfolio-space-sm);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr);
+}
+
+.resultMetricCard {
+  background: var(--portfolio-color-surface-warm);
+  border-radius: var(--portfolio-radius-sm);
+  display: grid;
+  gap: 0.625rem;
+  min-height: 10.625rem;
+  padding: 1.25rem;
+}
+
+.resultMetricCardWide {
+  grid-column: span 1;
+}
+
+.resultMetricTitle {
+  color: var(--portfolio-semantic-body-color);
+  font-family: var(--portfolio-font-label);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.011rem;
+  line-height: 1.5rem;
+  margin: 0;
+}
+
+.resultMetricValues {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+}
+
+.resultMetricValue {
+  align-items: center;
+  background: var(--portfolio-color-surface);
+  border-radius: var(--portfolio-radius-sm);
+  display: grid;
+  gap: 0.5rem;
+  justify-items: center;
+  min-height: 5.75rem;
+  padding: 1rem;
+}
+
+.resultMetricLabel {
+  color: var(--portfolio-color-text-muted);
+  font-family: var(--portfolio-font-label);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  margin: 0;
+}
+
+.resultMetricNumber {
+  align-items: end;
+  color: var(--portfolio-semantic-title-color);
+  display: flex;
+  gap: 0.375rem;
+  font-family: var(--portfolio-font-label);
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.0225rem;
+  line-height: 2rem;
+  margin: 0;
+}
+
+.resultMetricTrend {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  padding-bottom: 0.25rem;
+}
+
+.resultMetricTrendDecrease {
+  color: var(--portfolio-color-accent-moss);
+}
+
+.resultMetricTrendIncrease {
+  color: var(--portfolio-color-accent-brand);
 }
 
 .taskPanel {
@@ -688,15 +904,6 @@
 
 .taskCellTasks {
   padding-left: var(--drawing-ledger-task-table-task-padding-left);
-}
-
-.compactList {
-  margin: 0;
-  padding-left: 1.3125rem;
-}
-
-.compactList li + li {
-  margin-top: 0;
 }
 
 .summaryCard {
@@ -1101,6 +1308,14 @@
 }
 
 @media (max-width: 900px) {
+  .webCaseStack {
+    gap: var(--drawing-ledger-stack-gap-md);
+  }
+
+  .resultMetricsGrid {
+    grid-template-columns: 1fr;
+  }
+
   .heroSection {
     min-height: auto;
   }
@@ -1297,6 +1512,10 @@
   }
 
   .mobileCompareFrame {
+    grid-template-columns: 1fr;
+  }
+
+  .mobileGoalsGrid {
     grid-template-columns: 1fr;
   }
 

@@ -1,3 +1,5 @@
+import { spacing } from "./spacing";
+
 // 这份 token 专门服务作品集页面，不直接替换现有通用设计系统。
 // 先把方向稳定下来，后续页面可以按需接入，而不是一次性全局替换。
 const portfolioLightColors = Object.freeze({
@@ -103,10 +105,11 @@ export const portfolio = Object.freeze({
   }),
   spacing: Object.freeze({
     "2xs": "0.375rem",
-    xs: "0.75rem",
-    sm: "1.5rem",
-    md: "3rem",
-    lg: "6rem",
+    xs: spacing.sm,
+    sm: spacing.lg,
+    md: spacing["2xl"],
+    subsection: spacing["3xl"],
+    lg: spacing.section,
     sectionPaddingY: "8.25rem",
   }),
   radius: Object.freeze({
