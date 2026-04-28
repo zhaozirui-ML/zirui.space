@@ -413,7 +413,14 @@ function ResultMetricCard({ metric }) {
           <div className={styles.resultMetricValue} key={`${metric.title}-${item.value}`}>
             {item.label ? <p className={styles.resultMetricLabel}>{item.label}</p> : null}
             <p className={styles.resultMetricNumber}>
-              <span>{item.trend}</span>
+              <span
+                className={joinClassNames(
+                  styles.resultMetricTrend,
+                  item.trend === "降低" ? styles.resultMetricTrendDecrease : styles.resultMetricTrendIncrease,
+                )}
+              >
+                {item.trend}
+              </span>
               {item.value}
             </p>
           </div>

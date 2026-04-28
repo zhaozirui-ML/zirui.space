@@ -446,13 +446,13 @@
 }
 
 .responsiveDemoFrame {
+  aspect-ratio: 832 / 468;
   background: var(--portfolio-semantic-media-frame-background);
   border: 1px solid var(--portfolio-semantic-media-frame-border);
   border-radius: var(--portfolio-radius-md);
   display: grid;
-  min-height: 18rem;
   overflow: hidden;
-  padding: clamp(1rem, 3vw, 2rem);
+  padding: 3.875rem 2.5rem;
   place-items: center;
   position: relative;
   width: 100%;
@@ -463,28 +463,30 @@
 }
 
 .responsiveDemoVideoWrap {
-  border-radius: var(--portfolio-radius-md);
+  aspect-ratio: 752 / 344;
+  border-radius: var(--portfolio-radius-sm);
   overflow: hidden;
   position: relative;
-  width: min(100%, 44rem);
+  width: 100%;
   z-index: 1;
 }
 
 .responsiveDemoVideo {
-  border-radius: var(--portfolio-radius-md);
+  border-radius: var(--portfolio-radius-sm);
   display: block;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   width: 100%;
 }
 
 .workflowDemoFrame {
+  aspect-ratio: 832 / 468;
   background: var(--portfolio-semantic-media-frame-background);
   border: 1px solid var(--portfolio-semantic-media-frame-border);
   border-radius: var(--portfolio-radius-md);
   display: grid;
-  min-height: 18rem;
   overflow: hidden;
-  padding: clamp(1rem, 3vw, 2rem);
+  padding: 3.875rem 2.5rem;
   place-items: center;
   position: relative;
   width: 100%;
@@ -495,17 +497,19 @@
 }
 
 .workflowDemoVideoWrap {
-  border-radius: var(--portfolio-radius-md);
+  aspect-ratio: 752 / 344;
+  border-radius: var(--portfolio-radius-sm);
   overflow: hidden;
   position: relative;
-  width: min(100%, 44rem);
+  width: 100%;
   z-index: 1;
 }
 
 .workflowDemoVideo {
-  border-radius: var(--portfolio-radius-md);
+  border-radius: var(--portfolio-radius-sm);
   display: block;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   width: 100%;
 }
 
@@ -685,11 +689,18 @@
   margin: 0;
 }
 
-.resultMetricNumber span {
-  color: var(--portfolio-color-accent-brand);
+.resultMetricTrend {
   font-size: 0.75rem;
   line-height: 1rem;
   padding-bottom: 0.25rem;
+}
+
+.resultMetricTrendDecrease {
+  color: var(--portfolio-color-accent-moss);
+}
+
+.resultMetricTrendIncrease {
+  color: var(--portfolio-color-accent-brand);
 }
 
 .taskPanel {
