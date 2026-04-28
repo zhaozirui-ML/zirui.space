@@ -233,10 +233,10 @@ function buildStars(count, palette) {
       color: colors[Math.floor(Math.random() * colors.length)],
       baseAlpha: isBright ? 0.38 + Math.random() * 0.24 : 0.14 + Math.random() * 0.18,
       phase: Math.random() * Math.PI * 2,
-      speed: 0.24 + Math.random() * 0.48,
-      flickerAmplitude: isBright ? 0.09 + Math.random() * 0.12 : 0.04 + Math.random() * 0.08,
+      speed: isBright ? 0.42 + Math.random() * 0.72 : 0.3 + Math.random() * 0.58,
+      flickerAmplitude: isBright ? 0.16 + Math.random() * 0.18 : 0.07 + Math.random() * 0.11,
       flashPhase: Math.random() * Math.PI * 2,
-      flashSpeed: 0.035 + Math.random() * 0.07,
+      flashSpeed: isBright ? 0.08 + Math.random() * 0.12 : 0.045 + Math.random() * 0.08,
       isBright,
     };
   });
@@ -253,7 +253,7 @@ function drawStars(context, stars, width, height, time, isReducedMotion) {
       : Math.sin(star.phase + time * star.speed) * star.flickerAmplitude;
     const flash = isReducedMotion
       ? 0
-      : Math.pow(Math.max(0, Math.sin(star.flashPhase + time * star.flashSpeed)), 12) * 0.18;
+      : Math.pow(Math.max(0, Math.sin(star.flashPhase + time * star.flashSpeed)), 10) * 0.24;
     const alpha = Math.max(0.02, star.baseAlpha + shimmer + flash);
     const radius = star.baseRadius * (1 + flash * 0.5);
 
