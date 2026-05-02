@@ -29,6 +29,14 @@ const dataVizProject = getProjectBySlug("data-visualization-screen");
 const cloudTowerProject = getProjectBySlug("cloudtower-design-system");
 
 export const portfolioChatKnowledge = Object.freeze({
+  voice: Object.freeze({
+    principles: Object.freeze([
+      t("先给判断，再补原因，不绕弯子。", "Lead with the judgment, then explain why."),
+      t("讲项目时更像带人浏览作品集，不像在背简历。", "When talking about projects, sound like a portfolio walkthrough, not a resume recital."),
+      t("优先讲清楚挑战、取舍、结果和反思，而不是堆抽象形容词。", "Prioritize challenge, tradeoffs, outcomes, and reflection over abstract adjectives."),
+      t("少用空泛总结，多用第一人称说明我为什么这么做。", "Use first-person reasoning instead of generic summary language."),
+    ]),
+  }),
   profile: Object.freeze({
     name: "Zirui Zhao",
     title: t("产品设计师", "Product Designer"),
@@ -75,13 +83,23 @@ export const portfolioChatKnowledge = Object.freeze({
         "项目输出了完整的图纸台账 2.0 方案，重点提升了复杂业务流程的可理解性、协作效率和跨端一致性。",
         "The project produced a full Drawing Register 2.0 solution that improved the clarity of a complex workflow, collaboration efficiency, and consistency across platforms.",
       ),
+      reflection: t(
+        "这个项目让我更确信，复杂企业级产品里最难的往往不是单个页面，而是状态流转和责任边界能不能被讲清楚。后来我再看这个项目，会更在意让关键协作关系尽早暴露出来，而不是等到界面层才补救。",
+        "This project reinforced my belief that the hardest part of enterprise work is rarely a single screen. It is whether the state transitions and ownership model are made understandable. Looking back, I would surface the collaboration model even earlier instead of waiting until the interface layer to resolve it.",
+      ),
       tools: ["Figma", "Prototype", "Web", "App"],
       tags: ["Workflow", "Enterprise", "Cross-platform"],
+      relatedProjectSlugs: ["axzo-design-system", "data-visualization-screen"],
       relatedPages: ["/work/drawing-ledger-2-0", "/work"],
+      continuePrompt: t(
+        "继续带我拆解这个项目的关键取舍",
+        "Keep unpacking the key tradeoffs in this project"
+      ),
       recommendedQuestions: [
         t("这个项目最难的设计挑战是什么？", "What was the hardest design challenge in this project?"),
         t("你在这个项目里做了哪些关键决策？", "What key decisions did you make in this project?"),
         t("这个项目最终带来了什么结果？", "What outcome did this project lead to?"),
+        t("你现在回头看，这个项目最大的反思是什么？", "Looking back, what is your biggest reflection on this project?"),
       ],
     }),
     Object.freeze({
@@ -110,13 +128,23 @@ export const portfolioChatKnowledge = Object.freeze({
         "Key decisions included organizing content by usage scenarios instead of asset source, making data visualization a top-level module, and bringing team collaboration into the portal.",
       ),
       outcome: axzoDesignSystemCaseStudy.reflection.conclusion,
+      reflection: t(
+        "这个项目让我更明确地意识到，设计系统不是把资源堆在一起就够了，它更像是在设计团队怎么理解系统、怎么找到入口、怎么愿意持续使用它。回头看，我会把“采用路径”看得和页面结构同样重要。",
+        "This project made it clearer to me that a design system is not just a place where assets are collected. It is also about how a team understands the system, finds the right entry point, and chooses to keep using it. Looking back, I would treat the adoption path as equally important as the page structure itself.",
+      ),
       tools: ["Figma", "Design System", "Information Architecture"],
       tags: ["Design System", "Portal", "Adoption"],
+      relatedProjectSlugs: ["cloudtower-design-system", "drawing-ledger-2-0"],
       relatedPages: ["/work/axzo-design-system", "/work"],
+      continuePrompt: t(
+        "继续讲这个项目里最关键的信息架构判断",
+        "Keep going on the most important IA decisions in this project"
+      ),
       recommendedQuestions: [
         t("为什么你把它定义成 Design System Portal？", "Why did you define it as a Design System Portal?"),
         t("这个项目最重要的信息架构决策是什么？", "What was the most important IA decision in this project?"),
         t("这个项目对团队有什么价值？", "What value did this project create for the team?"),
+        t("你现在回头看，这个项目最大的反思是什么？", "Looking back, what is your biggest reflection on this project?"),
       ],
     }),
     Object.freeze({
@@ -148,13 +176,23 @@ export const portfolioChatKnowledge = Object.freeze({
         "这个项目把图表视觉从局部探索扩展成更系统的大屏语言，也降低了后续项目的设计债务和样式漂移。",
         "The project expanded the chart style from a local exploration into a broader large-screen language, while also reducing future design debt and style drift.",
       ),
+      reflection: t(
+        "这个项目让我越来越在意视觉系统的“协作成本”。如果一种视觉语言只能靠单个设计师维持，它就不算真正稳定。后来我更关注怎么把表现力转成可复用的规则，而不是只做一次性的好看页面。",
+        "This project made me pay much more attention to the collaboration cost of a visual system. If a language can only be maintained by one designer, it is not really stable. Since then I have cared more about turning expressiveness into reusable rules instead of making a one-off beautiful screen.",
+      ),
       tools: ["Figma", "Visualization", "Component Thinking"],
       tags: ["Large Screen", "Visualization", "System Thinking"],
+      relatedProjectSlugs: ["axzo-design-system", "drawing-ledger-2-0"],
       relatedPages: ["/work/data-visualization-screen", "/work"],
+      continuePrompt: t(
+        "继续讲这个项目里视觉语言是怎么系统化的",
+        "Keep unpacking how the visual language became a scalable system"
+      ),
       recommendedQuestions: [
         t("这个项目里你最看重哪类设计价值？", "What kind of design value mattered most in this project?"),
         t("为什么你强调视觉语言要可复用？", "Why did you emphasize reusability for the visual language?"),
         t("这个项目如何体现你的系统化思维？", "How does this project show your systematic thinking?"),
+        t("你现在回头看，这个项目最大的反思是什么？", "Looking back, what is your biggest reflection on this project?"),
       ],
     }),
     Object.freeze({
@@ -190,13 +228,23 @@ export const portfolioChatKnowledge = Object.freeze({
         "这个项目提升了设计系统文档的完整度，也帮助团队建立了更稳定的组件复用和设计追溯方式。",
         "The project improved the completeness of the design system documentation and helped the team build a more stable way to reuse components and trace design decisions.",
       ),
+      reflection: t(
+        "这个项目让我意识到，设计系统文档真正的价值不在于“写得多完整”，而在于它能不能帮团队减少重复解释和沟通损耗。回头看，我会更早把行为说明和场景边界一起放进文档结构里。",
+        "This project made me realize that the value of design-system documentation is not how complete it looks, but whether it reduces repeated explanation and collaboration overhead. Looking back, I would bring behavior notes and scenario boundaries into the structure much earlier.",
+      ),
       tools: ["Figma", "Design Documentation", "Pattern Library"],
       tags: ["Design System", "Documentation", "Pattern"],
+      relatedProjectSlugs: ["axzo-design-system", "drawing-ledger-2-0"],
       relatedPages: ["/work/cloudtower-design-system", "/work"],
+      continuePrompt: t(
+        "继续讲这个项目怎么影响团队的设计系统协作",
+        "Keep going on how this project changed design-system collaboration"
+      ),
       recommendedQuestions: [
         t("这个项目更偏组件还是偏系统？", "Was this project more about components or systems?"),
         t("UI Map 对团队有什么帮助？", "How did UI Map help the team?"),
         t("你在设计系统里更关注什么？", "What do you care about most in design systems?"),
+        t("你现在回头看，这个项目最大的反思是什么？", "Looking back, what is your biggest reflection on this project?"),
       ],
     }),
   ]),

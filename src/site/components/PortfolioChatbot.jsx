@@ -4,9 +4,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
+  ArrowUp,
   LoaderCircle,
-  MessageCircleMore,
-  SendHorizontal,
   Sparkles,
   X,
 } from "lucide-react";
@@ -20,15 +19,15 @@ import styles from "../styles/portfolio-chatbot.module.css";
  *   id: string,
  *   role: "assistant" | "user",
  *   content: string,
- *   relatedPages?: string[],
+ *   relatedProjects?: { path: string, reason: string, slug: string, title: string }[],
  *   suggestedQuestions?: string[],
  * }} ChatMessage
  */
 
 const CHATBOT_PAGE_LABELS = {
   "/": { zh: "首页", en: "Home" },
-  "/about": { zh: "About / 简历", en: "About" },
-  "/work": { zh: "Work / 作品", en: "Work" },
+  "/about": { zh: "简历", en: "About" },
+  "/work": { zh: "作品", en: "Work" },
   "/work/axzo-design-system": { zh: "Axzo 设计系统门户", en: "Axzo Design Portal" },
   "/work/cloudtower-design-system": { zh: "CloudTower 设计系统", en: "CloudTower Design System" },
   "/work/data-visualization-screen": { zh: "数据可视化系统", en: "Data Visualization System" },
@@ -47,9 +46,8 @@ function createInitialAssistantMessage(language) {
     role: "assistant",
     content:
       language === "zh"
-        ? "你好，我是这个作品集里的 Portfolio Chatbot。你可以问我关于赵子瑞的项目、经历、技能、设计方法或联系方式的问题。"
-        : "Hi, I'm the Portfolio Chatbot for this portfolio. You can ask me about Zirui Zhao's projects, experience, skills, design approach, or contact information.",
-    relatedPages: ["/about", "/work"],
+        ? "你好，我可以带你快速浏览赵子瑞的作品集。可以问我项目、经历、技能、设计方法或联系方式。"
+        : "Hi, I can guide you through Zirui's portfolio. Ask about projects, experience, skills, process, or contact.",
   };
 }
 
@@ -165,8 +163,34 @@ function getContextualIntro(pathname, language, localizedKnowledge) {
   }
 
   return language === "zh"
-    ? "你好，我是这个作品集里的 Portfolio Chatbot。你可以问我关于赵子瑞的项目、经历、技能、设计方法或联系方式的问题。"
-    : "Hi, I'm the Portfolio Chatbot for this portfolio. You can ask me about Zirui Zhao's projects, experience, skills, design approach, or contact information.";
+    ? "你好，我可以带你快速浏览赵子瑞的作品集。可以问我项目、经历、技能、设计方法或联系方式。"
+    : "Hi, I can guide you through Zirui's portfolio. Ask about projects, experience, skills, process, or contact.";
+}
+
+function getQuickReplyHeading(language) {
+  return language === "zh"
+    ? "建议问题"
+    : "Suggestions";
+}
+
+function getComposerHint(language) {
+  return language === "zh"
+    ? "回车发送 · Shift + 回车换行"
+    : "Enter to send · Shift + Enter for a new line";
+}
+
+function getLoadingMessage(pathname, language, localizedKnowledge) {
+  const project = getProjectFromPathname(pathname, localizedKnowledge);
+
+  if (project) {
+    return language === "zh"
+      ? `正在整理 ${project.title} 的关键线索…`
+      : `Pulling together the key threads from ${project.title}...`;
+  }
+
+  return language === "zh"
+    ? "正在整理一条更像作品集导览的回答…"
+    : "Putting together a reply that feels more like a portfolio walkthrough...";
 }
 
 export default function PortfolioChatbot() {
@@ -181,6 +205,8 @@ export default function PortfolioChatbot() {
     [language, localizedKnowledge, pathname]
   );
   const currentPageLabel = getPageLabel(pathname, language);
+  const contextualIntro = getContextualIntro(pathname, language, localizedKnowledge);
+  const loadingMessage = getLoadingMessage(pathname, language, localizedKnowledge);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -197,16 +223,13 @@ export default function PortfolioChatbot() {
     setMessages([
       {
         ...createInitialAssistantMessage(language),
-        content: getContextualIntro(pathname, language, localizedKnowledge),
-        relatedPages: [pathname, "/work", "/about"].filter(
-          (value, index, items) => items.indexOf(value) === index
-        ),
+        content: contextualIntro,
       },
     ]);
     setInputValue("");
     setErrorMessage("");
     setStatusMessage("");
-  }, [language, localizedKnowledge, pathname]);
+  }, [contextualIntro, language, localizedKnowledge, pathname]);
 
   useEffect(() => {
     const viewport = messageViewportRef.current;
@@ -264,7 +287,7 @@ export default function PortfolioChatbot() {
           id: createMessageId("assistant"),
           role: "assistant",
           content: data.answer,
-          relatedPages: data.relatedPages || [],
+          relatedProjects: data.relatedProjects || [],
           suggestedQuestions: data.suggestedQuestions || [],
         },
       ]);
@@ -300,21 +323,19 @@ export default function PortfolioChatbot() {
       {isOpen ? (
         <section
           aria-label={
-            language === "zh" ? "作品集问答助手面板" : "Portfolio assistant panel"
+            language === "zh" ? "作品集导览面板" : "Portfolio guide panel"
           }
           className={styles.chatPanel}
         >
           <header className={styles.chatPanelHeader}>
             <div className={styles.chatPanelHeading}>
-              <span className={styles.chatPanelEyebrow}>
-                <Sparkles aria-hidden="true" size={14} />
-                {language === "zh" ? "Portfolio Assistant" : "Portfolio Assistant"}
-              </span>
-              <h2 className={styles.chatPanelTitle}>
-                {language === "zh" ? "问我作品集相关的问题" : "Ask me about the portfolio"}
-              </h2>
+              <div className={styles.chatPanelTitleRow}>
+                <h2 className={styles.chatPanelTitle}>
+                  {language === "zh" ? "作品集导览" : "Portfolio guide"}
+                </h2>
+              </div>
               <p className={styles.chatPanelContext}>
-                {language === "zh" ? "当前页面" : "Current page"}: {currentPageLabel}
+                {language === "zh" ? "当前" : "Now viewing"}: {currentPageLabel}
               </p>
             </div>
 
@@ -334,27 +355,45 @@ export default function PortfolioChatbot() {
                 className={[
                   styles.messageBubble,
                   message.role === "user" ? styles.userBubble : styles.assistantBubble,
+                  message.role === "assistant" && messages.length === 1
+                    ? styles.welcomeBubble
+                    : "",
                 ]
                   .filter(Boolean)
                   .join(" ")}
                 key={message.id}
               >
-                {message.role === "assistant" ? (
-                  <p className={styles.messageRole}>
-                    {language === "zh" ? "Portfolio Chatbot" : "Portfolio Chatbot"}
-                  </p>
+                {message.role === "assistant" && messages.length === 1 ? (
+                  <span
+                    aria-label={
+                      language === "zh" ? "作品集导览小机器人" : "Portfolio guide mascot"
+                    }
+                    className={styles.chatMascot}
+                    role="img"
+                  />
                 ) : null}
 
                 <p className={styles.messageText}>{message.content}</p>
 
-                {message.relatedPages?.length ? (
-                  <div className={styles.relatedPages}>
-                    {message.relatedPages.map((pathname) => (
-                      <Link className={styles.relatedPageLink} href={pathname} key={pathname}>
-                        {getPageLabel(pathname, language)}
-                      </Link>
-                    ))}
-                  </div>
+                {message.role === "assistant" && message.relatedProjects?.length ? (
+                  <section className={styles.relatedProjectSection}>
+                    <p className={styles.relatedProjectHeading}>
+                      {language === "zh" ? "相关项目" : "Related projects"}
+                    </p>
+
+                    <div className={styles.relatedProjectList}>
+                      {message.relatedProjects.map((project) => (
+                        <Link
+                          className={styles.relatedProjectCard}
+                          href={project.path}
+                          key={project.slug}
+                        >
+                          <span className={styles.relatedProjectTitle}>{project.title}</span>
+                          <span className={styles.relatedProjectReason}>{project.reason}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  </section>
                 ) : null}
 
                 {message.role === "assistant" && message.suggestedQuestions?.length ? (
@@ -377,29 +416,39 @@ export default function PortfolioChatbot() {
             {messages.length === 1 ? (
               <section className={styles.quickReplySection}>
                 <p className={styles.quickReplyHeading}>
-                  {language === "zh" ? "你可以先从这些问题开始：" : "Start with one of these questions:"}
+                  {getQuickReplyHeading(language)}
                 </p>
 
                 <div className={styles.quickReplyList}>
-                  {quickReplies.map((item) => (
-                    <button
-                      className={styles.quickReplyButton}
-                      key={item.id}
-                      onClick={() => void sendQuestion(item.prompt)}
-                      type="button"
-                    >
-                      {item.label}
-                    </button>
+                  {quickReplies.map((item, index) => (
+                      <button
+                        className={[
+                          styles.quickReplyButton,
+                          index === 0 ? styles.quickReplyButtonPrimary : "",
+                        ]
+                          .filter(Boolean)
+                          .join(" ")}
+                        key={item.id}
+                        onClick={() => void sendQuestion(item.prompt)}
+                        type="button"
+                      >
+                        <span className={styles.quickReplyButtonInner}>
+                          <span>{item.label}</span>
+                        </span>
+
+                      </button>
                   ))}
                 </div>
               </section>
             ) : null}
 
             {isLoading ? (
-              <div className={styles.loadingRow} role="status">
-                <LoaderCircle aria-hidden="true" className={styles.loadingIcon} size={16} />
-                {language === "zh" ? "正在整理回答…" : "Preparing the reply..."}
-              </div>
+              <article className={[styles.messageBubble, styles.assistantBubble].join(" ")} role="status">
+                <div className={styles.loadingBubble}>
+                  <LoaderCircle aria-hidden="true" className={styles.loadingIcon} size={16} />
+                  <span>{loadingMessage}</span>
+                </div>
+              </article>
             ) : null}
           </div>
 
@@ -412,28 +461,30 @@ export default function PortfolioChatbot() {
                 {language === "zh" ? "聊天输入框" : "Chat input"}
               </label>
 
-              <textarea
-                className={styles.composerField}
-                id="portfolio-chat-input"
-                onChange={(event) => setInputValue(event.target.value)}
-                onKeyDown={handleComposerKeyDown}
-                placeholder={
-                  language === "zh"
-                    ? "例如：讲讲图纸台账 2.0 这个项目"
-                    : "For example: Tell me about Drawing Register 2.0"
-                }
-                rows={3}
-                value={inputValue}
-              />
-
-              <button
-                className={styles.sendButton}
-                disabled={!inputValue.trim() || isLoading}
-                type="submit"
-              >
-                <SendHorizontal aria-hidden="true" size={16} />
-                {language === "zh" ? "发送" : "Send"}
-              </button>
+              <div className={styles.composerFieldWrap}>
+                <textarea
+                  className={styles.composerField}
+                  id="portfolio-chat-input"
+                  onChange={(event) => setInputValue(event.target.value)}
+                  onKeyDown={handleComposerKeyDown}
+                  placeholder={
+                    language === "zh"
+                      ? "例如：讲讲图纸台账 2.0 这个项目"
+                      : "For example: Tell me about Drawing Register 2.0"
+                  }
+                  rows={3}
+                  value={inputValue}
+                />
+                <span className={styles.composerHint}>{getComposerHint(language)}</span>
+                <button
+                  aria-label={language === "zh" ? "发送消息" : "Send message"}
+                  className={styles.sendButton}
+                  disabled={!inputValue.trim() || isLoading}
+                  type="submit"
+                >
+                  <ArrowUp aria-hidden="true" size={16} strokeWidth={2.25} />
+                </button>
+              </div>
             </form>
           </footer>
         </section>
@@ -444,18 +495,17 @@ export default function PortfolioChatbot() {
         aria-label={
           isOpen
             ? language === "zh"
-              ? "关闭作品集聊天助手"
-              : "Close portfolio assistant"
+              ? "关闭作品集导览"
+              : "Close portfolio guide"
             : language === "zh"
-              ? "打开作品集聊天助手"
-              : "Open portfolio assistant"
+              ? "打开作品集导览"
+              : "Open portfolio guide"
         }
         className={styles.floatingTrigger}
         onClick={() => setIsOpen((currentValue) => !currentValue)}
         type="button"
       >
-        <MessageCircleMore aria-hidden="true" size={20} />
-        <span>{language === "zh" ? "问我作品集" : "Ask the portfolio"}</span>
+        <Sparkles aria-hidden="true" size={20} strokeWidth={2} />
       </button>
     </>
   );

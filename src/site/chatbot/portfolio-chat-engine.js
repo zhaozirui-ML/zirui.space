@@ -144,106 +144,132 @@ function isOutOfScope(normalizedQuestion) {
 function buildProjectOverview(projects, language) {
   if (language === "zh") {
     return [
-      "我目前最希望你先看的重点项目有：",
+      "如果你想先快速理解我做的事，我通常会先带你看这几个重点项目：",
       ...projects.slice(0, 4).map((project) => `- ${project.title}：${project.oneLiner}`),
       "",
-      "如果你愿意，我可以继续展开其中任意一个项目的背景、我的角色、关键决策或结果。",
+      "你如果想的话，我可以继续挑其中一个，往下讲挑战、关键决策、结果，或者我现在回头看的反思。",
     ].join("\n");
   }
 
   return [
-    "The featured projects I would start with are:",
+    "If you want the quickest read on the kind of work I do, I would usually start with these projects:",
     ...projects
       .slice(0, 4)
       .map((project) => `- ${project.title}: ${project.oneLiner}`),
     "",
-    "If you want, I can go deeper into the background, my role, key decisions, or outcomes for any one of them.",
+    "If you want, I can take any one of them further into the challenge, the key decisions, the outcome, or what I learned from it.",
   ].join("\n");
 }
 
 function buildProjectAnswer(project, language) {
   if (language === "zh") {
     return [
-      `${project.title}：${project.oneLiner}`,
+      `${project.title} 这个项目，我会先把它理解成：${project.oneLiner}`,
       "",
-      `项目背景：${project.background}`,
-      `我的角色：${project.myRole}`,
-      `设计问题：${project.problem}`,
-      `我是怎么做的：${project.process}`,
-      `关键决策：${project.keyDecisions}`,
-      `结果：${project.outcome}`,
+      `${project.background} 在这个项目里，${project.myRole}`,
+      "",
+      `当时最核心的问题是：${project.problem}`,
+      `我的处理方式是：${project.process}`,
+      "",
+      `这里最关键的设计判断是：${project.keyDecisions}`,
+      `最后产出的结果是：${project.outcome}`,
+      "",
+      `如果现在回头看，我对这个项目最明确的反思是：${project.reflection}`,
     ].join("\n");
   }
 
   return [
-    `${project.title}: ${project.oneLiner}`,
+    `I would frame ${project.title} like this: ${project.oneLiner}`,
     "",
-    `Background: ${project.background}`,
-    `My role: ${project.myRole}`,
-    `Design problem: ${project.problem}`,
-    `What I did: ${project.process}`,
-    `Key decisions: ${project.keyDecisions}`,
-    `Outcome: ${project.outcome}`,
+    `${project.background} In this project, ${project.myRole}`,
+    "",
+    `The core problem was: ${project.problem}`,
+    `My approach was: ${project.process}`,
+    "",
+    `The most important design judgment here was: ${project.keyDecisions}`,
+    `The final outcome was: ${project.outcome}`,
+    "",
+    `Looking back, my clearest reflection on this project is: ${project.reflection}`,
   ].join("\n");
 }
 
 function buildProjectChallengeAnswer(project, language) {
   if (language === "zh") {
     return [
-      `${project.title} 里最难的设计挑战，核心通常在这里：`,
+      `如果只说 ${project.title} 里最难的一层，我会强调这里：`,
       "",
       project.problem,
       "",
-      `我当时的处理方式是：${project.process}`,
+      `我当时是这样拆这个问题的：${project.process}`,
     ].join("\n");
   }
 
   return [
-    `The hardest design challenge in ${project.title} was mainly this:`,
+    `If I had to isolate the hardest part of ${project.title}, I would describe it like this:`,
     "",
     project.problem,
     "",
-    `My way of handling it was: ${project.process}`,
+    `This is how I approached it: ${project.process}`,
   ].join("\n");
 }
 
 function buildProjectDecisionAnswer(project, language) {
   if (language === "zh") {
     return [
-      `${project.title} 里我做的关键决策，最重要的一层是：`,
+      `在 ${project.title} 里，我做过几个关键判断，但最重要的一层是：`,
       "",
       project.keyDecisions,
       "",
-      `这些决策最终想解决的问题是：${project.problem}`,
+      `这些判断本质上都是为了回应这个问题：${project.problem}`,
     ].join("\n");
   }
 
   return [
-    `One of the most important decisions I made in ${project.title} was this:`,
+    `I made several important decisions in ${project.title}, but the one I would highlight first is this:`,
     "",
     project.keyDecisions,
     "",
-    `Those decisions were meant to solve this problem: ${project.problem}`,
+    `Those decisions were fundamentally trying to solve this problem: ${project.problem}`,
   ].join("\n");
 }
 
 function buildProjectOutcomeAnswer(project, language) {
   if (language === "zh") {
     return [
-      `${project.title} 的结果可以概括成这样：`,
+      `如果只看 ${project.title} 的结果，我会这样概括：`,
       "",
       project.outcome,
       "",
-      `如果你愿意，我也可以继续展开我在这个项目里的具体职责和过程。`,
+      `如果你愿意，我也可以继续展开我在这个项目里的职责、取舍和反思。`,
     ].join("\n");
   }
 
   return [
-    `The outcome of ${project.title} can be summarized like this:`,
+    `If I had to summarize the outcome of ${project.title}, I would put it like this:`,
     "",
     project.outcome,
     "",
-    "If you'd like, I can also go deeper into my role and the design process behind it.",
+    "If you'd like, I can also go deeper into my role, the tradeoffs, and what I learned from it.",
+  ].join("\n");
+}
+
+function buildProjectReflectionAnswer(project, language) {
+  if (language === "zh") {
+    return [
+      `如果现在回头看 ${project.title}，我最明确的一层反思是：`,
+      "",
+      project.reflection,
+      "",
+      `这也和我当时面对的核心问题有关：${project.problem}`,
+    ].join("\n");
+  }
+
+  return [
+    `Looking back at ${project.title}, my clearest reflection is this:`,
+    "",
+    project.reflection,
+    "",
+    `That reflection is closely tied to the original problem: ${project.problem}`,
   ].join("\n");
 }
 
@@ -266,48 +292,56 @@ function detectProjectIntent(normalizedQuestion) {
     return "outcome";
   }
 
+  if (
+    /反思|复盘|回头看|learn|learning|reflection|looking back|takeaway/.test(
+      normalizedQuestion
+    )
+  ) {
+    return "reflection";
+  }
+
   return null;
 }
 
 function buildExperienceAnswer(knowledge, language) {
   if (language === "zh") {
     return [
-      "我的相关工作经历可以先概括成三段：",
+      "如果从经历看我做过什么，我通常会先这样概括：",
       ...knowledge.experience.map(
         (item) =>
           `- ${item.dateRange}｜${item.company}｜${item.role}：${item.responsibilities[0]}`
       ),
       "",
-      "如果你愿意，我也可以继续展开某一段经历里我负责的项目类型和设计重点。",
+      "如果你愿意，我也可以继续展开其中一段经历里我负责的项目类型，以及我当时最关注的设计问题。",
     ].join("\n");
   }
 
   return [
-    "My relevant work experience can be summarized in three parts:",
+    "If I were to summarize my experience quickly, I would frame it like this:",
     ...knowledge.experience.map(
       (item) =>
         `- ${item.dateRange} | ${item.company} | ${item.role}: ${item.responsibilities[0]}`
     ),
     "",
-    "If you'd like, I can also go deeper into the types of projects and design focus in any one of these roles.",
+    "If you'd like, I can also go deeper into the project types and design focus inside any one of those roles.",
   ].join("\n");
 }
 
 function buildSkillsAnswer(knowledge, language) {
   if (language === "zh") {
     return [
-      "我的技能大致分成三组：",
+      "如果把我的能力拆开来看，我一般会分成这几组：",
       ...knowledge.skills.map((group) => `- ${group.category}：${group.items.map((item) => item.label || item).join("、")}`),
       "",
-      "如果你是在评估岗位匹配，我也可以进一步说明我最强的能力组合是什么。",
+      "如果你是在判断岗位匹配，我也可以继续讲哪一组能力最能代表我，以及它们在项目里是怎么组合起来的。",
     ].join("\n");
   }
 
   return [
-    "I usually describe my skills in three groups:",
+    "If I break my strengths down, I usually describe them in these groups:",
     ...knowledge.skills.map((group) => `- ${group.category}: ${group.items.map((item) => item.label || item).join(", ")}`),
     "",
-    "If you're evaluating fit for a role, I can also explain which combination of strengths is the most representative of me.",
+    "If you're evaluating fit for a role, I can also explain which combination of strengths represents me best in actual project work.",
   ].join("\n");
 }
 
@@ -338,7 +372,7 @@ function buildProfileAnswer(knowledge, language) {
       knowledge.profile.summary,
       "",
       knowledge.profile.focus,
-      `我比较有代表性的能力关键词包括：${knowledge.profile.strengths.join("、")}。`,
+      `如果只挑最能代表我的几个关键词，我会说是：${knowledge.profile.strengths.join("、")}。`,
     ].join("\n");
   }
 
@@ -346,7 +380,7 @@ function buildProfileAnswer(knowledge, language) {
     knowledge.profile.summary,
     "",
     knowledge.profile.focus,
-    `A few strengths that represent me well are: ${knowledge.profile.strengths.join(", ")}.`,
+    `If I had to pick the strengths that represent me best, I would say: ${knowledge.profile.strengths.join(", ")}.`,
   ].join("\n");
 }
 
@@ -378,9 +412,71 @@ function buildRelatedPages(project) {
   return project?.relatedPages || ["/about", "/work"];
 }
 
+function getProjectDetailPath(project) {
+  return project?.relatedPages.find((page) => page.startsWith("/work/")) || "/work";
+}
+
+function buildRelatedProjectEntries(projects, targetSlugs, language) {
+  return (targetSlugs || [])
+    .map((slug) => projects.find((project) => project.slug === slug))
+    .filter(Boolean)
+    .map((project) => ({
+      path: getProjectDetailPath(project),
+      reason:
+        language === "zh"
+          ? project.oneLiner
+          : project.oneLiner,
+      slug: project.slug,
+      title: project.title,
+    }));
+}
+
+function buildRelatedProjects(project, topic, projects, language) {
+  if (project?.relatedProjectSlugs?.length) {
+    return buildRelatedProjectEntries(
+      projects,
+      project.relatedProjectSlugs,
+      language
+    );
+  }
+
+  if (topic === "methods") {
+    return buildRelatedProjectEntries(
+      projects,
+      ["drawing-ledger-2-0", "axzo-design-system"],
+      language
+    );
+  }
+
+  if (topic === "skills") {
+    return buildRelatedProjectEntries(
+      projects,
+      ["drawing-ledger-2-0", "data-visualization-screen"],
+      language
+    );
+  }
+
+  if (topic === "experience") {
+    return buildRelatedProjectEntries(
+      projects,
+      ["drawing-ledger-2-0", "cloudtower-design-system"],
+      language
+    );
+  }
+
+  return buildRelatedProjectEntries(
+    projects,
+    ["drawing-ledger-2-0", "axzo-design-system"],
+    language
+  );
+}
+
 function buildSuggestedQuestions(project, knowledge, language, pathname) {
   if (project) {
-    return project.recommendedQuestions;
+    return [
+      project.continuePrompt,
+      ...project.recommendedQuestions,
+    ].filter(Boolean).slice(0, 4);
   }
 
   const quickReplyById = new Map(
@@ -430,6 +526,12 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
           ? "你可以问我关于项目、经历、技能、设计方法或联系方式的问题。"
           : "You can ask me about projects, experience, skills, design approach, or contact information.",
       relatedPages: projectFromPathname?.relatedPages || ["/work", "/about"],
+      relatedProjects: buildRelatedProjects(
+        projectFromPathname,
+        null,
+        localizedKnowledge.projects,
+        language
+      ),
       source: "fallback",
       suggestedQuestions: buildSuggestedQuestions(
         projectFromPathname,
@@ -444,6 +546,12 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
     return {
       answer: buildRefusalAnswer(localizedKnowledge),
       relatedPages: projectFromPathname?.relatedPages || ["/work", "/about"],
+      relatedProjects: buildRelatedProjects(
+        projectFromPathname,
+        null,
+        localizedKnowledge.projects,
+        language
+      ),
       source: "guardrail",
       suggestedQuestions: buildSuggestedQuestions(
         projectFromPathname,
@@ -459,6 +567,12 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
       return {
         answer: buildProjectChallengeAnswer(project, language),
         relatedPages: buildRelatedPages(project),
+        relatedProjects: buildRelatedProjects(
+          project,
+          null,
+          localizedKnowledge.projects,
+          language
+        ),
         source: "fallback",
         suggestedQuestions: buildSuggestedQuestions(
           project,
@@ -473,6 +587,12 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
       return {
         answer: buildProjectDecisionAnswer(project, language),
         relatedPages: buildRelatedPages(project),
+        relatedProjects: buildRelatedProjects(
+          project,
+          null,
+          localizedKnowledge.projects,
+          language
+        ),
         source: "fallback",
         suggestedQuestions: buildSuggestedQuestions(
           project,
@@ -487,6 +607,32 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
       return {
         answer: buildProjectOutcomeAnswer(project, language),
         relatedPages: buildRelatedPages(project),
+        relatedProjects: buildRelatedProjects(
+          project,
+          null,
+          localizedKnowledge.projects,
+          language
+        ),
+        source: "fallback",
+        suggestedQuestions: buildSuggestedQuestions(
+          project,
+          localizedKnowledge,
+          language,
+          normalizedPathname
+        ),
+      };
+    }
+
+    if (projectIntent === "reflection") {
+      return {
+        answer: buildProjectReflectionAnswer(project, language),
+        relatedPages: buildRelatedPages(project),
+        relatedProjects: buildRelatedProjects(
+          project,
+          null,
+          localizedKnowledge.projects,
+          language
+        ),
         source: "fallback",
         suggestedQuestions: buildSuggestedQuestions(
           project,
@@ -500,6 +646,12 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
     return {
       answer: buildProjectAnswer(project, language),
       relatedPages: buildRelatedPages(project),
+      relatedProjects: buildRelatedProjects(
+        project,
+        null,
+        localizedKnowledge.projects,
+        language
+      ),
       source: "fallback",
       suggestedQuestions: buildSuggestedQuestions(
         project,
@@ -514,6 +666,12 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
     return {
       answer: buildProjectOverview(localizedKnowledge.projects, language),
       relatedPages: ["/work"],
+      relatedProjects: buildRelatedProjects(
+        null,
+        "projects",
+        localizedKnowledge.projects,
+        language
+      ),
       source: "fallback",
       suggestedQuestions: buildSuggestedQuestions(
         projectFromPathname,
@@ -528,6 +686,12 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
     return {
       answer: buildExperienceAnswer(localizedKnowledge, language),
       relatedPages: ["/about"],
+      relatedProjects: buildRelatedProjects(
+        null,
+        "experience",
+        localizedKnowledge.projects,
+        language
+      ),
       source: "fallback",
       suggestedQuestions: buildSuggestedQuestions(
         null,
@@ -542,6 +706,12 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
     return {
       answer: buildSkillsAnswer(localizedKnowledge, language),
       relatedPages: ["/about", "/"],
+      relatedProjects: buildRelatedProjects(
+        null,
+        "skills",
+        localizedKnowledge.projects,
+        language
+      ),
       source: "fallback",
       suggestedQuestions: buildSuggestedQuestions(
         null,
@@ -556,6 +726,12 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
     return {
       answer: buildContactAnswer(localizedKnowledge, language),
       relatedPages: ["/about"],
+      relatedProjects: buildRelatedProjects(
+        null,
+        "contact",
+        localizedKnowledge.projects,
+        language
+      ),
       source: "fallback",
       suggestedQuestions: buildSuggestedQuestions(
         null,
@@ -570,6 +746,12 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
     return {
       answer: buildMethodAnswer(language),
       relatedPages: ["/", "/work"],
+      relatedProjects: buildRelatedProjects(
+        null,
+        "methods",
+        localizedKnowledge.projects,
+        language
+      ),
       source: "fallback",
       suggestedQuestions: buildSuggestedQuestions(
         projectFromPathname,
@@ -584,6 +766,12 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
     return {
       answer: buildProfileAnswer(localizedKnowledge, language),
       relatedPages: ["/about", "/"],
+      relatedProjects: buildRelatedProjects(
+        null,
+        "profile",
+        localizedKnowledge.projects,
+        language
+      ),
       source: "fallback",
       suggestedQuestions: buildSuggestedQuestions(
         null,
@@ -597,6 +785,12 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
   return {
     answer: buildRefusalAnswer(localizedKnowledge),
     relatedPages: projectFromPathname?.relatedPages || ["/work", "/about"],
+    relatedProjects: buildRelatedProjects(
+      projectFromPathname,
+      null,
+      localizedKnowledge.projects,
+      language
+    ),
     source: "guardrail",
     suggestedQuestions: buildSuggestedQuestions(
       projectFromPathname,
@@ -617,6 +811,7 @@ function buildPromptKnowledge(localizedKnowledge) {
       profile: localizedKnowledge.profile,
       projects: localizedKnowledge.projects,
       skills: localizedKnowledge.skills,
+      voice: localizedKnowledge.voice,
     },
     null,
     2
@@ -701,6 +896,8 @@ function getSystemPrompt(language) {
         "只能基于提供的知识回答，不要编造没有给出的事实。",
         "如果知识里没有明确答案，要坦诚说明这个作品集里没有公开写到。",
         "回答语气要冷静、可信、简洁，像作品集里的本人分身，而不是客服。",
+        "项目名、职责、关键决策、结果这类高确定性信息，优先使用知识库里的原始表达，不要改写成新的事实。",
+        "回答项目问题时，优先用第一人称去讲清楚挑战、关键决策、结果，以及我现在回头看的反思。",
         "默认用 3 到 6 句完成回答；只有在列举经历或技能时才适度使用列表。",
       ].join("\n")
     : [
@@ -710,8 +907,22 @@ function getSystemPrompt(language) {
         "Answer only from the provided knowledge and do not invent facts.",
         "If the answer is not clearly covered by the knowledge, say that it is not publicly specified in the portfolio.",
         "Keep the tone calm, credible, and concise, like the portfolio owner speaking directly, not a customer support bot.",
+        "For project titles, role descriptions, key decisions, and outcomes, prefer the exact source wording from the knowledge base instead of paraphrasing into new facts.",
+        "When answering project questions, prefer a first-person explanation that makes the challenge, key decisions, outcome, and retrospective reflection legible.",
         "Default to 3 to 6 sentences unless a short list is genuinely clearer for experience or skills.",
       ].join("\n");
+}
+
+function buildReferenceAnchor(fallbackReply, language) {
+  if (!fallbackReply?.answer || fallbackReply.source === "guardrail") {
+    return language === "zh"
+      ? "当前问题没有额外参考稿。"
+      : "There is no extra reference draft for this question.";
+  }
+
+  return language === "zh"
+    ? `下面这段是站内知识整理出的参考稿，请把它当成事实锚点。你可以润色语气和结构，但不要和它冲突：\n${fallbackReply.answer}`
+    : `Below is a reference draft synthesized from the on-site knowledge. Treat it as a factual anchor. You may improve tone and structure, but do not contradict it:\n${fallbackReply.answer}`;
 }
 
 function formatChatHistory(messages, language) {
@@ -736,14 +947,23 @@ function formatChatHistory(messages, language) {
     .join("\n");
 }
 
-function getUserPrompt(language, localizedKnowledge, pathname, messages, question) {
+function getUserPrompt(
+  language,
+  localizedKnowledge,
+  pathname,
+  messages,
+  question,
+  fallbackReply
+) {
   const conversationHistory = formatChatHistory(messages, language);
+  const referenceAnchor = buildReferenceAnchor(fallbackReply, language);
 
   return language === "zh"
     ? [
         `以下是作品集知识库：\n${buildPromptKnowledge(localizedKnowledge)}`,
         `当前页面：${pathname}`,
         `最近对话：\n${conversationHistory}`,
+        referenceAnchor,
         `当前用户问题：${question}`,
         "请结合最近对话理解指代关系，例如“这个项目”“刚才那个”“继续展开”。",
         "请直接给出最终回答。",
@@ -752,6 +972,7 @@ function getUserPrompt(language, localizedKnowledge, pathname, messages, questio
         `Here is the portfolio knowledge base:\n${buildPromptKnowledge(localizedKnowledge)}`,
         `Current page: ${pathname}`,
         `Recent conversation:\n${conversationHistory}`,
+        referenceAnchor,
         `Current user question: ${question}`,
         'Use the recent conversation to resolve references like "this project", "that one", or "go deeper".',
         "Return only the final answer.",
@@ -791,6 +1012,7 @@ function extractResponseText(data) {
 async function generateTextWithCompatibleProxy({
   apiKey,
   baseURL,
+  fallbackReply,
   language,
   localizedKnowledge,
   messages,
@@ -811,9 +1033,11 @@ async function generateTextWithCompatibleProxy({
         localizedKnowledge,
         pathname,
         messages,
-        question
+        question,
+        fallbackReply
       ),
       store: false,
+      temperature: 0.35,
       text: {
         format: {
           type: "text",
@@ -882,7 +1106,8 @@ export async function createPortfolioChatReply({
     localizedKnowledge,
     pathname,
     messages,
-    question
+    question,
+    fallbackReply
   );
 
   try {
@@ -890,6 +1115,7 @@ export async function createPortfolioChatReply({
       ? await generateTextWithCompatibleProxy({
           apiKey: process.env.OPENAI_API_KEY,
           baseURL,
+          fallbackReply,
           language,
           localizedKnowledge,
           messages,
@@ -901,6 +1127,7 @@ export async function createPortfolioChatReply({
             model: createPortfolioModel(),
             system: systemPrompt,
             prompt: userPrompt,
+            temperature: 0.35,
           })
         ).text.trim();
 
