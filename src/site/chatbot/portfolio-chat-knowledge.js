@@ -40,10 +40,13 @@ export const portfolioChatKnowledge = Object.freeze({
   profile: Object.freeze({
     name: "Zirui Zhao",
     title: t("产品设计师", "Product Designer"),
-    summary: homeIntro.title,
+    summary: t(
+      "我是赵子瑞，一名产品设计师，长期在复杂业务流程、设计系统和可落地体验之间做连接。",
+      "I'm Zirui Zhao, a product designer who works at the intersection of complex workflows, design systems, and experiences that can actually ship.",
+    ),
     focus: t(
-      "我擅长把复杂业务流程、系统体验和可落地前端实现连接起来，尤其关注企业级产品、设计系统和复杂工作流。",
-      "I specialize in connecting complex workflows, system-level product experiences, and shippable frontend implementation, with a focus on enterprise products, design systems, and complex workflows.",
+      "我比较擅长的方向，是把复杂业务流程讲清楚，把系统体验做顺，并且从一开始就考虑设计怎么落地。近几年的项目也主要集中在企业级产品、设计系统和复杂工作流。",
+      "What I do best is making complex workflows understandable, turning system-level experiences into something usable, and thinking about implementation from the start. Most of my recent work has been in enterprise products, design systems, and complex workflows.",
     ),
     strengths: homeSkills.map((item) => item.label),
   }),
@@ -92,14 +95,14 @@ export const portfolioChatKnowledge = Object.freeze({
       relatedProjectSlugs: ["axzo-design-system", "data-visualization-screen"],
       relatedPages: ["/work/drawing-ledger-2-0", "/work"],
       continuePrompt: t(
-        "继续带我拆解这个项目的关键取舍",
-        "Keep unpacking the key tradeoffs in this project"
+        "继续展开讲这个项目里最难的取舍和判断",
+        "Keep going on the hardest tradeoffs and decisions in this project"
       ),
       recommendedQuestions: [
-        t("这个项目最难的设计挑战是什么？", "What was the hardest design challenge in this project?"),
-        t("你在这个项目里做了哪些关键决策？", "What key decisions did you make in this project?"),
-        t("这个项目最终带来了什么结果？", "What outcome did this project lead to?"),
-        t("你现在回头看，这个项目最大的反思是什么？", "Looking back, what is your biggest reflection on this project?"),
+        t("这个项目里最难的设计挑战到底是什么？", "What was the hardest design challenge in this project, really?"),
+        t("你当时做过哪些关键取舍？", "What were the key tradeoffs you made at the time?"),
+        t("如果只讲一个最重要的结果，你会讲什么？", "If you had to highlight one outcome, what would it be?"),
+        t("你现在回头看，会怎么重新做这个项目？", "Looking back, what would you do differently on this project now?"),
       ],
     }),
     Object.freeze({
@@ -137,14 +140,14 @@ export const portfolioChatKnowledge = Object.freeze({
       relatedProjectSlugs: ["cloudtower-design-system", "drawing-ledger-2-0"],
       relatedPages: ["/work/axzo-design-system", "/work"],
       continuePrompt: t(
-        "继续讲这个项目里最关键的信息架构判断",
-        "Keep going on the most important IA decisions in this project"
+        "继续讲这个项目里最关键的信息架构和采用判断",
+        "Keep going on the most important IA and adoption decisions in this project"
       ),
       recommendedQuestions: [
-        t("为什么你把它定义成 Design System Portal？", "Why did you define it as a Design System Portal?"),
-        t("这个项目最重要的信息架构决策是什么？", "What was the most important IA decision in this project?"),
-        t("这个项目对团队有什么价值？", "What value did this project create for the team?"),
-        t("你现在回头看，这个项目最大的反思是什么？", "Looking back, what is your biggest reflection on this project?"),
+        t("为什么你会把它定义成 Design System Portal，而不只是官网？", "Why did you define it as a Design System Portal instead of just a website?"),
+        t("这里最关键的信息架构判断是什么？", "What was the most important information architecture decision here?"),
+        t("这个项目怎么帮助团队更容易采用设计系统？", "How did this project help the team adopt the design system more easily?"),
+        t("如果现在重做，你最想优化哪一部分？", "If you rebuilt it now, what would you most want to improve?"),
       ],
     }),
     Object.freeze({
@@ -185,14 +188,14 @@ export const portfolioChatKnowledge = Object.freeze({
       relatedProjectSlugs: ["axzo-design-system", "drawing-ledger-2-0"],
       relatedPages: ["/work/data-visualization-screen", "/work"],
       continuePrompt: t(
-        "继续讲这个项目里视觉语言是怎么系统化的",
-        "Keep unpacking how the visual language became a scalable system"
+        "继续讲这个项目里视觉语言是怎么被系统化的",
+        "Keep unpacking how the visual language became systematic and scalable"
       ),
       recommendedQuestions: [
-        t("这个项目里你最看重哪类设计价值？", "What kind of design value mattered most in this project?"),
-        t("为什么你强调视觉语言要可复用？", "Why did you emphasize reusability for the visual language?"),
-        t("这个项目如何体现你的系统化思维？", "How does this project show your systematic thinking?"),
-        t("你现在回头看，这个项目最大的反思是什么？", "Looking back, what is your biggest reflection on this project?"),
+        t("这个项目里你最看重的设计价值是什么？", "What design value mattered most to you in this project?"),
+        t("为什么你会这么强调视觉语言的可复用性？", "Why did you care so much about making the visual language reusable?"),
+        t("这个项目最能体现你系统化思维的地方是什么？", "What part of this project best shows your systematic thinking?"),
+        t("如果现在回头看，这个项目还有什么可以再往前推一步？", "Looking back now, what still could have been pushed further?"),
       ],
     }),
     Object.freeze({
@@ -237,14 +240,14 @@ export const portfolioChatKnowledge = Object.freeze({
       relatedProjectSlugs: ["axzo-design-system", "drawing-ledger-2-0"],
       relatedPages: ["/work/cloudtower-design-system", "/work"],
       continuePrompt: t(
-        "继续讲这个项目怎么影响团队的设计系统协作",
-        "Keep going on how this project changed design-system collaboration"
+        "继续讲这个项目怎么影响团队对设计系统的协作方式",
+        "Keep going on how this project changed the team's collaboration around the design system"
       ),
       recommendedQuestions: [
-        t("这个项目更偏组件还是偏系统？", "Was this project more about components or systems?"),
-        t("UI Map 对团队有什么帮助？", "How did UI Map help the team?"),
-        t("你在设计系统里更关注什么？", "What do you care about most in design systems?"),
-        t("你现在回头看，这个项目最大的反思是什么？", "Looking back, what is your biggest reflection on this project?"),
+        t("这个项目更偏组件建设，还是更偏系统方法？", "Was this project more about component building or system thinking?"),
+        t("UI Map 真正帮助团队解决了什么问题？", "What problem did UI Map actually help the team solve?"),
+        t("你在设计系统文档里最看重什么？", "What do you care about most in design-system documentation?"),
+        t("如果现在回头看，这个项目最值得补强的地方是什么？", "Looking back now, what part of this project is most worth strengthening?"),
       ],
     }),
   ]),
@@ -269,8 +272,8 @@ export const portfolioChatKnowledge = Object.freeze({
   ),
   contact: Object.freeze({
     intro: t(
-      "如果你想继续聊项目、工作机会或设计方法，最直接的方式是发邮件给我。",
-      "If you want to continue the conversation about projects, roles, or design methods, the most direct way is to email me.",
+      "如果你想继续聊项目细节、工作机会，或者只是想进一步交流我的设计方法，最直接的方式还是发邮件给我。我通常会优先回复和作品集、岗位机会、项目讨论相关的信息。",
+      "If you want to go deeper on a project, talk about a role, or continue the conversation around my design approach, email is still the most direct way to reach me. I usually prioritize messages related to portfolio conversations, opportunities, and project discussions.",
     ),
     items: aboutContactItems,
   }),
@@ -278,22 +281,50 @@ export const portfolioChatKnowledge = Object.freeze({
     Object.freeze({
       question: t("你是谁？", "Who are you?"),
       answer: t(
-        "我是赵子瑞，一名产品设计师，擅长复杂业务流程、设计系统和可落地的前端体验设计。",
-        "I'm Zirui Zhao, a product designer who focuses on complex workflows, design systems, and frontend experiences that can actually ship.",
+        "我是赵子瑞，一名产品设计师。我的项目长期集中在复杂业务流程、设计系统和企业级产品这些场景。我比较在意的不是把页面单独做漂亮，而是把复杂事情讲清楚，并且让方案真的能落地。",
+        "I'm Zirui Zhao, a product designer. Most of my work has been around complex workflows, design systems, and enterprise products. What I care about is not just making a single screen look polished, but making complexity understandable and making sure the work can actually ship.",
       ),
     }),
     Object.freeze({
       question: t("你最近在做什么类型的项目？", "What kind of projects have you worked on recently?"),
       answer: t(
-        "近期项目主要集中在企业级工作流、设计系统门户和数据可视化系统这几类复杂场景。",
-        "My recent work has focused on complex enterprise workflows, design system portals, and data visualization systems.",
+        "最近几年的项目，主要集中在三类：企业级工作流、设计系统相关项目，以及数据可视化系统。它们看起来题材不同，但共同点都是结构复杂、协作链路长，需要设计把业务逻辑讲清楚。",
+        "In the last few years, my work has mostly fallen into three buckets: enterprise workflows, design-system-related projects, and data visualization systems. They look different on the surface, but they all share the same challenge: complexity, long collaboration chains, and the need for design to make the underlying logic understandable.",
       ),
     }),
     Object.freeze({
       question: t("你怎么定义自己的设计方法？", "How would you describe your design approach?"),
       answer: t(
-        "我通常先厘清业务结构和信息关系，再用交互与视觉去解释复杂性，最后关注方案如何落地和持续演进。",
-        "I usually start by clarifying the business structure and information relationships, then use interaction and visual design to explain complexity, and finally focus on how the solution can land and evolve.",
+        "如果要用一句话说，我会先把业务结构和信息关系理顺，再决定交互和视觉怎么解释复杂性，最后从一开始就考虑这个方案怎么落地、怎么协作、怎么持续演进。",
+        "If I had to put it simply, I start by getting the business structure and information relationships clear, then decide how interaction and visual design should explain that complexity, and from the start I think about how the solution will ship, how teams will collaborate around it, and how it can evolve over time.",
+      ),
+    }),
+    Object.freeze({
+      question: t("你的重点项目有哪些？", "What are your featured projects?"),
+      answer: t(
+        "如果想快速理解我在做什么，我通常会先讲四个项目：图纸台账 2.0、Axzo 设计系统门户、数据可视化系统，以及 CloudTower 设计系统。它们分别能代表我在复杂工作流、设计系统 adoption、系统化视觉语言和设计文档协作上的思考。",
+        "If you want the fastest read on the kind of work I do, I would usually start with four projects: Drawing Register 2.0, the Axzo Design System Portal, the Data Visualization System, and the CloudTower Design System. Together they show how I think about complex workflows, design system adoption, scalable visual language, and documentation-driven collaboration.",
+      ),
+    }),
+    Object.freeze({
+      question: t("你和一般的视觉设计师有什么不同？", "What makes your work different from a purely visual designer?"),
+      answer: t(
+        "我当然会在意界面的视觉质量，但我更稳定的优势是在复杂场景里做结构化判断。比如业务流程怎么拆、角色之间怎么协作、设计系统怎么被团队真正采用。这也是为什么我的项目里会经常出现工作流、门户、文档和系统化语言这些主题。",
+        "Visual quality absolutely matters to me, but my more consistent strength is making structural decisions in complex situations. That includes how workflows are broken down, how roles collaborate, and how a design system actually gets adopted by a team. That is why my projects often revolve around workflows, portals, documentation, and systematic design language.",
+      ),
+    }),
+    Object.freeze({
+      question: t("如果我是招聘方，应该先看哪几个项目？", "If I were hiring you, which projects should I start with?"),
+      answer: t(
+        "如果你想看我处理复杂业务的能力，先看图纸台账 2.0；如果你更关注设计系统和信息架构，先看 Axzo 设计系统门户；如果你想看我怎么把视觉语言做成系统，可以看数据可视化系统。CloudTower 设计系统则更能补充我在文档、Pattern 和协作资产上的思考。",
+        "If you want to see how I handle complex product workflows, start with Drawing Register 2.0. If you care more about design systems and information architecture, start with the Axzo Design System Portal. If you want to see how I turn visual language into a system, look at the Data Visualization System. CloudTower adds another layer around documentation, patterns, and collaboration assets.",
+      ),
+    }),
+    Object.freeze({
+      question: t("怎么联系你？", "How can I contact you?"),
+      answer: t(
+        "最直接的方式是邮件联系。我比较欢迎和项目交流、岗位机会、作品集反馈相关的来信。如果你是基于某个具体项目联系我，直接在邮件里提项目名会更高效。",
+        "The most direct way is by email. I'm especially open to messages about projects, opportunities, and portfolio feedback. If you are reaching out about a specific case study, mentioning the project name in the email usually makes the conversation easier to pick up.",
       ),
     }),
   ]),
@@ -301,37 +332,37 @@ export const portfolioChatKnowledge = Object.freeze({
     Object.freeze({
       id: "intro",
       label: t("先介绍一下你自己", "Introduce yourself"),
-      prompt: t("先介绍一下你自己", "Can you introduce yourself first?"),
+      prompt: t("先用你的方式介绍一下你自己", "Can you introduce yourself in your own words first?"),
     }),
     Object.freeze({
       id: "featured-projects",
       label: t("你的重点项目有哪些？", "What are your featured projects?"),
-      prompt: t("你的重点项目有哪些？", "What are your featured projects?"),
+      prompt: t("如果我想快速了解你，应该先看哪几个重点项目？", "If I want the quickest read on your work, which featured projects should I start with?"),
     }),
     Object.freeze({
       id: "drawing-ledger",
       label: t("讲讲图纸台账 2.0", "Tell me about Drawing Register 2.0"),
-      prompt: t("讲讲图纸台账 2.0", "Tell me about Drawing Register 2.0."),
+      prompt: t("讲讲图纸台账 2.0，尤其是它最复杂的挑战和你的关键判断", "Tell me about Drawing Register 2.0, especially the hardest challenge and your key decisions."),
     }),
     Object.freeze({
       id: "design-method",
       label: t("你的设计方法是什么？", "What is your design approach?"),
-      prompt: t("你的设计方法是什么？", "What is your design approach?"),
+      prompt: t("你会怎么描述你自己的设计方法？", "How would you describe your design approach in your own words?"),
     }),
     Object.freeze({
       id: "experience",
       label: t("你的工作经历是什么？", "What is your work experience?"),
-      prompt: t("你的工作经历是什么？", "What is your work experience?"),
+      prompt: t("按时间顺序讲讲你的工作经历，以及每段经历分别在做什么", "Can you walk me through your work experience in order and what you focused on in each role?"),
     }),
     Object.freeze({
       id: "skills",
       label: t("你的技能结构是什么？", "What does your skill set look like?"),
-      prompt: t("你的技能结构是什么？", "What does your skill set look like?"),
+      prompt: t("如果把你的技能拆开看，你最稳定的能力结构是什么？", "If you break down your skill set, what are your most consistent strengths?"),
     }),
     Object.freeze({
       id: "contact",
       label: t("怎么联系你？", "How can I contact you?"),
-      prompt: t("怎么联系你？", "How can I contact you?"),
+      prompt: t("如果我想继续聊项目或工作机会，应该怎么联系你？", "If I want to continue the conversation about a project or a role, what's the best way to reach you?"),
     }),
   ]),
   guardrails: Object.freeze({

@@ -125,6 +125,47 @@ function detectProjectByPathname(projects, pathname) {
   return projects.find((project) => project.relatedPages.includes(normalizedPathname));
 }
 
+function detectProjectFromMessages(projects, messages) {
+  if (!Array.isArray(messages) || !messages.length) {
+    return null;
+  }
+
+  const recentMessages = [...messages].slice(-8).reverse();
+
+  for (const message of recentMessages) {
+    if (!message || typeof message.content !== "string") {
+      continue;
+    }
+
+    const normalizedContent = normalizeQuestion(message.content);
+    let matchedProject = null;
+    let bestIndex = Number.POSITIVE_INFINITY;
+
+    for (const project of projects) {
+      const aliasIndexes = project.aliases
+        .map((alias) => normalizedContent.indexOf(alias.toLowerCase()))
+        .filter((index) => index >= 0);
+
+      if (!aliasIndexes.length) {
+        continue;
+      }
+
+      const aliasIndex = Math.min(...aliasIndexes);
+
+      if (aliasIndex < bestIndex) {
+        bestIndex = aliasIndex;
+        matchedProject = project;
+      }
+    }
+
+    if (matchedProject) {
+      return matchedProject;
+    }
+  }
+
+  return null;
+}
+
 function detectTopic(normalizedQuestion) {
   for (const [topic, keywords] of Object.entries(TOPIC_KEYWORDS)) {
     if (keywords.some((keyword) => normalizedQuestion.includes(keyword))) {
@@ -273,7 +314,73 @@ function buildProjectReflectionAnswer(project, language) {
   ].join("\n");
 }
 
+function buildProjectRoleAnswer(project, language) {
+  if (language === "zh") {
+    return [
+      `如果只聚焦我在 ${project.title} 里的职责，我会这样说：`,
+      "",
+      project.myRole,
+      "",
+      `这也是为什么我在这个项目里会重点处理：${project.problem}`,
+    ].join("\n");
+  }
+
+  return [
+    `If I focus only on my role in ${project.title}, I would put it like this:`,
+    "",
+    project.myRole,
+    "",
+    `That is also why I spent most of my effort on this problem: ${project.problem}`,
+  ].join("\n");
+}
+
+function buildProjectBackgroundAnswer(project, language) {
+  if (language === "zh") {
+    return [
+      `如果先讲 ${project.title} 的背景，我会这样展开：`,
+      "",
+      project.background,
+      "",
+      `我当时介入这个项目时，负责的是：${project.myRole}`,
+    ].join("\n");
+  }
+
+  return [
+    `If I start with the background of ${project.title}, I would explain it like this:`,
+    "",
+    project.background,
+    "",
+    `When I joined this work, my role was: ${project.myRole}`,
+  ].join("\n");
+}
+
+function buildProjectTradeoffAnswer(project, language) {
+  if (language === "zh") {
+    return [
+      `如果说 ${project.title} 里最关键的取舍，我会这样理解：`,
+      "",
+      project.keyDecisions,
+      "",
+      `这些取舍并不是单纯偏好问题，而是为了平衡这个核心矛盾：${project.problem}`,
+    ].join("\n");
+  }
+
+  return [
+    `If I had to explain the most important tradeoff in ${project.title}, I would frame it this way:`,
+    "",
+    project.keyDecisions,
+    "",
+    `Those tradeoffs were not just preferences. They were a way to balance this core tension: ${project.problem}`,
+  ].join("\n");
+}
+
 function detectProjectIntent(normalizedQuestion) {
+  if (
+    /取舍|权衡|tradeoff|trade-off|trade off/.test(normalizedQuestion)
+  ) {
+    return "tradeoff";
+  }
+
   if (
     /最难|挑战|难点|challenge|hardest|difficult/.test(normalizedQuestion)
   ) {
@@ -281,7 +388,7 @@ function detectProjectIntent(normalizedQuestion) {
   }
 
   if (
-    /关键决策|决策|decision|decisions/.test(normalizedQuestion)
+    /关键决策|决策|判断|decision|decisions|judgment|judgments/.test(normalizedQuestion)
   ) {
     return "decision";
   }
@@ -300,7 +407,33 @@ function detectProjectIntent(normalizedQuestion) {
     return "reflection";
   }
 
+  if (
+    /职责|角色|负责|role|responsibility|responsibilities/.test(
+      normalizedQuestion
+    )
+  ) {
+    return "role";
+  }
+
+  if (
+    /背景|为什么做|起点|background|context|why this project/.test(
+      normalizedQuestion
+    )
+  ) {
+    return "background";
+  }
+
   return null;
+}
+
+function isImplicitProjectFollowup(normalizedQuestion) {
+  return /继续|展开|细讲|详细说说|挑一个|选一个|this one|that one|go deeper|tell me more|keep going/.test(
+    normalizedQuestion
+  );
+}
+
+function detectIntentFromQuestion(question) {
+  return detectProjectIntent(normalizeQuestion(question));
 }
 
 function buildExperienceAnswer(knowledge, language) {
@@ -416,11 +549,16 @@ function getProjectDetailPath(project) {
   return project?.relatedPages.find((page) => page.startsWith("/work/")) || "/work";
 }
 
+function isViewingProjectDetail(project, pathname) {
+  return Boolean(project && pathname === getProjectDetailPath(project));
+}
+
 function buildRelatedProjectEntries(projects, targetSlugs, language) {
   return (targetSlugs || [])
     .map((slug) => projects.find((project) => project.slug === slug))
     .filter(Boolean)
     .map((project) => ({
+      kind: "related-project",
       path: getProjectDetailPath(project),
       reason:
         language === "zh"
@@ -431,57 +569,539 @@ function buildRelatedProjectEntries(projects, targetSlugs, language) {
     }));
 }
 
-function buildRelatedProjects(project, topic, projects, language) {
-  if (project?.relatedProjectSlugs?.length) {
-    return buildRelatedProjectEntries(
-      projects,
-      project.relatedProjectSlugs,
-      language
-    );
-  }
+function getCurrentProjectEyebrow(projectIntent, language) {
+  const labels = {
+    background: {
+      zh: "当前正在聊：项目背景",
+      en: "Currently discussing: project background",
+    },
+    challenge: {
+      zh: "当前正在聊：设计挑战",
+      en: "Currently discussing: design challenge",
+    },
+    decision: {
+      zh: "当前正在聊：关键决策",
+      en: "Currently discussing: key decisions",
+    },
+    outcome: {
+      zh: "当前正在聊：项目结果",
+      en: "Currently discussing: project outcome",
+    },
+    reflection: {
+      zh: "当前正在聊：项目反思",
+      en: "Currently discussing: reflection",
+    },
+    role: {
+      zh: "当前正在聊：我的职责",
+      en: "Currently discussing: my role",
+    },
+    tradeoff: {
+      zh: "当前正在聊：关键取舍",
+      en: "Currently discussing: key tradeoffs",
+    },
+  };
 
-  if (topic === "methods") {
-    return buildRelatedProjectEntries(
-      projects,
-      ["drawing-ledger-2-0", "axzo-design-system"],
-      language
-    );
-  }
-
-  if (topic === "skills") {
-    return buildRelatedProjectEntries(
-      projects,
-      ["drawing-ledger-2-0", "data-visualization-screen"],
-      language
-    );
-  }
-
-  if (topic === "experience") {
-    return buildRelatedProjectEntries(
-      projects,
-      ["drawing-ledger-2-0", "cloudtower-design-system"],
-      language
-    );
-  }
-
-  return buildRelatedProjectEntries(
-    projects,
-    ["drawing-ledger-2-0", "axzo-design-system"],
-    language
+  return (
+    labels[projectIntent]?.[language] ||
+    (language === "zh" ? "当前正在聊：这个项目" : "Currently discussing: this project")
   );
 }
 
-function buildSuggestedQuestions(project, knowledge, language, pathname) {
+function getCurrentProjectReason(project, projectIntent, language) {
+  const reasons = {
+    background:
+      language === "zh"
+        ? "如果你想把这个项目的起点、业务背景和我介入的角色放回完整上下文，可以直接打开案例页继续看。"
+        : "If you want to place the project origin, business context, and my role back into the full story, open the full case study.",
+    challenge:
+      language === "zh"
+        ? "如果你想把这个挑战放回完整流程里理解，直接打开案例页会更清楚。"
+        : "If you want to understand this challenge inside the full workflow, opening the case study will make it much clearer.",
+    decision:
+      language === "zh"
+        ? "如果你想连同信息架构、流程和跨端约束一起看这些判断，直接打开完整案例页。"
+        : "If you want to see those decisions alongside the IA, workflow, and cross-platform constraints, open the full case study.",
+    outcome:
+      language === "zh"
+        ? "如果你想看这些结果是怎么一步步成立的，直接打开案例页继续往下看。"
+        : "If you want to see how those outcomes were built step by step, open the case study and continue there.",
+    reflection:
+      language === "zh"
+        ? "如果你想把我的反思和当时的方案、结果一起看，完整案例会更有说服力。"
+        : "If you want to read my reflection together with the original solution and outcome, the full case study will be more convincing.",
+    role:
+      language === "zh"
+        ? "如果你想更具体地看我在这个项目里负责的模块、判断和产出，直接打开完整案例页。"
+        : "If you want to see more concretely what I owned, decided, and delivered in this project, open the full case study.",
+    tradeoff:
+      language === "zh"
+        ? "如果你想把这些取舍放回真实业务约束里理解，直接打开完整案例页会更自然。"
+        : "If you want to understand those tradeoffs inside the real business constraints, opening the full case study will feel more natural.",
+  };
+
+  return (
+    reasons[projectIntent] ||
+    (language === "zh"
+      ? `如果你想继续看 ${project.title} 的完整案例，可以直接打开项目页。`
+      : `If you want to continue with the full ${project.title} case study, open the project page.`)
+  );
+}
+
+function buildCurrentProjectEntry(project, projectIntent, language) {
+  if (!project) {
+    return null;
+  }
+
+  return {
+    eyebrow: getCurrentProjectEyebrow(projectIntent, language),
+    kind: "current-project",
+    path: getProjectDetailPath(project),
+    reason: getCurrentProjectReason(project, projectIntent, language),
+    slug: project.slug,
+    title: project.title,
+  };
+}
+
+function dedupeRelatedProjects(entries) {
+  const seenSlugs = new Set();
+
+  return entries.filter((entry) => {
+    if (!entry?.slug || seenSlugs.has(entry.slug)) {
+      return false;
+    }
+
+    seenSlugs.add(entry.slug);
+    return true;
+  });
+}
+
+function dedupeQuestions(questions) {
+  const seen = new Set();
+
+  return questions.filter((question) => {
+    if (!question || seen.has(question)) {
+      return false;
+    }
+
+    seen.add(question);
+    return true;
+  });
+}
+
+function isSimilarQuestion(question, previousQuestion) {
+  const normalizedQuestion = normalizeQuestion(question);
+  const normalizedPreviousQuestion = normalizeQuestion(previousQuestion);
+
+  if (!normalizedQuestion || !normalizedPreviousQuestion) {
+    return false;
+  }
+
+  return (
+    normalizedQuestion === normalizedPreviousQuestion ||
+    normalizedQuestion.includes(normalizedPreviousQuestion) ||
+    normalizedPreviousQuestion.includes(normalizedQuestion)
+  );
+}
+
+function getAskedQuestionSignals(messages) {
+  const userMessages = Array.isArray(messages)
+    ? messages.filter((message) => message?.role === "user" && message.content)
+    : [];
+
+  return {
+    intents: new Set(
+      userMessages
+        .map((message) => detectIntentFromQuestion(message.content))
+        .filter(Boolean)
+    ),
+    questions: userMessages.map((message) => message.content),
+  };
+}
+
+function buildRelatedProjects(
+  project,
+  topic,
+  projects,
+  language,
+  pathname,
+  projectIntent
+) {
+  const entries = [];
+  const projectDetailPath = getProjectDetailPath(project);
+
+  if (project && pathname !== projectDetailPath) {
+    entries.push(buildCurrentProjectEntry(project, projectIntent, language));
+  }
+
+  if (project?.relatedProjectSlugs?.length) {
+    entries.push(
+      ...buildRelatedProjectEntries(
+        projects,
+        project.relatedProjectSlugs,
+        language
+      )
+    );
+
+    return dedupeRelatedProjects(entries).slice(0, 3);
+  }
+
+  if (topic === "methods") {
+    entries.push(
+      ...buildRelatedProjectEntries(
+        projects,
+        ["drawing-ledger-2-0", "axzo-design-system"],
+        language
+      )
+    );
+
+    return dedupeRelatedProjects(entries).slice(0, 3);
+  }
+
+  if (topic === "skills") {
+    entries.push(
+      ...buildRelatedProjectEntries(
+        projects,
+        ["drawing-ledger-2-0", "data-visualization-screen"],
+        language
+      )
+    );
+
+    return dedupeRelatedProjects(entries).slice(0, 3);
+  }
+
+  if (topic === "experience") {
+    entries.push(
+      ...buildRelatedProjectEntries(
+        projects,
+        ["drawing-ledger-2-0", "cloudtower-design-system"],
+        language
+      )
+    );
+
+    return dedupeRelatedProjects(entries).slice(0, 3);
+  }
+
+  entries.push(
+    ...buildRelatedProjectEntries(
+      projects,
+      ["drawing-ledger-2-0", "axzo-design-system"],
+      language
+    )
+  );
+
+  return dedupeRelatedProjects(entries).slice(0, 3);
+}
+
+const PROJECT_FOLLOWUP_INTENT_WEIGHTS = {
+  background: {
+    challenge: 34,
+    role: 22,
+    decision: 18,
+    tradeoff: 12,
+  },
+  challenge: {
+    decision: 36,
+    outcome: 26,
+    reflection: 20,
+    tradeoff: 16,
+  },
+  decision: {
+    outcome: 34,
+    reflection: 26,
+    challenge: 12,
+    tradeoff: 10,
+  },
+  outcome: {
+    reflection: 36,
+    tradeoff: 18,
+    role: 14,
+    background: 12,
+    decision: 14,
+    challenge: 10,
+  },
+  reflection: {
+    challenge: 22,
+    decision: 20,
+    outcome: 12,
+  },
+  role: {
+    challenge: 28,
+    decision: 26,
+    outcome: 16,
+  },
+  tradeoff: {
+    decision: 32,
+    outcome: 22,
+    reflection: 22,
+    challenge: 10,
+  },
+};
+
+function buildDefaultProjectFollowupCandidates(language) {
+  return [
+    {
+      intent: "challenge",
+      question:
+        language === "zh"
+          ? "如果只讲这个项目里最关键的挑战，你会怎么讲？"
+          : "If you focused only on the hardest challenge in this project, how would you explain it?",
+    },
+    {
+      intent: "decision",
+      question:
+        language === "zh"
+          ? "你在这个项目里做过哪些关键判断？"
+          : "What were the most important judgments or decisions you made in this project?",
+    },
+    {
+      intent: "outcome",
+      question:
+        language === "zh"
+          ? "这个项目最后最有说服力的结果是什么？"
+          : "What was the most convincing outcome of this project in the end?",
+    },
+    {
+      intent: "reflection",
+      question:
+        language === "zh"
+          ? "现在回头看，你最想重做哪一部分？"
+          : "Looking back now, what part would you most want to redo?",
+    },
+    {
+      intent: "tradeoff",
+      question:
+        language === "zh"
+          ? "这个项目里最关键的取舍是什么？"
+          : "What was the most important tradeoff in this project?",
+    },
+    {
+      intent: "role",
+      question:
+        language === "zh"
+          ? "你在这个项目里具体负责哪些部分？"
+          : "What parts of this project were you directly responsible for?",
+    },
+    {
+      intent: "background",
+      question:
+        language === "zh"
+          ? "这个项目一开始为什么要做？"
+          : "Why did this project need to happen in the first place?",
+    },
+  ].map((candidate, index) => ({
+    ...candidate,
+    baseScore: 52 - index,
+    source: "default",
+  }));
+}
+
+function buildProjectFollowupCandidates(project, language, isOnProjectDetail) {
+  const recommendedCandidates = project.recommendedQuestions.map((question, index) => ({
+    baseScore: 62 - index,
+    intent: detectIntentFromQuestion(question) || "overview",
+    question,
+    source: "recommended",
+  }));
+
+  const candidates = [...recommendedCandidates];
+
+  if (project.continuePrompt && !isOnProjectDetail) {
+    candidates.push({
+      baseScore: 68,
+      intent: "overview",
+      question: project.continuePrompt,
+      source: "continue",
+    });
+  }
+
+  candidates.push(...buildDefaultProjectFollowupCandidates(language));
+
+  return candidates;
+}
+
+function scoreProjectFollowupCandidate(
+  candidate,
+  projectIntent,
+  askedQuestionSignals,
+  isOnProjectDetail
+) {
+  let score = candidate.baseScore;
+
+  if (projectIntent) {
+    score += PROJECT_FOLLOWUP_INTENT_WEIGHTS[projectIntent]?.[candidate.intent] || 0;
+
+    if (candidate.intent === projectIntent) {
+      score -= 28;
+    }
+  } else if (isOnProjectDetail && candidate.source === "default") {
+    score += 18;
+  }
+
+  if (!isOnProjectDetail && candidate.source === "continue") {
+    score += 16;
+  }
+
+  if (askedQuestionSignals.intents.has(candidate.intent)) {
+    score -= 34;
+  }
+
+  if (
+    askedQuestionSignals.questions.some((question) =>
+      isSimilarQuestion(candidate.question, question)
+    )
+  ) {
+    score -= 80;
+  }
+
+  return score;
+}
+
+function getProjectFollowupQuestions(
+  project,
+  projectIntent,
+  pathname,
+  language,
+  messages = []
+) {
+  if (!project) {
+    return [];
+  }
+
+  const isOnProjectDetail = isViewingProjectDetail(project, pathname);
+  const askedQuestionSignals = getAskedQuestionSignals(messages);
+  const candidates = buildProjectFollowupCandidates(
+    project,
+    language,
+    isOnProjectDetail
+  );
+
+  const rankedCandidates = candidates
+    .map((candidate, index) => ({
+      ...candidate,
+      index,
+      score: scoreProjectFollowupCandidate(
+        candidate,
+        projectIntent,
+        askedQuestionSignals,
+        isOnProjectDetail
+      ),
+    }))
+    .sort((a, b) => b.score - a.score || a.index - b.index);
+  const selectedCandidates = [];
+  const selectedIntents = new Set();
+
+  for (const candidate of rankedCandidates) {
+    if (selectedCandidates.length >= 4) {
+      break;
+    }
+
+    if (candidate.intent !== "overview" && selectedIntents.has(candidate.intent)) {
+      continue;
+    }
+
+    if (
+      selectedCandidates.some((selectedCandidate) =>
+        isSimilarQuestion(candidate.question, selectedCandidate.question)
+      )
+    ) {
+      continue;
+    }
+
+    selectedCandidates.push(candidate);
+    selectedIntents.add(candidate.intent);
+  }
+
+  for (const candidate of rankedCandidates) {
+    if (selectedCandidates.length >= 4) {
+      break;
+    }
+
+    if (
+      selectedCandidates.some((selectedCandidate) =>
+        isSimilarQuestion(candidate.question, selectedCandidate.question)
+      )
+    ) {
+      continue;
+    }
+
+    selectedCandidates.push(candidate);
+  }
+
+  return dedupeQuestions(
+    selectedCandidates.map((candidate) => candidate.question)
+  ).slice(0, 4);
+}
+
+function buildSuggestedQuestions(
+  project,
+  knowledge,
+  language,
+  pathname,
+  topic,
+  projectIntent,
+  messages = []
+) {
+  const effectiveMessages = messages.length ? messages : knowledge.__messages || [];
+
   if (project) {
-    return [
-      project.continuePrompt,
-      ...project.recommendedQuestions,
-    ].filter(Boolean).slice(0, 4);
+    return getProjectFollowupQuestions(
+      project,
+      projectIntent,
+      pathname,
+      language,
+      effectiveMessages
+    );
   }
 
   const quickReplyById = new Map(
     knowledge.quickReplies.map((item) => [item.id, item.prompt])
   );
+
+  if (topic === "projects") {
+    return [
+      quickReplyById.get("drawing-ledger"),
+      language === "zh"
+        ? "挑一个重点项目继续展开讲"
+        : "Pick one featured project and go deeper.",
+      language === "zh"
+        ? "讲讲你做过的关键设计决策"
+        : "Tell me about the key design decisions you have made.",
+    ].filter(Boolean);
+  }
+
+  if (topic === "experience") {
+    return [
+      quickReplyById.get("experience"),
+      quickReplyById.get("skills"),
+      quickReplyById.get("contact"),
+    ].filter(Boolean);
+  }
+
+  if (topic === "skills") {
+    return [
+      quickReplyById.get("skills"),
+      quickReplyById.get("design-method"),
+      quickReplyById.get("featured-projects"),
+    ].filter(Boolean);
+  }
+
+  if (topic === "contact") {
+    return [
+      quickReplyById.get("featured-projects"),
+      quickReplyById.get("experience"),
+      quickReplyById.get("contact"),
+    ].filter(Boolean);
+  }
+
+  if (topic === "methods") {
+    return [
+      quickReplyById.get("design-method"),
+      quickReplyById.get("drawing-ledger"),
+      language === "zh"
+        ? "讲讲 Axzo 设计系统门户"
+        : "Tell me about the Axzo Design System Portal.",
+    ].filter(Boolean);
+  }
 
   if (pathname === "/work") {
     return [
@@ -504,10 +1124,13 @@ function buildSuggestedQuestions(project, knowledge, language, pathname) {
   return knowledge.quickReplies.slice(0, 3).map((item) => item.prompt);
 }
 
-export function createPortfolioChatFallbackReply({ language, pathname, question }) {
+export function createPortfolioChatFallbackReply({ language, messages = [], pathname, question }) {
   // fallback 的职责是“稳定保底”，不是无限模拟聊天机器人。
   // 这里优先保留正式版也一定需要的几类能力：固定信息、项目摘要、边界拒答和异常兜底。
-  const localizedKnowledge = getLocalizedChatValue(portfolioChatKnowledge, language);
+  const localizedKnowledge = {
+    ...getLocalizedChatValue(portfolioChatKnowledge, language),
+    __messages: messages,
+  };
   const normalizedQuestion = normalizeQuestion(question);
   const normalizedPathname = normalizePathname(pathname);
   const explicitProject = detectProject(localizedKnowledge.projects, normalizedQuestion);
@@ -515,9 +1138,14 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
     localizedKnowledge.projects,
     normalizedPathname
   );
-  const project = explicitProject || projectFromPathname || null;
+  const projectFromMessages = detectProjectFromMessages(
+    localizedKnowledge.projects,
+    messages
+  );
+  const project = explicitProject || projectFromMessages || projectFromPathname || null;
   const projectIntent = detectProjectIntent(normalizedQuestion);
   const topic = detectTopic(normalizedQuestion);
+  const isProjectFollowup = isImplicitProjectFollowup(normalizedQuestion);
 
   if (!normalizedQuestion) {
     return {
@@ -530,14 +1158,18 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
         projectFromPathname,
         null,
         localizedKnowledge.projects,
-        language
+        language,
+        normalizedPathname,
+        projectIntent
       ),
       source: "fallback",
       suggestedQuestions: buildSuggestedQuestions(
         projectFromPathname,
         localizedKnowledge,
         language,
-        normalizedPathname
+        normalizedPathname,
+        topic,
+        projectIntent
       ),
     };
   }
@@ -547,22 +1179,50 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
       answer: buildRefusalAnswer(localizedKnowledge),
       relatedPages: projectFromPathname?.relatedPages || ["/work", "/about"],
       relatedProjects: buildRelatedProjects(
-        projectFromPathname,
+        project,
         null,
         localizedKnowledge.projects,
-        language
+        language,
+        normalizedPathname,
+        projectIntent
       ),
       source: "guardrail",
       suggestedQuestions: buildSuggestedQuestions(
-        projectFromPathname,
+        project,
         localizedKnowledge,
         language,
-        normalizedPathname
+        normalizedPathname,
+        topic,
+        projectIntent
       ),
     };
   }
 
   if (project) {
+    if (projectIntent === "tradeoff") {
+      return {
+        answer: buildProjectTradeoffAnswer(project, language),
+        relatedPages: buildRelatedPages(project),
+        relatedProjects: buildRelatedProjects(
+          project,
+          null,
+          localizedKnowledge.projects,
+          language,
+          normalizedPathname,
+          projectIntent
+        ),
+        source: "fallback",
+        suggestedQuestions: buildSuggestedQuestions(
+          project,
+          localizedKnowledge,
+          language,
+          normalizedPathname,
+          topic,
+          projectIntent
+        ),
+      };
+    }
+
     if (projectIntent === "challenge") {
       return {
         answer: buildProjectChallengeAnswer(project, language),
@@ -571,14 +1231,18 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
           project,
           null,
           localizedKnowledge.projects,
-          language
+          language,
+          normalizedPathname,
+          projectIntent
         ),
         source: "fallback",
         suggestedQuestions: buildSuggestedQuestions(
           project,
           localizedKnowledge,
           language,
-          normalizedPathname
+          normalizedPathname,
+          topic,
+          projectIntent
         ),
       };
     }
@@ -591,14 +1255,18 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
           project,
           null,
           localizedKnowledge.projects,
-          language
+          language,
+          normalizedPathname,
+          projectIntent
         ),
         source: "fallback",
         suggestedQuestions: buildSuggestedQuestions(
           project,
           localizedKnowledge,
           language,
-          normalizedPathname
+          normalizedPathname,
+          topic,
+          projectIntent
         ),
       };
     }
@@ -611,14 +1279,18 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
           project,
           null,
           localizedKnowledge.projects,
-          language
+          language,
+          normalizedPathname,
+          projectIntent
         ),
         source: "fallback",
         suggestedQuestions: buildSuggestedQuestions(
           project,
           localizedKnowledge,
           language,
-          normalizedPathname
+          normalizedPathname,
+          topic,
+          projectIntent
         ),
       };
     }
@@ -631,14 +1303,89 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
           project,
           null,
           localizedKnowledge.projects,
-          language
+          language,
+          normalizedPathname,
+          projectIntent
         ),
         source: "fallback",
         suggestedQuestions: buildSuggestedQuestions(
           project,
           localizedKnowledge,
           language,
+          normalizedPathname,
+          topic,
+          projectIntent
+        ),
+      };
+    }
+
+    if (projectIntent === "role") {
+      return {
+        answer: buildProjectRoleAnswer(project, language),
+        relatedPages: buildRelatedPages(project),
+        relatedProjects: buildRelatedProjects(
+          project,
+          null,
+          localizedKnowledge.projects,
+          language,
+          normalizedPathname,
+          projectIntent
+        ),
+        source: "fallback",
+        suggestedQuestions: buildSuggestedQuestions(
+          project,
+          localizedKnowledge,
+          language,
+          normalizedPathname,
+          topic,
+          projectIntent
+        ),
+      };
+    }
+
+    if (projectIntent === "background") {
+      return {
+        answer: buildProjectBackgroundAnswer(project, language),
+        relatedPages: buildRelatedPages(project),
+        relatedProjects: buildRelatedProjects(
+          project,
+          null,
+          localizedKnowledge.projects,
+          language,
+          normalizedPathname,
+          projectIntent
+        ),
+        source: "fallback",
+        suggestedQuestions: buildSuggestedQuestions(
+          project,
+          localizedKnowledge,
+          language,
+          normalizedPathname,
+          topic,
+          projectIntent
+        ),
+      };
+    }
+
+    if (isProjectFollowup) {
+      return {
+        answer: buildProjectAnswer(project, language),
+        relatedPages: buildRelatedPages(project),
+        relatedProjects: buildRelatedProjects(
+          project,
+          null,
+          localizedKnowledge.projects,
+          language,
           normalizedPathname
+        ),
+        source: "fallback",
+        suggestedQuestions: buildSuggestedQuestions(
+          project,
+          localizedKnowledge,
+          language,
+          normalizedPathname,
+          topic,
+          projectIntent
         ),
       };
     }
@@ -650,14 +1397,18 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
         project,
         null,
         localizedKnowledge.projects,
-        language
+        language,
+        normalizedPathname,
+        projectIntent
       ),
       source: "fallback",
       suggestedQuestions: buildSuggestedQuestions(
         project,
         localizedKnowledge,
         language,
-        normalizedPathname
+        normalizedPathname,
+        topic,
+        projectIntent
       ),
     };
   }
@@ -670,14 +1421,18 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
         null,
         "projects",
         localizedKnowledge.projects,
-        language
+        language,
+        normalizedPathname,
+        projectIntent
       ),
       source: "fallback",
       suggestedQuestions: buildSuggestedQuestions(
         projectFromPathname,
         localizedKnowledge,
         language,
-        normalizedPathname
+        normalizedPathname,
+        topic,
+        projectIntent
       ),
     };
   }
@@ -690,14 +1445,18 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
         null,
         "experience",
         localizedKnowledge.projects,
-        language
+        language,
+        normalizedPathname,
+        projectIntent
       ),
       source: "fallback",
       suggestedQuestions: buildSuggestedQuestions(
         null,
         localizedKnowledge,
         language,
-        normalizedPathname
+        normalizedPathname,
+        topic,
+        projectIntent
       ),
     };
   }
@@ -710,14 +1469,18 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
         null,
         "skills",
         localizedKnowledge.projects,
-        language
+        language,
+        normalizedPathname,
+        projectIntent
       ),
       source: "fallback",
       suggestedQuestions: buildSuggestedQuestions(
         null,
         localizedKnowledge,
         language,
-        normalizedPathname
+        normalizedPathname,
+        topic,
+        projectIntent
       ),
     };
   }
@@ -730,14 +1493,18 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
         null,
         "contact",
         localizedKnowledge.projects,
-        language
+        language,
+        normalizedPathname,
+        projectIntent
       ),
       source: "fallback",
       suggestedQuestions: buildSuggestedQuestions(
         null,
         localizedKnowledge,
         language,
-        normalizedPathname
+        normalizedPathname,
+        topic,
+        projectIntent
       ),
     };
   }
@@ -750,14 +1517,18 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
         null,
         "methods",
         localizedKnowledge.projects,
-        language
+        language,
+        normalizedPathname,
+        projectIntent
       ),
       source: "fallback",
       suggestedQuestions: buildSuggestedQuestions(
-        projectFromPathname,
+        project,
         localizedKnowledge,
         language,
-        normalizedPathname
+        normalizedPathname,
+        topic,
+        projectIntent
       ),
     };
   }
@@ -770,14 +1541,18 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
         null,
         "profile",
         localizedKnowledge.projects,
-        language
+        language,
+        normalizedPathname,
+        projectIntent
       ),
       source: "fallback",
       suggestedQuestions: buildSuggestedQuestions(
         null,
         localizedKnowledge,
         language,
-        normalizedPathname
+        normalizedPathname,
+        topic,
+        projectIntent
       ),
     };
   }
@@ -786,17 +1561,21 @@ export function createPortfolioChatFallbackReply({ language, pathname, question 
     answer: buildRefusalAnswer(localizedKnowledge),
     relatedPages: projectFromPathname?.relatedPages || ["/work", "/about"],
     relatedProjects: buildRelatedProjects(
-      projectFromPathname,
+      project,
       null,
       localizedKnowledge.projects,
-      language
+      language,
+      normalizedPathname,
+      projectIntent
     ),
     source: "guardrail",
     suggestedQuestions: buildSuggestedQuestions(
-      projectFromPathname,
+      project,
       localizedKnowledge,
       language,
-      normalizedPathname
+      normalizedPathname,
+      topic,
+      projectIntent
     ),
   };
 }
@@ -1078,6 +1857,7 @@ export async function createPortfolioChatReply({
 }) {
   const fallbackReply = createPortfolioChatFallbackReply({
     language,
+    messages,
     pathname,
     question,
   });

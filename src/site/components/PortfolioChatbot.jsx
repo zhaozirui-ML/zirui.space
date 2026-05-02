@@ -19,7 +19,7 @@ import styles from "../styles/portfolio-chatbot.module.css";
  *   id: string,
  *   role: "assistant" | "user",
  *   content: string,
- *   relatedProjects?: { path: string, reason: string, slug: string, title: string }[],
+ *   relatedProjects?: { eyebrow?: string, kind?: "current-project" | "related-project", path: string, reason: string, slug: string, title: string }[],
  *   suggestedQuestions?: string[],
  * }} ChatMessage
  */
@@ -171,6 +171,24 @@ function getQuickReplyHeading(language) {
   return language === "zh"
     ? "建议问题"
     : "Suggestions";
+}
+
+function getSuggestedFollowupHeading(language) {
+  return language === "zh"
+    ? "继续追问"
+    : "Suggested follow-ups";
+}
+
+function getRelatedProjectHeading(language) {
+  return language === "zh"
+    ? "继续浏览"
+    : "Continue browsing";
+}
+
+function getCurrentProjectHeading(language) {
+  return language === "zh"
+    ? "下一步"
+    : "Next step";
 }
 
 function getComposerHint(language) {
@@ -350,7 +368,16 @@ export default function PortfolioChatbot() {
           </header>
 
           <div className={styles.messageViewport} ref={messageViewportRef}>
-            {messages.map((message) => (
+            {messages.map((message) => {
+              const currentProjectEntry = message.relatedProjects?.find(
+                (project) => project.kind === "current-project"
+              );
+              const secondaryProjects =
+                message.relatedProjects?.filter(
+                  (project) => project.kind !== "current-project"
+                ) || [];
+
+              return (
               <article
                 className={[
                   styles.messageBubble,
@@ -375,14 +402,43 @@ export default function PortfolioChatbot() {
 
                 <p className={styles.messageText}>{message.content}</p>
 
-                {message.role === "assistant" && message.relatedProjects?.length ? (
+                {message.role === "assistant" && currentProjectEntry ? (
+                  <section className={styles.currentProjectSection}>
+                    <p className={styles.relatedProjectHeading}>
+                      {getCurrentProjectHeading(language)}
+                    </p>
+
+                    <Link
+                      className={styles.currentProjectCard}
+                      href={currentProjectEntry.path}
+                    >
+                      <span className={styles.currentProjectEyebrow}>
+                        {currentProjectEntry.eyebrow ||
+                          (language === "zh"
+                            ? "当前正在聊"
+                            : "Currently discussing")}
+                      </span>
+                      <span className={styles.currentProjectTitle}>
+                        {currentProjectEntry.title}
+                      </span>
+                      <span className={styles.currentProjectReason}>
+                        {currentProjectEntry.reason}
+                      </span>
+                      <span className={styles.relatedProjectCta}>
+                        {language === "zh" ? "打开完整案例" : "Open full case study"}
+                      </span>
+                    </Link>
+                  </section>
+                ) : null}
+
+                {message.role === "assistant" && secondaryProjects.length ? (
                   <section className={styles.relatedProjectSection}>
                     <p className={styles.relatedProjectHeading}>
-                      {language === "zh" ? "相关项目" : "Related projects"}
+                      {getRelatedProjectHeading(language)}
                     </p>
 
                     <div className={styles.relatedProjectList}>
-                      {message.relatedProjects.map((project) => (
+                      {secondaryProjects.map((project) => (
                         <Link
                           className={styles.relatedProjectCard}
                           href={project.path}
@@ -390,6 +446,9 @@ export default function PortfolioChatbot() {
                         >
                           <span className={styles.relatedProjectTitle}>{project.title}</span>
                           <span className={styles.relatedProjectReason}>{project.reason}</span>
+                          <span className={styles.relatedProjectCta}>
+                            {language === "zh" ? "查看项目页" : "Open project page"}
+                          </span>
                         </Link>
                       ))}
                     </div>
@@ -397,21 +456,28 @@ export default function PortfolioChatbot() {
                 ) : null}
 
                 {message.role === "assistant" && message.suggestedQuestions?.length ? (
-                  <div className={styles.suggestedQuestions}>
-                    {message.suggestedQuestions.map((suggestion) => (
-                      <button
-                        className={styles.suggestionButton}
-                        key={suggestion}
-                        onClick={() => void sendQuestion(suggestion)}
-                        type="button"
-                      >
-                        {suggestion}
-                      </button>
-                    ))}
-                  </div>
+                  <section className={styles.suggestedQuestionSection}>
+                    <p className={styles.suggestedQuestionHeading}>
+                      {getSuggestedFollowupHeading(language)}
+                    </p>
+
+                    <div className={styles.suggestedQuestions}>
+                      {message.suggestedQuestions.map((suggestion) => (
+                        <button
+                          className={styles.suggestionButton}
+                          key={suggestion}
+                          onClick={() => void sendQuestion(suggestion)}
+                          type="button"
+                        >
+                          {suggestion}
+                        </button>
+                      ))}
+                    </div>
+                  </section>
                 ) : null}
               </article>
-            ))}
+              );
+            })}
 
             {messages.length === 1 ? (
               <section className={styles.quickReplySection}>
