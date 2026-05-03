@@ -9,8 +9,12 @@
 - 这个网站长期应该呈现什么气质
 - 后续所有视觉与交互决策应优先遵守哪些原则
 
-如果要看 token、组件和主题层，请看 [DESIGN_SYSTEM.md](/Users/zhaozirui/Desktop/AI%20Coding/Portfolio2026/DESIGN_SYSTEM.md)。  
+如果要看 token、组件和主题层，请看 [design-system.md](/Users/zhaozirui/Desktop/AI%20Coding/Portfolio2026/design-system.md)。  
+<<<<<<< ours
 如果要看页面模式、案例页叙事和 Figma 落地规则，请看 [GUIDELINES.md](/Users/zhaozirui/Desktop/AI%20Coding/Portfolio2026/GUIDELINES.md)。
+=======
+如果要看页面模式、案例页叙事和 Figma 落地规则，请看 [design.md](/Users/zhaozirui/Desktop/AI%20Coding/Portfolio2026/design.md)。
+>>>>>>> theirs
 
 ## Users
 

@@ -1,4 +1,4 @@
-# GUIDELINES
+# DESIGN
 
 本文档只负责作品集页面层的规则。
 
@@ -8,7 +8,7 @@
 - 页面级硬规则有哪些
 - 封面、章节、大图、图注这些模式应该怎么组织
 
-如果要看 design system 本体，请看 [DESIGN_SYSTEM.md](/Users/zhaozirui/Desktop/AI%20Coding/Portfolio2026/DESIGN_SYSTEM.md)。
+如果要看 design system 本体，请看 [design-system.md](/Users/zhaozirui/Desktop/AI%20Coding/Portfolio2026/design-system.md)。
 如果要看更上层的受众、品牌气质、参考方向与长期设计原则，请先看 [docs/design-context.md](/Users/zhaozirui/Desktop/AI%20Coding/Portfolio2026/docs/design-context.md)。
 
 本文档只负责 page layer：页面气质落地、案例叙事结构、页面级 non-negotiables 和 Figma 实现规则。
@@ -39,6 +39,7 @@
 
 - 作品集页面优先使用 `portfolio` 主题，而不是旧的通用 preview 风格
 - 基础组件可以继续复用通用设计系统，但作品集页面的视觉语义应优先服从 `portfolio` token
+- 新增功能模块涉及颜色、字体、图标、圆角、阴影、间距等设计语言要素时，必须优先复用现有 design system / portfolio theme 中已经定义的 token、组件和图标语义；如果现有系统没有合适语义，先说明缺口，再决定是否补充到 design system，不能在功能模块里临时硬编码一套新的视觉语言
 - 标题字体只用于封面标题、章节标题和叙事型标题，不用于按钮、表单、功能型标签
 - 大图展示默认优先使用“外层浅底容器 + 轻边框 + 内层圆角内容”的模式
 - 图注默认弱于正文，不和正文抢层级

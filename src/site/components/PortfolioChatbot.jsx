@@ -2,9 +2,10 @@
 
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { ArrowUp, Square, Sparkles, X } from "lucide-react";
+import { ArrowUp, RotateCcw, Square, Sparkles, X } from "lucide-react";
 
 import { useLanguage } from "../i18n/LanguageProvider";
+import { isModuleHomePath } from "../lib/is-module-home-path";
 import { getLocalizedChatValue, portfolioChatKnowledge } from "../chatbot/portfolio-chat-knowledge";
 import styles from "../styles/portfolio-chatbot.module.css";
 
@@ -40,8 +41,8 @@ function createInitialAssistantMessage(language) {
     role: "assistant",
     content:
       language === "zh"
-        ? "你好，我可以带你快速浏览赵子瑞的作品集。可以问我项目、经历、技能、设计方法或联系方式。"
-        : "Hi, I can guide you through Zirui's portfolio. Ask about projects, experience, skills, process, or contact.",
+        ? "Hi，我是 Porty。可以问我项目、经历、技能或联系方式。"
+        : "Hi, I'm Porty. Ask me about projects, experience, skills, or contact.",
   };
 }
 
@@ -136,12 +137,8 @@ function getContextualQuickReplies(pathname, localizedKnowledge, language) {
 }
 
 function getContextualIntro(pathname, language, localizedKnowledge) {
-  const project = getProjectFromPathname(pathname, localizedKnowledge);
-
-  if (project) {
-    return language === "zh"
-      ? `你现在正在看 ${project.title}。如果你愿意，我可以直接展开这个项目的背景、我的角色、关键决策或结果。`
-      : `You're currently viewing ${project.title}. If you want, I can go straight into the background, my role, key decisions, or outcomes for this project.`;
+  if (!isModuleHomePath(pathname)) {
+    return "";
   }
 
   if (pathname === "/work") {
@@ -157,8 +154,8 @@ function getContextualIntro(pathname, language, localizedKnowledge) {
   }
 
   return language === "zh"
-    ? "你好，我可以带你快速浏览赵子瑞的作品集。可以问我项目、经历、技能、设计方法或联系方式。"
-    : "Hi, I can guide you through Zirui's portfolio. Ask about projects, experience, skills, process, or contact.";
+    ? "Hi，我是 Porty。可以问我项目、经历、技能或联系方式。"
+    : "Hi, I'm Porty. Ask me about projects, experience, skills, or contact.";
 }
 
 function getQuickReplyHeading(language) {
@@ -247,7 +244,6 @@ export default function PortfolioChatbot() {
     () => getContextualQuickReplies(pathname, localizedKnowledge, language),
     [language, localizedKnowledge, pathname]
   );
-  const currentPageLabel = getPageLabel(pathname, language);
   const contextualIntro = getContextualIntro(pathname, language, localizedKnowledge);
   const loadingMessage = getLoadingMessage(language);
   const [isOpen, setIsOpen] = useState(false);
@@ -260,7 +256,9 @@ export default function PortfolioChatbot() {
     createInitialAssistantMessage(language),
   ]);
   const abortControllerRef = useRef(null);
+  const composerFieldRef = useRef(null);
   const messageViewportRef = useRef(null);
+  const isWelcomeState = messages.length === 1 && messages[0]?.role === "assistant";
 
   useEffect(() => {
     // 跟随站点语言时，直接重置会话可以避免中英文消息混杂在同一个面板里。
@@ -284,6 +282,17 @@ export default function PortfolioChatbot() {
 
     viewport.scrollTop = viewport.scrollHeight;
   }, [messages, isLoading]);
+
+  useEffect(() => {
+    const composerField = composerFieldRef.current;
+
+    if (!composerField) {
+      return;
+    }
+
+    composerField.style.height = "auto";
+    composerField.style.height = `${composerField.scrollHeight}px`;
+  }, [inputValue]);
 
   async function sendQuestion(rawQuestion) {
     const trimmedQuestion = rawQuestion.trim();
@@ -365,6 +374,20 @@ export default function PortfolioChatbot() {
     abortControllerRef.current?.abort();
   }
 
+  function resetConversation() {
+    abortControllerRef.current?.abort();
+    setMessages([
+      {
+        ...createInitialAssistantMessage(language),
+        content: contextualIntro,
+      },
+    ]);
+    setInputValue("");
+    setErrorMessage("");
+    setStatusMessage("");
+    setIsLoading(false);
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
     void sendQuestion(inputValue);
@@ -389,15 +412,21 @@ export default function PortfolioChatbot() {
           className={styles.chatPanel}
         >
           <header className={styles.chatPanelHeader}>
+            <button
+              aria-label={language === "zh" ? "新建对话" : "New chat"}
+              className={styles.iconButton}
+              onClick={resetConversation}
+              type="button"
+            >
+              <RotateCcw aria-hidden="true" size={15} />
+            </button>
+
             <div className={styles.chatPanelHeading}>
               <div className={styles.chatPanelTitleRow}>
                 <h2 className={styles.chatPanelTitle}>
                   {language === "zh" ? "作品集导览" : "Portfolio guide"}
                 </h2>
               </div>
-              <p className={styles.chatPanelContext}>
-                {language === "zh" ? "当前" : "Now viewing"}: {currentPageLabel}
-              </p>
             </div>
 
             <button
@@ -410,9 +439,25 @@ export default function PortfolioChatbot() {
             </button>
           </header>
 
-          <div className={styles.messageViewport} ref={messageViewportRef}>
+          <div
+            className={[
+              styles.messageViewport,
+              isWelcomeState ? styles.messageViewportWelcome : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+            ref={messageViewportRef}
+          >
             {messages.map((message, index) => {
               const previousMessage = messages[index - 1];
+              const isEmptyWelcomeMessage =
+                messages.length === 1 &&
+                message.role === "assistant" &&
+                !message.content.trim();
+
+              if (isEmptyWelcomeMessage) {
+                return null;
+              }
 
               return (
                 <article
@@ -529,10 +574,11 @@ export default function PortfolioChatbot() {
                   onKeyDown={handleComposerKeyDown}
                   placeholder={
                     language === "zh"
-                      ? "例如：讲讲图纸台账 2.0 这个项目"
-                      : "For example: Tell me about Drawing Register 2.0"
+                      ? "问问 Porty"
+                      : "Message Porty"
                   }
-                  rows={3}
+                  ref={composerFieldRef}
+                  rows={1}
                   value={inputValue}
                 />
                 <span className={styles.composerHint}>{getComposerHint(language)}</span>

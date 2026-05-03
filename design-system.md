@@ -1,9 +1,9 @@
-# DESIGN SYSTEM
+# Design System
 
 本文档只记录这个项目的 design system 本体。
 
 它不负责讲作品集页面叙事策略。  
-如果要看页面规则，请看 [GUIDELINES.md](/Users/zhaozirui/Desktop/AI%20Coding/Portfolio2026/GUIDELINES.md)。
+如果要看页面规则，请看 [design.md](/Users/zhaozirui/Desktop/AI%20Coding/Portfolio2026/design.md)。
 
 如果要看更上层的受众、品牌气质、参考方向与长期设计原则，请先看 [docs/design-context.md](/Users/zhaozirui/Desktop/AI%20Coding/Portfolio2026/docs/design-context.md)。
 

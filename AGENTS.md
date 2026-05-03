@@ -32,7 +32,7 @@
 - **缺失处理**：如果现有 token 不适合当前语义，不要先写临时颜色；必须先说明缺少什么颜色语义，再决定是否补充到 design token。
 
 ## 6. 设计上下文文档分工
-- 高层设计意图看 `docs/design-context.md`；系统层规则看 `DESIGN_SYSTEM.md`；页面层规则看 `GUIDELINES.md`。
+- 高层设计意图看 `docs/design-context.md`；系统层规则看 `design-system.md`；页面层规则看 `design.md`。
 - 如果三者出现直接冲突，不要扩大改动范围；先说明冲突点与影响，再等待确认后处理。
 
 ## 7. 专项规则：Figma 还原修复

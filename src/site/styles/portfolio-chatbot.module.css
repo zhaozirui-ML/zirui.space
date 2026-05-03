@@ -3,41 +3,103 @@
   background:
     linear-gradient(
       135deg,
-      color-mix(in srgb, var(--portfolio-color-surface) 92%, transparent),
-      color-mix(in srgb, var(--portfolio-color-surface-warm) 82%, transparent)
+      color-mix(in srgb, var(--portfolio-color-surface) 96%, transparent),
+      color-mix(in srgb, var(--portfolio-color-surface-warm) 90%, transparent)
     );
   border: 1px solid var(--portfolio-color-border-light);
   border-radius: 999px;
   bottom: max(
-    calc(var(--ds-space-2xs) * 5),
-    env(safe-area-inset-bottom, 0px) + var(--ds-space-md)
+    calc(var(--ds-space-2xs) * 8),
+    env(safe-area-inset-bottom, 0px) + calc(var(--ds-space-2xs) * 6)
   );
   box-shadow:
-    var(--portfolio-shadow-card),
-    inset 0 1px 0 color-mix(in srgb, var(--portfolio-color-surface) 82%, transparent);
-  color: var(--portfolio-semantic-title-color);
+    0 4px 8px rgb(34 38 42 / 0.12),
+    0 0 0 1px color-mix(in srgb, var(--portfolio-color-surface) 76%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--portfolio-color-surface) 90%, transparent);
+  color: var(--portfolio-color-text-muted);
   cursor: pointer;
   display: inline-flex;
   height: 2.375rem;
   justify-content: center;
   padding: 0;
   position: fixed;
-  right: max(var(--ds-space-md), env(safe-area-inset-right, 0px) + var(--ds-space-sm));
+  right: max(
+    calc(var(--ds-space-2xs) * 8),
+    env(safe-area-inset-right, 0px) + calc(var(--ds-space-2xs) * 6)
+  );
   transition:
-    transform 180ms ease,
-    border-color 180ms ease,
-    background-color 180ms ease,
-    box-shadow 180ms ease;
+    transform 240ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 220ms ease,
+    background-color 220ms ease,
+    color 220ms ease,
+    box-shadow 240ms cubic-bezier(0.22, 1, 0.36, 1);
   width: 2.375rem;
   z-index: 40;
 }
 
+.floatingTrigger::before {
+  background: color-mix(in srgb, var(--portfolio-color-accent-brand) 14%, transparent);
+  border-radius: inherit;
+  content: "";
+  inset: -0.375rem;
+  opacity: 0;
+  position: absolute;
+  transform: scale(0.82);
+  transition:
+    opacity 260ms ease,
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: -1;
+}
+
 .floatingTrigger:hover {
-  border-color: var(--portfolio-color-border-strong);
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--portfolio-color-accent-brand) 20%, var(--portfolio-color-surface)),
+      color-mix(in srgb, var(--portfolio-color-accent-brand) 12%, var(--portfolio-color-surface-warm))
+    );
+  border-color: color-mix(in srgb, var(--portfolio-color-accent-brand) 46%, var(--portfolio-color-border-strong));
   box-shadow:
-    var(--portfolio-shadow-card),
-    inset 0 1px 0 color-mix(in srgb, var(--portfolio-color-surface) 90%, transparent);
-  transform: translateY(-1px);
+    0 6px 12px rgb(34 38 42 / 0.14),
+    0 0 0 1px color-mix(in srgb, var(--portfolio-color-accent-brand) 12%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--portfolio-color-surface) 92%, transparent);
+  color: var(--portfolio-color-accent-brand);
+  transform: translateY(-2px) scale(1.04);
+}
+
+.floatingTrigger:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.floatingTrigger:active {
+  transform: translateY(0) scale(0.96);
+}
+
+.floatingTrigger[aria-expanded="true"] {
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--portfolio-color-accent-brand) 18%, var(--portfolio-color-surface)),
+      color-mix(in srgb, var(--portfolio-color-accent-brand) 10%, var(--portfolio-color-surface-warm))
+    );
+  border-color: color-mix(in srgb, var(--portfolio-color-accent-brand) 42%, var(--portfolio-color-border-strong));
+  color: var(--portfolio-color-accent-brand);
+}
+
+.floatingTrigger svg {
+  transform-origin: center;
+  transition:
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 180ms ease;
+}
+
+.floatingTrigger:hover svg {
+  transform: scale(1.08);
+}
+
+.floatingTrigger:active svg {
+  transform: scale(0.92);
 }
 
 .chatPanel {
@@ -51,8 +113,11 @@
   border: 1px solid var(--portfolio-color-border-light);
   border-radius: var(--portfolio-radius-lg);
   bottom: calc(
-    max(calc(var(--ds-space-2xs) * 5), env(safe-area-inset-bottom, 0px) + var(--ds-space-md)) +
-      2.625rem
+    max(
+      calc(var(--ds-space-2xs) * 8),
+      env(safe-area-inset-bottom, 0px) + calc(var(--ds-space-2xs) * 6)
+    ) +
+      2.875rem
   );
   box-shadow: var(--portfolio-shadow-card);
   display: grid;
@@ -63,32 +128,23 @@
   overflow: hidden;
   position: fixed;
   resize: none;
-  right: max(var(--ds-space-md), env(safe-area-inset-right, 0px) + var(--ds-space-sm));
+  right: max(
+    calc(var(--ds-space-2xs) * 8),
+    env(safe-area-inset-right, 0px) + calc(var(--ds-space-2xs) * 6)
+  );
   width: min(27.5rem, calc(100vw - 2rem));
   z-index: 40;
 }
 
 .chatPanelHeader {
-  align-items: stretch;
-  border-bottom: 1px solid color-mix(in srgb, var(--portfolio-color-border-light) 88%, transparent);
-  display: flex;
-  justify-content: center;
-  padding: 1rem 1.5rem 0.875rem;
-  position: relative;
-}
-
-.chatPanelHeader::before {
-  content: "";
-  height: 2.125rem;
-  left: 1rem;
-  position: absolute;
-  top: 1rem;
-  width: 2.125rem;
+  align-items: center;
+  display: grid;
+  grid-template-columns: 2.125rem minmax(0, 1fr) 2.125rem;
+  padding: 1rem 1.5rem;
 }
 
 .chatPanelHeading {
   display: grid;
-  gap: 0.5rem;
   width: 100%;
 }
 
@@ -111,15 +167,6 @@
   padding: 0.625rem 1.375rem;
 }
 
-.chatPanelContext {
-  color: var(--portfolio-color-text-muted);
-  font-family: var(--portfolio-font-label);
-  font-size: 0.71875rem;
-  line-height: 1.4;
-  margin: 0;
-  text-align: center;
-}
-
 .iconButton {
   align-items: center;
   background: color-mix(in srgb, var(--portfolio-color-surface) 92%, var(--portfolio-color-surface-warm));
@@ -131,9 +178,6 @@
   flex: 0 0 auto;
   height: 2.125rem;
   justify-content: center;
-  position: absolute;
-  right: 1rem;
-  top: 1rem;
   transition:
     background-color 180ms ease,
     color 180ms ease,
@@ -153,7 +197,11 @@
   display: grid;
   gap: 1.75rem;
   overflow-y: auto;
-  padding: 2.5rem 1.5rem 1.75rem;
+  padding: 2rem 1.5rem 1.75rem;
+}
+
+.messageViewportWelcome {
+  padding-top: 2.75rem;
 }
 
 .messageBubble {
@@ -186,6 +234,7 @@
 }
 
 .chatMascot {
+  animation: portfolio-chatbot-porty-float 3600ms cubic-bezier(0.25, 1, 0.5, 1) infinite;
   background-image: url("/site/chatbot/porty-spritesheet.webp");
   background-position: 0 0;
   background-repeat: no-repeat;
@@ -194,6 +243,7 @@
   height: 5.42rem;
   image-rendering: pixelated;
   margin-bottom: 0.375rem;
+  transform-origin: 50% 80%;
   width: 5rem;
 }
 
@@ -256,7 +306,7 @@
 
 .quickReplyList {
   display: grid;
-  gap: 0.5rem;
+  gap: 0.3125rem;
 }
 
 .suggestedQuestionSection {
@@ -266,27 +316,27 @@
 }
 
 .suggestedQuestionHeading {
-  color: var(--portfolio-color-text-muted);
+  color: var(--portfolio-semantic-title-color);
   font-family: var(--portfolio-font-label);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0;
   line-height: 1.35;
   margin: 0;
 }
 
 .quickReplySection {
   display: grid;
-  gap: 1.125rem;
+  gap: 0.75rem;
   padding: 0.5rem 0.25rem 1rem;
 }
 
 .quickReplyHeading {
-  color: var(--portfolio-color-text-muted);
+  color: var(--portfolio-semantic-title-color);
   font-family: var(--portfolio-font-label);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0;
   line-height: 1.35;
   margin: 0;
 }
@@ -300,8 +350,8 @@
   cursor: pointer;
   display: inline-flex;
   font-family: var(--portfolio-font-label);
-  font-size: 0.875rem;
-  font-weight: 400;
+  font-size: 0.9375rem;
+  font-weight: 500;
   gap: 0.75rem;
   justify-content: space-between;
   line-height: 1.45;
@@ -335,8 +385,8 @@
   color: var(--portfolio-color-text-muted);
   cursor: pointer;
   font-family: var(--portfolio-font-label);
-  font-size: 0.875rem;
-  font-weight: 400;
+  font-size: 0.9375rem;
+  font-weight: 500;
   line-height: 1.5;
   padding: 0;
   text-align: left;
@@ -381,10 +431,9 @@
 }
 
 .chatPanelFooter {
-  border-top: 1px solid color-mix(in srgb, var(--portfolio-color-border-light) 88%, transparent);
   display: grid;
   gap: 0.75rem;
-  padding: 1.125rem 1.5rem 1.375rem;
+  padding: 1rem 1.5rem;
 }
 
 .statusMessage,
@@ -410,7 +459,7 @@
 .composerFieldWrap {
   background: color-mix(in srgb, var(--portfolio-color-surface) 99%, transparent);
   border: 1px solid color-mix(in srgb, var(--portfolio-color-border-light) 96%, transparent);
-  border-radius: 1.75rem;
+  border-radius: 1.375rem;
   box-shadow:
     var(--portfolio-shadow-card),
     inset 0 1px 0 color-mix(in srgb, var(--portfolio-color-surface) 90%, transparent);
@@ -433,15 +482,17 @@
 .composerField {
   background: transparent;
   border: 1px solid transparent;
-  border-radius: 1.75rem;
+  border-radius: 1.375rem;
   color: var(--portfolio-semantic-body-color);
   font-family: var(--portfolio-font-body);
   font-size: 0.9375rem;
   font-weight: 400;
   line-height: 1.6;
-  min-height: 6.5rem;
+  max-height: 10rem;
+  min-height: 5rem;
   outline: none;
-  padding: 1.125rem 3.25rem 2.75rem 1.125rem;
+  overflow-y: auto;
+  padding: 1rem 3.25rem 2.5rem 1.125rem;
   resize: none;
   width: 100%;
 }
@@ -466,7 +517,7 @@
 }
 
 .composerHint {
-  bottom: 1.0625rem;
+  bottom: 0.9375rem;
   color: var(--portfolio-color-text-subtle);
   font-family: var(--portfolio-font-label);
   font-size: 0.6875rem;
@@ -489,7 +540,7 @@
   justify-content: center;
   position: absolute;
   right: 0.875rem;
-  bottom: 0.9375rem;
+  bottom: 0.8125rem;
   transition:
     background-color 180ms ease,
     border-color 180ms ease,
@@ -556,8 +607,21 @@
   }
 }
 
+@keyframes portfolio-chatbot-porty-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-0.1875rem);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .floatingTrigger,
+  .floatingTrigger::before,
+  .floatingTrigger svg,
   .iconButton,
   .quickReplyButton,
   .suggestionButton,
@@ -566,6 +630,7 @@
     transition: none;
   }
 
+  .chatMascot,
   .loadingText {
     animation: none;
   }
