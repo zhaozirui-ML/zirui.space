@@ -1,14 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import {
-  ArrowUp,
-  LoaderCircle,
-  Sparkles,
-  X,
-} from "lucide-react";
+import { ArrowUp, Square, Sparkles, X } from "lucide-react";
 
 import { useLanguage } from "../i18n/LanguageProvider";
 import { getLocalizedChatValue, portfolioChatKnowledge } from "../chatbot/portfolio-chat-knowledge";
@@ -179,36 +173,67 @@ function getSuggestedFollowupHeading(language) {
     : "Suggested follow-ups";
 }
 
-function getRelatedProjectHeading(language) {
-  return language === "zh"
-    ? "继续浏览"
-    : "Continue browsing";
-}
-
-function getCurrentProjectHeading(language) {
-  return language === "zh"
-    ? "下一步"
-    : "Next step";
-}
-
 function getComposerHint(language) {
   return language === "zh"
     ? "回车发送 · Shift + 回车换行"
     : "Enter to send · Shift + Enter for a new line";
 }
 
-function getLoadingMessage(pathname, language, localizedKnowledge) {
-  const project = getProjectFromPathname(pathname, localizedKnowledge);
-
-  if (project) {
-    return language === "zh"
-      ? `正在整理 ${project.title} 的关键线索…`
-      : `Pulling together the key threads from ${project.title}...`;
-  }
-
+function getLoadingMessage(language) {
   return language === "zh"
-    ? "正在整理一条更像作品集导览的回答…"
-    : "Putting together a reply that feels more like a portfolio walkthrough...";
+    ? "thinking"
+    : "thinking";
+}
+
+function renderInlineMarkdown(content) {
+  const segments = content.split(/(\*\*.*?\*\*)/g);
+
+  return segments.map((segment, index) => {
+    if (segment.startsWith("**") && segment.endsWith("**") && segment.length > 4) {
+      return (
+        <strong key={`strong-${index}`}>
+          {segment.slice(2, -2)}
+        </strong>
+      );
+    }
+
+    return <Fragment key={`text-${index}`}>{segment}</Fragment>;
+  });
+}
+
+function renderMessageContent(content) {
+  const blocks = content
+    .trim()
+    .split(/\n\s*\n/)
+    .map((block) => block.trim())
+    .filter(Boolean);
+
+  return blocks.map((block, blockIndex) => {
+    const lines = block
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean);
+
+    const isList = lines.every((line) => /^[-*]\s+/.test(line));
+
+    if (isList) {
+      return (
+        <ul className={styles.messageList} key={`list-${blockIndex}`}>
+          {lines.map((line, lineIndex) => (
+            <li className={styles.messageListItem} key={`list-item-${blockIndex}-${lineIndex}`}>
+              {renderInlineMarkdown(line.replace(/^[-*]\s+/, ""))}
+            </li>
+          ))}
+        </ul>
+      );
+    }
+
+    return (
+      <p className={styles.messageParagraph} key={`paragraph-${blockIndex}`}>
+        {renderInlineMarkdown(block)}
+      </p>
+    );
+  });
 }
 
 export default function PortfolioChatbot() {
@@ -224,7 +249,7 @@ export default function PortfolioChatbot() {
   );
   const currentPageLabel = getPageLabel(pathname, language);
   const contextualIntro = getContextualIntro(pathname, language, localizedKnowledge);
-  const loadingMessage = getLoadingMessage(pathname, language, localizedKnowledge);
+  const loadingMessage = getLoadingMessage(language);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -234,6 +259,7 @@ export default function PortfolioChatbot() {
   const [messages, setMessages] = useState(() => [
     createInitialAssistantMessage(language),
   ]);
+  const abortControllerRef = useRef(null);
   const messageViewportRef = useRef(null);
 
   useEffect(() => {
@@ -278,6 +304,8 @@ export default function PortfolioChatbot() {
     setErrorMessage("");
     setStatusMessage("");
     setIsLoading(true);
+    const abortController = new AbortController();
+    abortControllerRef.current = abortController;
 
     try {
       const response = await fetch("/api/chat", {
@@ -291,6 +319,7 @@ export default function PortfolioChatbot() {
           "Content-Type": "application/json",
         },
         method: "POST",
+        signal: abortController.signal,
       });
 
       if (!response.ok) {
@@ -311,6 +340,15 @@ export default function PortfolioChatbot() {
       ]);
       setStatusMessage(data.notice || "");
     } catch (error) {
+      if (error?.name === "AbortError") {
+        setStatusMessage(
+          language === "zh"
+            ? "已暂停本次回答。"
+            : "This reply was paused."
+        );
+        return;
+      }
+
       console.error("Portfolio chatbot request failed.", error);
       setErrorMessage(
         language === "zh"
@@ -318,8 +356,13 @@ export default function PortfolioChatbot() {
           : "The chat service is temporarily unavailable. Please try again later, or use the quick questions above to continue exploring the portfolio."
       );
     } finally {
+      abortControllerRef.current = null;
       setIsLoading(false);
     }
+  }
+
+  function handleStopGeneration() {
+    abortControllerRef.current?.abort();
   }
 
   function handleSubmit(event) {
@@ -368,114 +411,60 @@ export default function PortfolioChatbot() {
           </header>
 
           <div className={styles.messageViewport} ref={messageViewportRef}>
-            {messages.map((message) => {
-              const currentProjectEntry = message.relatedProjects?.find(
-                (project) => project.kind === "current-project"
-              );
-              const secondaryProjects =
-                message.relatedProjects?.filter(
-                  (project) => project.kind !== "current-project"
-                ) || [];
+            {messages.map((message, index) => {
+              const previousMessage = messages[index - 1];
 
               return (
-              <article
-                className={[
-                  styles.messageBubble,
-                  message.role === "user" ? styles.userBubble : styles.assistantBubble,
-                  message.role === "assistant" && messages.length === 1
-                    ? styles.welcomeBubble
-                    : "",
-                ]
-                  .filter(Boolean)
-                  .join(" ")}
-                key={message.id}
-              >
-                {message.role === "assistant" && messages.length === 1 ? (
-                  <span
-                    aria-label={
-                      language === "zh" ? "作品集导览小机器人" : "Portfolio guide mascot"
-                    }
-                    className={styles.chatMascot}
-                    role="img"
-                  />
-                ) : null}
+                <article
+                  className={[
+                    styles.messageBubble,
+                    message.role === "user" ? styles.userBubble : styles.assistantBubble,
+                    message.role === "assistant" && previousMessage?.role === "user"
+                      ? styles.assistantReplyBubble
+                      : "",
+                    message.role === "assistant" && messages.length === 1
+                      ? styles.welcomeBubble
+                      : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                  key={message.id}
+                >
+                  {message.role === "assistant" && messages.length === 1 ? (
+                    <span
+                      aria-label={
+                        language === "zh" ? "作品集导览小机器人" : "Portfolio guide mascot"
+                      }
+                      className={styles.chatMascot}
+                      role="img"
+                    />
+                  ) : null}
 
-                <p className={styles.messageText}>{message.content}</p>
+                  <div className={styles.messageText}>
+                    {renderMessageContent(message.content)}
+                  </div>
 
-                {message.role === "assistant" && currentProjectEntry ? (
-                  <section className={styles.currentProjectSection}>
-                    <p className={styles.relatedProjectHeading}>
-                      {getCurrentProjectHeading(language)}
-                    </p>
+                  {message.role === "assistant" && message.suggestedQuestions?.length ? (
+                    <section className={styles.suggestedQuestionSection}>
+                      <p className={styles.suggestedQuestionHeading}>
+                        {getSuggestedFollowupHeading(language)}
+                      </p>
 
-                    <Link
-                      className={styles.currentProjectCard}
-                      href={currentProjectEntry.path}
-                    >
-                      <span className={styles.currentProjectEyebrow}>
-                        {currentProjectEntry.eyebrow ||
-                          (language === "zh"
-                            ? "当前正在聊"
-                            : "Currently discussing")}
-                      </span>
-                      <span className={styles.currentProjectTitle}>
-                        {currentProjectEntry.title}
-                      </span>
-                      <span className={styles.currentProjectReason}>
-                        {currentProjectEntry.reason}
-                      </span>
-                      <span className={styles.relatedProjectCta}>
-                        {language === "zh" ? "打开完整案例" : "Open full case study"}
-                      </span>
-                    </Link>
-                  </section>
-                ) : null}
-
-                {message.role === "assistant" && secondaryProjects.length ? (
-                  <section className={styles.relatedProjectSection}>
-                    <p className={styles.relatedProjectHeading}>
-                      {getRelatedProjectHeading(language)}
-                    </p>
-
-                    <div className={styles.relatedProjectList}>
-                      {secondaryProjects.map((project) => (
-                        <Link
-                          className={styles.relatedProjectCard}
-                          href={project.path}
-                          key={project.slug}
-                        >
-                          <span className={styles.relatedProjectTitle}>{project.title}</span>
-                          <span className={styles.relatedProjectReason}>{project.reason}</span>
-                          <span className={styles.relatedProjectCta}>
-                            {language === "zh" ? "查看项目页" : "Open project page"}
-                          </span>
-                        </Link>
-                      ))}
-                    </div>
-                  </section>
-                ) : null}
-
-                {message.role === "assistant" && message.suggestedQuestions?.length ? (
-                  <section className={styles.suggestedQuestionSection}>
-                    <p className={styles.suggestedQuestionHeading}>
-                      {getSuggestedFollowupHeading(language)}
-                    </p>
-
-                    <div className={styles.suggestedQuestions}>
-                      {message.suggestedQuestions.map((suggestion) => (
-                        <button
-                          className={styles.suggestionButton}
-                          key={suggestion}
-                          onClick={() => void sendQuestion(suggestion)}
-                          type="button"
-                        >
-                          {suggestion}
-                        </button>
-                      ))}
-                    </div>
-                  </section>
-                ) : null}
-              </article>
+                      <div className={styles.suggestedQuestions}>
+                        {message.suggestedQuestions.map((suggestion) => (
+                          <button
+                            className={styles.suggestionButton}
+                            key={suggestion}
+                            onClick={() => void sendQuestion(suggestion)}
+                            type="button"
+                          >
+                            {suggestion}
+                          </button>
+                        ))}
+                      </div>
+                    </section>
+                  ) : null}
+                </article>
               );
             })}
 
@@ -487,32 +476,37 @@ export default function PortfolioChatbot() {
 
                 <div className={styles.quickReplyList}>
                   {quickReplies.map((item, index) => (
-                      <button
-                        className={[
-                          styles.quickReplyButton,
-                          index === 0 ? styles.quickReplyButtonPrimary : "",
-                        ]
-                          .filter(Boolean)
-                          .join(" ")}
-                        key={item.id}
-                        onClick={() => void sendQuestion(item.prompt)}
-                        type="button"
-                      >
-                        <span className={styles.quickReplyButtonInner}>
-                          <span>{item.label}</span>
-                        </span>
-
-                      </button>
+                    <button
+                      className={[
+                        styles.quickReplyButton,
+                        index === 0 ? styles.quickReplyButtonPrimary : "",
+                      ]
+                        .filter(Boolean)
+                        .join(" ")}
+                      key={item.id}
+                      onClick={() => void sendQuestion(item.prompt)}
+                      type="button"
+                    >
+                      <span className={styles.quickReplyButtonInner}>
+                        <span>{item.label}</span>
+                      </span>
+                    </button>
                   ))}
                 </div>
               </section>
             ) : null}
 
             {isLoading ? (
-              <article className={[styles.messageBubble, styles.assistantBubble].join(" ")} role="status">
+              <article
+                className={[
+                  styles.messageBubble,
+                  styles.assistantBubble,
+                  styles.loadingMessageBubble,
+                ].join(" ")}
+                role="status"
+              >
                 <div className={styles.loadingBubble}>
-                  <LoaderCircle aria-hidden="true" className={styles.loadingIcon} size={16} />
-                  <span>{loadingMessage}</span>
+                  <span className={styles.loadingText}>{loadingMessage}</span>
                 </div>
               </article>
             ) : null}
@@ -543,12 +537,30 @@ export default function PortfolioChatbot() {
                 />
                 <span className={styles.composerHint}>{getComposerHint(language)}</span>
                 <button
-                  aria-label={language === "zh" ? "发送消息" : "Send message"}
-                  className={styles.sendButton}
-                  disabled={!inputValue.trim() || isLoading}
-                  type="submit"
+                  aria-label={
+                    isLoading
+                      ? language === "zh"
+                        ? "暂停回答"
+                        : "Pause reply"
+                      : language === "zh"
+                        ? "发送消息"
+                        : "Send message"
+                  }
+                  className={[
+                    styles.sendButton,
+                    isLoading ? styles.stopButton : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                  disabled={!isLoading && !inputValue.trim()}
+                  onClick={isLoading ? handleStopGeneration : undefined}
+                  type={isLoading ? "button" : "submit"}
                 >
-                  <ArrowUp aria-hidden="true" size={16} strokeWidth={2.25} />
+                  {isLoading ? (
+                    <Square aria-hidden="true" fill="currentColor" size={11} strokeWidth={2.5} />
+                  ) : (
+                    <ArrowUp aria-hidden="true" size={16} strokeWidth={2.25} />
+                  )}
                 </button>
               </div>
             </form>
@@ -571,7 +583,7 @@ export default function PortfolioChatbot() {
         onClick={() => setIsOpen((currentValue) => !currentValue)}
         type="button"
       >
-        <Sparkles aria-hidden="true" size={20} strokeWidth={2} />
+        <Sparkles aria-hidden="true" size={13} strokeWidth={2} />
       </button>
     </>
   );

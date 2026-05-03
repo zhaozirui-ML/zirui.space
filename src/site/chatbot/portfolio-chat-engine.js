@@ -718,6 +718,79 @@ function getAskedQuestionSignals(messages) {
   };
 }
 
+function getProjectIntentTrail(messages, project) {
+  if (!project || !Array.isArray(messages)) {
+    return [];
+  }
+
+  const userMessages = messages.filter(
+    (message) => message?.role === "user" && typeof message.content === "string"
+  );
+  const intentTrail = [];
+  let projectLocked = false;
+
+  for (const message of userMessages) {
+    const normalizedContent = normalizeQuestion(message.content);
+    const mentionsProject = project.aliases.some((alias) =>
+      normalizedContent.includes(alias.toLowerCase())
+    );
+
+    if (mentionsProject) {
+      projectLocked = true;
+    }
+
+    const intent = detectProjectIntent(normalizedContent);
+
+    if (intent && (mentionsProject || projectLocked)) {
+      intentTrail.push(intent);
+    }
+  }
+
+  return intentTrail;
+}
+
+function createConversationState({
+  localizedKnowledge,
+  messages,
+  pathname,
+  question,
+}) {
+  const normalizedQuestion = normalizeQuestion(question);
+  const normalizedPathname = normalizePathname(pathname);
+  const explicitProject = detectProject(
+    localizedKnowledge.projects,
+    normalizedQuestion
+  );
+  const projectFromPathname = detectProjectByPathname(
+    localizedKnowledge.projects,
+    normalizedPathname
+  );
+  const projectFromMessages = detectProjectFromMessages(
+    localizedKnowledge.projects,
+    messages
+  );
+  const activeProject =
+    explicitProject || projectFromMessages || projectFromPathname || null;
+  const projectIntent = detectProjectIntent(normalizedQuestion);
+  const topic = detectTopic(normalizedQuestion);
+  const projectIntentTrail = getProjectIntentTrail(messages, activeProject);
+
+  return {
+    activeProject,
+    askedQuestionSignals: getAskedQuestionSignals(messages),
+    coveredProjectIntents: new Set(projectIntentTrail),
+    isProjectFollowup: isImplicitProjectFollowup(normalizedQuestion),
+    normalizedPathname,
+    normalizedQuestion,
+    previousProjectIntent: projectIntentTrail.at(-1) || null,
+    projectFromPathname,
+    projectIntent,
+    projectIntentTrail,
+    question,
+    topic,
+  };
+}
+
 function buildRelatedProjects(
   project,
   topic,
@@ -919,18 +992,14 @@ function buildProjectFollowupCandidates(project, language, isOnProjectDetail) {
   return candidates;
 }
 
-function scoreProjectFollowupCandidate(
-  candidate,
-  projectIntent,
-  askedQuestionSignals,
-  isOnProjectDetail
-) {
+function scoreProjectFollowupCandidate(candidate, state, isOnProjectDetail) {
   let score = candidate.baseScore;
 
-  if (projectIntent) {
-    score += PROJECT_FOLLOWUP_INTENT_WEIGHTS[projectIntent]?.[candidate.intent] || 0;
+  if (state.projectIntent) {
+    score +=
+      PROJECT_FOLLOWUP_INTENT_WEIGHTS[state.projectIntent]?.[candidate.intent] || 0;
 
-    if (candidate.intent === projectIntent) {
+    if (candidate.intent === state.projectIntent) {
       score -= 28;
     }
   } else if (isOnProjectDetail && candidate.source === "default") {
@@ -941,12 +1010,12 @@ function scoreProjectFollowupCandidate(
     score += 16;
   }
 
-  if (askedQuestionSignals.intents.has(candidate.intent)) {
+  if (state.askedQuestionSignals.intents.has(candidate.intent)) {
     score -= 34;
   }
 
   if (
-    askedQuestionSignals.questions.some((question) =>
+    state.askedQuestionSignals.questions.some((question) =>
       isSimilarQuestion(candidate.question, question)
     )
   ) {
@@ -956,19 +1025,15 @@ function scoreProjectFollowupCandidate(
   return score;
 }
 
-function getProjectFollowupQuestions(
-  project,
-  projectIntent,
-  pathname,
-  language,
-  messages = []
-) {
+function rankProjectFollowupCandidates(project, state, language) {
   if (!project) {
     return [];
   }
 
-  const isOnProjectDetail = isViewingProjectDetail(project, pathname);
-  const askedQuestionSignals = getAskedQuestionSignals(messages);
+  const isOnProjectDetail = isViewingProjectDetail(
+    project,
+    state.normalizedPathname
+  );
   const candidates = buildProjectFollowupCandidates(
     project,
     language,
@@ -979,12 +1044,7 @@ function getProjectFollowupQuestions(
     .map((candidate, index) => ({
       ...candidate,
       index,
-      score: scoreProjectFollowupCandidate(
-        candidate,
-        projectIntent,
-        askedQuestionSignals,
-        isOnProjectDetail
-      ),
+      score: scoreProjectFollowupCandidate(candidate, state, isOnProjectDetail),
     }))
     .sort((a, b) => b.score - a.score || a.index - b.index);
   const selectedCandidates = [];
@@ -1032,32 +1092,12 @@ function getProjectFollowupQuestions(
   ).slice(0, 4);
 }
 
-function buildSuggestedQuestions(
-  project,
-  knowledge,
-  language,
-  pathname,
-  topic,
-  projectIntent,
-  messages = []
-) {
-  const effectiveMessages = messages.length ? messages : knowledge.__messages || [];
-
-  if (project) {
-    return getProjectFollowupQuestions(
-      project,
-      projectIntent,
-      pathname,
-      language,
-      effectiveMessages
-    );
-  }
-
+function buildGeneralSuggestionCandidates(knowledge, language, state) {
   const quickReplyById = new Map(
     knowledge.quickReplies.map((item) => [item.id, item.prompt])
   );
 
-  if (topic === "projects") {
+  if (state.topic === "projects") {
     return [
       quickReplyById.get("drawing-ledger"),
       language === "zh"
@@ -1069,7 +1109,7 @@ function buildSuggestedQuestions(
     ].filter(Boolean);
   }
 
-  if (topic === "experience") {
+  if (state.topic === "experience") {
     return [
       quickReplyById.get("experience"),
       quickReplyById.get("skills"),
@@ -1077,7 +1117,7 @@ function buildSuggestedQuestions(
     ].filter(Boolean);
   }
 
-  if (topic === "skills") {
+  if (state.topic === "skills") {
     return [
       quickReplyById.get("skills"),
       quickReplyById.get("design-method"),
@@ -1085,7 +1125,7 @@ function buildSuggestedQuestions(
     ].filter(Boolean);
   }
 
-  if (topic === "contact") {
+  if (state.topic === "contact") {
     return [
       quickReplyById.get("featured-projects"),
       quickReplyById.get("experience"),
@@ -1093,7 +1133,7 @@ function buildSuggestedQuestions(
     ].filter(Boolean);
   }
 
-  if (topic === "methods") {
+  if (state.topic === "methods") {
     return [
       quickReplyById.get("design-method"),
       quickReplyById.get("drawing-ledger"),
@@ -1103,7 +1143,7 @@ function buildSuggestedQuestions(
     ].filter(Boolean);
   }
 
-  if (pathname === "/work") {
+  if (state.normalizedPathname === "/work") {
     return [
       quickReplyById.get("featured-projects"),
       quickReplyById.get("drawing-ledger"),
@@ -1113,7 +1153,7 @@ function buildSuggestedQuestions(
     ].filter(Boolean);
   }
 
-  if (pathname === "/about") {
+  if (state.normalizedPathname === "/about") {
     return [
       quickReplyById.get("intro"),
       quickReplyById.get("experience"),
@@ -1124,28 +1164,140 @@ function buildSuggestedQuestions(
   return knowledge.quickReplies.slice(0, 3).map((item) => item.prompt);
 }
 
+function buildSuggestedQuestionsFromState(state, knowledge, language) {
+  if (state.activeProject) {
+    return rankProjectFollowupCandidates(state.activeProject, state, language);
+  }
+
+  return buildGeneralSuggestionCandidates(knowledge, language, state);
+}
+
+const PROJECT_ANSWER_BUILDERS = {
+  background: buildProjectBackgroundAnswer,
+  challenge: buildProjectChallengeAnswer,
+  decision: buildProjectDecisionAnswer,
+  outcome: buildProjectOutcomeAnswer,
+  reflection: buildProjectReflectionAnswer,
+  role: buildProjectRoleAnswer,
+  tradeoff: buildProjectTradeoffAnswer,
+};
+
+const PROJECT_ANSWER_TRANSITIONS = {
+  challenge: {
+    decision: {
+      zh: "顺着刚才那个挑战往下讲，最关键的判断在这里：",
+      en: "Following that challenge, the most important decision sits here:",
+    },
+    outcome: {
+      zh: "如果顺着刚才的挑战继续往下看，结果最值得看的部分是：",
+      en: "If we continue from that challenge, the most important outcome to look at is this:",
+    },
+    reflection: {
+      zh: "如果从刚才那个挑战回头看，我最明确的反思是：",
+      en: "If I look back from that challenge, my clearest reflection is this:",
+    },
+  },
+  decision: {
+    outcome: {
+      zh: "顺着刚才那些判断继续往下讲，最后形成的结果是：",
+      en: "If I continue from those decisions, the resulting outcome is this:",
+    },
+    reflection: {
+      zh: "如果从刚才那些判断回头看，我现在最明确的反思是：",
+      en: "If I look back at those decisions now, my clearest reflection is this:",
+    },
+    tradeoff: {
+      zh: "如果把刚才那些判断换成取舍的角度来看，核心其实在这里：",
+      en: "If I reframe those decisions as tradeoffs, the core is really here:",
+    },
+  },
+  outcome: {
+    reflection: {
+      zh: "如果从刚才那个结果再往后看，我最想补充的反思是：",
+      en: "If I continue past that outcome, the reflection I most want to add is this:",
+    },
+    role: {
+      zh: "如果顺着刚才那个结果回到我的职责上看，我主要负责的是：",
+      en: "If I trace that outcome back to my role, what I mainly owned was this:",
+    },
+  },
+};
+
+function joinAnswerSections(...sections) {
+  return sections.filter(Boolean).join("\n\n");
+}
+
+function buildProjectAnswerLead(project, state, language) {
+  if (!state.projectIntent) {
+    return null;
+  }
+
+  if (
+    state.coveredProjectIntents.has(state.projectIntent) &&
+    state.previousProjectIntent === state.projectIntent
+  ) {
+    return language === "zh"
+      ? "这个角度上一轮已经提到过了，我换一个更聚焦的方式继续往下讲："
+      : "We already touched on this angle in the previous turn, so I will continue with a more focused explanation:";
+  }
+
+  const transition =
+    PROJECT_ANSWER_TRANSITIONS[state.previousProjectIntent]?.[state.projectIntent];
+
+  if (transition) {
+    return transition[language];
+  }
+
+  if (state.previousProjectIntent && state.previousProjectIntent !== state.projectIntent) {
+    return language === "zh"
+      ? "如果把刚才那一层再往下展开，我会这样接着讲："
+      : "If I take the previous angle one step further, I would continue like this:";
+  }
+
+  return null;
+}
+
+function buildProjectAnswerFromState(project, state, language) {
+  const lead = buildProjectAnswerLead(project, state, language);
+
+  if (state.projectIntent && PROJECT_ANSWER_BUILDERS[state.projectIntent]) {
+    return joinAnswerSections(
+      lead,
+      PROJECT_ANSWER_BUILDERS[state.projectIntent](project, language)
+    );
+  }
+
+  if (state.isProjectFollowup && state.previousProjectIntent) {
+    const followupLead =
+      language === "zh"
+        ? "我们已经锁定在这个项目上了，我继续顺着上一层往下展开："
+        : "We are already anchored on this project, so I will keep unpacking the next layer:";
+
+    return joinAnswerSections(followupLead, buildProjectAnswer(project, language));
+  }
+
+  return buildProjectAnswer(project, language);
+}
+
 export function createPortfolioChatFallbackReply({ language, messages = [], pathname, question }) {
   // fallback 的职责是“稳定保底”，不是无限模拟聊天机器人。
   // 这里优先保留正式版也一定需要的几类能力：固定信息、项目摘要、边界拒答和异常兜底。
-  const localizedKnowledge = {
-    ...getLocalizedChatValue(portfolioChatKnowledge, language),
-    __messages: messages,
-  };
-  const normalizedQuestion = normalizeQuestion(question);
-  const normalizedPathname = normalizePathname(pathname);
-  const explicitProject = detectProject(localizedKnowledge.projects, normalizedQuestion);
-  const projectFromPathname = detectProjectByPathname(
-    localizedKnowledge.projects,
-    normalizedPathname
-  );
-  const projectFromMessages = detectProjectFromMessages(
-    localizedKnowledge.projects,
-    messages
-  );
-  const project = explicitProject || projectFromMessages || projectFromPathname || null;
-  const projectIntent = detectProjectIntent(normalizedQuestion);
-  const topic = detectTopic(normalizedQuestion);
-  const isProjectFollowup = isImplicitProjectFollowup(normalizedQuestion);
+  const localizedKnowledge = getLocalizedChatValue(portfolioChatKnowledge, language);
+  const state = createConversationState({
+    localizedKnowledge,
+    messages,
+    pathname,
+    question,
+  });
+  const {
+    activeProject,
+    isProjectFollowup,
+    normalizedPathname,
+    normalizedQuestion,
+    projectFromPathname,
+    projectIntent,
+    topic,
+  } = state;
 
   if (!normalizedQuestion) {
     return {
@@ -1163,13 +1315,10 @@ export function createPortfolioChatFallbackReply({ language, messages = [], path
         projectIntent
       ),
       source: "fallback",
-      suggestedQuestions: buildSuggestedQuestions(
-        projectFromPathname,
+      suggestedQuestions: buildSuggestedQuestionsFromState(
+        state,
         localizedKnowledge,
-        language,
-        normalizedPathname,
-        topic,
-        projectIntent
+        language
       ),
     };
   }
@@ -1179,7 +1328,7 @@ export function createPortfolioChatFallbackReply({ language, messages = [], path
       answer: buildRefusalAnswer(localizedKnowledge),
       relatedPages: projectFromPathname?.relatedPages || ["/work", "/about"],
       relatedProjects: buildRelatedProjects(
-        project,
+        activeProject,
         null,
         localizedKnowledge.projects,
         language,
@@ -1187,214 +1336,20 @@ export function createPortfolioChatFallbackReply({ language, messages = [], path
         projectIntent
       ),
       source: "guardrail",
-      suggestedQuestions: buildSuggestedQuestions(
-        project,
+      suggestedQuestions: buildSuggestedQuestionsFromState(
+        state,
         localizedKnowledge,
-        language,
-        normalizedPathname,
-        topic,
-        projectIntent
+        language
       ),
     };
   }
 
-  if (project) {
-    if (projectIntent === "tradeoff") {
-      return {
-        answer: buildProjectTradeoffAnswer(project, language),
-        relatedPages: buildRelatedPages(project),
-        relatedProjects: buildRelatedProjects(
-          project,
-          null,
-          localizedKnowledge.projects,
-          language,
-          normalizedPathname,
-          projectIntent
-        ),
-        source: "fallback",
-        suggestedQuestions: buildSuggestedQuestions(
-          project,
-          localizedKnowledge,
-          language,
-          normalizedPathname,
-          topic,
-          projectIntent
-        ),
-      };
-    }
-
-    if (projectIntent === "challenge") {
-      return {
-        answer: buildProjectChallengeAnswer(project, language),
-        relatedPages: buildRelatedPages(project),
-        relatedProjects: buildRelatedProjects(
-          project,
-          null,
-          localizedKnowledge.projects,
-          language,
-          normalizedPathname,
-          projectIntent
-        ),
-        source: "fallback",
-        suggestedQuestions: buildSuggestedQuestions(
-          project,
-          localizedKnowledge,
-          language,
-          normalizedPathname,
-          topic,
-          projectIntent
-        ),
-      };
-    }
-
-    if (projectIntent === "decision") {
-      return {
-        answer: buildProjectDecisionAnswer(project, language),
-        relatedPages: buildRelatedPages(project),
-        relatedProjects: buildRelatedProjects(
-          project,
-          null,
-          localizedKnowledge.projects,
-          language,
-          normalizedPathname,
-          projectIntent
-        ),
-        source: "fallback",
-        suggestedQuestions: buildSuggestedQuestions(
-          project,
-          localizedKnowledge,
-          language,
-          normalizedPathname,
-          topic,
-          projectIntent
-        ),
-      };
-    }
-
-    if (projectIntent === "outcome") {
-      return {
-        answer: buildProjectOutcomeAnswer(project, language),
-        relatedPages: buildRelatedPages(project),
-        relatedProjects: buildRelatedProjects(
-          project,
-          null,
-          localizedKnowledge.projects,
-          language,
-          normalizedPathname,
-          projectIntent
-        ),
-        source: "fallback",
-        suggestedQuestions: buildSuggestedQuestions(
-          project,
-          localizedKnowledge,
-          language,
-          normalizedPathname,
-          topic,
-          projectIntent
-        ),
-      };
-    }
-
-    if (projectIntent === "reflection") {
-      return {
-        answer: buildProjectReflectionAnswer(project, language),
-        relatedPages: buildRelatedPages(project),
-        relatedProjects: buildRelatedProjects(
-          project,
-          null,
-          localizedKnowledge.projects,
-          language,
-          normalizedPathname,
-          projectIntent
-        ),
-        source: "fallback",
-        suggestedQuestions: buildSuggestedQuestions(
-          project,
-          localizedKnowledge,
-          language,
-          normalizedPathname,
-          topic,
-          projectIntent
-        ),
-      };
-    }
-
-    if (projectIntent === "role") {
-      return {
-        answer: buildProjectRoleAnswer(project, language),
-        relatedPages: buildRelatedPages(project),
-        relatedProjects: buildRelatedProjects(
-          project,
-          null,
-          localizedKnowledge.projects,
-          language,
-          normalizedPathname,
-          projectIntent
-        ),
-        source: "fallback",
-        suggestedQuestions: buildSuggestedQuestions(
-          project,
-          localizedKnowledge,
-          language,
-          normalizedPathname,
-          topic,
-          projectIntent
-        ),
-      };
-    }
-
-    if (projectIntent === "background") {
-      return {
-        answer: buildProjectBackgroundAnswer(project, language),
-        relatedPages: buildRelatedPages(project),
-        relatedProjects: buildRelatedProjects(
-          project,
-          null,
-          localizedKnowledge.projects,
-          language,
-          normalizedPathname,
-          projectIntent
-        ),
-        source: "fallback",
-        suggestedQuestions: buildSuggestedQuestions(
-          project,
-          localizedKnowledge,
-          language,
-          normalizedPathname,
-          topic,
-          projectIntent
-        ),
-      };
-    }
-
-    if (isProjectFollowup) {
-      return {
-        answer: buildProjectAnswer(project, language),
-        relatedPages: buildRelatedPages(project),
-        relatedProjects: buildRelatedProjects(
-          project,
-          null,
-          localizedKnowledge.projects,
-          language,
-          normalizedPathname
-        ),
-        source: "fallback",
-        suggestedQuestions: buildSuggestedQuestions(
-          project,
-          localizedKnowledge,
-          language,
-          normalizedPathname,
-          topic,
-          projectIntent
-        ),
-      };
-    }
-
+  if (activeProject) {
     return {
-      answer: buildProjectAnswer(project, language),
-      relatedPages: buildRelatedPages(project),
+      answer: buildProjectAnswerFromState(activeProject, state, language),
+      relatedPages: buildRelatedPages(activeProject),
       relatedProjects: buildRelatedProjects(
-        project,
+        activeProject,
         null,
         localizedKnowledge.projects,
         language,
@@ -1402,13 +1357,10 @@ export function createPortfolioChatFallbackReply({ language, messages = [], path
         projectIntent
       ),
       source: "fallback",
-      suggestedQuestions: buildSuggestedQuestions(
-        project,
+      suggestedQuestions: buildSuggestedQuestionsFromState(
+        state,
         localizedKnowledge,
-        language,
-        normalizedPathname,
-        topic,
-        projectIntent
+        language
       ),
     };
   }
@@ -1426,13 +1378,10 @@ export function createPortfolioChatFallbackReply({ language, messages = [], path
         projectIntent
       ),
       source: "fallback",
-      suggestedQuestions: buildSuggestedQuestions(
-        projectFromPathname,
+      suggestedQuestions: buildSuggestedQuestionsFromState(
+        state,
         localizedKnowledge,
-        language,
-        normalizedPathname,
-        topic,
-        projectIntent
+        language
       ),
     };
   }
@@ -1450,13 +1399,10 @@ export function createPortfolioChatFallbackReply({ language, messages = [], path
         projectIntent
       ),
       source: "fallback",
-      suggestedQuestions: buildSuggestedQuestions(
-        null,
+      suggestedQuestions: buildSuggestedQuestionsFromState(
+        state,
         localizedKnowledge,
-        language,
-        normalizedPathname,
-        topic,
-        projectIntent
+        language
       ),
     };
   }
@@ -1474,13 +1420,10 @@ export function createPortfolioChatFallbackReply({ language, messages = [], path
         projectIntent
       ),
       source: "fallback",
-      suggestedQuestions: buildSuggestedQuestions(
-        null,
+      suggestedQuestions: buildSuggestedQuestionsFromState(
+        state,
         localizedKnowledge,
-        language,
-        normalizedPathname,
-        topic,
-        projectIntent
+        language
       ),
     };
   }
@@ -1498,13 +1441,10 @@ export function createPortfolioChatFallbackReply({ language, messages = [], path
         projectIntent
       ),
       source: "fallback",
-      suggestedQuestions: buildSuggestedQuestions(
-        null,
+      suggestedQuestions: buildSuggestedQuestionsFromState(
+        state,
         localizedKnowledge,
-        language,
-        normalizedPathname,
-        topic,
-        projectIntent
+        language
       ),
     };
   }
@@ -1522,13 +1462,10 @@ export function createPortfolioChatFallbackReply({ language, messages = [], path
         projectIntent
       ),
       source: "fallback",
-      suggestedQuestions: buildSuggestedQuestions(
-        project,
+      suggestedQuestions: buildSuggestedQuestionsFromState(
+        state,
         localizedKnowledge,
-        language,
-        normalizedPathname,
-        topic,
-        projectIntent
+        language
       ),
     };
   }
@@ -1546,13 +1483,10 @@ export function createPortfolioChatFallbackReply({ language, messages = [], path
         projectIntent
       ),
       source: "fallback",
-      suggestedQuestions: buildSuggestedQuestions(
-        null,
+      suggestedQuestions: buildSuggestedQuestionsFromState(
+        state,
         localizedKnowledge,
-        language,
-        normalizedPathname,
-        topic,
-        projectIntent
+        language
       ),
     };
   }
@@ -1561,7 +1495,7 @@ export function createPortfolioChatFallbackReply({ language, messages = [], path
     answer: buildRefusalAnswer(localizedKnowledge),
     relatedPages: projectFromPathname?.relatedPages || ["/work", "/about"],
     relatedProjects: buildRelatedProjects(
-      project,
+      activeProject,
       null,
       localizedKnowledge.projects,
       language,
@@ -1569,13 +1503,10 @@ export function createPortfolioChatFallbackReply({ language, messages = [], path
       projectIntent
     ),
     source: "guardrail",
-    suggestedQuestions: buildSuggestedQuestions(
-      project,
+    suggestedQuestions: buildSuggestedQuestionsFromState(
+      state,
       localizedKnowledge,
-      language,
-      normalizedPathname,
-      topic,
-      projectIntent
+      language
     ),
   };
 }
@@ -1704,6 +1635,42 @@ function buildReferenceAnchor(fallbackReply, language) {
     : `Below is a reference draft synthesized from the on-site knowledge. Treat it as a factual anchor. You may improve tone and structure, but do not contradict it:\n${fallbackReply.answer}`;
 }
 
+function buildConversationStateSummary(state, language) {
+  if (!state) {
+    return language === "zh" ? "当前没有额外状态。" : "There is no extra state.";
+  }
+
+  const activeProjectLabel = state.activeProject?.title
+    ? state.activeProject.title
+    : language === "zh"
+      ? "无"
+      : "none";
+  const currentIntentLabel = state.projectIntent || (language === "zh" ? "无" : "none");
+  const previousIntentLabel =
+    state.previousProjectIntent || (language === "zh" ? "无" : "none");
+  const coveredIntentLabel = state.projectIntentTrail?.length
+    ? state.projectIntentTrail.join(", ")
+    : language === "zh"
+      ? "无"
+      : "none";
+
+  return language === "zh"
+    ? [
+        `当前激活项目：${activeProjectLabel}`,
+        `当前问题意图：${currentIntentLabel}`,
+        `上一层项目意图：${previousIntentLabel}`,
+        `本轮会话已覆盖的项目意图：${coveredIntentLabel}`,
+        "如果上一轮已经在讲同一个项目，请保留承接感，不要把回答写成全新开题。",
+      ].join("\n")
+    : [
+        `Active project: ${activeProjectLabel}`,
+        `Current question intent: ${currentIntentLabel}`,
+        `Previous project intent: ${previousIntentLabel}`,
+        `Project intents already covered in this conversation: ${coveredIntentLabel}`,
+        "If the previous turn was already about the same project, preserve continuity instead of writing the answer like a brand new topic.",
+      ].join("\n");
+}
+
 function formatChatHistory(messages, language) {
   if (!Array.isArray(messages) || !messages.length) {
     return language === "zh" ? "暂无历史对话。" : "No prior conversation.";
@@ -1732,28 +1699,34 @@ function getUserPrompt(
   pathname,
   messages,
   question,
-  fallbackReply
+  fallbackReply,
+  state
 ) {
   const conversationHistory = formatChatHistory(messages, language);
   const referenceAnchor = buildReferenceAnchor(fallbackReply, language);
+  const conversationState = buildConversationStateSummary(state, language);
 
   return language === "zh"
     ? [
         `以下是作品集知识库：\n${buildPromptKnowledge(localizedKnowledge)}`,
         `当前页面：${pathname}`,
         `最近对话：\n${conversationHistory}`,
+        `当前会话状态：\n${conversationState}`,
         referenceAnchor,
         `当前用户问题：${question}`,
         "请结合最近对话理解指代关系，例如“这个项目”“刚才那个”“继续展开”。",
+        "如果当前问题是在承接上一轮，请沿着上一轮继续讲，不要重新从项目总览开始。",
         "请直接给出最终回答。",
       ].join("\n\n")
     : [
         `Here is the portfolio knowledge base:\n${buildPromptKnowledge(localizedKnowledge)}`,
         `Current page: ${pathname}`,
         `Recent conversation:\n${conversationHistory}`,
+        `Current conversation state:\n${conversationState}`,
         referenceAnchor,
         `Current user question: ${question}`,
         'Use the recent conversation to resolve references like "this project", "that one", or "go deeper".',
+        "If the current question continues the previous turn, continue from that layer instead of restarting from a project overview.",
         "Return only the final answer.",
       ].join("\n\n");
 }
@@ -1797,6 +1770,7 @@ async function generateTextWithCompatibleProxy({
   messages,
   pathname,
   question,
+  state,
 }) {
   const response = await fetch(buildResponsesUrl(baseURL), {
     method: "POST",
@@ -1813,7 +1787,8 @@ async function generateTextWithCompatibleProxy({
         pathname,
         messages,
         question,
-        fallbackReply
+        fallbackReply,
+        state
       ),
       store: false,
       temperature: 0.35,
@@ -1855,6 +1830,13 @@ export async function createPortfolioChatReply({
   pathname,
   question,
 }) {
+  const localizedKnowledge = getLocalizedChatValue(portfolioChatKnowledge, language);
+  const state = createConversationState({
+    localizedKnowledge,
+    messages,
+    pathname,
+    question,
+  });
   const fallbackReply = createPortfolioChatFallbackReply({
     language,
     messages,
@@ -1878,7 +1860,6 @@ export async function createPortfolioChatReply({
     };
   }
 
-  const localizedKnowledge = getLocalizedChatValue(portfolioChatKnowledge, language);
   const baseURL = process.env.OPENAI_BASE_URL?.trim();
   const systemPrompt = getSystemPrompt(language);
   const userPrompt = getUserPrompt(
@@ -1887,7 +1868,8 @@ export async function createPortfolioChatReply({
     pathname,
     messages,
     question,
-    fallbackReply
+    fallbackReply,
+    state
   );
 
   try {
@@ -1901,6 +1883,7 @@ export async function createPortfolioChatReply({
           messages,
           pathname,
           question,
+          state,
         })
       : (
           await generateText({
