@@ -6,6 +6,7 @@ import { ArrowUp, RotateCcw, Square, Sparkles, X } from "lucide-react";
 
 import { useLanguage } from "../i18n/LanguageProvider";
 import { isModuleHomePath } from "../lib/is-module-home-path";
+import { getBlogBySlug } from "../lib/get-blog-by-slug";
 import { getLocalizedChatValue, portfolioChatKnowledge } from "../chatbot/portfolio-chat-knowledge";
 import styles from "../styles/portfolio-chatbot.module.css";
 
@@ -119,12 +120,162 @@ function getProjectFromPathname(pathname, localizedKnowledge) {
   );
 }
 
+function getBlogFromPathname(pathname) {
+  if (!pathname.startsWith("/blog/") || pathname === "/blog") {
+    return null;
+  }
+
+  const slug = pathname.replace(/^\/blog\//, "").split("/")[0];
+
+  return getBlogBySlug(slug);
+}
+
+function getBlogDetailQuickReplies(blogPost, language) {
+  const title =
+    typeof blogPost.title === "object"
+      ? blogPost.title[language]
+      : blogPost.title;
+  const category =
+    typeof blogPost.category === "object"
+      ? blogPost.category[language]
+      : blogPost.category;
+  const baseReplies = [
+    {
+      id: `${blogPost.slug}-main-idea`,
+      label:
+        language === "zh"
+          ? `这篇《${title}》最想讲清楚什么？`
+          : `What is the main idea in "${title}"?`,
+      prompt:
+        language === "zh"
+          ? `这篇《${title}》最想讲清楚什么？如果只保留一个核心判断，你会怎么概括？`
+          : `What is the main idea in "${title}"? If you had to keep just one core judgment, how would you summarize it?`,
+    },
+  ];
+
+  if (category === "设计" || category === "DESIGN") {
+    return [
+      ...baseReplies,
+      {
+        id: `${blogPost.slug}-practice-link`,
+        label:
+          language === "zh"
+            ? "这篇文章和你的实际项目有什么关系？"
+            : "How does this article connect to your actual project work?",
+        prompt:
+          language === "zh"
+            ? `这篇《${title}》和你的实际项目有什么关系？它更像方法总结、经验复盘，还是观点表达？`
+            : `How does "${title}" connect to your actual project work? Is it more of a method note, a retrospective, or a point-of-view piece?`,
+      },
+      {
+        id: `${blogPost.slug}-write-motivation`,
+        label:
+          language === "zh"
+            ? "你当时为什么会写这篇？"
+            : "Why did you decide to write this?",
+        prompt:
+          language === "zh"
+            ? `你当时为什么会写《${title}》？是因为工作中的某个具体问题、一次复盘，还是一个长期在意的主题？`
+            : `Why did you decide to write "${title}" at the time? Was it driven by a specific problem at work, a retrospective, or a longer-running theme you care about?`,
+      },
+      {
+        id: `${blogPost.slug}-different-now`,
+        label:
+          language === "zh"
+            ? "如果现在重写，你会改什么？"
+            : "What would you change if you rewrote it now?",
+        prompt:
+          language === "zh"
+            ? `如果现在重写《${title}》，你最想补充、修正或更新的地方是什么？`
+            : `If you rewrote "${title}" today, what would you most want to add, revise, or update?`,
+      },
+    ];
+  }
+
+  if (category === "工具" || category === "TOOLS") {
+    return [
+      ...baseReplies,
+      {
+        id: `${blogPost.slug}-tool-fit`,
+        label:
+          language === "zh"
+            ? "这个工具最开始吸引你的是什么？"
+            : "What attracted you to this tool at first?",
+        prompt:
+          language === "zh"
+            ? `在《${title}》里，这个工具最开始吸引你的到底是什么？是能力、气质，还是它看起来很适合你的工作流？`
+            : `In "${title}", what exactly attracted you to this tool at first? Its capabilities, its character, or how well it seemed to fit your workflow?`,
+      },
+      {
+        id: `${blogPost.slug}-expectation-gap`,
+        label:
+          language === "zh"
+            ? "后来真正的落差出现在哪里？"
+            : "Where did the gap show up later?",
+        prompt:
+          language === "zh"
+            ? `后来真正的落差出现在哪里？是工具本身的问题，还是你对它的期待和真实需求之间有偏差？`
+            : `Where did the real gap show up later? Was it the tool itself, or a mismatch between your expectations and your actual needs?`,
+      },
+      {
+        id: `${blogPost.slug}-decision-now`,
+        label:
+          language === "zh"
+            ? "你现在怎么判断一个工具值不值得长期用？"
+            : "How do you judge whether a tool is worth using long term now?",
+        prompt:
+          language === "zh"
+            ? `经历了《${title}》里的这段过程之后，你现在怎么判断一个工具值不值得长期使用？`
+            : `After the experience described in "${title}", how do you now judge whether a tool is worth using long term?`,
+      },
+    ];
+  }
+
+  return [
+    ...baseReplies,
+    {
+      id: `${blogPost.slug}-why-worth-writing`,
+      label:
+        language === "zh"
+          ? "你为什么觉得这个主题值得写？"
+          : "Why did this topic feel worth writing about?",
+      prompt:
+        language === "zh"
+          ? `你为什么觉得《${title}》这个主题值得专门写下来？它对应的是一个长期问题，还是一次很明确的触发？`
+          : `Why did "${title}" feel worth writing down as a standalone post? Was it tied to a long-running question or to a more specific trigger?`,
+    },
+    {
+      id: `${blogPost.slug}-practical-takeaway`,
+      label:
+        language === "zh"
+          ? "如果只给一个可执行建议，你会给什么？"
+          : "If you gave one practical takeaway, what would it be?",
+      prompt:
+        language === "zh"
+          ? `如果从《${title}》里只保留一个最可执行的建议，你会给什么？`
+          : `If you kept just one actionable takeaway from "${title}", what would it be?`,
+    },
+    {
+      id: `${blogPost.slug}-different-now`,
+      label:
+        language === "zh"
+          ? "如果现在重写，你会补什么？"
+          : "What would you add if you rewrote it now?",
+      prompt:
+        language === "zh"
+          ? `如果现在重写《${title}》，你最想补充的角度或修正的判断是什么？`
+          : `If you rewrote "${title}" today, what angle or judgment would you most want to add or revise?`,
+    },
+  ];
+}
+
 function pickQuickReplies(items, maxCount) {
   return items.filter(Boolean).slice(0, maxCount);
 }
 
 function getContextualQuickReplies(pathname, localizedKnowledge, language) {
   const project = getProjectFromPathname(pathname, localizedKnowledge);
+  const blogPost = getBlogFromPathname(pathname);
 
   if (project) {
     return pickQuickReplies(
@@ -171,6 +322,65 @@ function getContextualQuickReplies(pathname, localizedKnowledge, language) {
     );
   }
 
+  if (blogPost) {
+    return pickQuickReplies(
+      getBlogDetailQuickReplies(blogPost, language),
+      MAX_GLOBAL_QUICK_REPLIES
+    );
+  }
+
+  if (pathname === "/blog") {
+    return pickQuickReplies(
+      [
+        {
+          id: "blog-recent-topics",
+          label:
+            language === "zh"
+              ? "你最近在写哪些主题？"
+              : "What topics have you been writing about recently?",
+          prompt:
+            language === "zh"
+              ? "你最近在写哪些主题？这些内容大致反映了你在关注什么问题？"
+              : "What topics have you been writing about recently, and what do they say about the problems you care about?",
+        },
+        {
+          id: "blog-project-connection",
+          label:
+            language === "zh"
+              ? "这些文章和你的项目实践有什么关系？"
+              : "How do these articles connect to your project practice?",
+          prompt:
+            language === "zh"
+              ? "这些文章和你的项目实践有什么关系？它们更像方法总结、复盘，还是观点输出？"
+              : "How do these articles connect to your project practice? Are they more like method notes, retrospectives, or point-of-view pieces?",
+        },
+        {
+          id: "blog-smartx-article",
+          label:
+            language === "zh"
+              ? "讲讲 SmartX 设计工作流这篇文章"
+              : "Tell me about the SmartX design workflow article",
+          prompt:
+            language === "zh"
+              ? "讲讲 SmartX 设计工作流这篇文章。你当时最想讲清楚的重点是什么？"
+              : "Tell me about the SmartX design workflow article. What was the main idea you most wanted to make clear?",
+        },
+        {
+          id: "blog-writing-style",
+          label:
+            language === "zh"
+              ? "你写文章时最看重什么？"
+              : "What matters most to you when writing?",
+          prompt:
+            language === "zh"
+              ? "你写这些文章时最看重什么？你更在意观点清晰、经验沉淀，还是对团队有用？"
+              : "What matters most to you when writing these posts? Clear perspective, distilled experience, or practical value to a team?",
+        },
+      ],
+      MAX_GLOBAL_QUICK_REPLIES
+    );
+  }
+
   return pickQuickReplies(
     [
       localizedKnowledge.quickReplies.find((item) => item.id === "intro"),
@@ -189,14 +399,20 @@ function getContextualIntro(pathname, language, localizedKnowledge) {
 
   if (pathname === "/work") {
     return language === "zh"
-      ? "你现在在作品页。如果你想更快判断我的代表项目，可以直接问我某个项目的挑战、职责、决策或结果。"
-      : "You're on the Work page. If you want to evaluate my strongest case studies quickly, ask me about a project's challenge, role, decision-making, or outcome.";
+      ? "如果你想更快判断我的代表项目，可以直接问我某个项目的挑战、职责、决策或结果。"
+      : "If you want to evaluate my strongest case studies quickly, ask me about a project's challenge, role, decision-making, or outcome.";
   }
 
   if (pathname === "/about") {
     return language === "zh"
-      ? "你现在在 About 页。如果你是在判断岗位匹配，可以直接问我经历、技能结构、设计方法或联系方式。"
-      : "You're on the About page. If you're evaluating role fit, you can ask about my experience, skill set, design approach, or contact information.";
+      ? "如果你是在判断岗位匹配，可以直接问我经历、技能结构、设计方法或联系方式。"
+      : "If you're evaluating role fit, you can ask about my experience, skill set, design approach, or contact information.";
+  }
+
+  if (pathname === "/blog") {
+    return language === "zh"
+      ? "可以直接问我最近在写什么，或者这些文章和项目实践之间的关系。"
+      : "You can ask what I have been writing lately, or how these articles connect back to my project practice.";
   }
 
   return language === "zh"
@@ -726,11 +942,6 @@ export default function PortfolioChatbot() {
             {messages.map((message, index) => {
               const isLatestMessage = index === messages.length - 1;
               const isInitialWelcomeMessage = isInitialAssistantMessage(message);
-              const previousUserMessageCount = messages
-                .slice(0, index)
-                .filter((item) => item.role === "user").length;
-              const isFollowupUserMessage =
-                message.role === "user" && previousUserMessageCount > 0;
               const isEmptyWelcomeMessage =
                 isInitialWelcomeMessage &&
                 !message.content.trim();
@@ -747,7 +958,6 @@ export default function PortfolioChatbot() {
                   className={[
                     styles.messageBubble,
                     message.role === "user" ? styles.userBubble : styles.assistantBubble,
-                    isFollowupUserMessage ? styles.followupUserBubble : "",
                     isInitialWelcomeMessage && messages.length === 1
                       ? styles.welcomeBubble
                       : "",

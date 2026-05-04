@@ -309,21 +309,11 @@
 .userBubble {
   align-self: flex-end;
   background: color-mix(in srgb, var(--ds-color-surface-muted) 72%, var(--portfolio-color-surface));
-  border: 1px solid color-mix(in srgb, var(--portfolio-color-border-light) 84%, var(--portfolio-color-text-subtle));
+  border: 0;
   border-radius: 1rem;
   max-width: 88%;
   padding: 0.625rem 0.875rem;
   width: fit-content;
-}
-
-.followupUserBubble {
-  border-color: color-mix(in srgb, var(--portfolio-color-text-muted) 42%, var(--portfolio-color-border-light));
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--portfolio-color-surface) 72%, transparent);
-  padding: 0.5625rem 0.8125rem;
-}
-
-.followupUserBubble .messageText {
-  font-size: 0.90625rem;
 }
 
 .userBubble .messageText {
@@ -377,7 +367,9 @@
 }
 
 .suggestedQuestions {
-  display: grid;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
   gap: 0.75rem;
 }
 
@@ -459,24 +451,28 @@
 }
 
 .suggestionButton {
-  background: transparent;
+  background: color-mix(in srgb, var(--portfolio-color-surface) 70%, transparent);
   border: 0;
-  border-radius: 0;
+  border-radius: 0.75rem;
   color: var(--portfolio-color-text-muted);
   cursor: pointer;
+  display: inline-flex;
   font-family: var(--portfolio-font-label);
-  font-size: 0.9375rem;
+  font-size: 0.90625rem;
   font-weight: 400;
-  line-height: 1.5;
-  padding: 0;
+  line-height: 1.4;
+  padding: 0.4375rem 0.625rem;
   text-align: left;
   text-decoration: none;
   transition:
+    background-color 180ms ease,
     color 180ms ease,
     transform 180ms ease;
+  width: fit-content;
 }
 
 .suggestionButton:hover {
+  background: color-mix(in srgb, var(--portfolio-color-surface-warm) 52%, transparent);
   color: var(--portfolio-semantic-body-color);
   transform: translateX(1px);
 }
