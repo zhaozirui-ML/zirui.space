@@ -59,6 +59,46 @@ function serializeChatHistory(messages) {
   }));
 }
 
+function normalizeQuestionKey(question) {
+  return question.trim().toLowerCase().replace(/[\p{P}\p{S}\s]+/gu, "");
+}
+
+function isSimilarQuestion(question, previousQuestion) {
+  const normalizedQuestion = normalizeQuestionKey(question);
+  const normalizedPreviousQuestion = normalizeQuestionKey(previousQuestion);
+
+  if (!normalizedQuestion || !normalizedPreviousQuestion) {
+    return false;
+  }
+
+  return (
+    normalizedQuestion === normalizedPreviousQuestion ||
+    normalizedQuestion.includes(normalizedPreviousQuestion) ||
+    normalizedPreviousQuestion.includes(normalizedQuestion)
+  );
+}
+
+function filterSuggestedQuestionsForHistory(suggestedQuestions, messages) {
+  const askedQuestions = messages
+    .filter((message) => message.role === "user")
+    .map((message) => message.content);
+  const seenQuestions = new Set();
+
+  return suggestedQuestions.filter((question) => {
+    const normalizedQuestion = normalizeQuestionKey(question);
+
+    if (!normalizedQuestion || seenQuestions.has(normalizedQuestion)) {
+      return false;
+    }
+
+    seenQuestions.add(normalizedQuestion);
+
+    return !askedQuestions.some((askedQuestion) =>
+      isSimilarQuestion(question, askedQuestion)
+    );
+  });
+}
+
 function isInitialAssistantMessage(message) {
   return message?.role === "assistant" && message.id?.startsWith("assistant-welcome-");
 }
@@ -342,7 +382,6 @@ export default function PortfolioChatbot() {
     shouldShowWelcomeMessage &&
     messages.length === 1 &&
     isInitialAssistantMessage(messages[0]);
-  const isQuickReplyState = messages.length === 1;
 
   useEffect(() => {
     // 跟随站点语言时，直接重置会话可以避免中英文消息混杂在同一个面板里。
@@ -512,7 +551,10 @@ export default function PortfolioChatbot() {
       const assistantMessageId = createMessageId("assistant");
       const structuredAnswer = splitAnswerIntoReadableParagraphs(data.answer || "", language);
       const relatedProjects = data.relatedProjects || [];
-      const suggestedQuestions = data.suggestedQuestions || [];
+      const suggestedQuestions = filterSuggestedQuestionsForHistory(
+        data.suggestedQuestions || [],
+        [...messages, userMessage]
+      );
 
       setMessages((currentMessages) => [
         ...currentMessages,
@@ -676,16 +718,19 @@ export default function PortfolioChatbot() {
             className={[
               styles.messageViewport,
               isWelcomeState ? styles.messageViewportWelcome : "",
-              isQuickReplyState ? styles.messageViewportQuickReplies : "",
             ]
               .filter(Boolean)
               .join(" ")}
             ref={messageViewportRef}
           >
             {messages.map((message, index) => {
-              const previousMessage = messages[index - 1];
               const isLatestMessage = index === messages.length - 1;
               const isInitialWelcomeMessage = isInitialAssistantMessage(message);
+              const previousUserMessageCount = messages
+                .slice(0, index)
+                .filter((item) => item.role === "user").length;
+              const isFollowupUserMessage =
+                message.role === "user" && previousUserMessageCount > 0;
               const isEmptyWelcomeMessage =
                 isInitialWelcomeMessage &&
                 !message.content.trim();
@@ -702,9 +747,7 @@ export default function PortfolioChatbot() {
                   className={[
                     styles.messageBubble,
                     message.role === "user" ? styles.userBubble : styles.assistantBubble,
-                    message.role === "assistant" && previousMessage?.role === "user"
-                      ? styles.assistantReplyBubble
-                      : "",
+                    isFollowupUserMessage ? styles.followupUserBubble : "",
                     isInitialWelcomeMessage && messages.length === 1
                       ? styles.welcomeBubble
                       : "",

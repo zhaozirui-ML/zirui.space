@@ -104,6 +104,10 @@ function normalizeQuestion(question) {
   return question.trim().toLowerCase();
 }
 
+function normalizeQuestionKey(question) {
+  return normalizeQuestion(question).replace(/[\p{P}\p{S}\s]+/gu, "");
+}
+
 function normalizePathname(pathname) {
   return typeof pathname === "string" && pathname ? pathname : "/";
 }
@@ -704,11 +708,13 @@ function dedupeQuestions(questions) {
   const seen = new Set();
 
   return questions.filter((question) => {
-    if (!question || seen.has(question)) {
+    const normalizedQuestion = normalizeQuestionKey(question);
+
+    if (!question || !normalizedQuestion || seen.has(normalizedQuestion)) {
       return false;
     }
 
-    seen.add(question);
+    seen.add(normalizedQuestion);
     return true;
   });
 }
@@ -716,15 +722,34 @@ function dedupeQuestions(questions) {
 function isSimilarQuestion(question, previousQuestion) {
   const normalizedQuestion = normalizeQuestion(question);
   const normalizedPreviousQuestion = normalizeQuestion(previousQuestion);
+  const normalizedQuestionKey = normalizeQuestionKey(question);
+  const normalizedPreviousQuestionKey = normalizeQuestionKey(previousQuestion);
 
-  if (!normalizedQuestion || !normalizedPreviousQuestion) {
+  if (
+    !normalizedQuestion ||
+    !normalizedPreviousQuestion ||
+    !normalizedQuestionKey ||
+    !normalizedPreviousQuestionKey
+  ) {
     return false;
   }
 
   return (
     normalizedQuestion === normalizedPreviousQuestion ||
+    normalizedQuestionKey === normalizedPreviousQuestionKey ||
     normalizedQuestion.includes(normalizedPreviousQuestion) ||
-    normalizedPreviousQuestion.includes(normalizedQuestion)
+    normalizedPreviousQuestion.includes(normalizedQuestion) ||
+    normalizedQuestionKey.includes(normalizedPreviousQuestionKey) ||
+    normalizedPreviousQuestionKey.includes(normalizedQuestionKey)
+  );
+}
+
+function filterAlreadyAskedQuestions(questions, askedQuestions) {
+  return dedupeQuestions(questions).filter(
+    (question) =>
+      !askedQuestions.some((askedQuestion) =>
+        isSimilarQuestion(question, askedQuestion)
+      )
   );
 }
 
@@ -1212,11 +1237,19 @@ function buildGeneralSuggestionCandidates(knowledge, language, state) {
 }
 
 function buildSuggestedQuestionsFromState(state, knowledge, language) {
+  const askedQuestions = state.askedQuestionSignals.questions;
+
   if (state.activeProject) {
-    return rankProjectFollowupCandidates(state.activeProject, state, language);
+    return filterAlreadyAskedQuestions(
+      rankProjectFollowupCandidates(state.activeProject, state, language),
+      askedQuestions
+    );
   }
 
-  return buildGeneralSuggestionCandidates(knowledge, language, state);
+  return filterAlreadyAskedQuestions(
+    buildGeneralSuggestionCandidates(knowledge, language, state),
+    askedQuestions
+  );
 }
 
 const PROJECT_ANSWER_BUILDERS = {
