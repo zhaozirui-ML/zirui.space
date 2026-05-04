@@ -17,6 +17,7 @@ import {
 } from "../fonts/site-fonts";
 import { LanguageProvider, useLanguage } from "../i18n/LanguageProvider";
 import { isModuleHomePath } from "../lib/is-module-home-path";
+import PortfolioChatbot from "./PortfolioChatbot";
 import SiteChromeFrame from "./SiteChromeFrame";
 import SiteMoonlightBackground from "./SiteMoonlightBackground";
 import SiteSunnyBackground from "./SiteSunnyBackground";
@@ -96,6 +97,7 @@ function SiteLayoutFrame({
       <SiteChromeFrame colorTheme={colorTheme} onThemeToggle={onThemeToggle}>
         {children}
       </SiteChromeFrame>
+      <PortfolioChatbot />
     </div>
   );
 }
