@@ -16,7 +16,7 @@
   color: var(--portfolio-semantic-title-color);
   cursor: pointer;
   display: inline-flex;
-  height: 2.375rem;
+  height: 3.25rem;
   justify-content: center;
   overflow: hidden;
   padding: 0;
@@ -28,7 +28,7 @@
     background-color 220ms ease,
     color 220ms ease,
     box-shadow 240ms cubic-bezier(0.22, 1, 0.36, 1);
-  width: 2.375rem;
+  width: 3.25rem;
   z-index: 40;
 }
 
@@ -712,8 +712,11 @@
 
 @media (max-width: 767px) {
   .floatingTrigger {
-    height: 2.875rem;
-    width: 2.875rem;
+    --portfolio-chatbot-trigger-bottom: max(
+      calc(var(--ds-space-2xs) * 5),
+      env(safe-area-inset-bottom, 0px) + calc(var(--ds-space-2xs) * 4)
+    );
+    --portfolio-chatbot-trigger-right: var(--ds-space-sm);
   }
 
   .chatPanel {

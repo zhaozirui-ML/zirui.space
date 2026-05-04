@@ -368,11 +368,13 @@
       calc(var(--ds-space-2xs) * 5),
       env(safe-area-inset-bottom, 0px) + calc(var(--ds-space-2xs) * 4)
     );
+    justify-content: flex-start;
     padding: 0 var(--ds-space-sm);
   }
 
   .siteHeaderFrame {
-    width: calc(100vw - var(--ds-space-lg) * 2);
+    margin: 0;
+    width: calc(100vw - var(--ds-space-sm) * 2 - 3.25rem - 0.75rem);
   }
 
   .siteHeaderInner {
