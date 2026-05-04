@@ -30,6 +30,8 @@ const CHATBOT_PAGE_LABELS = {
 };
 const MAX_GLOBAL_QUICK_REPLIES = 4;
 const MAX_PROJECT_QUICK_REPLIES = 3;
+const PANEL_CLOSE_DURATION_MS = 300;
+const PANEL_STATE_STORAGE_KEY = "portfolio-chatbot-panel-state";
 
 /**
  * @param {"zh" | "en"} language
@@ -55,6 +57,10 @@ function serializeChatHistory(messages) {
     role: message.role,
     content: message.content,
   }));
+}
+
+function isInitialAssistantMessage(message) {
+  return message?.role === "assistant" && message.id?.startsWith("assistant-welcome-");
 }
 
 function getPageLabel(pathname, language) {
@@ -182,6 +188,73 @@ function getLoadingMessage(language) {
     : "thinking";
 }
 
+function splitAnswerIntoReadableParagraphs(content, language) {
+  const trimmedContent = content.trim();
+
+  if (!trimmedContent || /\n\s*\n/.test(trimmedContent) || /^[-*]\s+/m.test(trimmedContent)) {
+    return trimmedContent;
+  }
+
+  const sentences = trimmedContent.match(/[^。！？.!?]+[。！？.!?]?/g) || [trimmedContent];
+  const shouldSplit =
+    sentences.length > 2 &&
+    trimmedContent.length > (language === "zh" ? 90 : 180);
+
+  if (!shouldSplit) {
+    return trimmedContent;
+  }
+
+  const paragraphSize = language === "zh" ? 2 : 2;
+  const paragraphs = [];
+
+  for (let index = 0; index < sentences.length; index += paragraphSize) {
+    paragraphs.push(sentences.slice(index, index + paragraphSize).join("").trim());
+  }
+
+  return paragraphs.filter(Boolean).join("\n\n");
+}
+
+function tokenizeAssistantAnswer(content, language) {
+  if (!content) {
+    return [];
+  }
+
+  if (language === "zh") {
+    return Array.from(content);
+  }
+
+  return content.match(/\S+\s*|\s+/g) || Array.from(content);
+}
+
+function emphasizeReadableLead(content) {
+  if (content.includes("**")) {
+    return content;
+  }
+
+  const leadPatterns = [
+    "当时最核心的问题是：",
+    "我的处理方式是：",
+    "这里最关键的设计判断是：",
+    "最后产出的结果是：",
+    "如果现在回头看，我对这个项目最明确的反思是：",
+    "邮箱：",
+    "社交平台：",
+    "The core problem was:",
+    "My approach was:",
+    "The most important design judgment here was:",
+    "The final outcome was:",
+    "Looking back, my clearest reflection on this project is:",
+  ];
+
+  const matchedLead = leadPatterns.find((pattern) => content.startsWith(pattern));
+
+  if (!matchedLead) {
+    return content;
+  }
+
+  return `**${matchedLead}**${content.slice(matchedLead.length)}`;
+}
+
 function renderInlineMarkdown(content) {
   const segments = content.split(/(\*\*.*?\*\*)/g);
 
@@ -218,7 +291,7 @@ function renderMessageContent(content) {
         <ul className={styles.messageList} key={`list-${blockIndex}`}>
           {lines.map((line, lineIndex) => (
             <li className={styles.messageListItem} key={`list-item-${blockIndex}-${lineIndex}`}>
-              {renderInlineMarkdown(line.replace(/^[-*]\s+/, ""))}
+              {renderInlineMarkdown(emphasizeReadableLead(line.replace(/^[-*]\s+/, "")))}
             </li>
           ))}
         </ul>
@@ -227,7 +300,7 @@ function renderMessageContent(content) {
 
     return (
       <p className={styles.messageParagraph} key={`paragraph-${blockIndex}`}>
-        {renderInlineMarkdown(block)}
+        {renderInlineMarkdown(emphasizeReadableLead(block))}
       </p>
     );
   });
@@ -246,19 +319,30 @@ export default function PortfolioChatbot() {
   );
   const contextualIntro = getContextualIntro(pathname, language, localizedKnowledge);
   const loadingMessage = getLoadingMessage(language);
-  const [isOpen, setIsOpen] = useState(false);
+  const [panelPhase, setPanelPhase] = useState("closed");
   const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
   /** @type {[ChatMessage[], import("react").Dispatch<import("react").SetStateAction<ChatMessage[]>>]} */
   const [messages, setMessages] = useState(() => [
     createInitialAssistantMessage(language),
   ]);
   const abortControllerRef = useRef(null);
+  const closeTimerRef = useRef(null);
   const composerFieldRef = useRef(null);
   const messageViewportRef = useRef(null);
-  const isWelcomeState = messages.length === 1 && messages[0]?.role === "assistant";
+  const typingResolveRef = useRef(null);
+  const typingTimerRef = useRef(null);
+  const isPanelMounted = panelPhase !== "closed";
+  const isOpen = panelPhase === "opening" || panelPhase === "open";
+  const shouldShowWelcomeMessage = isModuleHomePath(pathname);
+  const isWelcomeState =
+    shouldShowWelcomeMessage &&
+    messages.length === 1 &&
+    isInitialAssistantMessage(messages[0]);
+  const isQuickReplyState = messages.length === 1;
 
   useEffect(() => {
     // 跟随站点语言时，直接重置会话可以避免中英文消息混杂在同一个面板里。
@@ -272,6 +356,24 @@ export default function PortfolioChatbot() {
     setErrorMessage("");
     setStatusMessage("");
   }, [contextualIntro, language, localizedKnowledge, pathname]);
+
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current) {
+        window.clearTimeout(closeTimerRef.current);
+      }
+
+      if (typingTimerRef.current) {
+        window.clearTimeout(typingTimerRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (window.sessionStorage.getItem(PANEL_STATE_STORAGE_KEY) === "open") {
+      setPanelPhase("open");
+    }
+  }, []);
 
   useEffect(() => {
     const viewport = messageViewportRef.current;
@@ -294,6 +396,76 @@ export default function PortfolioChatbot() {
     composerField.style.height = `${composerField.scrollHeight}px`;
   }, [inputValue]);
 
+  function clearTypingTimer() {
+    if (!typingTimerRef.current) {
+      return;
+    }
+
+    window.clearTimeout(typingTimerRef.current);
+    typingTimerRef.current = null;
+
+    typingResolveRef.current?.();
+    typingResolveRef.current = null;
+  }
+
+  function animateAssistantMessage({
+    answer,
+    messageId,
+    relatedProjects,
+    suggestedQuestions,
+  }) {
+    const tokens = tokenizeAssistantAnswer(answer, language);
+
+    setIsTyping(true);
+
+    return new Promise((resolve) => {
+      let tokenIndex = 0;
+      let visibleContent = "";
+      typingResolveRef.current = resolve;
+
+      function commitNextToken() {
+        if (tokenIndex >= tokens.length) {
+          setMessages((currentMessages) =>
+            currentMessages.map((message) =>
+              message.id === messageId
+                ? {
+                    ...message,
+                    content: answer,
+                    relatedProjects,
+                    suggestedQuestions,
+                  }
+                : message
+            )
+          );
+          setIsTyping(false);
+          setIsLoading(false);
+          typingResolveRef.current = null;
+          typingTimerRef.current = null;
+          resolve();
+          return;
+        }
+
+        visibleContent += tokens[tokenIndex];
+        tokenIndex += 1;
+
+        setMessages((currentMessages) =>
+          currentMessages.map((message) =>
+            message.id === messageId
+              ? {
+                  ...message,
+                  content: visibleContent,
+                }
+              : message
+          )
+        );
+
+        typingTimerRef.current = window.setTimeout(commitNextToken, language === "zh" ? 14 : 22);
+      }
+
+      commitNextToken();
+    });
+  }
+
   async function sendQuestion(rawQuestion) {
     const trimmedQuestion = rawQuestion.trim();
 
@@ -313,6 +485,7 @@ export default function PortfolioChatbot() {
     setErrorMessage("");
     setStatusMessage("");
     setIsLoading(true);
+    clearTypingTimer();
     const abortController = new AbortController();
     abortControllerRef.current = abortController;
 
@@ -336,18 +509,29 @@ export default function PortfolioChatbot() {
       }
 
       const data = await response.json();
+      const assistantMessageId = createMessageId("assistant");
+      const structuredAnswer = splitAnswerIntoReadableParagraphs(data.answer || "", language);
+      const relatedProjects = data.relatedProjects || [];
+      const suggestedQuestions = data.suggestedQuestions || [];
 
       setMessages((currentMessages) => [
         ...currentMessages,
         {
-          id: createMessageId("assistant"),
+          id: assistantMessageId,
           role: "assistant",
-          content: data.answer,
-          relatedProjects: data.relatedProjects || [],
-          suggestedQuestions: data.suggestedQuestions || [],
+          content: "",
+          relatedProjects: [],
+          suggestedQuestions: [],
         },
       ]);
       setStatusMessage(data.notice || "");
+
+      await animateAssistantMessage({
+        answer: structuredAnswer,
+        messageId: assistantMessageId,
+        relatedProjects,
+        suggestedQuestions,
+      });
     } catch (error) {
       if (error?.name === "AbortError") {
         setStatusMessage(
@@ -355,10 +539,14 @@ export default function PortfolioChatbot() {
             ? "已暂停本次回答。"
             : "This reply was paused."
         );
+        setIsTyping(false);
+        setIsLoading(false);
         return;
       }
 
       console.error("Portfolio chatbot request failed.", error);
+      setIsTyping(false);
+      setIsLoading(false);
       setErrorMessage(
         language === "zh"
           ? "暂时无法连接聊天服务。你可以稍后再试，或者先使用上面的预设问题浏览作品集内容。"
@@ -366,12 +554,54 @@ export default function PortfolioChatbot() {
       );
     } finally {
       abortControllerRef.current = null;
-      setIsLoading(false);
     }
   }
 
   function handleStopGeneration() {
     abortControllerRef.current?.abort();
+    clearTypingTimer();
+    setIsTyping(false);
+    setIsLoading(false);
+  }
+
+  function clearCloseTimer() {
+    if (!closeTimerRef.current) {
+      return;
+    }
+
+    window.clearTimeout(closeTimerRef.current);
+    closeTimerRef.current = null;
+  }
+
+  function openPanel() {
+    if (panelPhase === "open") {
+      return;
+    }
+
+    window.sessionStorage.setItem(PANEL_STATE_STORAGE_KEY, "open");
+    clearCloseTimer();
+    setPanelPhase("opening");
+
+    // 这里多等一帧，让浏览器先画出“入口态”，再平滑过渡到展开态。
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        setPanelPhase("open");
+      });
+    });
+  }
+
+  function closePanel() {
+    if (panelPhase === "closed" || panelPhase === "closing") {
+      return;
+    }
+
+    window.sessionStorage.setItem(PANEL_STATE_STORAGE_KEY, "closed");
+    clearCloseTimer();
+    setPanelPhase("closing");
+    closeTimerRef.current = window.setTimeout(() => {
+      setPanelPhase("closed");
+      closeTimerRef.current = null;
+    }, PANEL_CLOSE_DURATION_MS);
   }
 
   function resetConversation() {
@@ -385,7 +615,9 @@ export default function PortfolioChatbot() {
     setInputValue("");
     setErrorMessage("");
     setStatusMessage("");
+    setIsTyping(false);
     setIsLoading(false);
+    clearTypingTimer();
   }
 
   function handleSubmit(event) {
@@ -404,12 +636,13 @@ export default function PortfolioChatbot() {
 
   return (
     <>
-      {isOpen ? (
+      {isPanelMounted ? (
         <section
           aria-label={
             language === "zh" ? "作品集导览面板" : "Portfolio guide panel"
           }
           className={styles.chatPanel}
+          data-phase={panelPhase}
         >
           <header className={styles.chatPanelHeader}>
             <button
@@ -432,7 +665,7 @@ export default function PortfolioChatbot() {
             <button
               aria-label={language === "zh" ? "关闭聊天面板" : "Close chat panel"}
               className={styles.iconButton}
-              onClick={() => setIsOpen(false)}
+              onClick={closePanel}
               type="button"
             >
               <X aria-hidden="true" size={16} />
@@ -443,6 +676,7 @@ export default function PortfolioChatbot() {
             className={[
               styles.messageViewport,
               isWelcomeState ? styles.messageViewportWelcome : "",
+              isQuickReplyState ? styles.messageViewportQuickReplies : "",
             ]
               .filter(Boolean)
               .join(" ")}
@@ -450,12 +684,16 @@ export default function PortfolioChatbot() {
           >
             {messages.map((message, index) => {
               const previousMessage = messages[index - 1];
+              const isLatestMessage = index === messages.length - 1;
+              const isInitialWelcomeMessage = isInitialAssistantMessage(message);
               const isEmptyWelcomeMessage =
-                messages.length === 1 &&
-                message.role === "assistant" &&
+                isInitialWelcomeMessage &&
                 !message.content.trim();
+              const shouldHideWelcomeMessage =
+                isInitialWelcomeMessage &&
+                (!shouldShowWelcomeMessage || messages.length > 1);
 
-              if (isEmptyWelcomeMessage) {
+              if (isEmptyWelcomeMessage || shouldHideWelcomeMessage) {
                 return null;
               }
 
@@ -467,7 +705,7 @@ export default function PortfolioChatbot() {
                     message.role === "assistant" && previousMessage?.role === "user"
                       ? styles.assistantReplyBubble
                       : "",
-                    message.role === "assistant" && messages.length === 1
+                    isInitialWelcomeMessage && messages.length === 1
                       ? styles.welcomeBubble
                       : "",
                   ]
@@ -475,7 +713,7 @@ export default function PortfolioChatbot() {
                     .join(" ")}
                   key={message.id}
                 >
-                  {message.role === "assistant" && messages.length === 1 ? (
+                  {isInitialWelcomeMessage && messages.length === 1 ? (
                     <span
                       aria-label={
                         language === "zh" ? "作品集导览小机器人" : "Portfolio guide mascot"
@@ -489,7 +727,7 @@ export default function PortfolioChatbot() {
                     {renderMessageContent(message.content)}
                   </div>
 
-                  {message.role === "assistant" && message.suggestedQuestions?.length ? (
+                  {isLatestMessage && message.role === "assistant" && message.suggestedQuestions?.length ? (
                     <section className={styles.suggestedQuestionSection}>
                       <p className={styles.suggestedQuestionHeading}>
                         {getSuggestedFollowupHeading(language)}
@@ -513,7 +751,7 @@ export default function PortfolioChatbot() {
               );
             })}
 
-            {messages.length === 1 ? (
+            {isWelcomeState || (messages.length === 1 && !shouldShowWelcomeMessage) ? (
               <section className={styles.quickReplySection}>
                 <p className={styles.quickReplyHeading}>
                   {getQuickReplyHeading(language)}
@@ -541,7 +779,7 @@ export default function PortfolioChatbot() {
               </section>
             ) : null}
 
-            {isLoading ? (
+            {isLoading && !isTyping ? (
               <article
                 className={[
                   styles.messageBubble,
@@ -614,23 +852,21 @@ export default function PortfolioChatbot() {
         </section>
       ) : null}
 
-      <button
-        aria-expanded={isOpen}
-        aria-label={
-          isOpen
-            ? language === "zh"
-              ? "关闭作品集导览"
-              : "Close portfolio guide"
-            : language === "zh"
+      {!isOpen ? (
+        <button
+          aria-expanded={isOpen}
+          aria-label={
+            language === "zh"
               ? "打开作品集导览"
               : "Open portfolio guide"
-        }
-        className={styles.floatingTrigger}
-        onClick={() => setIsOpen((currentValue) => !currentValue)}
-        type="button"
-      >
-        <Sparkles aria-hidden="true" size={13} strokeWidth={2} />
-      </button>
+          }
+          className={styles.floatingTrigger}
+          onClick={openPanel}
+          type="button"
+        >
+          <Sparkles aria-hidden="true" size={13} strokeWidth={2} />
+        </button>
+      ) : null}
     </>
   );
 }

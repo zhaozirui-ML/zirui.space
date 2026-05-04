@@ -432,6 +432,31 @@ function isImplicitProjectFollowup(normalizedQuestion) {
   );
 }
 
+function isExplicitProjectReference(normalizedQuestion) {
+  return /这个项目|这个案例|这个作品|该项目|这个页面|this project|this case study|this case|that project/.test(
+    normalizedQuestion
+  );
+}
+
+function shouldUsePathnameProject({
+  explicitProject,
+  isProjectFollowup,
+  normalizedQuestion,
+  projectIntent,
+  projectTopic,
+}) {
+  // 详情页上下文只应该服务于“继续聊这个项目”，不应该劫持联系方式、技能等泛问题。
+  if (explicitProject || projectIntent || projectTopic === "projects") {
+    return true;
+  }
+
+  if (isProjectFollowup || isExplicitProjectReference(normalizedQuestion)) {
+    return true;
+  }
+
+  return false;
+}
+
 function detectIntentFromQuestion(question) {
   return detectProjectIntent(normalizeQuestion(question));
 }
@@ -769,10 +794,20 @@ function createConversationState({
     localizedKnowledge.projects,
     messages
   );
-  const activeProject =
-    explicitProject || projectFromMessages || projectFromPathname || null;
   const projectIntent = detectProjectIntent(normalizedQuestion);
   const topic = detectTopic(normalizedQuestion);
+  const shouldLockToPathnameProject = shouldUsePathnameProject({
+    explicitProject,
+    isProjectFollowup: isImplicitProjectFollowup(normalizedQuestion),
+    normalizedQuestion,
+    projectIntent,
+    projectTopic: topic,
+  });
+  const activeProject =
+    explicitProject ||
+    projectFromMessages ||
+    (shouldLockToPathnameProject ? projectFromPathname : null) ||
+    null;
   const projectIntentTrail = getProjectIntentTrail(messages, activeProject);
 
   return {
@@ -1014,6 +1049,11 @@ function scoreProjectFollowupCandidate(candidate, state, isOnProjectDetail) {
     score -= 34;
   }
 
+  // 这里单独看“同一个项目里已经聊过什么”，避免建议追问反复把用户带回旧角度。
+  if (candidate.intent !== "overview" && state.coveredProjectIntents.has(candidate.intent)) {
+    score -= 44;
+  }
+
   if (
     state.askedQuestionSignals.questions.some((question) =>
       isSimilarQuestion(candidate.question, question)
@@ -1053,6 +1093,13 @@ function rankProjectFollowupCandidates(project, state, language) {
   for (const candidate of rankedCandidates) {
     if (selectedCandidates.length >= 4) {
       break;
+    }
+
+    if (
+      candidate.intent !== "overview" &&
+      state.coveredProjectIntents.has(candidate.intent)
+    ) {
+      continue;
     }
 
     if (candidate.intent !== "overview" && selectedIntents.has(candidate.intent)) {
@@ -1608,7 +1655,9 @@ function getSystemPrompt(language) {
         "回答语气要冷静、可信、简洁，像作品集里的本人分身，而不是客服。",
         "项目名、职责、关键决策、结果这类高确定性信息，优先使用知识库里的原始表达，不要改写成新的事实。",
         "回答项目问题时，优先用第一人称去讲清楚挑战、关键决策、结果，以及我现在回头看的反思。",
-        "默认用 3 到 6 句完成回答；只有在列举经历或技能时才适度使用列表。",
+        "默认用 3 到 6 句完成回答；把回答拆成 2 到 3 个短段落，避免输出一整段长文本。",
+        "当回答包含多个并列点、步骤、项目或能力维度时，优先使用简短列表。",
+        "只在关键标签上使用加粗，例如“核心问题：”“关键判断：”“结果：”“反思：”，不要随机加粗整句。",
       ].join("\n")
     : [
         "You are the Portfolio Chatbot inside a portfolio website and may only answer portfolio-related questions.",
@@ -1619,7 +1668,9 @@ function getSystemPrompt(language) {
         "Keep the tone calm, credible, and concise, like the portfolio owner speaking directly, not a customer support bot.",
         "For project titles, role descriptions, key decisions, and outcomes, prefer the exact source wording from the knowledge base instead of paraphrasing into new facts.",
         "When answering project questions, prefer a first-person explanation that makes the challenge, key decisions, outcome, and retrospective reflection legible.",
-        "Default to 3 to 6 sentences unless a short list is genuinely clearer for experience or skills.",
+        "Default to 3 to 6 sentences; split the answer into 2 to 3 short paragraphs instead of one long block.",
+        "Use a concise list when the answer contains parallel points, steps, projects, or skill areas.",
+        "Use bold only for key labels such as \"Core problem:\", \"Key decision:\", \"Outcome:\", or \"Reflection:\". Do not randomly bold full sentences.",
       ].join("\n");
 }
 
