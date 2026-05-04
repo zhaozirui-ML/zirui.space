@@ -462,12 +462,14 @@
       env(safe-area-inset-bottom, 0px) + calc(var(--ds-space-2xs) * 4)
     );
     justify-content: flex-start;
-    padding: 0 var(--ds-space-sm);
+    padding: 0 var(--portfolio-page-inline-padding-mobile);
   }
 
   .siteHeaderFrame {
     margin: 0;
-    width: calc(100vw - var(--ds-space-sm) * 2 - 3.25rem - 0.75rem);
+    width: calc(
+      100vw - var(--portfolio-page-inline-padding-mobile) * 2 - 3.25rem - 0.75rem
+    );
   }
 
   .siteHeaderInner {
@@ -845,8 +847,8 @@
 
 @media (max-width: 640px) {
   .siteHeaderFrame {
-    padding-left: var(--ds-space-lg);
-    padding-right: var(--ds-space-lg);
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .detailPage {

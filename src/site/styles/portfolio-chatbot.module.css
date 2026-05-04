@@ -29,7 +29,20 @@
     color 220ms ease,
     box-shadow 240ms cubic-bezier(0.22, 1, 0.36, 1);
   width: 3.25rem;
+  will-change: transform, opacity;
   z-index: 40;
+}
+
+.floatingTriggerHidden {
+  opacity: 0;
+  pointer-events: none;
+  transform:
+    translate3d(
+      0,
+      calc(100% + env(safe-area-inset-bottom, 0px) + var(--ds-space-xl)),
+      0
+    )
+    scale(0.98);
 }
 
 .floatingTrigger::before {
@@ -136,7 +149,9 @@
   box-shadow: var(--portfolio-shadow-card);
   opacity: 1;
   pointer-events: auto;
-  transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+  transform:
+    translate3d(0, var(--portfolio-chatbot-drag-offset, 0px), 0)
+    scale3d(1, 1, 1);
 }
 
 .chatPanel[data-phase="closing"] {
@@ -154,6 +169,10 @@
     box-shadow 220ms ease,
     border-radius 220ms ease,
     border-color 180ms ease;
+}
+
+.chatPanel[data-dragging="true"] {
+  transition: none;
 }
 
 .chatPanelHeader {
@@ -716,18 +735,24 @@
       calc(var(--ds-space-2xs) * 5),
       env(safe-area-inset-bottom, 0px) + calc(var(--ds-space-2xs) * 4)
     );
-    --portfolio-chatbot-trigger-right: var(--ds-space-sm);
+    --portfolio-chatbot-trigger-right: var(--portfolio-page-inline-padding-mobile);
   }
 
   .chatPanel {
-    bottom: max(var(--ds-space-md), env(safe-area-inset-bottom, 0px) + var(--ds-space-md));
-    height: min(39rem, calc(100dvh - 2rem));
-    left: 1rem;
-    max-width: none;
+    bottom: 0;
+    height: 90dvh;
+    left: 0;
+    max-width: 100vw;
     min-width: 0;
     resize: none;
-    right: 1rem;
-    transform-origin: calc(100% - 1.4375rem) calc(100% - 1.4375rem);
-    width: auto;
+    right: 0;
+    transform-origin: 50% 100%;
+    width: 100vw;
+  }
+
+  .chatPanel,
+  .chatPanel[data-phase="open"],
+  .chatPanel[data-phase="closing"] {
+    border-radius: var(--portfolio-radius-lg) var(--portfolio-radius-lg) 0 0;
   }
 }

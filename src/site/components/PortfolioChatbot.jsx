@@ -4,6 +4,7 @@ import { Fragment, memo, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { ArrowUp, RotateCcw, Square, Sparkles, X } from "lucide-react";
 
+import useMobileBottomChromeVisibility from "../hooks/useMobileBottomChromeVisibility";
 import { useLanguage } from "../i18n/LanguageProvider";
 import { isModuleHomePath } from "../lib/is-module-home-path";
 import { getBlogBySlug } from "../lib/get-blog-by-slug";
@@ -34,6 +35,7 @@ const MAX_PROJECT_QUICK_REPLIES = 3;
 const MAX_SUGGESTED_FOLLOWUPS = 3;
 const PANEL_CLOSE_DURATION_MS = 300;
 const PANEL_STATE_STORAGE_KEY = "portfolio-chatbot-panel-state";
+const PANEL_SWIPE_CLOSE_THRESHOLD = 96;
 
 /**
  * @param {"zh" | "en"} language
@@ -585,7 +587,9 @@ export default function PortfolioChatbot() {
   );
   const contextualIntro = getContextualIntro(pathname, language, localizedKnowledge);
   const loadingMessage = getLoadingMessage(language);
+  const isBottomChromeHidden = useMobileBottomChromeVisibility();
   const [panelPhase, setPanelPhase] = useState("closed");
+  const [panelDragOffset, setPanelDragOffset] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -599,8 +603,14 @@ export default function PortfolioChatbot() {
   const closeTimerRef = useRef(null);
   const composerFieldRef = useRef(null);
   const messageViewportRef = useRef(null);
+  const panelDragOffsetRef = useRef(0);
   const typingResolveRef = useRef(null);
   const typingTimerRef = useRef(null);
+  const panelGestureRef = useRef({
+    isActive: false,
+    startX: 0,
+    startY: 0,
+  });
   const isPanelMounted = panelPhase !== "closed";
   const isOpen = panelPhase === "opening" || panelPhase === "open";
   const shouldShowWelcomeMessage = isModuleHomePath(pathname);
@@ -646,6 +656,13 @@ export default function PortfolioChatbot() {
       setPanelPhase("open");
     }
   }, []);
+
+  useEffect(() => {
+    if (panelPhase !== "open" && panelDragOffset !== 0) {
+      panelDragOffsetRef.current = 0;
+      setPanelDragOffset(0);
+    }
+  }, [panelDragOffset, panelPhase]);
 
   useEffect(() => {
     const viewport = messageViewportRef.current;
@@ -879,6 +896,97 @@ export default function PortfolioChatbot() {
     }, PANEL_CLOSE_DURATION_MS);
   }
 
+  function resetPanelGesture() {
+    panelGestureRef.current = {
+      isActive: false,
+      startX: 0,
+      startY: 0,
+    };
+    panelDragOffsetRef.current = 0;
+  }
+
+  function isMobilePanelGestureEnabled() {
+    return (
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 767px)").matches
+    );
+  }
+
+  function shouldIgnorePanelGesture(target) {
+    return Boolean(
+      target?.closest("button, textarea, input, a, label")
+    );
+  }
+
+  function handlePanelTouchStart(event) {
+    if (
+      panelPhase !== "open" ||
+      event.touches.length !== 1 ||
+      !isMobilePanelGestureEnabled()
+    ) {
+      resetPanelGesture();
+      return;
+    }
+
+    const target = event.target;
+
+    if (shouldIgnorePanelGesture(target)) {
+      resetPanelGesture();
+      return;
+    }
+
+    if (
+      target instanceof HTMLElement &&
+      target.closest(`.${styles.messageViewport}`) &&
+      (messageViewportRef.current?.scrollTop ?? 0) > 0
+    ) {
+      resetPanelGesture();
+      return;
+    }
+
+    panelGestureRef.current = {
+      isActive: true,
+      startX: event.touches[0].clientX,
+      startY: event.touches[0].clientY,
+    };
+  }
+
+  function handlePanelTouchMove(event) {
+    if (!panelGestureRef.current.isActive || event.touches.length !== 1) {
+      return;
+    }
+
+    const deltaX = event.touches[0].clientX - panelGestureRef.current.startX;
+    const deltaY = event.touches[0].clientY - panelGestureRef.current.startY;
+
+    if (deltaY <= 0 || Math.abs(deltaY) <= Math.abs(deltaX)) {
+      return;
+    }
+
+    event.preventDefault();
+    panelDragOffsetRef.current = deltaY;
+    setPanelDragOffset(deltaY);
+  }
+
+  function handlePanelTouchEnd() {
+    if (!panelGestureRef.current.isActive) {
+      return;
+    }
+
+    const shouldClose = panelDragOffsetRef.current >= PANEL_SWIPE_CLOSE_THRESHOLD;
+
+    resetPanelGesture();
+
+    if (shouldClose) {
+      setPanelDragOffset(0);
+      closePanel();
+      return;
+    }
+
+    panelDragOffsetRef.current = 0;
+    setPanelDragOffset(0);
+  }
+
   function resetConversation() {
     abortControllerRef.current?.abort();
     setMessages([
@@ -909,6 +1017,10 @@ export default function PortfolioChatbot() {
     void sendQuestion(inputValue);
   }
 
+  const chatPanelStyle = /** @type {import("react").CSSProperties} */ ({
+    "--portfolio-chatbot-drag-offset": `${panelDragOffset}px`,
+  });
+
   return (
     <>
       {isPanelMounted ? (
@@ -917,7 +1029,12 @@ export default function PortfolioChatbot() {
             language === "zh" ? "作品集导览面板" : "Portfolio guide panel"
           }
           className={styles.chatPanel}
+          data-dragging={panelDragOffset > 0 ? "true" : "false"}
           data-phase={panelPhase}
+          onTouchEnd={handlePanelTouchEnd}
+          onTouchMove={handlePanelTouchMove}
+          onTouchStart={handlePanelTouchStart}
+          style={chatPanelStyle}
         >
           <header className={styles.chatPanelHeader}>
             <button
@@ -1124,7 +1241,12 @@ export default function PortfolioChatbot() {
               ? "打开作品集导览"
               : "Open portfolio guide"
           }
-          className={styles.floatingTrigger}
+          className={[
+            styles.floatingTrigger,
+            isBottomChromeHidden ? styles.floatingTriggerHidden : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
           onClick={openPanel}
           type="button"
         >
