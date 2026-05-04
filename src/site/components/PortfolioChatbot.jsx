@@ -658,6 +658,29 @@ export default function PortfolioChatbot() {
   }, []);
 
   useEffect(() => {
+    if (!isOpen) {
+      return undefined;
+    }
+
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousBodyOverscrollBehavior = document.body.style.overscrollBehaviorY;
+    const previousDocumentOverscrollBehavior =
+      document.documentElement.style.overscrollBehaviorY;
+
+    // 移动端面板展开后锁住页面背景滚动，避免面板滚动触底时把底层页面一起带动。
+    document.body.style.overflow = "hidden";
+    document.body.style.overscrollBehaviorY = "none";
+    document.documentElement.style.overscrollBehaviorY = "none";
+
+    return () => {
+      document.body.style.overflow = previousBodyOverflow;
+      document.body.style.overscrollBehaviorY = previousBodyOverscrollBehavior;
+      document.documentElement.style.overscrollBehaviorY =
+        previousDocumentOverscrollBehavior;
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
     if (panelPhase !== "open" && panelDragOffset !== 0) {
       panelDragOffsetRef.current = 0;
       setPanelDragOffset(0);
