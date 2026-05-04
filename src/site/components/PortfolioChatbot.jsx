@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, memo, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { ArrowUp, RotateCcw, Square, Sparkles, X } from "lucide-react";
 
@@ -31,6 +31,7 @@ const CHATBOT_PAGE_LABELS = {
 };
 const MAX_GLOBAL_QUICK_REPLIES = 4;
 const MAX_PROJECT_QUICK_REPLIES = 3;
+const MAX_SUGGESTED_FOLLOWUPS = 3;
 const PANEL_CLOSE_DURATION_MS = 300;
 const PANEL_STATE_STORAGE_KEY = "portfolio-chatbot-panel-state";
 
@@ -85,19 +86,21 @@ function filterSuggestedQuestionsForHistory(suggestedQuestions, messages) {
     .map((message) => message.content);
   const seenQuestions = new Set();
 
-  return suggestedQuestions.filter((question) => {
-    const normalizedQuestion = normalizeQuestionKey(question);
+  return suggestedQuestions
+    .filter((question) => {
+      const normalizedQuestion = normalizeQuestionKey(question);
 
-    if (!normalizedQuestion || seenQuestions.has(normalizedQuestion)) {
-      return false;
-    }
+      if (!normalizedQuestion || seenQuestions.has(normalizedQuestion)) {
+        return false;
+      }
 
-    seenQuestions.add(normalizedQuestion);
+      seenQuestions.add(normalizedQuestion);
 
-    return !askedQuestions.some((askedQuestion) =>
-      isSimilarQuestion(question, askedQuestion)
-    );
-  });
+      return !askedQuestions.some((askedQuestion) =>
+        isSimilarQuestion(question, askedQuestion)
+      );
+    })
+    .slice(0, MAX_SUGGESTED_FOLLOWUPS);
 }
 
 function isInitialAssistantMessage(message) {
@@ -426,12 +429,6 @@ function getQuickReplyHeading(language) {
     : "Suggestions";
 }
 
-function getSuggestedFollowupHeading(language) {
-  return language === "zh"
-    ? "继续追问"
-    : "Suggested follow-ups";
-}
-
 function getComposerHint(language) {
   return language === "zh"
     ? "回车发送 · Shift + 回车换行"
@@ -562,6 +559,19 @@ function renderMessageContent(content) {
   });
 }
 
+/**
+ * @param {{ content: string }} props
+ */
+function MessageContentComponent({ content }) {
+  return (
+    <div className={styles.messageText}>
+      {renderMessageContent(content)}
+    </div>
+  );
+}
+
+const MessageContent = memo(MessageContentComponent);
+
 export default function PortfolioChatbot() {
   const pathname = usePathname() || "/";
   const { language } = useLanguage();
@@ -600,6 +610,9 @@ export default function PortfolioChatbot() {
     isInitialAssistantMessage(messages[0]);
 
   useEffect(() => {
+    abortControllerRef.current?.abort();
+    abortControllerRef.current = null;
+    clearTypingTimer();
     // 跟随站点语言时，直接重置会话可以避免中英文消息混杂在同一个面板里。
     setMessages([
       {
@@ -610,10 +623,14 @@ export default function PortfolioChatbot() {
     setInputValue("");
     setErrorMessage("");
     setStatusMessage("");
+    setIsTyping(false);
+    setIsLoading(false);
   }, [contextualIntro, language, localizedKnowledge, pathname]);
 
   useEffect(() => {
     return () => {
+      abortControllerRef.current?.abort();
+
       if (closeTimerRef.current) {
         window.clearTimeout(closeTimerRef.current);
       }
@@ -915,7 +932,7 @@ export default function PortfolioChatbot() {
             <div className={styles.chatPanelHeading}>
               <div className={styles.chatPanelTitleRow}>
                 <h2 className={styles.chatPanelTitle}>
-                  {language === "zh" ? "作品集导览" : "Portfolio guide"}
+                  {language === "zh" ? "问问 Porty" : "Ask Porty"}
                 </h2>
               </div>
             </div>
@@ -976,16 +993,10 @@ export default function PortfolioChatbot() {
                     />
                   ) : null}
 
-                  <div className={styles.messageText}>
-                    {renderMessageContent(message.content)}
-                  </div>
+                  <MessageContent content={message.content} />
 
                   {isLatestMessage && message.role === "assistant" && message.suggestedQuestions?.length ? (
                     <section className={styles.suggestedQuestionSection}>
-                      <p className={styles.suggestedQuestionHeading}>
-                        {getSuggestedFollowupHeading(language)}
-                      </p>
-
                       <div className={styles.suggestedQuestions}>
                         {message.suggestedQuestions.map((suggestion) => (
                           <button

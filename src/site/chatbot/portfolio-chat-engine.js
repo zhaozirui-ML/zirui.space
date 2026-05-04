@@ -1,10 +1,13 @@
 import { createOpenAI } from "@ai-sdk/openai";
 import { generateText } from "ai";
 
+import { blogPosts } from "../data/blog-posts";
 import {
   getLocalizedChatValue,
   portfolioChatKnowledge,
 } from "./portfolio-chat-knowledge";
+
+const MAX_SUGGESTED_QUESTIONS = 3;
 
 const TOPIC_KEYWORDS = {
   contact: [
@@ -77,6 +80,21 @@ const TOPIC_KEYWORDS = {
     "擅长",
     "工具",
   ],
+  blog: [
+    "article",
+    "articles",
+    "blog",
+    "post",
+    "posts",
+    "write",
+    "writing",
+    "wrote",
+    "文章",
+    "博客",
+    "写",
+    "写作",
+    "主题",
+  ],
 };
 
 const OUT_OF_SCOPE_KEYWORDS = [
@@ -127,6 +145,64 @@ function detectProjectByPathname(projects, pathname) {
   }
 
   return projects.find((project) => project.relatedPages.includes(normalizedPathname));
+}
+
+function getLocalizedBlogPosts(language) {
+  return getLocalizedChatValue(blogPosts, language);
+}
+
+function getBlogDetailPath(blogPost) {
+  return blogPost ? `/blog/${blogPost.slug}` : "/blog";
+}
+
+function detectBlogByPathname(blogs, pathname) {
+  const normalizedPathname = normalizePathname(pathname);
+
+  if (!normalizedPathname.startsWith("/blog/")) {
+    return null;
+  }
+
+  const slug = normalizedPathname.replace(/^\/blog\//, "").split("/")[0];
+
+  return blogs.find((blogPost) => blogPost.slug === slug) || null;
+}
+
+function getBlogAliases(blogPost) {
+  return [
+    blogPost.slug,
+    blogPost.title,
+    blogPost.title?.replace(/[《》"'"]/g, ""),
+  ]
+    .filter(Boolean)
+    .map((alias) => String(alias).toLowerCase());
+}
+
+function detectBlog(blogs, normalizedQuestion) {
+  return blogs.find((blogPost) =>
+    getBlogAliases(blogPost).some((alias) => normalizedQuestion.includes(alias))
+  ) || null;
+}
+
+function detectBlogFromMessages(blogs, messages) {
+  if (!Array.isArray(messages) || !messages.length) {
+    return null;
+  }
+
+  const recentMessages = [...messages].slice(-8).reverse();
+
+  for (const message of recentMessages) {
+    if (!message || typeof message.content !== "string") {
+      continue;
+    }
+
+    const matchedBlog = detectBlog(blogs, normalizeQuestion(message.content));
+
+    if (matchedBlog) {
+      return matchedBlog;
+    }
+  }
+
+  return null;
 }
 
 function detectProjectFromMessages(projects, messages) {
@@ -430,6 +506,50 @@ function detectProjectIntent(normalizedQuestion) {
   return null;
 }
 
+function detectBlogIntent(normalizedQuestion) {
+  if (/项目|实践|project|practice|actual work/.test(normalizedQuestion)) {
+    return "practice";
+  }
+
+  if (/为什么|动机|触发|why|motivation|decide/.test(normalizedQuestion)) {
+    return "motivation";
+  }
+
+  if (/重写|补充|修正|更新|rewrite|change|revise|update/.test(normalizedQuestion)) {
+    return "rewrite";
+  }
+
+  if (/工具|吸引|tool|attracted|fit/.test(normalizedQuestion)) {
+    return "tool-fit";
+  }
+
+  if (/落差|期待|差距|gap|expectation/.test(normalizedQuestion)) {
+    return "expectation-gap";
+  }
+
+  if (/长期|值不值得|判断|long term|judge|worth/.test(normalizedQuestion)) {
+    return "tool-judgment";
+  }
+
+  if (/建议|启发|takeaway|actionable|practical/.test(normalizedQuestion)) {
+    return "takeaway";
+  }
+
+  if (/主题|最近在写|写哪些|topics|writing about/.test(normalizedQuestion)) {
+    return "themes";
+  }
+
+  if (/写文章|写作|看重|writing|write these posts/.test(normalizedQuestion)) {
+    return "writing-style";
+  }
+
+  if (/讲清楚|核心|main idea|core judgment|summarize/.test(normalizedQuestion)) {
+    return "main-idea";
+  }
+
+  return null;
+}
+
 function isImplicitProjectFollowup(normalizedQuestion) {
   return /继续|展开|细讲|详细说说|挑一个|选一个|this one|that one|go deeper|tell me more|keep going/.test(
     normalizedQuestion
@@ -563,6 +683,154 @@ function buildMethodAnswer(language) {
     "In practice, I begin by understanding the business goal and information structure, then map the key task flows and role relationships, then use interaction and interface design to explain the complexity, and finally focus on whether the solution can actually ship and keep evolving with the team.",
     "",
     "That is why many of my projects emphasize systematic thinking, delivery rigor, and clear design decision-making at the same time.",
+  ].join("\n");
+}
+
+function buildBlogOverviewAnswer(blogs, language) {
+  const featuredBlogs = blogs.slice(0, 4);
+
+  if (language === "zh") {
+    return [
+      "Blog 里主要记录三类内容：设计工作流、协作方法，以及工具使用后的反思。",
+      "",
+      ...featuredBlogs.map((post) => `- ${post.title}：${post.summary}`),
+      "",
+      "这些文章更像是项目之外的思考补充：它们能说明我怎么复盘工作、沉淀方法，以及判断一个工具或流程是否真的适合长期使用。",
+    ].join("\n");
+  }
+
+  return [
+    "The Blog mainly covers three kinds of writing: design workflow, collaboration methods, and reflections after using tools.",
+    "",
+    ...featuredBlogs.map((post) => `- ${post.title}: ${post.summary}`),
+    "",
+    "I see these posts as supporting context around the project work: they show how I reflect on work, distill methods, and judge whether a tool or process is worth using over time.",
+  ].join("\n");
+}
+
+function getBlogPracticeLink(blogPost, language) {
+  if (blogPost.category === "设计" || blogPost.category === "DESIGN") {
+    return language === "zh"
+      ? "它和项目实践的关系很直接：我不是在抽象地讲设计流程，而是在复盘真实工作里如何拆主线任务、支线协作和设计系统沉淀。"
+      : "Its connection to project practice is direct: it is not an abstract design-process note, but a reflection on how core tasks, supporting collaboration, and design-system work were separated in real work.";
+  }
+
+  if (blogPost.category === "工具" || blogPost.category === "TOOLS") {
+    return language === "zh"
+      ? "它和项目实践的关系更偏工作流判断：我在意的不是工具本身有多强，而是它和真实需求、长期维护成本、迁移成本之间是否匹配。"
+      : "Its connection to project practice is more about workflow judgment: the point is not how powerful the tool is, but whether it fits real needs, long-term maintenance, and migration cost.";
+  }
+
+  return language === "zh"
+    ? "它和项目实践的关系更偏方法沉淀：把一个看似通用的问题，转成我在协作、决策或产品判断里可以反复使用的框架。"
+    : "Its connection to project practice is more about method-building: turning a general topic into a reusable frame for collaboration, decision-making, or product judgment.";
+}
+
+function buildBlogAnswer(blogPost, state, language) {
+  const intent = state.blogIntent || "main-idea";
+
+  if (intent === "practice") {
+    return [
+      language === "zh"
+        ? `《${blogPost.title}》和我的项目实践之间，核心连接点是：`
+        : `The core connection between "${blogPost.title}" and my project work is this:`,
+      "",
+      getBlogPracticeLink(blogPost, language),
+      "",
+      blogPost.detailSummary || blogPost.summary,
+    ].join("\n");
+  }
+
+  if (intent === "motivation") {
+    return language === "zh"
+      ? [
+          `我写《${blogPost.title}》，更多是为了把当时正在经历或反复思考的问题沉淀下来。`,
+          "",
+          blogPost.detailSummary || blogPost.summary,
+          "",
+          "它不是单纯的内容更新，更像是一次阶段性复盘：把工作里的判断、协作里的感受，或者工具使用后的落差整理成可以回看的材料。",
+        ].join("\n")
+      : [
+          `I wrote "${blogPost.title}" mainly to capture a problem I was experiencing or repeatedly thinking about at the time.`,
+          "",
+          blogPost.detailSummary || blogPost.summary,
+          "",
+          "It was less about publishing content for its own sake and more like a retrospective: turning work judgments, collaboration observations, or the gap after using a tool into something I could revisit.",
+        ].join("\n");
+  }
+
+  if (intent === "rewrite") {
+    return language === "zh"
+      ? [
+          `如果现在重写《${blogPost.title}》，我会更明确地补上“后来我怎么判断这件事”。`,
+          "",
+          "早期文章更像记录当时的理解，现在我会更在意把判断条件讲清楚：为什么这个问题重要、它和实际项目或工作流有什么关系，以及这个判断后来有没有变化。",
+        ].join("\n")
+      : [
+          `If I rewrote "${blogPost.title}" today, I would make the later judgment clearer.`,
+          "",
+          "The earlier post records how I understood the topic at the time. Today I would clarify the decision criteria: why the problem matters, how it connects to real project work or workflow, and whether my judgment changed later.",
+        ].join("\n");
+  }
+
+  if (intent === "tool-fit" || intent === "expectation-gap" || intent === "tool-judgment") {
+    return language === "zh"
+      ? [
+          `这篇《${blogPost.title}》里，真正重要的不是工具本身，而是期待和真实需求之间的匹配。`,
+          "",
+          blogPost.detailSummary || blogPost.summary,
+          "",
+          "现在我判断一个工具是否值得长期使用，会更看重三个问题：它是否真的进入日常工作流、迁移和维护成本是否可控，以及它解决的是长期问题还是短期新鲜感。",
+        ].join("\n")
+      : [
+          `In "${blogPost.title}", the real point is not the tool itself, but the match between expectation and actual need.`,
+          "",
+          blogPost.detailSummary || blogPost.summary,
+          "",
+          "Today, when judging whether a tool is worth using long term, I care more about three questions: whether it actually enters my daily workflow, whether migration and maintenance costs are manageable, and whether it solves a lasting problem rather than a short-term novelty.",
+        ].join("\n");
+  }
+
+  if (intent === "takeaway") {
+    return language === "zh"
+      ? [
+          `如果只从《${blogPost.title}》里保留一个可执行建议，我会说：先判断它对应的真实问题，再决定方法或工具。`,
+          "",
+          "很多时候，问题没有被讲清楚时，流程、工具或技巧都会变成表面优化。先把目标、约束和实际使用场景讲清楚，后面的选择才更稳。",
+        ].join("\n")
+      : [
+          `If I kept one practical takeaway from "${blogPost.title}", it would be this: define the real problem first, then choose the method or tool.`,
+          "",
+          "When the problem is unclear, processes, tools, and techniques easily become surface-level optimizations. Clarifying the goal, constraints, and usage context first makes the later choices more stable.",
+        ].join("\n");
+  }
+
+  return language === "zh"
+    ? [
+        `《${blogPost.title}》最想讲清楚的是：${blogPost.detailSummary || blogPost.summary}`,
+        "",
+        getBlogPracticeLink(blogPost, language),
+      ].join("\n")
+    : [
+        `The main idea in "${blogPost.title}" is: ${blogPost.detailSummary || blogPost.summary}`,
+        "",
+        getBlogPracticeLink(blogPost, language),
+      ].join("\n");
+}
+
+function buildBlogWritingStyleAnswer(language) {
+  if (language === "zh") {
+    return [
+      "我写文章时最看重的是把一个具体经验整理成可复用的判断，而不是只记录发生了什么。",
+      "",
+      "如果是设计类文章，我会更关注流程和方法；如果是工具类文章，我会更关注期待、落差和长期使用成本；如果是协作类文章，我会更关注它能不能帮助真实团队更好地沟通和决策。",
+    ].join("\n");
+  }
+
+  return [
+    "When I write, I care most about turning a specific experience into a reusable judgment, not just recording what happened.",
+    "",
+    "For design posts, I focus more on process and method. For tool posts, I focus on expectation, gap, and long-term cost. For collaboration posts, I care about whether the thinking can help a real team communicate and decide better.",
   ].join("\n");
 }
 
@@ -800,6 +1068,7 @@ function getProjectIntentTrail(messages, project) {
 }
 
 function createConversationState({
+  localizedBlogs,
   localizedKnowledge,
   messages,
   pathname,
@@ -807,6 +1076,10 @@ function createConversationState({
 }) {
   const normalizedQuestion = normalizeQuestion(question);
   const normalizedPathname = normalizePathname(pathname);
+  const explicitBlog = detectBlog(localizedBlogs, normalizedQuestion);
+  const blogFromPathname = detectBlogByPathname(localizedBlogs, normalizedPathname);
+  const blogFromMessages = detectBlogFromMessages(localizedBlogs, messages);
+  const blogIntent = detectBlogIntent(normalizedQuestion);
   const explicitProject = detectProject(
     localizedKnowledge.projects,
     normalizedQuestion
@@ -837,8 +1110,12 @@ function createConversationState({
 
   return {
     activeProject,
+    activeBlog: explicitBlog || blogFromPathname || blogFromMessages || null,
     askedQuestionSignals: getAskedQuestionSignals(messages),
+    blogFromPathname,
+    blogIntent,
     coveredProjectIntents: new Set(projectIntentTrail),
+    isBlogContext: normalizedPathname === "/blog" || normalizedPathname.startsWith("/blog/"),
     isProjectFollowup: isImplicitProjectFollowup(normalizedQuestion),
     normalizedPathname,
     normalizedQuestion,
@@ -1116,7 +1393,7 @@ function rankProjectFollowupCandidates(project, state, language) {
   const selectedIntents = new Set();
 
   for (const candidate of rankedCandidates) {
-    if (selectedCandidates.length >= 4) {
+    if (selectedCandidates.length >= MAX_SUGGESTED_QUESTIONS) {
       break;
     }
 
@@ -1144,7 +1421,7 @@ function rankProjectFollowupCandidates(project, state, language) {
   }
 
   for (const candidate of rankedCandidates) {
-    if (selectedCandidates.length >= 4) {
+    if (selectedCandidates.length >= MAX_SUGGESTED_QUESTIONS) {
       break;
     }
 
@@ -1161,13 +1438,27 @@ function rankProjectFollowupCandidates(project, state, language) {
 
   return dedupeQuestions(
     selectedCandidates.map((candidate) => candidate.question)
-  ).slice(0, 4);
+  ).slice(0, MAX_SUGGESTED_QUESTIONS);
 }
 
 function buildGeneralSuggestionCandidates(knowledge, language, state) {
   const quickReplyById = new Map(
     knowledge.quickReplies.map((item) => [item.id, item.prompt])
   );
+
+  if (state.isBlogContext || state.topic === "blog") {
+    return [
+      language === "zh"
+        ? "你最近在写哪些主题？这些内容大致反映了你在关注什么问题？"
+        : "What topics have you been writing about recently, and what do they say about the problems you care about?",
+      language === "zh"
+        ? "这些文章和你的项目实践有什么关系？"
+        : "How do these articles connect to your project practice?",
+      language === "zh"
+        ? "你写这些文章时最看重什么？"
+        : "What matters most to you when writing these posts?",
+    ];
+  }
 
   if (state.topic === "projects") {
     return [
@@ -1236,20 +1527,45 @@ function buildGeneralSuggestionCandidates(knowledge, language, state) {
   return knowledge.quickReplies.slice(0, 3).map((item) => item.prompt);
 }
 
+function buildBlogSuggestionCandidates(blogPost, language) {
+  if (!blogPost) {
+    return [];
+  }
+
+  return [
+    language === "zh"
+      ? `这篇《${blogPost.title}》最想讲清楚什么？`
+      : `What is the main idea in "${blogPost.title}"?`,
+    language === "zh"
+      ? "这篇文章和你的实际项目有什么关系？"
+      : "How does this article connect to your actual project work?",
+    language === "zh"
+      ? "如果现在重写，你会补什么？"
+      : "What would you add if you rewrote it now?",
+  ];
+}
+
 function buildSuggestedQuestionsFromState(state, knowledge, language) {
-  const askedQuestions = state.askedQuestionSignals.questions;
+  const askedQuestions = [...state.askedQuestionSignals.questions, state.question];
 
   if (state.activeProject) {
     return filterAlreadyAskedQuestions(
       rankProjectFollowupCandidates(state.activeProject, state, language),
       askedQuestions
-    );
+    ).slice(0, MAX_SUGGESTED_QUESTIONS);
+  }
+
+  if (state.activeBlog) {
+    return filterAlreadyAskedQuestions(
+      buildBlogSuggestionCandidates(state.activeBlog, language),
+      askedQuestions
+    ).slice(0, MAX_SUGGESTED_QUESTIONS);
   }
 
   return filterAlreadyAskedQuestions(
     buildGeneralSuggestionCandidates(knowledge, language, state),
     askedQuestions
-  );
+  ).slice(0, MAX_SUGGESTED_QUESTIONS);
 }
 
 const PROJECT_ANSWER_BUILDERS = {
@@ -1363,7 +1679,9 @@ export function createPortfolioChatFallbackReply({ language, messages = [], path
   // fallback 的职责是“稳定保底”，不是无限模拟聊天机器人。
   // 这里优先保留正式版也一定需要的几类能力：固定信息、项目摘要、边界拒答和异常兜底。
   const localizedKnowledge = getLocalizedChatValue(portfolioChatKnowledge, language);
+  const localizedBlogs = getLocalizedBlogPosts(language);
   const state = createConversationState({
+    localizedBlogs,
     localizedKnowledge,
     messages,
     pathname,
@@ -1371,9 +1689,12 @@ export function createPortfolioChatFallbackReply({ language, messages = [], path
   });
   const {
     activeProject,
+    activeBlog,
+    blogIntent,
     isProjectFollowup,
     normalizedPathname,
     normalizedQuestion,
+    blogFromPathname,
     projectFromPathname,
     projectIntent,
     topic,
@@ -1385,7 +1706,9 @@ export function createPortfolioChatFallbackReply({ language, messages = [], path
         language === "zh"
           ? "你可以问我关于项目、经历、技能、设计方法或联系方式的问题。"
           : "You can ask me about projects, experience, skills, design approach, or contact information.",
-      relatedPages: projectFromPathname?.relatedPages || ["/work", "/about"],
+      relatedPages: blogFromPathname
+        ? [getBlogDetailPath(blogFromPathname), "/blog"]
+        : projectFromPathname?.relatedPages || ["/work", "/about", "/blog"],
       relatedProjects: buildRelatedProjects(
         projectFromPathname,
         null,
@@ -1436,6 +1759,37 @@ export function createPortfolioChatFallbackReply({ language, messages = [], path
         normalizedPathname,
         projectIntent
       ),
+      source: "fallback",
+      suggestedQuestions: buildSuggestedQuestionsFromState(
+        state,
+        localizedKnowledge,
+        language
+      ),
+    };
+  }
+
+  if (activeBlog) {
+    return {
+      answer: buildBlogAnswer(activeBlog, state, language),
+      relatedPages: [getBlogDetailPath(activeBlog), "/blog"],
+      relatedProjects: [],
+      source: "fallback",
+      suggestedQuestions: buildSuggestedQuestionsFromState(
+        state,
+        localizedKnowledge,
+        language
+      ),
+    };
+  }
+
+  if (topic === "blog" || state.isBlogContext) {
+    return {
+      answer:
+        blogIntent === "writing-style"
+          ? buildBlogWritingStyleAnswer(language)
+          : buildBlogOverviewAnswer(localizedBlogs, language),
+      relatedPages: ["/blog"],
+      relatedProjects: [],
       source: "fallback",
       suggestedQuestions: buildSuggestedQuestionsFromState(
         state,
@@ -1591,9 +1945,18 @@ export function createPortfolioChatFallbackReply({ language, messages = [], path
   };
 }
 
-function buildPromptKnowledge(localizedKnowledge) {
+function buildPromptKnowledge(localizedKnowledge, language) {
+  const localizedBlogs = getLocalizedBlogPosts(language);
+
   return JSON.stringify(
     {
+      blogs: localizedBlogs.map((post) => ({
+        category: post.category,
+        detailSummary: post.detailSummary,
+        slug: post.slug,
+        summary: post.summary,
+        title: post.title,
+      })),
       contact: localizedKnowledge.contact,
       experience: localizedKnowledge.experience,
       faq: localizedKnowledge.faq,
@@ -1681,7 +2044,7 @@ function getSystemPrompt(language) {
   return language === "zh"
     ? [
         "你是作品集网站里的 Portfolio Chatbot，只能回答这个作品集相关的问题。",
-        "允许回答的话题只有：个人介绍、项目介绍、工作经历、设计方法、技能、联系方式。",
+        "允许回答的话题只有：个人介绍、项目介绍、工作经历、设计方法、技能、联系方式、作品集文章。",
         "如果问题超出范围，必须礼貌拒答，并把话题引回作品集。",
         "只能基于提供的知识回答，不要编造没有给出的事实。",
         "如果知识里没有明确答案，要坦诚说明这个作品集里没有公开写到。",
@@ -1694,7 +2057,7 @@ function getSystemPrompt(language) {
       ].join("\n")
     : [
         "You are the Portfolio Chatbot inside a portfolio website and may only answer portfolio-related questions.",
-        "Allowed topics are only: profile, projects, experience, design approach, skills, and contact.",
+        "Allowed topics are only: profile, projects, experience, design approach, skills, contact, and portfolio articles.",
         "If the question is out of scope, politely refuse and steer the conversation back to the portfolio.",
         "Answer only from the provided knowledge and do not invent facts.",
         "If the answer is not clearly covered by the knowledge, say that it is not publicly specified in the portfolio.",
@@ -1729,6 +2092,11 @@ function buildConversationStateSummary(state, language) {
     : language === "zh"
       ? "无"
       : "none";
+  const activeBlogLabel = state.activeBlog?.title
+    ? state.activeBlog.title
+    : language === "zh"
+      ? "无"
+      : "none";
   const currentIntentLabel = state.projectIntent || (language === "zh" ? "无" : "none");
   const previousIntentLabel =
     state.previousProjectIntent || (language === "zh" ? "无" : "none");
@@ -1741,6 +2109,7 @@ function buildConversationStateSummary(state, language) {
   return language === "zh"
     ? [
         `当前激活项目：${activeProjectLabel}`,
+        `当前激活文章：${activeBlogLabel}`,
         `当前问题意图：${currentIntentLabel}`,
         `上一层项目意图：${previousIntentLabel}`,
         `本轮会话已覆盖的项目意图：${coveredIntentLabel}`,
@@ -1748,6 +2117,7 @@ function buildConversationStateSummary(state, language) {
       ].join("\n")
     : [
         `Active project: ${activeProjectLabel}`,
+        `Active article: ${activeBlogLabel}`,
         `Current question intent: ${currentIntentLabel}`,
         `Previous project intent: ${previousIntentLabel}`,
         `Project intents already covered in this conversation: ${coveredIntentLabel}`,
@@ -1792,7 +2162,7 @@ function getUserPrompt(
 
   return language === "zh"
     ? [
-        `以下是作品集知识库：\n${buildPromptKnowledge(localizedKnowledge)}`,
+        `以下是作品集知识库：\n${buildPromptKnowledge(localizedKnowledge, language)}`,
         `当前页面：${pathname}`,
         `最近对话：\n${conversationHistory}`,
         `当前会话状态：\n${conversationState}`,
@@ -1803,7 +2173,7 @@ function getUserPrompt(
         "请直接给出最终回答。",
       ].join("\n\n")
     : [
-        `Here is the portfolio knowledge base:\n${buildPromptKnowledge(localizedKnowledge)}`,
+        `Here is the portfolio knowledge base:\n${buildPromptKnowledge(localizedKnowledge, language)}`,
         `Current page: ${pathname}`,
         `Recent conversation:\n${conversationHistory}`,
         `Current conversation state:\n${conversationState}`,
@@ -1915,7 +2285,9 @@ export async function createPortfolioChatReply({
   question,
 }) {
   const localizedKnowledge = getLocalizedChatValue(portfolioChatKnowledge, language);
+  const localizedBlogs = getLocalizedBlogPosts(language);
   const state = createConversationState({
+    localizedBlogs,
     localizedKnowledge,
     messages,
     pathname,

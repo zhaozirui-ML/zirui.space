@@ -8,24 +8,17 @@
     env(safe-area-inset-right, 0px) + calc(var(--ds-space-2xs) * 6)
   );
   align-items: center;
-  background:
-    linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--portfolio-color-surface) 96%, transparent),
-      color-mix(in srgb, var(--portfolio-color-surface-warm) 90%, transparent)
-    );
+  background: var(--portfolio-color-surface);
   border: 1px solid var(--portfolio-color-border-light);
   border-radius: 999px;
   bottom: var(--portfolio-chatbot-trigger-bottom);
-  box-shadow:
-    0 4px 8px rgb(34 38 42 / 0.12),
-    0 0 0 1px color-mix(in srgb, var(--portfolio-color-surface) 76%, transparent),
-    inset 0 1px 0 color-mix(in srgb, var(--portfolio-color-surface) 90%, transparent);
-  color: var(--portfolio-color-text-muted);
+  box-shadow: 0 4px 8px rgb(34 38 42 / 0.12);
+  color: var(--portfolio-semantic-title-color);
   cursor: pointer;
   display: inline-flex;
   height: 2.375rem;
   justify-content: center;
+  overflow: hidden;
   padding: 0;
   position: fixed;
   right: var(--portfolio-chatbot-trigger-right);
@@ -40,33 +33,24 @@
 }
 
 .floatingTrigger::before {
-  background: color-mix(in srgb, var(--portfolio-color-accent-brand) 14%, transparent);
+  background: var(--portfolio-color-surface-warm);
   border-radius: inherit;
   content: "";
-  inset: -0.375rem;
+  inset: 0;
   opacity: 0;
   position: absolute;
   transform: scale(0.82);
   transition:
     opacity 260ms ease,
     transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
-  z-index: -1;
+  z-index: 0;
 }
 
 .floatingTrigger:hover {
-  background:
-    linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--portfolio-color-accent-brand) 20%, var(--portfolio-color-surface)),
-      color-mix(in srgb, var(--portfolio-color-accent-brand) 12%, var(--portfolio-color-surface-warm))
-    );
-  border-color: color-mix(in srgb, var(--portfolio-color-accent-brand) 46%, var(--portfolio-color-border-strong));
-  box-shadow:
-    0 6px 12px rgb(34 38 42 / 0.14),
-    0 0 0 1px color-mix(in srgb, var(--portfolio-color-accent-brand) 12%, transparent),
-    inset 0 1px 0 color-mix(in srgb, var(--portfolio-color-surface) 92%, transparent);
-  color: var(--portfolio-color-accent-brand);
-  transform: translateY(-2px) scale(1.04);
+  border-color: var(--portfolio-color-border-light);
+  box-shadow: 0 4px 8px rgb(34 38 42 / 0.12);
+  color: var(--portfolio-semantic-title-color);
+  transform: translateY(-1px);
 }
 
 .floatingTrigger:hover::before {
@@ -79,21 +63,18 @@
 }
 
 .floatingTrigger[aria-expanded="true"] {
-  background:
-    linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--portfolio-color-accent-brand) 18%, var(--portfolio-color-surface)),
-      color-mix(in srgb, var(--portfolio-color-accent-brand) 10%, var(--portfolio-color-surface-warm))
-    );
-  border-color: color-mix(in srgb, var(--portfolio-color-accent-brand) 42%, var(--portfolio-color-border-strong));
-  color: var(--portfolio-color-accent-brand);
+  background: var(--portfolio-color-surface);
+  border-color: var(--portfolio-color-border-light);
+  color: var(--portfolio-semantic-title-color);
 }
 
 .floatingTrigger svg {
+  position: relative;
   transform-origin: center;
   transition:
     transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
     opacity 180ms ease;
+  z-index: 1;
 }
 
 .floatingTrigger:hover svg {
@@ -199,9 +180,8 @@
 
 .chatPanelTitle {
   background: color-mix(in srgb, var(--portfolio-color-surface) 96%, transparent);
-  border: 1px solid color-mix(in srgb, var(--portfolio-color-border-light) 92%, transparent);
+  border: 0;
   border-radius: 999px;
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--portfolio-color-surface) 90%, transparent);
   color: var(--portfolio-semantic-title-color);
   font-family: var(--portfolio-font-body);
   font-size: 0.90625rem;
@@ -308,7 +288,7 @@
 
 .userBubble {
   align-self: flex-end;
-  background: color-mix(in srgb, var(--ds-color-surface-muted) 72%, var(--portfolio-color-surface));
+  background: var(--portfolio-color-accent-brand);
   border: 0;
   border-radius: 1rem;
   max-width: 88%;
@@ -317,6 +297,7 @@
 }
 
 .userBubble .messageText {
+  color: var(--portfolio-color-text-inverted);
   line-height: 1.5;
 }
 
@@ -381,18 +362,7 @@
 
 .suggestedQuestionSection {
   display: grid;
-  gap: 0.8125rem;
-  padding-top: 1.375rem;
-}
-
-.suggestedQuestionHeading {
-  color: var(--portfolio-semantic-title-color);
-  font-family: var(--portfolio-font-label);
-  font-size: 0.9375rem;
-  font-weight: 600;
-  letter-spacing: 0;
-  line-height: 1.35;
-  margin: 0;
+  padding-top: 0.75rem;
 }
 
 .quickReplySection {
@@ -451,10 +421,10 @@
 }
 
 .suggestionButton {
-  background: color-mix(in srgb, var(--portfolio-color-surface) 70%, transparent);
+  background: var(--portfolio-color-surface);
   border: 0;
   border-radius: 0.75rem;
-  color: var(--portfolio-color-text-muted);
+  color: color-mix(in srgb, var(--portfolio-semantic-body-color) 78%, var(--portfolio-color-text-muted));
   cursor: pointer;
   display: inline-flex;
   font-family: var(--portfolio-font-label);
@@ -472,8 +442,8 @@
 }
 
 .suggestionButton:hover {
-  background: color-mix(in srgb, var(--portfolio-color-surface-warm) 52%, transparent);
-  color: var(--portfolio-semantic-body-color);
+  background: color-mix(in srgb, var(--portfolio-color-surface) 64%, var(--portfolio-color-surface-warm));
+  color: color-mix(in srgb, var(--portfolio-semantic-body-color) 88%, var(--portfolio-color-text-muted));
   transform: translateX(1px);
 }
 
