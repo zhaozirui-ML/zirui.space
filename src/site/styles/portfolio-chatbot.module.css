@@ -144,6 +144,25 @@
   z-index: 40;
 }
 
+.chatPanelBackdrop {
+  background: transparent;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  transition: opacity 220ms ease;
+  z-index: 35;
+}
+
+.chatPanelBackdrop[data-phase="open"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.chatPanelBackdrop[data-phase="closing"] {
+  opacity: 0;
+}
+
 .chatPanel[data-phase="open"] {
   border-radius: var(--portfolio-radius-lg);
   box-shadow: var(--portfolio-shadow-card);
@@ -198,21 +217,24 @@
 }
 
 .chatPanelTitle {
-  background: color-mix(in srgb, var(--portfolio-color-surface) 96%, transparent);
+  background: color-mix(in srgb, var(--portfolio-color-surface) 94%, var(--portfolio-color-surface-warm));
   border: 0;
   border-radius: 999px;
   color: var(--portfolio-semantic-title-color);
   font-family: var(--portfolio-font-body);
-  font-size: 0.90625rem;
+  font-size: 1rem;
   font-weight: 600;
   line-height: 1.4;
   margin: 0;
-  padding: 0.625rem 1.375rem;
+  padding: 0.875rem 1.625rem;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--portfolio-color-surface) 92%, transparent),
+    0 0.5rem 1.5rem color-mix(in srgb, var(--portfolio-color-surface-warm) 68%, transparent);
 }
 
 .iconButton {
   align-items: center;
-  background: color-mix(in srgb, var(--portfolio-color-surface) 92%, var(--portfolio-color-surface-warm));
+  background: color-mix(in srgb, var(--portfolio-color-surface) 96%, var(--portfolio-color-surface-warm));
   border: 1px solid var(--portfolio-color-border-light);
   border-radius: 999px;
   color: var(--portfolio-color-text-muted);
@@ -253,7 +275,7 @@
 }
 
 .messageViewportWelcome {
-  padding-top: 2.75rem;
+  padding-top: 3rem;
 }
 
 .messageBubble {
@@ -283,8 +305,8 @@
 }
 
 .welcomeBubble {
-  gap: 0.9375rem;
-  padding: 0.75rem 0.25rem 0.625rem;
+  gap: 1rem;
+  padding: 1rem 0.25rem 0.75rem;
 }
 
 .welcomeBubble .messageText {
@@ -389,15 +411,15 @@
 .quickReplySection {
   align-content: start;
   display: grid;
-  gap: 0.75rem;
+  gap: 0.875rem;
   margin-top: auto;
-  padding: 0.5rem 0.25rem 1rem;
+  padding: 1rem 0.125rem 1.25rem;
 }
 
 .quickReplyHeading {
   color: var(--portfolio-semantic-title-color);
   font-family: var(--portfolio-font-label);
-  font-size: 0.9375rem;
+  font-size: 1.125rem;
   font-weight: 600;
   letter-spacing: 0;
   line-height: 1.35;
@@ -413,12 +435,12 @@
   cursor: pointer;
   display: inline-flex;
   font-family: var(--portfolio-font-label);
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-weight: 400;
   gap: 0.75rem;
   justify-content: space-between;
   line-height: 1.45;
-  padding: 0.4375rem 0.125rem;
+  padding: 0.5rem 0.125rem;
   text-align: left;
   transition:
     color 180ms ease,
@@ -501,7 +523,7 @@
   display: grid;
   gap: 0.75rem;
   opacity: 0;
-  padding: 1rem 1rem;
+  padding: 1rem 1rem 1rem;
   transform: translateY(1.25rem);
   transition:
     opacity 240ms ease,
@@ -550,7 +572,7 @@
 .composerFieldWrap {
   background: color-mix(in srgb, var(--portfolio-color-surface) 99%, transparent);
   border: 1px solid color-mix(in srgb, var(--portfolio-color-border-light) 96%, transparent);
-  border-radius: 1.375rem;
+  border-radius: 1.625rem;
   box-shadow:
     var(--portfolio-shadow-card),
     inset 0 1px 0 color-mix(in srgb, var(--portfolio-color-surface) 90%, transparent);
@@ -732,6 +754,10 @@
 }
 
 @media (max-width: 767px) {
+  .chatPanelBackdrop {
+    background: color-mix(in srgb, var(--portfolio-semantic-title-color) 16%, transparent);
+  }
+
   .floatingTrigger {
     --portfolio-chatbot-trigger-bottom: max(
       calc(var(--ds-space-2xs) * 5),
@@ -741,13 +767,26 @@
   }
 
   .chatPanel {
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--portfolio-color-surface) 98%, transparent),
+        color-mix(in srgb, var(--portfolio-color-surface-warm) 84%, transparent)
+      );
+    border: 1px solid color-mix(in srgb, var(--portfolio-color-border-light) 92%, transparent);
     bottom: 0;
-    height: 90dvh;
+    box-shadow:
+      0 1.5rem 3.5rem color-mix(in srgb, var(--portfolio-semantic-title-color) 18%, transparent),
+      inset 0 1px 0 color-mix(in srgb, var(--portfolio-color-surface) 94%, transparent);
+    height: calc(100dvh - max(env(safe-area-inset-top, 0px) + 4.75rem, 4.75rem));
     left: 0;
-    max-width: 100vw;
+    max-height: calc(100dvh - max(env(safe-area-inset-top, 0px) + 4.75rem, 4.75rem));
+    max-width: none;
     min-width: 0;
     resize: none;
     right: 0;
+    top: auto;
+    transform: translate3d(0, 1.5rem, 0) scale3d(0.985, 0.985, 1);
     transform-origin: 50% 100%;
     width: 100vw;
   }
@@ -755,6 +794,53 @@
   .chatPanel,
   .chatPanel[data-phase="open"],
   .chatPanel[data-phase="closing"] {
-    border-radius: var(--portfolio-radius-lg) var(--portfolio-radius-lg) 0 0;
+    border-radius: 2rem 2rem 0 0;
+  }
+
+  .chatPanelHeader {
+    grid-template-columns: 3.25rem minmax(0, 1fr) 3.25rem;
+    padding: 1.375rem 1rem 1rem;
+  }
+
+  .messageViewport {
+    padding: 1.5rem 1.25rem 1rem;
+  }
+
+  .chatPanelFooter {
+    padding: 0.875rem 1rem 1rem;
+  }
+
+  .composerFieldWrap {
+    min-height: 11rem;
+    padding-top: 0.125rem;
+  }
+
+  .composerField {
+    min-height: 5.5rem;
+    padding-top: 1.125rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .iconButton {
+    height: 3.25rem;
+    width: 3.25rem;
+  }
+
+  .chatPanelTitle {
+    font-size: 0.96875rem;
+    padding: 0.9375rem 1.875rem;
+  }
+
+  .composerHint {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .chatPanelBackdrop,
+  .chatPanelBackdrop[data-phase="open"],
+  .chatPanelBackdrop[data-phase="closing"] {
+    opacity: 0;
+    pointer-events: none;
   }
 }

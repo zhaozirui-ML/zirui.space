@@ -1047,213 +1047,222 @@ export default function PortfolioChatbot() {
   return (
     <>
       {isPanelMounted ? (
-        <section
-          aria-label={
-            language === "zh" ? "作品集导览面板" : "Portfolio guide panel"
-          }
-          className={styles.chatPanel}
-          data-dragging={panelDragOffset > 0 ? "true" : "false"}
-          data-phase={panelPhase}
-          onTouchEnd={handlePanelTouchEnd}
-          onTouchMove={handlePanelTouchMove}
-          onTouchStart={handlePanelTouchStart}
-          style={chatPanelStyle}
-        >
-          <header className={styles.chatPanelHeader}>
-            <button
-              aria-label={language === "zh" ? "新建对话" : "New chat"}
-              className={styles.iconButton}
-              onClick={resetConversation}
-              type="button"
-            >
-              <RotateCcw aria-hidden="true" size={15} />
-            </button>
-
-            <div className={styles.chatPanelHeading}>
-              <div className={styles.chatPanelTitleRow}>
-                <h2 className={styles.chatPanelTitle}>
-                  {language === "zh" ? "问问 Porty" : "Ask Porty"}
-                </h2>
-              </div>
-            </div>
-
-            <button
-              aria-label={language === "zh" ? "关闭聊天面板" : "Close chat panel"}
-              className={styles.iconButton}
-              onClick={closePanel}
-              type="button"
-            >
-              <X aria-hidden="true" size={16} />
-            </button>
-          </header>
-
+        <>
           <div
-            className={[
-              styles.messageViewport,
-              isWelcomeState ? styles.messageViewportWelcome : "",
-            ]
-              .filter(Boolean)
-              .join(" ")}
-            ref={messageViewportRef}
+            aria-hidden="true"
+            className={styles.chatPanelBackdrop}
+            data-phase={panelPhase}
+            onClick={closePanel}
+          />
+
+          <section
+            aria-label={
+              language === "zh" ? "作品集导览面板" : "Portfolio guide panel"
+            }
+            className={styles.chatPanel}
+            data-dragging={panelDragOffset > 0 ? "true" : "false"}
+            data-phase={panelPhase}
+            onTouchEnd={handlePanelTouchEnd}
+            onTouchMove={handlePanelTouchMove}
+            onTouchStart={handlePanelTouchStart}
+            style={chatPanelStyle}
           >
-            {messages.map((message, index) => {
-              const isLatestMessage = index === messages.length - 1;
-              const isInitialWelcomeMessage = isInitialAssistantMessage(message);
-              const isEmptyWelcomeMessage =
-                isInitialWelcomeMessage &&
-                !message.content.trim();
-              const shouldHideWelcomeMessage =
-                isInitialWelcomeMessage &&
-                (!shouldShowWelcomeMessage || messages.length > 1);
+            <header className={styles.chatPanelHeader}>
+              <button
+                aria-label={language === "zh" ? "新建对话" : "New chat"}
+                className={styles.iconButton}
+                onClick={resetConversation}
+                type="button"
+              >
+                <RotateCcw aria-hidden="true" size={15} />
+              </button>
 
-              if (isEmptyWelcomeMessage || shouldHideWelcomeMessage) {
-                return null;
-              }
+              <div className={styles.chatPanelHeading}>
+                <div className={styles.chatPanelTitleRow}>
+                  <h2 className={styles.chatPanelTitle}>
+                    {language === "zh" ? "问问 Porty" : "Ask Porty"}
+                  </h2>
+                </div>
+              </div>
 
-              return (
+              <button
+                aria-label={language === "zh" ? "关闭聊天面板" : "Close chat panel"}
+                className={styles.iconButton}
+                onClick={closePanel}
+                type="button"
+              >
+                <X aria-hidden="true" size={16} />
+              </button>
+            </header>
+
+            <div
+              className={[
+                styles.messageViewport,
+                isWelcomeState ? styles.messageViewportWelcome : "",
+              ]
+                .filter(Boolean)
+                .join(" ")}
+              ref={messageViewportRef}
+            >
+              {messages.map((message, index) => {
+                const isLatestMessage = index === messages.length - 1;
+                const isInitialWelcomeMessage = isInitialAssistantMessage(message);
+                const isEmptyWelcomeMessage =
+                  isInitialWelcomeMessage &&
+                  !message.content.trim();
+                const shouldHideWelcomeMessage =
+                  isInitialWelcomeMessage &&
+                  (!shouldShowWelcomeMessage || messages.length > 1);
+
+                if (isEmptyWelcomeMessage || shouldHideWelcomeMessage) {
+                  return null;
+                }
+
+                return (
+                  <article
+                    className={[
+                      styles.messageBubble,
+                      message.role === "user" ? styles.userBubble : styles.assistantBubble,
+                      isInitialWelcomeMessage && messages.length === 1
+                        ? styles.welcomeBubble
+                        : "",
+                    ]
+                      .filter(Boolean)
+                      .join(" ")}
+                    key={message.id}
+                  >
+                    {isInitialWelcomeMessage && messages.length === 1 ? (
+                      <span
+                        aria-label={
+                          language === "zh" ? "作品集导览小机器人" : "Portfolio guide mascot"
+                        }
+                        className={styles.chatMascot}
+                        role="img"
+                      />
+                    ) : null}
+
+                    <MessageContent content={message.content} />
+
+                    {isLatestMessage && message.role === "assistant" && message.suggestedQuestions?.length ? (
+                      <section className={styles.suggestedQuestionSection}>
+                        <div className={styles.suggestedQuestions}>
+                          {message.suggestedQuestions.map((suggestion) => (
+                            <button
+                              className={styles.suggestionButton}
+                              key={suggestion}
+                              onClick={() => void sendQuestion(suggestion)}
+                              type="button"
+                            >
+                              {suggestion}
+                            </button>
+                          ))}
+                        </div>
+                      </section>
+                    ) : null}
+                  </article>
+                );
+              })}
+
+              {isWelcomeState || (messages.length === 1 && !shouldShowWelcomeMessage) ? (
+                <section className={styles.quickReplySection}>
+                  <p className={styles.quickReplyHeading}>
+                    {getQuickReplyHeading(language)}
+                  </p>
+
+                  <div className={styles.quickReplyList}>
+                    {quickReplies.map((item, index) => (
+                      <button
+                        className={[
+                          styles.quickReplyButton,
+                          index === 0 ? styles.quickReplyButtonPrimary : "",
+                        ]
+                          .filter(Boolean)
+                          .join(" ")}
+                        key={item.id}
+                        onClick={() => void sendQuestion(item.prompt)}
+                        type="button"
+                      >
+                        <span className={styles.quickReplyButtonInner}>
+                          <span>{item.label}</span>
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </section>
+              ) : null}
+
+              {isLoading && !isTyping ? (
                 <article
                   className={[
                     styles.messageBubble,
-                    message.role === "user" ? styles.userBubble : styles.assistantBubble,
-                    isInitialWelcomeMessage && messages.length === 1
-                      ? styles.welcomeBubble
-                      : "",
-                  ]
-                    .filter(Boolean)
-                    .join(" ")}
-                  key={message.id}
+                    styles.assistantBubble,
+                    styles.loadingMessageBubble,
+                  ].join(" ")}
+                  role="status"
                 >
-                  {isInitialWelcomeMessage && messages.length === 1 ? (
-                    <span
-                      aria-label={
-                        language === "zh" ? "作品集导览小机器人" : "Portfolio guide mascot"
-                      }
-                      className={styles.chatMascot}
-                      role="img"
-                    />
-                  ) : null}
-
-                  <MessageContent content={message.content} />
-
-                  {isLatestMessage && message.role === "assistant" && message.suggestedQuestions?.length ? (
-                    <section className={styles.suggestedQuestionSection}>
-                      <div className={styles.suggestedQuestions}>
-                        {message.suggestedQuestions.map((suggestion) => (
-                          <button
-                            className={styles.suggestionButton}
-                            key={suggestion}
-                            onClick={() => void sendQuestion(suggestion)}
-                            type="button"
-                          >
-                            {suggestion}
-                          </button>
-                        ))}
-                      </div>
-                    </section>
-                  ) : null}
+                  <div className={styles.loadingBubble}>
+                    <span className={styles.loadingText}>{loadingMessage}</span>
+                  </div>
                 </article>
-              );
-            })}
+              ) : null}
+            </div>
 
-            {isWelcomeState || (messages.length === 1 && !shouldShowWelcomeMessage) ? (
-              <section className={styles.quickReplySection}>
-                <p className={styles.quickReplyHeading}>
-                  {getQuickReplyHeading(language)}
-                </p>
+            <footer className={styles.chatPanelFooter}>
+              {statusMessage ? <p className={styles.statusMessage}>{statusMessage}</p> : null}
+              {errorMessage ? <p className={styles.errorMessage}>{errorMessage}</p> : null}
 
-                <div className={styles.quickReplyList}>
-                  {quickReplies.map((item, index) => (
-                    <button
-                      className={[
-                        styles.quickReplyButton,
-                        index === 0 ? styles.quickReplyButtonPrimary : "",
-                      ]
-                        .filter(Boolean)
-                        .join(" ")}
-                      key={item.id}
-                      onClick={() => void sendQuestion(item.prompt)}
-                      type="button"
-                    >
-                      <span className={styles.quickReplyButtonInner}>
-                        <span>{item.label}</span>
-                      </span>
-                    </button>
-                  ))}
+              <form className={styles.composer} onSubmit={handleSubmit}>
+                <label className="sr-only" htmlFor="portfolio-chat-input">
+                  {language === "zh" ? "聊天输入框" : "Chat input"}
+                </label>
+
+                <div className={styles.composerFieldWrap}>
+                  <textarea
+                    className={styles.composerField}
+                    id="portfolio-chat-input"
+                    onChange={(event) => setInputValue(event.target.value)}
+                    onKeyDown={handleComposerKeyDown}
+                    placeholder={
+                      language === "zh"
+                        ? "问问 Porty"
+                        : "Message Porty"
+                    }
+                    ref={composerFieldRef}
+                    rows={1}
+                    value={inputValue}
+                  />
+                  <span className={styles.composerHint}>{getComposerHint(language)}</span>
+                  <button
+                    aria-label={
+                      isLoading
+                        ? language === "zh"
+                          ? "暂停回答"
+                          : "Pause reply"
+                        : language === "zh"
+                          ? "发送消息"
+                          : "Send message"
+                    }
+                    className={[
+                      styles.sendButton,
+                      isLoading ? styles.stopButton : "",
+                    ]
+                      .filter(Boolean)
+                      .join(" ")}
+                    disabled={!isLoading && !inputValue.trim()}
+                    onClick={isLoading ? handleStopGeneration : undefined}
+                    type={isLoading ? "button" : "submit"}
+                  >
+                    {isLoading ? (
+                      <Square aria-hidden="true" fill="currentColor" size={11} strokeWidth={2.5} />
+                    ) : (
+                      <ArrowUp aria-hidden="true" size={16} strokeWidth={2.25} />
+                    )}
+                  </button>
                 </div>
-              </section>
-            ) : null}
-
-            {isLoading && !isTyping ? (
-              <article
-                className={[
-                  styles.messageBubble,
-                  styles.assistantBubble,
-                  styles.loadingMessageBubble,
-                ].join(" ")}
-                role="status"
-              >
-                <div className={styles.loadingBubble}>
-                  <span className={styles.loadingText}>{loadingMessage}</span>
-                </div>
-              </article>
-            ) : null}
-          </div>
-
-          <footer className={styles.chatPanelFooter}>
-            {statusMessage ? <p className={styles.statusMessage}>{statusMessage}</p> : null}
-            {errorMessage ? <p className={styles.errorMessage}>{errorMessage}</p> : null}
-
-            <form className={styles.composer} onSubmit={handleSubmit}>
-              <label className="sr-only" htmlFor="portfolio-chat-input">
-                {language === "zh" ? "聊天输入框" : "Chat input"}
-              </label>
-
-              <div className={styles.composerFieldWrap}>
-                <textarea
-                  className={styles.composerField}
-                  id="portfolio-chat-input"
-                  onChange={(event) => setInputValue(event.target.value)}
-                  onKeyDown={handleComposerKeyDown}
-                  placeholder={
-                    language === "zh"
-                      ? "问问 Porty"
-                      : "Message Porty"
-                  }
-                  ref={composerFieldRef}
-                  rows={1}
-                  value={inputValue}
-                />
-                <span className={styles.composerHint}>{getComposerHint(language)}</span>
-                <button
-                  aria-label={
-                    isLoading
-                      ? language === "zh"
-                        ? "暂停回答"
-                        : "Pause reply"
-                      : language === "zh"
-                        ? "发送消息"
-                        : "Send message"
-                  }
-                  className={[
-                    styles.sendButton,
-                    isLoading ? styles.stopButton : "",
-                  ]
-                    .filter(Boolean)
-                    .join(" ")}
-                  disabled={!isLoading && !inputValue.trim()}
-                  onClick={isLoading ? handleStopGeneration : undefined}
-                  type={isLoading ? "button" : "submit"}
-                >
-                  {isLoading ? (
-                    <Square aria-hidden="true" fill="currentColor" size={11} strokeWidth={2.5} />
-                  ) : (
-                    <ArrowUp aria-hidden="true" size={16} strokeWidth={2.25} />
-                  )}
-                </button>
-              </div>
-            </form>
-          </footer>
-        </section>
+              </form>
+            </footer>
+          </section>
+        </>
       ) : null}
 
       {!isOpen ? (
