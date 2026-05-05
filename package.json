@@ -5,6 +5,7 @@
   "packageManager": "pnpm@9.15.9",
   "scripts": {
     "dev": "node scripts/dev.mjs",
+    "codex:run": "node scripts/codex-run.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings=0",

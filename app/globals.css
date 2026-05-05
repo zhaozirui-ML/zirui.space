@@ -16,6 +16,8 @@ body {
   background: var(--ds-color-canvas);
   color: var(--ds-color-text);
   font-family: var(--ds-font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 a {

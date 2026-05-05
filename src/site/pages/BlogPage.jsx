@@ -8,6 +8,34 @@ import { formatBlogDate } from "../lib/format-blog-date";
 import { trimTrailingSentencePunctuation } from "../lib/trim-trailing-sentence-punctuation";
 import styles from "../styles/blog-page.module.css";
 
+function isRemoteImageSource(source) {
+  return source.startsWith("http://") || source.startsWith("https://");
+}
+
+function BlogImageFrame({ alt, className, imageClassName, priority = false, sizes, src, title }) {
+  if (isRemoteImageSource(src)) {
+    return (
+      <div aria-label={alt} className={[className, styles.imageFallback].join(" ")} role="img">
+        <span className={styles.imageFallbackKicker}>Essay</span>
+        <span className={styles.imageFallbackTitle}>{title}</span>
+      </div>
+    );
+  }
+
+  return (
+    <div className={className}>
+      <Image
+        alt={alt}
+        className={imageClassName}
+        fill
+        loading={priority ? "eager" : undefined}
+        sizes={sizes}
+        src={src}
+      />
+    </div>
+  );
+}
+
 /**
  * Blog 列表页先接入索引级双语；文章正文后续单独处理。
  *
@@ -55,17 +83,16 @@ export default function BlogPage({ language }) {
                   href={`/blog/${post.slug}`}
                   key={post.slug}
                 >
-                  <div className={styles.featuredMedia}>
-                    <Image
-                      alt={imageAlt}
-                      className={styles.featuredImage}
-                      fill
-                      // 首屏第一张 featured 图最容易被浏览器判定为 LCP，优先加载能减少首屏主内容等待。
-                      loading={isLeadFeaturedPost ? "eager" : undefined}
-                      sizes="(max-width: 640px) 100vw, (max-width: 960px) 92vw, 448px"
-                      src={post.imageSrc}
-                    />
-                  </div>
+                  <BlogImageFrame
+                    alt={imageAlt}
+                    className={styles.featuredMedia}
+                    imageClassName={styles.featuredImage}
+                    // 首屏第一张 featured 图最容易被浏览器判定为 LCP，优先加载能减少首屏主内容等待。
+                    priority={isLeadFeaturedPost}
+                    sizes="(max-width: 640px) 100vw, (max-width: 960px) 92vw, 448px"
+                    src={post.imageSrc}
+                    title={title}
+                  />
 
                   <div
                     className={[
@@ -147,15 +174,14 @@ export default function BlogPage({ language }) {
                     href={`/blog/${post.slug}`}
                     key={post.slug}
                   >
-                    <div className={styles.browseMedia}>
-                      <Image
-                        alt={imageAlt}
-                        className={styles.featuredImage}
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, 287px"
-                        src={post.imageSrc}
-                      />
-                    </div>
+                    <BlogImageFrame
+                      alt={imageAlt}
+                      className={styles.browseMedia}
+                      imageClassName={styles.featuredImage}
+                      sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, 287px"
+                      src={post.imageSrc}
+                      title={title}
+                    />
 
                     <div className={styles.browseBody}>
                       <h3 className={styles.browseTitle}>{title}</h3>

@@ -22,6 +22,16 @@
   --blog-section-title-cell-padding-sm: 2rem 1rem;
   --blog-featured-body-padding-sm: 0 0 0.5rem;
   --blog-browse-card-padding-sm: 1rem;
+  --blog-card-shadow-rest:
+    0 0 0 1px color-mix(in srgb, var(--portfolio-color-text-title) 4%, transparent),
+    0 1px 2px -1px color-mix(in srgb, var(--portfolio-color-text-title) 8%, transparent),
+    0 12px 28px -24px color-mix(in srgb, var(--portfolio-color-text-title) 18%, transparent);
+  --blog-card-shadow-hover:
+    0 0 0 1px color-mix(in srgb, var(--portfolio-color-text-title) 6%, transparent),
+    0 2px 4px -2px color-mix(in srgb, var(--portfolio-color-text-title) 10%, transparent),
+    0 18px 36px -26px color-mix(in srgb, var(--portfolio-color-text-title) 24%, transparent);
+  --blog-image-inner-outline:
+    inset 0 0 0 1px color-mix(in srgb, var(--portfolio-color-text-title) 10%, transparent);
   background: var(--portfolio-color-bg-pure);
   margin: 0 auto;
   margin-top: var(--blog-page-margin-top);
@@ -125,6 +135,8 @@
 
 .featuredCard {
   background: transparent;
+  border-radius: var(--portfolio-radius-md);
+  box-shadow: var(--blog-card-shadow-rest);
   display: grid;
   gap: var(--blog-featured-card-gap);
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -132,7 +144,14 @@
   position: relative;
   transition:
     background-color 200ms ease,
-    color 200ms ease;
+    box-shadow 180ms ease,
+    color 200ms ease,
+    transform 180ms ease;
+}
+
+.featuredCard:active,
+.browseCard:active {
+  transform: scale(0.995);
 }
 
 .featuredCard:focus-visible,
@@ -155,6 +174,8 @@
 
 .featuredMedia {
   aspect-ratio: 16 / 9;
+  border-radius: calc(var(--portfolio-radius-md) - 0.5rem);
+  box-shadow: var(--blog-image-inner-outline);
   overflow: hidden;
   position: relative;
 }
@@ -209,6 +230,7 @@
   line-height: 1.5;
   margin: 0;
   max-width: 28rem;
+  text-wrap: pretty;
 }
 
 .featuredSummaryDark {
@@ -278,18 +300,56 @@
 
 .browseCard {
   align-content: start;
+  border-radius: var(--portfolio-radius-md);
+  box-shadow: var(--blog-card-shadow-rest);
   display: grid;
   gap: var(--blog-browse-card-gap);
   padding: var(--blog-browse-card-padding);
   transition:
     background-color 200ms ease,
-    border-color 200ms ease;
+    border-color 200ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
 }
 
 .browseMedia {
   aspect-ratio: 287 / 189;
+  border-radius: calc(var(--portfolio-radius-md) - 0.5rem);
+  box-shadow: var(--blog-image-inner-outline);
   overflow: hidden;
   position: relative;
+}
+
+.imageFallback {
+  align-content: end;
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--portfolio-color-surface-warm) 82%, var(--portfolio-color-bg-pure)),
+      color-mix(in srgb, var(--portfolio-color-accent-brand) 10%, var(--portfolio-color-bg-soft))
+    );
+  color: var(--portfolio-semantic-title-color);
+  display: grid;
+  gap: var(--portfolio-space-2xs);
+  padding: var(--portfolio-space-sm);
+}
+
+.imageFallbackKicker {
+  color: var(--portfolio-color-text-muted);
+  font-family: var(--portfolio-font-label);
+  font-size: var(--portfolio-type-caption-size);
+  letter-spacing: 0.16em;
+  line-height: var(--portfolio-type-caption-line);
+  text-transform: uppercase;
+}
+
+.imageFallbackTitle {
+  font-family: var(--portfolio-font-title-serif);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.25;
+  max-width: 14rem;
+  text-wrap: balance;
 }
 
 .browseBody {
@@ -304,6 +364,7 @@
   font-weight: 500;
   line-height: 1.5556;
   margin: 0;
+  text-wrap: balance;
 }
 
 .browseTitle:lang(zh) {
@@ -315,6 +376,8 @@
   .featuredCard:hover {
     background:
       color-mix(in srgb, var(--portfolio-color-accent-brand) 5%, transparent);
+    box-shadow: var(--blog-card-shadow-hover);
+    transform: translateY(-1px);
   }
 
   .featuredCardDark:hover {
@@ -332,6 +395,22 @@
   .browseCard:hover {
     background:
       color-mix(in srgb, var(--portfolio-color-accent-moss) 5%, transparent);
+    box-shadow: var(--blog-card-shadow-hover);
+    transform: translateY(-1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .featuredCard,
+  .browseCard {
+    transition: none;
+  }
+
+  .featuredCard:hover,
+  .featuredCard:active,
+  .browseCard:hover,
+  .browseCard:active {
+    transform: none;
   }
 }
 

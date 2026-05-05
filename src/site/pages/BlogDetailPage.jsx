@@ -10,6 +10,10 @@ import { formatBlogDate } from "../lib/format-blog-date";
 import shellStyles from "../styles/site-shell.module.css";
 import styles from "../styles/blog-detail-page.module.css";
 
+function isRemoteImageSource(source) {
+  return source.startsWith("http://") || source.startsWith("https://");
+}
+
 function resolveLocalizedText(value, language) {
   return typeof value === "string" ? value : getLocalizedValue(value, language);
 }
@@ -68,12 +72,27 @@ function renderContentBlock(block, index, language) {
   }
 
   if (block.type === "image") {
+    const alt = resolveLocalizedText(block.alt, language);
+
+    if (isRemoteImageSource(block.src)) {
+      return (
+        <div
+          aria-label={alt}
+          className={[styles.contentImageFrame, styles.contentImageFallback].join(" ")}
+          key={`${block.type}-${index}`}
+          role="img"
+        >
+          <span className={styles.imageFallbackKicker}>Article image</span>
+          <span className={styles.imageFallbackTitle}>{alt}</span>
+        </div>
+      );
+    }
+
     return (
       <div className={styles.contentImageFrame} key={`${block.type}-${index}`}>
-        {/* 这里直接消费旧站文章里的远程图片内容，先不改变当前图片接入链路。 */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          alt={resolveLocalizedText(block.alt, language)}
+          alt={alt}
           className={styles.contentImage}
           loading="lazy"
           src={block.src}
@@ -133,6 +152,7 @@ export default function BlogDetailPage({ language = "zh", returnHref = "/blog", 
   const summary = getLocalizedValue(post.summary, language);
   const heroImageAlt = getLocalizedValue(post.heroImageAlt, language);
   const canShowEnglishDetail = post.supportsEnglishDetail === true;
+  const shouldUseHeroFallback = isRemoteImageSource(post.heroImageSrc);
 
   if (language === "en" && !canShowEnglishDetail) {
     return (
@@ -183,15 +203,25 @@ export default function BlogDetailPage({ language = "zh", returnHref = "/blog", 
           <div aria-hidden="true" className={styles.detailRail} />
           <div className={styles.heroContent}>
             <section className={styles.heroFrame}>
-              <div className={styles.heroImageWrap}>
-                {/* 这里直接沿用 V1 站点的远程 banner，只替换内容，不改当前图片接入链路。 */}
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  alt={heroImageAlt}
-                  className={styles.heroImage}
-                  src={post.heroImageSrc}
-                />
-              </div>
+              {shouldUseHeroFallback ? (
+                <div
+                  aria-label={heroImageAlt}
+                  className={[styles.heroImageWrap, styles.heroImageFallback].join(" ")}
+                  role="img"
+                >
+                  <span className={styles.imageFallbackKicker}>Essay</span>
+                  <span className={styles.heroFallbackTitle}>{title}</span>
+                </div>
+              ) : (
+                <div className={styles.heroImageWrap}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    alt={heroImageAlt}
+                    className={styles.heroImage}
+                    src={post.heroImageSrc}
+                  />
+                </div>
+              )}
               {post.heroCaption ? <p className={styles.heroCaption}>{post.heroCaption}</p> : null}
             </section>
           </div>
