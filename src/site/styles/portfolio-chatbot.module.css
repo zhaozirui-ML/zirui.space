@@ -767,20 +767,25 @@
   }
 
   .chatPanel {
+    /* 移动端 modal 顶部保留一小段安全留白，同时把主体高度尽量拉高。 */
+    --portfolio-chatbot-mobile-top-gap: max(
+      env(safe-area-inset-top, 0px) + 3.5rem,
+      3.5rem
+    );
     background:
       linear-gradient(
         180deg,
         color-mix(in srgb, var(--portfolio-color-surface) 98%, transparent),
         color-mix(in srgb, var(--portfolio-color-surface-warm) 84%, transparent)
-      );
+    );
     border: 1px solid color-mix(in srgb, var(--portfolio-color-border-light) 92%, transparent);
     bottom: 0;
     box-shadow:
       0 1.5rem 3.5rem color-mix(in srgb, var(--portfolio-semantic-title-color) 18%, transparent),
       inset 0 1px 0 color-mix(in srgb, var(--portfolio-color-surface) 94%, transparent);
-    height: calc(100dvh - max(env(safe-area-inset-top, 0px) + 4.75rem, 4.75rem));
+    height: max(90dvh, calc(100dvh - var(--portfolio-chatbot-mobile-top-gap)));
     left: 0;
-    max-height: calc(100dvh - max(env(safe-area-inset-top, 0px) + 4.75rem, 4.75rem));
+    max-height: calc(100dvh - var(--portfolio-chatbot-mobile-top-gap));
     max-width: none;
     min-width: 0;
     resize: none;
