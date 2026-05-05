@@ -27,6 +27,11 @@ const drawingLedgerProject = getProjectBySlug("drawing-ledger-2-0");
 const axzoProject = getProjectBySlug("axzo-design-system");
 const dataVizProject = getProjectBySlug("data-visualization-screen");
 const cloudTowerProject = getProjectBySlug("cloudtower-design-system");
+const phoneContactItem = aboutContactItems.find(
+  (item) => typeof item.value === "string" && !item.href && /\d/.test(item.value)
+);
+const emailContactItem = aboutContactItems.find((item) => item.href?.startsWith("mailto:"));
+const socialContactItem = aboutContactItems.find((item) => Array.isArray(item.value));
 
 export const portfolioChatKnowledge = Object.freeze({
   voice: Object.freeze({
@@ -40,6 +45,147 @@ export const portfolioChatKnowledge = Object.freeze({
   profile: Object.freeze({
     name: "Zirui Zhao",
     title: t("产品设计师", "Product Designer"),
+    publicMetadata: Object.freeze([
+      Object.freeze({
+        id: "name",
+        label: t("名字", "Name"),
+        value: t("赵子瑞", "Zirui Zhao"),
+        detail: t("英文页头和英文语境里会写作 Zirui Zhao。", "In English contexts, the portfolio uses Zirui Zhao."),
+        aliases: Object.freeze([
+          "名字",
+          "姓名",
+          "中文名",
+          "英文名",
+          "叫什么",
+          "你叫什么",
+          "作者名字",
+          "作者姓名",
+          "作者是谁",
+          "这个网站是谁做的",
+          "这个站是谁做的",
+          "这个网站作者是谁",
+          "这个作品集是谁做的",
+          "这个作品集作者是谁",
+          "name",
+          "full name",
+          "english name",
+          "chinese name",
+          "your name",
+          "what's your name",
+          "what is your name",
+          "author",
+          "author name",
+          "site owner",
+          "website author",
+          "who made this portfolio",
+          "who created this portfolio",
+          "portfolio author",
+        ]),
+      }),
+      Object.freeze({
+        id: "english-name",
+        label: t("英文名", "English name"),
+        value: "Zirui Zhao",
+        detail: t("中文语境里会写作赵子瑞。", "In Chinese contexts, the portfolio uses 赵子瑞."),
+        aliases: Object.freeze([
+          "英文名",
+          "英文名字",
+          "english name",
+          "name in english",
+        ]),
+      }),
+      Object.freeze({
+        id: "title",
+        label: t("当前身份", "Current role"),
+        value: t("产品设计师", "Product Designer"),
+        detail: t(
+          "首页公开写到的是一名拥有 4 年多经验的产品设计师。",
+          "The homepage describes this as a product designer with 4+ years of experience."
+        ),
+        aliases: Object.freeze([
+          "职位",
+          "身份",
+          "现在做什么",
+          "当前身份",
+          "你的工作是什么",
+          "title",
+          "role",
+          "current role",
+          "job title",
+          "what do you do",
+        ]),
+      }),
+      Object.freeze({
+        id: "experience-years",
+        label: t("经验年限", "Years of experience"),
+        value: t("4 年多经验", "4+ years of experience"),
+        detail: t(
+          "首页公开写到的是，主要长期关注复杂业务流程、设计系统和可落地体验。",
+          "The homepage frames the work around complex workflows, design systems, and shippable product experiences."
+        ),
+        aliases: Object.freeze([
+          "几年经验",
+          "经验几年",
+          "工作几年",
+          "经验年限",
+          "多少年经验",
+          "years of experience",
+          "how many years",
+          "experience level",
+        ]),
+      }),
+      Object.freeze({
+        id: "email",
+        label: t("邮箱", "Email"),
+        value: emailContactItem?.value || "Zhaozirui721@gmail.com",
+        href: emailContactItem?.href || "mailto:Zhaozirui721@gmail.com",
+        aliases: Object.freeze([
+          "邮箱",
+          "邮件",
+          "电子邮箱",
+          "email",
+          "mail",
+          "email address",
+        ]),
+      }),
+      Object.freeze({
+        id: "phone",
+        label: t("电话", "Phone"),
+        value: phoneContactItem?.value || "13260951210",
+        href: `tel:${phoneContactItem?.value || "13260951210"}`,
+        aliases: Object.freeze([
+          "电话",
+          "手机号",
+          "电话号码",
+          "手机",
+          "phone",
+          "phone number",
+          "mobile",
+        ]),
+      }),
+      Object.freeze({
+        id: "social",
+        label: t("社交平台", "Social platforms"),
+        value: socialContactItem?.value || [],
+        detail: t(
+          "这些平台都已经公开挂在作品集里。",
+          "These platforms are already publicly linked from the portfolio."
+        ),
+        aliases: Object.freeze([
+          "社交平台",
+          "社交账号",
+          "社交媒体",
+          "sns",
+          "social",
+          "social links",
+          "social media",
+          "x",
+          "instagram",
+          "notion",
+          "spotify",
+        ]),
+      }),
+    ]),
     summary: t(
       "我是赵子瑞，一名产品设计师，长期在复杂业务流程、设计系统和可落地体验之间做连接。",
       "I'm Zirui Zhao, a product designer who works at the intersection of complex workflows, design systems, and experiences that can actually ship.",
@@ -368,6 +514,7 @@ export const portfolioChatKnowledge = Object.freeze({
   guardrails: Object.freeze({
     allowedTopics: Object.freeze([
       t("个人介绍", "Profile"),
+      t("公开作者信息", "Public author metadata"),
       t("项目介绍", "Projects"),
       t("工作经历", "Experience"),
       t("设计方法", "Design approach"),
@@ -375,8 +522,8 @@ export const portfolioChatKnowledge = Object.freeze({
       t("联系方式", "Contact"),
     ]),
     refusalMessage: t(
-      "我目前只回答和这个作品集相关的问题，例如我的项目、经历、技能、设计方法或联系方式。如果你愿意，可以换一个和作品集更相关的问题继续问我。",
-      "I only answer questions related to this portfolio, such as my projects, experience, skills, design approach, or contact information. If you'd like, ask another portfolio-related question and I'll continue from there.",
+      "我目前只回答这个作品集里公开相关的信息，例如作者信息、项目、经历、技能、设计方法、联系方式或文章内容。如果你愿意，可以换一个和作品集公开内容更相关的问题继续问我。",
+      "I only answer questions about public information from this portfolio, such as author metadata, projects, experience, skills, design approach, contact details, or portfolio articles. If you'd like, ask another question that stays within the public portfolio content.",
     ),
   }),
 });

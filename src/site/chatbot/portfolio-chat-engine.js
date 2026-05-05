@@ -47,11 +47,41 @@ const TOPIC_KEYWORDS = {
     "如何设计",
   ],
   profile: [
+    "role",
+    "title",
+    "current role",
+    "current title",
+    "what do you do",
+    "name",
+    "full name",
+    "your name",
+    "what's your name",
+    "what is your name",
+    "author",
+    "author name",
+    "who made this portfolio",
+    "who created this portfolio",
+    "portfolio author",
     "who are you",
     "introduce yourself",
     "about you",
     "about yourself",
     "profile",
+    "名字",
+    "姓名",
+    "叫什么",
+    "你叫什么",
+    "身份",
+    "职位",
+    "当前身份",
+    "现在的身份",
+    "现在做什么",
+    "作者",
+    "作者是谁",
+    "作者名字",
+    "作者姓名",
+    "这个作品集是谁做的",
+    "这个作品集作者是谁",
     "你是谁",
     "介绍一下你自己",
     "自我介绍",
@@ -254,6 +284,18 @@ function detectTopic(normalizedQuestion) {
   }
 
   return null;
+}
+
+function detectPublicMetadataItem(profile, normalizedQuestion) {
+  const metadataItems = profile?.publicMetadata || [];
+
+  return (
+    metadataItems.find((item) =>
+      (item.aliases || []).some((alias) =>
+        normalizedQuestion.includes(String(alias).toLowerCase())
+      )
+    ) || null
+  );
 }
 
 function isOutOfScope(normalizedQuestion) {
@@ -669,6 +711,50 @@ function buildProfileAnswer(knowledge, language) {
     knowledge.profile.focus,
     `If I had to pick the strengths that represent me best, I would say: ${knowledge.profile.strengths.join(", ")}.`,
   ].join("\n");
+}
+
+function buildPublicMetadataAnswer(profile, metadataItem, language) {
+  if (!metadataItem) {
+    return language === "zh"
+      ? "这个问题看起来像是在问作品集里的公开作者信息，但当前没有找到对应字段。你也可以直接问我的名字、当前身份，或者继续问项目、经历和设计方法。"
+      : "This sounds like a question about the public author metadata in the portfolio, but I could not find the matching field right now. You can also ask directly about my name, current role, projects, experience, or design approach.";
+  }
+
+  const value = metadataItem.value;
+  const label = metadataItem.label;
+  const detail = metadataItem.detail;
+
+  if (Array.isArray(value)) {
+    const lines = value.map((item) => `- [${item.label}](${item.href})`);
+
+    if (language === "zh") {
+      return [
+        `这个作品集里公开写到的${label}有：`,
+        ...lines,
+        ...(detail ? ["", detail] : []),
+      ].join("\n");
+    }
+
+    return [
+      `The public ${String(label).toLowerCase()} listed in this portfolio are:`,
+      ...lines,
+      ...(detail ? ["", detail] : []),
+    ].join("\n");
+  }
+
+  if (metadataItem.href) {
+    if (language === "zh") {
+      return `这个作品集里公开写到的${label}是：[${value}](${metadataItem.href})。${detail ? ` ${detail}` : ""}`;
+    }
+
+    return `The public ${String(label).toLowerCase()} listed in this portfolio is [${value}](${metadataItem.href}).${detail ? ` ${detail}` : ""}`;
+  }
+
+  if (language === "zh") {
+    return `这个作品集里公开写到的${label}是：${value}。${detail ? ` ${detail}` : ""}`;
+  }
+
+  return `The public ${String(label).toLowerCase()} listed in this portfolio is ${value}.${detail ? ` ${detail}` : ""}`;
 }
 
 function buildMethodAnswer(language) {
@@ -1106,7 +1192,11 @@ function createConversationState({
     messages
   );
   const projectIntent = detectProjectIntent(normalizedQuestion);
-  const topic = detectTopic(normalizedQuestion);
+  const publicMetadataItem = detectPublicMetadataItem(
+    localizedKnowledge.profile,
+    normalizedQuestion
+  );
+  const topic = detectTopic(normalizedQuestion) || (publicMetadataItem ? "profile" : null);
   const shouldLockToPathnameProject = shouldUsePathnameProject({
     explicitProject,
     isProjectFollowup: isImplicitProjectFollowup(normalizedQuestion),
@@ -1136,6 +1226,7 @@ function createConversationState({
     projectFromPathname,
     projectIntent,
     projectIntentTrail,
+    publicMetadataItem,
     question,
     topic,
   };
@@ -1710,6 +1801,7 @@ export function createPortfolioChatFallbackReply({ language, messages = [], path
     blogFromPathname,
     projectFromPathname,
     projectIntent,
+    publicMetadataItem,
     topic,
   } = state;
 
@@ -1717,8 +1809,8 @@ export function createPortfolioChatFallbackReply({ language, messages = [], path
     return {
       answer:
         language === "zh"
-          ? "你可以问我关于项目、经历、技能、设计方法或联系方式的问题。"
-          : "You can ask me about projects, experience, skills, design approach, or contact information.",
+          ? "你可以问我关于作者信息、项目、经历、技能、设计方法或联系方式的问题。"
+          : "You can ask me about public author metadata, projects, experience, skills, design approach, or contact information.",
       relatedPages: blogFromPathname
         ? [getBlogDetailPath(blogFromPathname), "/blog"]
         : projectFromPathname?.relatedPages || ["/work", "/about", "/blog"],
@@ -1875,6 +1967,34 @@ export function createPortfolioChatFallbackReply({ language, messages = [], path
     };
   }
 
+  if (
+    publicMetadataItem &&
+    (!topic || topic === "profile" || topic === "contact" || topic === "experience")
+  ) {
+    return {
+      answer: buildPublicMetadataAnswer(
+        localizedKnowledge.profile,
+        publicMetadataItem,
+        language
+      ),
+      relatedPages: ["/about", "/"],
+      relatedProjects: buildRelatedProjects(
+        null,
+        "profile",
+        localizedKnowledge.projects,
+        language,
+        normalizedPathname,
+        projectIntent
+      ),
+      source: "fallback",
+      suggestedQuestions: buildSuggestedQuestionsFromState(
+        state,
+        localizedKnowledge,
+        language
+      ),
+    };
+  }
+
   if (topic === "contact") {
     return {
       answer: buildContactAnswer(localizedKnowledge, language),
@@ -1919,7 +2039,13 @@ export function createPortfolioChatFallbackReply({ language, messages = [], path
 
   if (topic === "profile") {
     return {
-      answer: buildProfileAnswer(localizedKnowledge, language),
+      answer: publicMetadataItem
+        ? buildPublicMetadataAnswer(
+            localizedKnowledge.profile,
+            publicMetadataItem,
+            language
+          )
+        : buildProfileAnswer(localizedKnowledge, language),
       relatedPages: ["/about", "/"],
       relatedProjects: buildRelatedProjects(
         null,
@@ -2057,7 +2183,7 @@ function getSystemPrompt(language) {
   return language === "zh"
     ? [
         "你是作品集网站里的 Portfolio Chatbot，只能回答这个作品集相关的问题。",
-        "允许回答的话题只有：个人介绍、项目介绍、工作经历、设计方法、技能、联系方式、作品集文章。",
+        "允许回答的话题包括：作者公开信息、个人介绍、项目介绍、工作经历、设计方法、技能、联系方式、作品集文章。",
         "如果问题超出范围，必须礼貌拒答，并把话题引回作品集。",
         "只能基于提供的知识回答，不要编造没有给出的事实。",
         "如果知识里没有明确答案，要坦诚说明这个作品集里没有公开写到。",
@@ -2070,7 +2196,7 @@ function getSystemPrompt(language) {
       ].join("\n")
     : [
         "You are the Portfolio Chatbot inside a portfolio website and may only answer portfolio-related questions.",
-        "Allowed topics are only: profile, projects, experience, design approach, skills, contact, and portfolio articles.",
+        "Allowed topics include: public author metadata, profile, projects, experience, design approach, skills, contact, and portfolio articles.",
         "If the question is out of scope, politely refuse and steer the conversation back to the portfolio.",
         "Answer only from the provided knowledge and do not invent facts.",
         "If the answer is not clearly covered by the knowledge, say that it is not publicly specified in the portfolio.",
