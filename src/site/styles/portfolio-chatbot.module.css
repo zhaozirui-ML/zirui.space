@@ -59,18 +59,6 @@
   z-index: 0;
 }
 
-.floatingTrigger:hover {
-  border-color: var(--portfolio-color-border-light);
-  box-shadow: 0 4px 8px rgb(34 38 42 / 0.12);
-  color: var(--portfolio-semantic-title-color);
-  transform: translateY(-1px);
-}
-
-.floatingTrigger:hover::before {
-  opacity: 1;
-  transform: scale(1);
-}
-
 .floatingTrigger:active {
   transform: translateY(0) scale(0.96);
 }
@@ -90,12 +78,26 @@
   z-index: 1;
 }
 
-.floatingTrigger:hover svg {
-  transform: scale(1.08);
-}
-
 .floatingTrigger:active svg {
   transform: scale(0.92);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .floatingTrigger:hover {
+    border-color: var(--portfolio-color-border-light);
+    box-shadow: 0 4px 8px rgb(34 38 42 / 0.12);
+    color: var(--portfolio-semantic-title-color);
+    transform: translateY(-1px);
+  }
+
+  .floatingTrigger:hover::before {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .floatingTrigger:hover svg {
+    transform: scale(1.08);
+  }
 }
 
 .chatPanel {
