@@ -74,9 +74,13 @@
 }
 
 .projectCard {
+  --project-card-shadow-rest:
+    0 1px 2px -1px color-mix(in srgb, var(--portfolio-color-text-title) 8%, transparent),
+    0 12px 28px -24px color-mix(in srgb, var(--portfolio-color-text-title) 18%, transparent);
   background: var(--portfolio-color-surface);
   border: var(--portfolio-work-border-width) solid var(--portfolio-color-border-light);
   border-radius: var(--portfolio-radius-lg);
+  box-shadow: var(--project-card-shadow-rest);
   color: inherit;
   display: grid;
   gap: var(--portfolio-space-sm);
@@ -162,6 +166,28 @@
 .projectCard:focus-visible {
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--portfolio-color-accent-brand) 32%, transparent);
   outline: none;
+}
+
+.projectCard:active {
+  transform: scale(0.995);
+}
+
+@media (hover: hover) {
+  .projectCard:hover {
+    box-shadow: var(--project-card-shadow-hover);
+    transform: translateY(var(--portfolio-work-project-hover-translate-y));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projectCard {
+    transition: none;
+  }
+
+  .projectCard:hover,
+  .projectCard:active {
+    transform: none;
+  }
 }
 
 .projectMeta {

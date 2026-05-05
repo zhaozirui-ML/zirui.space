@@ -22,6 +22,8 @@
   --blog-section-title-cell-padding-sm: 2rem 1rem;
   --blog-featured-body-padding-sm: 0 0 0.5rem;
   --blog-browse-card-padding-sm: 1rem;
+  --blog-image-inner-outline:
+    inset 0 0 0 1px color-mix(in srgb, var(--portfolio-color-text-title) 10%, transparent);
   background: var(--portfolio-color-bg-pure);
   margin: 0 auto;
   margin-top: var(--blog-page-margin-top);
@@ -135,6 +137,11 @@
     color 200ms ease;
 }
 
+.featuredCard:active,
+.browseCard:active {
+  transform: none;
+}
+
 .featuredCard:focus-visible,
 .browseCard:focus-visible {
   outline: 2px solid var(--portfolio-color-accent-brand);
@@ -155,6 +162,7 @@
 
 .featuredMedia {
   aspect-ratio: 16 / 9;
+  box-shadow: var(--blog-image-inner-outline);
   overflow: hidden;
   position: relative;
 }
@@ -209,6 +217,7 @@
   line-height: 1.5;
   margin: 0;
   max-width: 28rem;
+  text-wrap: pretty;
 }
 
 .featuredSummaryDark {
@@ -288,8 +297,41 @@
 
 .browseMedia {
   aspect-ratio: 287 / 189;
+  box-shadow: var(--blog-image-inner-outline);
   overflow: hidden;
   position: relative;
+}
+
+.imageFallback {
+  align-content: end;
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--portfolio-color-surface-warm) 82%, var(--portfolio-color-bg-pure)),
+      color-mix(in srgb, var(--portfolio-color-accent-brand) 10%, var(--portfolio-color-bg-soft))
+    );
+  color: var(--portfolio-semantic-title-color);
+  display: grid;
+  gap: var(--portfolio-space-2xs);
+  padding: var(--portfolio-space-sm);
+}
+
+.imageFallbackKicker {
+  color: var(--portfolio-color-text-muted);
+  font-family: var(--portfolio-font-label);
+  font-size: var(--portfolio-type-caption-size);
+  letter-spacing: 0.16em;
+  line-height: var(--portfolio-type-caption-line);
+  text-transform: uppercase;
+}
+
+.imageFallbackTitle {
+  font-family: var(--portfolio-font-title-serif);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.25;
+  max-width: 14rem;
+  text-wrap: balance;
 }
 
 .browseBody {
@@ -304,6 +346,7 @@
   font-weight: 500;
   line-height: 1.5556;
   margin: 0;
+  text-wrap: balance;
 }
 
 .browseTitle:lang(zh) {
@@ -332,6 +375,20 @@
   .browseCard:hover {
     background:
       color-mix(in srgb, var(--portfolio-color-accent-moss) 5%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .featuredCard,
+  .browseCard {
+    transition: none;
+  }
+
+  .featuredCard:hover,
+  .featuredCard:active,
+  .browseCard:hover,
+  .browseCard:active {
+    transform: none;
   }
 }
 
