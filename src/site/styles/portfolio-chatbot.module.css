@@ -373,6 +373,19 @@
   font-weight: 600;
 }
 
+.messageLink {
+  color: var(--portfolio-color-accent-brand);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--portfolio-color-accent-brand) 45%, transparent);
+  text-decoration-thickness: 0.075em;
+  text-underline-offset: 0.14em;
+}
+
+.messageLink:hover,
+.messageLink:focus-visible {
+  color: color-mix(in srgb, var(--portfolio-color-accent-brand) 84%, var(--portfolio-semantic-title-color));
+}
+
 .messageList {
   display: grid;
   gap: 0.9375rem;
@@ -767,11 +780,8 @@
   }
 
   .chatPanel {
-    /* 移动端 modal 顶部保留一小段安全留白，同时把主体高度尽量拉高。 */
-    --portfolio-chatbot-mobile-top-gap: max(
-      env(safe-area-inset-top, 0px) + 3.5rem,
-      3.5rem
-    );
+    /* 移动端 modal 高度完全跟随设备顶部安全区计算，不额外写死留白。 */
+    --portfolio-chatbot-mobile-top-gap: env(safe-area-inset-top, 0px);
     background:
       linear-gradient(
         180deg,
@@ -783,7 +793,7 @@
     box-shadow:
       0 1.5rem 3.5rem color-mix(in srgb, var(--portfolio-semantic-title-color) 18%, transparent),
       inset 0 1px 0 color-mix(in srgb, var(--portfolio-color-surface) 94%, transparent);
-    height: max(90dvh, calc(100dvh - var(--portfolio-chatbot-mobile-top-gap)));
+    height: calc(100dvh - var(--portfolio-chatbot-mobile-top-gap));
     left: 0;
     max-height: calc(100dvh - var(--portfolio-chatbot-mobile-top-gap));
     max-width: none;
@@ -816,14 +826,14 @@
   }
 
   .composerFieldWrap {
-    min-height: 11rem;
+    min-height: 10rem;
     padding-top: 0.125rem;
   }
 
   .composerField {
-    min-height: 5.5rem;
-    padding-top: 1.125rem;
-    padding-bottom: 2.5rem;
+    min-height: 5rem;
+    padding-top: 1rem;
+    padding-bottom: 2.25rem;
   }
 
   .iconButton {

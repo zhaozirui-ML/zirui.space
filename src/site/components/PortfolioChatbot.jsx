@@ -469,6 +469,81 @@ function splitAnswerIntoReadableParagraphs(content, language) {
   return paragraphs.filter(Boolean).join("\n\n");
 }
 
+function normalizeStructuredAnswer(content) {
+  if (!content) {
+    return "";
+  }
+
+  return content
+    .split("\n")
+    .flatMap((line) => {
+      const trimmedLine = line.trim();
+
+      if (!trimmedLine) {
+        return [""];
+      }
+
+      const inlineBulletMatch = trimmedLine.match(/^(.+?[：:])\s*(-\s+.+)$/);
+
+      if (!inlineBulletMatch) {
+        return [line];
+      }
+
+      const listItems = inlineBulletMatch[2]
+        .split(/\s+-\s+/)
+        .map((item) => item.replace(/^-\s*/, "").trim())
+        .filter(Boolean);
+
+      if (listItems.length < 2) {
+        return [line];
+      }
+
+      return [
+        inlineBulletMatch[1].trim(),
+        ...listItems.map((item) => `- ${item}`),
+      ];
+    })
+    .join("\n");
+}
+
+function normalizeLinkMarkup(content) {
+  if (!content) {
+    return "";
+  }
+
+  return content
+    .replace(
+      /(^|\n)(\s*[-*]\s*)\*\*([^*]+)\*\*[：:]\s*(https?:\/\/[^\s)]+)/g,
+      (_match, lineStart, bulletPrefix, label, href) =>
+        `${lineStart}${bulletPrefix}[${label}](${href})`
+    )
+    .replace(
+      /(^|\n)(\s*)\*\*([^*]+)\*\*[：:]\s*(https?:\/\/[^\s)]+)/g,
+      (_match, lineStart, indentation, label, href) =>
+        `${lineStart}${indentation}[${label}](${href})`
+    )
+    .replace(
+      /(^|\n)(\s*[-*]\s*)([^:\n]{1,32})[：:]\s*(https?:\/\/[^\s)]+)/g,
+      (_match, lineStart, bulletPrefix, label, href) =>
+        `${lineStart}${bulletPrefix}[${label.trim()}](${href})`
+    )
+    .replace(
+      /(^|\n)(\s*)([^:\n]{1,32})[：:]\s*(https?:\/\/[^\s)]+)/g,
+      (_match, lineStart, indentation, label, href) =>
+        `${lineStart}${indentation}[${label.trim()}](${href})`
+    )
+    .replace(
+      /(^|\n)(\s*[-*]\s*)([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/gim,
+      (_match, lineStart, bulletPrefix, email) =>
+        `${lineStart}${bulletPrefix}[${email}](mailto:${email})`
+    )
+    .replace(
+      /(^|\n)(\s*)([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/gim,
+      (_match, lineStart, indentation, email) =>
+        `${lineStart}${indentation}[${email}](mailto:${email})`
+    );
+}
+
 function tokenizeAssistantAnswer(content, language) {
   if (!content) {
     return [];
@@ -511,19 +586,65 @@ function emphasizeReadableLead(content) {
 }
 
 function renderInlineMarkdown(content) {
-  const segments = content.split(/(\*\*.*?\*\*)/g);
+  const tokens = content.match(/(\*\*.*?\*\*|\[.*?\]\(.*?\))/g);
 
-  return segments.map((segment, index) => {
-    if (segment.startsWith("**") && segment.endsWith("**") && segment.length > 4) {
-      return (
-        <strong key={`strong-${index}`}>
-          {segment.slice(2, -2)}
-        </strong>
+  if (!tokens) {
+    return [content];
+  }
+
+  const parts = [];
+  let cursor = 0;
+
+  tokens.forEach((token, index) => {
+    const tokenIndex = content.indexOf(token, cursor);
+
+    if (tokenIndex > cursor) {
+      parts.push(
+        <Fragment key={`text-${index}-before`}>
+          {content.slice(cursor, tokenIndex)}
+        </Fragment>
       );
     }
 
-    return <Fragment key={`text-${index}`}>{segment}</Fragment>;
+    if (token.startsWith("**") && token.endsWith("**") && token.length > 4) {
+      parts.push(
+        <strong key={`strong-${index}`}>
+          {token.slice(2, -2)}
+        </strong>
+      );
+    } else {
+      const linkMatch = token.match(/^\[(.+?)\]\((.+?)\)$/);
+
+      if (linkMatch) {
+        const [, label, href] = linkMatch;
+        parts.push(
+          <a
+            className={styles.messageLink}
+            href={href}
+            key={`link-${index}`}
+            rel="noreferrer"
+            target="_blank"
+          >
+            {label}
+          </a>
+        );
+      } else {
+        parts.push(<Fragment key={`text-${index}`}>{token}</Fragment>);
+      }
+    }
+
+    cursor = tokenIndex + token.length;
   });
+
+  if (cursor < content.length) {
+    parts.push(
+      <Fragment key="text-tail">
+        {content.slice(cursor)}
+      </Fragment>
+    );
+  }
+
+  return parts;
 }
 
 function renderMessageContent(content) {
@@ -822,7 +943,10 @@ export default function PortfolioChatbot() {
 
       const data = await response.json();
       const assistantMessageId = createMessageId("assistant");
-      const structuredAnswer = splitAnswerIntoReadableParagraphs(data.answer || "", language);
+      const structuredAnswer = splitAnswerIntoReadableParagraphs(
+        normalizeLinkMarkup(normalizeStructuredAnswer(data.answer || "")),
+        language
+      );
       const relatedProjects = data.relatedProjects || [];
       const suggestedQuestions = filterSuggestedQuestionsForHistory(
         data.suggestedQuestions || [],

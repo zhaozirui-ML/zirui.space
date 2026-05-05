@@ -630,21 +630,26 @@ function buildSkillsAnswer(knowledge, language) {
 function buildContactAnswer(knowledge, language) {
   const emailItem = knowledge.contact.items.find((item) => item.href?.startsWith("mailto:"));
   const socialItem = knowledge.contact.items.find((item) => Array.isArray(item.value));
+  const socialLinks = (socialItem?.value || []).map((item) => `- [${item.label}](${item.href})`);
 
   if (language === "zh") {
     return [
       knowledge.contact.intro,
       "",
-      `邮箱：${emailItem?.value || "Zhaozirui721@gmail.com"}`,
-      `社交平台：${(socialItem?.value || []).map((item) => item.label).join("、")}`,
+      `- 邮箱：[${emailItem?.value || "Zhaozirui721@gmail.com"}](${emailItem?.href || "mailto:Zhaozirui721@gmail.com"})`,
+      ...(socialLinks.length
+        ? ["", "如果你想继续聊项目细节、工作机会，或者交流设计方法，也可以在这些平台找到我：", ...socialLinks]
+        : []),
     ].join("\n");
   }
 
   return [
     knowledge.contact.intro,
     "",
-    `Email: ${emailItem?.value || "Zhaozirui721@gmail.com"}`,
-    `Social platforms: ${(socialItem?.value || []).map((item) => item.label).join(", ")}`,
+    `- Email: [${emailItem?.value || "Zhaozirui721@gmail.com"}](${emailItem?.href || "mailto:Zhaozirui721@gmail.com"})`,
+    ...(socialLinks.length
+      ? ["", "You can also find me on these platforms if you want to continue the conversation there:", ...socialLinks]
+      : []),
   ].join("\n");
 }
 
@@ -671,7 +676,11 @@ function buildMethodAnswer(language) {
     return [
       "我的设计方法通常不是先从视觉开始，而是先把复杂问题讲清楚。",
       "",
-      "一般来说我会先理解业务目标和信息结构，再梳理关键任务链路与角色关系，然后用交互和界面把复杂性变得更容易理解，最后再关注方案是否真的能被团队落地和持续迭代。",
+      "一般来说我会按这个顺序推进：",
+      "- 先理解业务目标和信息结构",
+      "- 再梳理关键任务链路与角色关系",
+      "- 然后用交互和界面把复杂性变得更容易理解",
+      "- 最后确认方案能不能被团队落地，并持续迭代",
       "",
       "这也是为什么我的很多项目会同时强调系统化思维、可交付性和设计决策的清晰表达。",
     ].join("\n");
@@ -680,7 +689,11 @@ function buildMethodAnswer(language) {
   return [
     "My design approach usually does not start from visuals. It starts from making the complexity understandable.",
     "",
-    "In practice, I begin by understanding the business goal and information structure, then map the key task flows and role relationships, then use interaction and interface design to explain the complexity, and finally focus on whether the solution can actually ship and keep evolving with the team.",
+    "In practice, I usually move through the work in this order:",
+    "- Understand the business goal and information structure first",
+    "- Map the key task flows and role relationships next",
+    "- Use interaction and interface design to make the complexity legible",
+    "- Finally check whether the solution can actually ship and keep evolving with the team",
     "",
     "That is why many of my projects emphasize systematic thinking, delivery rigor, and clear design decision-making at the same time.",
   ].join("\n");
