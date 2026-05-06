@@ -9,8 +9,8 @@
 - 这个网站长期应该呈现什么气质
 - 后续所有视觉与交互决策应优先遵守哪些原则
 
-如果要看 token、组件和主题层，请看 [DESIGN_SYSTEM.md](/Users/zhaozirui/Desktop/AI%20Coding/Portfolio2026/DESIGN_SYSTEM.md)。  
-如果要看页面模式、案例页叙事和 Figma 落地规则，请看 [GUIDELINES.md](/Users/zhaozirui/Desktop/AI%20Coding/Portfolio2026/GUIDELINES.md)。
+如果要看 token、组件和主题层，请看 [design-system.md](/Users/zhaozirui/Desktop/AI%20Coding/Portfolio2026/design-system.md)。  
+如果要看页面模式、案例页叙事和 Figma 落地规则，请看 [design.md](/Users/zhaozirui/Desktop/AI%20Coding/Portfolio2026/design.md)。
 
 ## Users
 
@@ -46,15 +46,6 @@
 - 聪明
 - 有判断力
 - 温和
-
-文案气质也应遵守同一套判断：
-
-- 中英文文案不追求字面形式完全一致，而要追求气质一致
-- 文案调整时，优先选择各自语言里最自然、最得体、最符合页面气质的表达
-- 如果英文使用省略号、短句停顿或更轻的语气，不代表中文必须机械复刻相同标点
-- 如果中文用句号更稳、更克制、更像作品集表达，应优先保留中文自己的自然节奏
-- 判断标准不是“看起来是否完全对称”，而是两种语言是否都传达出同样的冷静、可信、细腻与克制
-- 后续所有文案微调，都应按“各自语言最自然的方式统一气质”这个原则处理
 
 整体表达应避免：
 
