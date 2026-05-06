@@ -19,6 +19,8 @@
   --blog-content-list-padding-left: 1.5rem;
   --blog-content-list-nested-padding-left: 1.25rem;
   --blog-content-list-nested-margin-top: 0.75rem;
+  --blog-content-quote-padding: 0.875rem 1rem;
+  --blog-content-code-padding: 0.75rem 0.875rem;
   --blog-content-image-radius: 1rem;
   --blog-article-footer-gap: 0.75rem;
   --blog-article-footer-padding-top: 1.5rem;
@@ -264,6 +266,46 @@
   margin: 0;
   max-width: var(--blog-reading-width);
   text-wrap: pretty;
+}
+
+.contentQuote {
+  background: color-mix(in srgb, var(--portfolio-color-surface-warm) 56%, var(--portfolio-color-bg-pure));
+  border-radius: 0.875rem;
+  margin: 0;
+  max-width: var(--blog-reading-width);
+  padding: var(--blog-content-quote-padding);
+}
+
+.contentListQuote {
+  margin-top: 0.75rem;
+}
+
+.contentQuoteText {
+  color: var(--portfolio-semantic-body-color);
+  font-size: 0.96875rem;
+  line-height: 1.85;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.contentCodeBlock {
+  background: color-mix(in srgb, var(--portfolio-color-surface-warm) 22%, var(--portfolio-color-bg-pure));
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: 0.75rem;
+  margin: 0;
+  max-width: var(--blog-reading-width);
+  overflow-x: auto;
+  padding: var(--blog-content-code-padding);
+  width: fit-content;
+}
+
+.contentCode {
+  color: color-mix(in srgb, var(--portfolio-semantic-title-color) 88%, var(--portfolio-color-text-muted));
+  display: block;
+  font-family: var(--portfolio-font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
 }
 
 .contentList {
