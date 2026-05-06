@@ -59,8 +59,12 @@ export const codexWorktreeParallelDevelopment = {
         },
         {
           text: t(
-            "Codex 的可视化实现：我需要去了解 Codex 是如何将这些 Git 功能可视化的，哪些功能提供了 UI 界面，哪些功能没有提供 UI、需要在终端中执行。",
-            "Codex's visual layer: I also needed to understand how Codex surfaces these Git capabilities, which actions are available in the UI, and which still need to be handled in the terminal.",
+            "Codex 的可视化实现：我需要去了解 Codex 是如何把这些 Git 功能可视化的，哪些动作已经有 UI，哪些动作仍然需要回到终端执行。这一步其实很重要，因为只有把界面能力和命令行能力的边界看清楚，后续并行开发才不容易误判。",
+            "Codex's visual layer: I also needed to understand how Codex turns these Git capabilities into interface actions, which tasks are already covered by the UI, and which still need to happen in the terminal. That boundary matters, because without it, parallel development becomes easy to misread and harder to control.",
+          ),
+          quote: t(
+            "例如目前的 Codex 客户端里，就有一种很典型的“管生不管埋”感：UI 可以很方便地基于任务或上下文创建新分支和 worktree，但如果你想删除历史分支、清理无用分支，还是得绕回 Terminal 处理。",
+            "For example, the current Codex client still has a very recognizable “create, but do not clean up” feel: the UI makes it easy to create a new branch or worktree from a task or context, but if you want to delete old branches or clean up unused ones, you still have to go back to the terminal.",
           ),
           nested: [],
         },
@@ -185,8 +189,15 @@ export const codexWorktreeParallelDevelopment = {
     {
       type: "paragraph",
       text: t(
-        "典型命令思路是：`git worktree add -b codex/xxx /path/to/worktree main`",
-        "A typical command looks like: `git worktree add -b codex/xxx /path/to/worktree main`",
+        "典型命令思路是：",
+        "A typical command looks like this:",
+      ),
+    },
+    {
+      type: "code",
+      code: t(
+        "git worktree add -b codex/xxx /path/to/worktree main",
+        "git worktree add -b codex/xxx /path/to/worktree main",
       ),
     },
     {
@@ -223,8 +234,15 @@ export const codexWorktreeParallelDevelopment = {
     {
       type: "paragraph",
       text: t(
-        "通过可视化 UI 的方式创建，就是在输入框下方的工作区 selector 里面选择“移交到工作树”，然后系统就会帮你创建一个新的 worktree 以及新的分支。",
-        "In the UI, the equivalent flow is choosing “Hand off to worktree” from the workspace selector below the input box. Codex then creates both the new worktree and the new branch for you.",
+        "如果走可视化 UI，做法就是在输入框下方的 workspace selector 里选择“移交到工作树”，系统会自动帮你创建新的 worktree 和分支。",
+        "In the UI, the equivalent move is to choose “Hand off to worktree” from the workspace selector below the input box. Codex then creates both the new worktree and the new branch for you.",
+      ),
+    },
+    {
+      type: "quote",
+      text: t(
+        "这里也能看出 Codex 当前一个很典型的产品特征：创建动作做得很顺手，但清理动作还没有完全进入 UI。",
+        "This also shows a very typical product trait in Codex today: creation is well supported in the UI, while cleanup has not fully made its way there yet.",
       ),
     },
     {
@@ -246,8 +264,15 @@ export const codexWorktreeParallelDevelopment = {
     {
       type: "paragraph",
       text: t(
-        "典型思路是先执行 `git branch codex/xxx main`，再执行 `git worktree add /path/to/worktree codex/xxx`。",
-        "The typical sequence is to run `git branch codex/xxx main` first, and then `git worktree add /path/to/worktree codex/xxx`.",
+        "典型思路是分两步：",
+        "The typical sequence is split into two steps:",
+      ),
+    },
+    {
+      type: "code",
+      code: t(
+        "git branch codex/xxx main\ngit worktree add /path/to/worktree codex/xxx",
+        "git branch codex/xxx main\ngit worktree add /path/to/worktree codex/xxx",
       ),
     },
     {
@@ -426,8 +451,8 @@ export const codexWorktreeParallelDevelopment = {
     {
       type: "paragraph",
       text: t(
-        "对我来说，这篇复盘真正有价值的地方，不只是记住几个 Git 命令，而是把 branch、worktree、thread 的边界先想清楚。边界清楚了，后面的并行协作和任务切换才会顺很多。",
-        "For me, the real value of this write-up is not simply memorizing a few Git commands. It is getting clear on the boundaries between branch, worktree, and thread first. Once those boundaries are clear, parallel collaboration and task handoff become much smoother.",
+        "这篇复盘真正的价值，不在于记住几个 Git 命令，而在于厘清 branch、worktree、thread 各自的职责边界。只有先把这些边界想清楚，并行协作、任务切换和后续清理才会真正变得可控。",
+        "The value of this review lies less in memorizing a few Git commands than in clarifying the boundaries between branch, worktree, and thread. Once those boundaries are explicit, parallel collaboration, task switching, and cleanup become far more controllable.",
       ),
     },
   ],

@@ -28,6 +28,13 @@ function renderNestedList(items, ordered, keyPrefix, language) {
           {item.text ? (
             <p className={styles.contentParagraph}>{resolveLocalizedText(item.text, language)}</p>
           ) : null}
+          {item.quote ? (
+            <blockquote className={[styles.contentQuote, styles.contentListQuote].join(" ")}>
+              <p className={styles.contentQuoteText}>
+                {resolveLocalizedText(item.quote, language)}
+              </p>
+            </blockquote>
+          ) : null}
           {item.nested.map((nestedList, nestedIndex) =>
             renderNestedList(
               nestedList.items,
@@ -64,6 +71,22 @@ function renderContentBlock(block, index, language) {
       <p className={styles.contentParagraph} key={`${block.type}-${index}`}>
         {resolveLocalizedText(block.text, language)}
       </p>
+    );
+  }
+
+  if (block.type === "quote") {
+    return (
+      <blockquote className={styles.contentQuote} key={`${block.type}-${index}`}>
+        <p className={styles.contentQuoteText}>{resolveLocalizedText(block.text, language)}</p>
+      </blockquote>
+    );
+  }
+
+  if (block.type === "code") {
+    return (
+      <pre className={styles.contentCodeBlock} key={`${block.type}-${index}`}>
+        <code className={styles.contentCode}>{resolveLocalizedText(block.code, language)}</code>
+      </pre>
     );
   }
 

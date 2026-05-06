@@ -55,6 +55,20 @@ export const blogPostTemplate = {
       },
     },
     {
+      type: "quote",
+      text: {
+        zh: "如果这里是一个例子、提醒或想单独强调的观点，可以用引用块。",
+        en: "Use a quote block for an example, a note, or a point you want to highlight on its own.",
+      },
+    },
+    {
+      type: "code",
+      code: {
+        zh: "pnpm lint\npnpm typecheck",
+        en: "pnpm lint\npnpm typecheck",
+      },
+    },
+    {
       type: "list",
       ordered: false,
       items: [
