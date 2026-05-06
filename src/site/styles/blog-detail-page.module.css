@@ -107,8 +107,7 @@
   font-weight: 500;
   letter-spacing: 0;
   line-height: 1.333;
-  max-width: 22ch;
-  text-wrap: balance;
+  text-wrap: pretty;
 }
 
 .metaRow {
@@ -196,12 +195,10 @@
 
 .heroFallbackTitle {
   font-size: clamp(1.5rem, 4vw, 2.25rem);
-  max-width: 15ch;
 }
 
 .imageFallbackTitle {
   font-size: 1.25rem;
-  max-width: 28rem;
 }
 
 .body {
