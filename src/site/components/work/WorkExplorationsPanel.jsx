@@ -3,25 +3,11 @@ import Image from "next/image";
 import { joinClassNames } from "./join-class-names";
 import styles from "./work-components.module.css";
 
-function ExplorationCaption({ caption }) {
-  if (!caption) {
-    return null;
-  }
-
-  return <p className={styles.explorationCaption}>{caption}</p>;
-}
-
 function ExplorationCard({ card }) {
-  const imageClassName = card.surface === "soft" ? styles.explorationImageSoftShadow : "";
-  const cardClassName = joinClassNames(
-    styles.explorationCard,
-    card.surface === "soft" ? styles.explorationCardSoftSurface : "",
-  );
-
   if (card.kind === "feature-image") {
     return (
-      <article className={joinClassNames(cardClassName, styles.explorationCardFeature)}>
-        <div className={joinClassNames(styles.explorationFeatureImage, imageClassName)}>
+      <article className={joinClassNames(styles.explorationCard, styles.explorationCardFeature)}>
+        <div className={styles.explorationFeatureImage}>
           <Image
             alt={card.alt}
             fill
@@ -29,15 +15,14 @@ function ExplorationCard({ card }) {
             src={card.src}
           />
         </div>
-        <ExplorationCaption caption={card.caption} />
       </article>
     );
   }
 
   if (card.kind === "device-image") {
     return (
-      <article className={joinClassNames(cardClassName, styles.explorationCardFeature)}>
-        <div className={joinClassNames(styles.explorationDeviceVisual, imageClassName)}>
+      <article className={joinClassNames(styles.explorationCard, styles.explorationCardFeature)}>
+        <div className={styles.explorationDeviceVisual}>
           <Image
             alt={card.alt}
             fill
@@ -45,15 +30,14 @@ function ExplorationCard({ card }) {
             src={card.src}
           />
         </div>
-        <ExplorationCaption caption={card.caption} />
       </article>
     );
   }
 
   if (card.kind === "ticket-image") {
     return (
-      <article className={joinClassNames(cardClassName, styles.explorationCardFeature)}>
-        <div className={joinClassNames(styles.explorationTicketVisual, imageClassName)}>
+      <article className={joinClassNames(styles.explorationCard, styles.explorationCardFeature)}>
+        <div className={styles.explorationTicketVisual}>
           <Image
             alt={card.alt}
             fill
@@ -61,18 +45,16 @@ function ExplorationCard({ card }) {
             src={card.src}
           />
         </div>
-        <ExplorationCaption caption={card.caption} />
       </article>
     );
   }
 
-  if (card.kind === "compact-image") {
+      if (card.kind === "compact-image") {
     return (
-      <article className={joinClassNames(cardClassName, styles.explorationCardCompact)}>
+      <article className={joinClassNames(styles.explorationCard, styles.explorationCardCompact)}>
         <div
           className={joinClassNames(
             styles.explorationCompactImage,
-            imageClassName,
             card.id === "cloud-icon-card" ? styles.explorationCompactImageCloud : "",
             card.id === "list-icon-card" ? styles.explorationCompactImageOffsetDown : "",
           )}
@@ -84,15 +66,14 @@ function ExplorationCard({ card }) {
             src={card.src}
           />
         </div>
-        <ExplorationCaption caption={card.caption} />
       </article>
     );
   }
 
   if (card.kind === "full-image") {
     return (
-      <article className={joinClassNames(cardClassName, styles.explorationCardTall)}>
-        <div className={joinClassNames(styles.explorationTallImage, imageClassName)}>
+      <article className={joinClassNames(styles.explorationCard, styles.explorationCardTall)}>
+        <div className={styles.explorationTallImage}>
           <Image
             alt={card.alt}
             fill
@@ -100,17 +81,15 @@ function ExplorationCard({ card }) {
             src={card.src}
           />
         </div>
-        <ExplorationCaption caption={card.caption} />
       </article>
     );
   }
 
   return (
-    <article className={joinClassNames(cardClassName, styles.explorationCardImmersive)}>
+    <article className={joinClassNames(styles.explorationCard, styles.explorationCardImmersive)}>
       <div
         className={joinClassNames(
           styles.explorationImmersiveImage,
-          imageClassName,
           card.id === "blur-card" ? styles.explorationImmersiveImageBlur : "",
         )}
       >
@@ -121,7 +100,6 @@ function ExplorationCard({ card }) {
           src={card.src}
         />
       </div>
-      <ExplorationCaption caption={card.caption} />
     </article>
   );
 }

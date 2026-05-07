@@ -224,17 +224,7 @@
 
 .explorationCard {
   display: grid;
-  gap: var(--portfolio-space-sm);
   place-items: center;
-}
-
-.explorationCardSoftSurface {
-  background: var(--portfolio-color-bg-soft);
-}
-
-.explorationImageSoftShadow {
-  border-radius: calc(var(--portfolio-radius-lg) - var(--portfolio-work-inner-radius-offset));
-  overflow: hidden;
 }
 
 .explorationCardFeature {
@@ -258,17 +248,6 @@
 
 .explorationCardImmersive {
   padding: var(--portfolio-work-border-width);
-}
-
-.explorationCaption {
-  color: var(--portfolio-color-text-muted);
-  font-family: var(--portfolio-font-body);
-  font-size: var(--portfolio-type-body-sm-size);
-  line-height: var(--portfolio-type-body-sm-line);
-  margin: 0;
-  max-width: 34rem;
-  text-align: center;
-  text-wrap: pretty;
 }
 
 .earningsVisual {
