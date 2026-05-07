@@ -21,6 +21,7 @@ export const codexWorktreeParallelDevelopment = {
     en: "TOOLS",
   },
   imageSrc: "/site/blog/codex-worktree-parallel-development/cover-thumb.png",
+  imagePosition: "left center",
   imageAlt: {
     zh: "Codex 中利用 Git Worktree 并行开发的实践文章封面",
     en: "Cover image for Parallel Development in Codex with Git Worktrees",
