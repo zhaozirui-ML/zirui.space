@@ -245,6 +245,62 @@ export const workTabs = [
 const explorationsRows = [
   [
     {
+      alt: "An AI chat concept combining a review-style conversation, media suggestion cards, and a message composer.",
+      caption: "AI chat with smart media suggestions.",
+      id: "ai-chat-media-card",
+      kind: "feature-image",
+      surface: "soft",
+      src: "/site/work/explorations/exploration-ai-chat-media-v2@2x.png",
+    },
+  ],
+  [
+    {
+      alt: "A voice interaction concept featuring a soft blue orb, hold-to-talk prompt, and microphone button.",
+      caption: "Hold to talk with live voice orb UI.",
+      id: "ai-voice-orb-card",
+      kind: "feature-image",
+      surface: "soft",
+      src: "/site/work/explorations/exploration-ai-voice-orb@2x.png",
+    },
+    {
+      alt: "An AI music concept featuring a soft gradient recording surface with text, camera, and audio tabs.",
+      caption: "AI music tool for recording and recognition.",
+      id: "ai-music-recording-card",
+      kind: "feature-image",
+      surface: "soft",
+      src: "/site/work/explorations/exploration-ai-music-recording-v2@2x.png",
+    },
+  ],
+  [
+    {
+      alt: "A voice feature concept listing versatility, documentation, data protection, and storage with a speech recognition action.",
+      caption: "Enhanced AI features for voice-based interaction.",
+      id: "ai-voice-features-card",
+      kind: "feature-image",
+      surface: "soft",
+      src: "/site/work/explorations/exploration-ai-voice-features@2x.png",
+    },
+  ],
+  [
+    {
+      alt: "An AI chat concept with a luminous orb, starter prompts, and a lightweight message input.",
+      caption: "AI chat UI with threads, prompts, & quick actions.",
+      id: "ai-chat-prompts-card",
+      kind: "feature-image",
+      surface: "soft",
+      src: "/site/work/explorations/exploration-ai-chat-prompts@2x.png",
+    },
+    {
+      alt: "An AI music concept showing pastel music cards, social stats, and a create new action.",
+      caption: "AI-generated music with social stats.",
+      id: "ai-music-social-card",
+      kind: "feature-image",
+      surface: "soft",
+      src: "/site/work/explorations/exploration-ai-music-social@2x.png",
+    },
+  ],
+  [
+    {
       alt: "An earnings exploration card with a dark gradient surface and a highlighted total.",
       id: "earnings-card",
       kind: "feature-image",
