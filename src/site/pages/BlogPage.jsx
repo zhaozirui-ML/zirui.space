@@ -12,7 +12,16 @@ function isRemoteImageSource(source) {
   return source.startsWith("http://") || source.startsWith("https://");
 }
 
-function BlogImageFrame({ alt, className, imageClassName, priority = false, sizes, src, title }) {
+function BlogImageFrame({
+  alt,
+  className,
+  imageClassName,
+  imagePosition,
+  priority = false,
+  sizes,
+  src,
+  title,
+}) {
   if (isRemoteImageSource(src)) {
     return (
       <div aria-label={alt} className={[className, styles.imageFallback].join(" ")} role="img">
@@ -30,6 +39,7 @@ function BlogImageFrame({ alt, className, imageClassName, priority = false, size
         fill
         loading={priority ? "eager" : undefined}
         sizes={sizes}
+        style={imagePosition ? { objectPosition: imagePosition } : undefined}
         src={src}
       />
     </div>
@@ -87,6 +97,7 @@ export default function BlogPage({ language }) {
                     alt={imageAlt}
                     className={styles.featuredMedia}
                     imageClassName={styles.featuredImage}
+                    imagePosition={post.imagePosition}
                     // 首屏第一张 featured 图最容易被浏览器判定为 LCP，优先加载能减少首屏主内容等待。
                     priority={isLeadFeaturedPost}
                     sizes="(max-width: 640px) 100vw, (max-width: 960px) 92vw, 448px"
@@ -178,6 +189,7 @@ export default function BlogPage({ language }) {
                       alt={imageAlt}
                       className={styles.browseMedia}
                       imageClassName={styles.featuredImage}
+                      imagePosition={post.imagePosition}
                       sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, 287px"
                       src={post.imageSrc}
                       title={title}
