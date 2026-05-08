@@ -222,79 +222,81 @@ export default function SiteHeader({ colorTheme, onThemeToggle }) {
     <header className={headerClassName}>
       <div className={styles.siteHeaderFrame}>
         <div className={styles.siteHeaderInner}>
-          <Link
-            aria-label={getLocalizedValue(siteShellDictionary.brandHomeLabel, language)}
-            className={styles.brandLink}
-            href="/"
-          >
-            <span className={styles.brandMarkFrame}>
-              <Image
-                alt=""
-                aria-hidden="true"
-                className={styles.brandMark}
-                // 告诉 Next.js 这张头像在不同断点下只会以很小的固定宽度显示，
-                // 这样它就能选择更合适的图片尺寸，避免继续出现 fill + sizes 缺失警告。
-                sizes="(max-width: 640px) 26px, 29px"
-                style={{
-                  inset: 0,
-                  objectFit: "contain",
-                  objectPosition: "center top",
-                  position: "absolute",
-                }}
-                fill
-                src={brandAvatarSrc}
-              />
-            </span>
-          </Link>
-          <div className={styles.siteHeaderControls}>
-            <div className={styles.navigationGroup}>
-              <nav
-                aria-label={getLocalizedValue(
-                  siteShellDictionary.navigationAriaLabel,
-                  language,
-                )}
-                className={styles.navigation}
-                ref={navigationRef}
-              >
-                {siteNavigation.map((item) => {
-                  const isActive = isNavigationItemActive(pathname, item.href);
-                  const linkClassName = [
-                    styles.navigationLink,
-                    isActive ? styles.navigationLinkActive : "",
-                  ]
-                    .filter(Boolean)
-                    .join(" ");
-
-                  return (
-                    <div
-                      className={styles.navigationItem}
-                      data-active={isActive ? "true" : "false"}
-                      key={item.href}
-                      ref={(element) => {
-                        if (element) {
-                          itemRefs.current.set(item.href, element);
-                          return;
-                        }
-
-                        itemRefs.current.delete(item.href);
-                      }}
-                    >
-                      <Link
-                        aria-current={isActive ? "page" : undefined}
-                        className={linkClassName}
-                        href={item.href}
-                      >
-                        {getLocalizedValue(item.label, language)}
-                      </Link>
-                    </div>
-                  );
-                })}
-                <span
+          <div className={styles.siteHeaderPrimary}>
+            <Link
+              aria-label={getLocalizedValue(siteShellDictionary.brandHomeLabel, language)}
+              className={styles.brandLink}
+              href="/"
+            >
+              <span className={styles.brandMarkFrame}>
+                <Image
+                  alt=""
                   aria-hidden="true"
-                  className={styles.navigationIndicator}
-                  style={indicatorStyle}
+                  className={styles.brandMark}
+                  // 告诉 Next.js 这张头像在不同断点下只会以很小的固定宽度显示，
+                  // 这样它就能选择更合适的图片尺寸，避免继续出现 fill + sizes 缺失警告。
+                  sizes="(max-width: 640px) 26px, 29px"
+                  style={{
+                    inset: 0,
+                    objectFit: "contain",
+                    objectPosition: "center top",
+                    position: "absolute",
+                  }}
+                  fill
+                  src={brandAvatarSrc}
                 />
-              </nav>
+              </span>
+            </Link>
+            <div className={styles.siteHeaderControls}>
+              <div className={styles.navigationGroup}>
+                <nav
+                  aria-label={getLocalizedValue(
+                    siteShellDictionary.navigationAriaLabel,
+                    language,
+                  )}
+                  className={styles.navigation}
+                  ref={navigationRef}
+                >
+                  {siteNavigation.map((item) => {
+                    const isActive = isNavigationItemActive(pathname, item.href);
+                    const linkClassName = [
+                      styles.navigationLink,
+                      isActive ? styles.navigationLinkActive : "",
+                    ]
+                      .filter(Boolean)
+                      .join(" ");
+
+                    return (
+                      <div
+                        className={styles.navigationItem}
+                        data-active={isActive ? "true" : "false"}
+                        key={item.href}
+                        ref={(element) => {
+                          if (element) {
+                            itemRefs.current.set(item.href, element);
+                            return;
+                          }
+
+                          itemRefs.current.delete(item.href);
+                        }}
+                      >
+                        <Link
+                          aria-current={isActive ? "page" : undefined}
+                          className={linkClassName}
+                          href={item.href}
+                        >
+                          {getLocalizedValue(item.label, language)}
+                        </Link>
+                      </div>
+                    );
+                  })}
+                  <span
+                    aria-hidden="true"
+                    className={styles.navigationIndicator}
+                    style={indicatorStyle}
+                  />
+                </nav>
+              </div>
             </div>
           </div>
           <div className={styles.siteHeaderActions}>
