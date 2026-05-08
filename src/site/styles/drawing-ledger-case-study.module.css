@@ -1292,7 +1292,7 @@
   }
 
   .sectionContentDetail {
-    padding-top: 4rem;
+    padding-top: 6rem;
   }
 
   .mobileLandingGrid {
@@ -1309,7 +1309,7 @@
 
 @media (max-width: 900px) {
   .webCaseStack {
-    gap: var(--drawing-ledger-stack-gap-md);
+    gap: 6rem;
   }
 
   .resultMetricsGrid {
@@ -1457,7 +1457,7 @@
   }
 
   .sectionContentDetail {
-    padding-top: 3rem;
+    padding-top: 6rem;
   }
 
   .chartCard,
