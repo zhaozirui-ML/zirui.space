@@ -112,8 +112,8 @@ export const workIndexDictionary = {
     en: "Recent explorations. Still cooking...",
   },
   metadataDescription: {
-    zh: "浏览赵子瑞的产品设计案例、系统设计项目与探索作品。",
-    en: "Browse Zhao Zirui's product design case studies, systems work, and explorations.",
+    zh: "浏览赵子瑞的产品设计案例、系统设计项目与个人项目。",
+    en: "Browse Zhao Zirui's product design case studies, systems work, and side projects.",
   },
   metadataAriaLabel: {
     zh: "项目信息",

@@ -222,7 +222,10 @@ export const workItems = [
 
 export const homeWorkItems = workItems.filter((item) => item.showOnHome !== false);
 
-export const workTabs = [
+// 先通过页面层开关下架「探索」入口，保留数据和组件实现，方便后续直接恢复。
+const showExplorationsTab = false;
+
+const allWorkTabs = [
   {
     id: "professional-work",
     iconName: "layoutGrid",
@@ -239,6 +242,10 @@ export const workTabs = [
     label: t("个人项目", "Side Projects"),
   },
 ];
+
+export const workTabs = allWorkTabs.filter(
+  (tab) => tab.id !== "explorations" || showExplorationsTab,
+);
 
 // Work 页不是平均网格，而是有主次节奏，所以这里显式保留各个 tab 的版式顺序。
 // explorations 和 side projects 也先走页面层数据，不急着提升到全局组件层。
