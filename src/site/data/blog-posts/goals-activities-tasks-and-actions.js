@@ -18,12 +18,12 @@ export const goalsActivitiesTasksAndActions = {
     zh: "指南",
     en: "GUIDE"
   },
-  imageSrc: "https://framerusercontent.com/images/InuNHIQ0GzOduJG7DthhRGJV8fY.jpg?width=1000&height=1334",
+  imageSrc: "/site/blog/goals-activities-tasks-and-actions/cover.jpg",
   imageAlt: {
     zh: "设计中的目标、活动、任务、行为文章封面",
     en: "Cover image for Goals, Activities, Tasks, and Actions in Design"
   },
-  heroImageSrc: "https://framerusercontent.com/images/InuNHIQ0GzOduJG7DthhRGJV8fY.jpg?width=1000&height=1334",
+  heroImageSrc: "/site/blog/goals-activities-tasks-and-actions/cover.jpg",
   heroImageAlt: {
     zh: "设计中的目标、活动、任务、行为文章 banner",
     en: "Banner image for Goals, Activities, Tasks, and Actions in Design"

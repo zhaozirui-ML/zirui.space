@@ -30,7 +30,7 @@ export const blogPosts = [
   minimalTodos,
 ];
 
-export const featuredBlogPosts = blogPosts.filter((post) => post.section === "featured");
+export const featuredBlogPosts = blogPosts.filter((post) => post.section === "featured").slice(0, 3);
 
 // Browse all 需要把 featured 文章也包含进来，并且按发布时间倒序显示。
 export const blogIndexPosts = [...blogPosts].sort(
