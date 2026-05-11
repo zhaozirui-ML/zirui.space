@@ -346,7 +346,7 @@ worktree 虽然来自同一个 Git 仓库，但它本质上是：
 
 ---
 
-## 6. `AGENTS.md`、`GUIDELINES.md`、`DESIGN_SYSTEM.md` 分别放什么
+## 6. `AGENTS.md`、`design.md`、`design-system.md` 分别放什么
 
 这三个文档也很容易混。
 
@@ -368,7 +368,7 @@ worktree 虽然来自同一个 Git 仓库，但它本质上是：
 
 - `AGENTS.md` 是“怎么协作”
 
-### 6.2 `GUIDELINES.md`
+### 6.2 `design.md`
 
 放的是：
 
@@ -382,9 +382,9 @@ worktree 虽然来自同一个 Git 仓库，但它本质上是：
 
 简单理解：
 
-- `GUIDELINES.md` 是“页面应该长什么样、怎么表达”
+- `design.md` 是“页面应该长什么样、怎么表达”
 
-### 6.3 `DESIGN_SYSTEM.md`
+### 6.3 `design-system.md`
 
 放的是：
 
@@ -402,13 +402,13 @@ worktree 虽然来自同一个 Git 仓库，但它本质上是：
 
 简单理解：
 
-- `DESIGN_SYSTEM.md` 是“系统级视觉规则”
+- `design-system.md` 是“系统级视觉规则”
 
 ### 6.4 一个简单记忆法
 
 - `AGENTS.md`：协作规则
-- `GUIDELINES.md`：页面规范
-- `DESIGN_SYSTEM.md`：视觉系统规则
+- `design.md`：页面规范
+- `design-system.md`：视觉系统规则
 
 ---
 
@@ -576,11 +576,11 @@ worktree 虽然来自同一个 Git 仓库，但它本质上是：
    - 看默认工作流
    - 看 Figma 实现时的默认 Skill 组合
 
-2. `GUIDELINES.md`
+2. `design.md`
    - 看页面规范
    - 看内容保真规则
 
-3. `DESIGN_SYSTEM.md`
+3. `design-system.md`
    - 看字体规则
    - 看详情页 / 首页的区分
 

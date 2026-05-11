@@ -5,8 +5,8 @@
 它不替代以下文档：
 
 - `docs/design-context.md`：高层设计意图、品牌气质、长期方向
-- `DESIGN_SYSTEM.md`：token、组件、主题分层与职责边界
-- `GUIDELINES.md`：页面层模式、内容规则、Figma 落地原则
+- `design-system.md`：token、组件、主题分层与职责边界
+- `design.md`：页面层模式、内容规则、Figma 落地原则
 
 这份文档更偏“实现决策备忘录”：
 
