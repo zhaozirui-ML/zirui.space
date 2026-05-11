@@ -37,7 +37,7 @@ const roundTwoBenefits = [
     title: "保留表格",
   },
   {
-    body: "实现“千人千面”的核心策略，把不同角色最需要关注的内容放在最显眼的位置。",
+    body: "实现视觉层级重塑的核心策略，把不同角色最需要关注的内容放在最显眼的位置。",
     title: "增加待办区",
   },
   {
@@ -532,7 +532,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
         ? {
             "保住了用户习惯和海量数据的检索效率。":
               "Preserves user habits and the retrieval efficiency needed for large-scale data.",
-            "实现“千人千面”的核心策略，把不同角色最需要关注的内容放在最显眼的位置。":
+            "实现视觉层级重塑的核心策略，把不同角色最需要关注的内容放在最显眼的位置。":
               "Delivers the core 'different users, different views' strategy by placing each role's most important content in the most visible spot.",
             "界面改动成本小，底层逻辑无需完全重写，ROI 更高。":
               "Minimizes interface change cost, avoids a full backend rewrite, and improves ROI.",
@@ -806,7 +806,16 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                       </p>
                       <ul>
                         <li>{display("保留表格： 保住了用户习惯和海量数据的检索效率", "Keep the table: preserve user habits and retrieval efficiency for large data sets")}</li>
-                        <li>{display("增加待办区：实现了“千人千面”的核心策略，将不同角色当前最需要关注的内容展示在最显眼的位置", "Add a task area: deliver role-specific views by placing what each role needs most in the most visible position")}</li>
+                        <li>
+                          {display(
+                            <>
+                              增加待办区：实现<strong>视觉层级重塑</strong>的核心策略，将不同角色当前最需要关注的内容展示在最显眼的位置
+                            </>,
+                            <>
+                              Add a task area: deliver the core strategy of <strong>visual hierarchy reshaping</strong> by placing what each role needs most in the most visible position
+                            </>,
+                          )}
+                        </li>
                         <li>{display("研发友好：界面改动成本小，底层逻辑无需完全重写，ROI 极高", "Engineering-friendly: low interface change cost, no full rewrite of underlying logic, and high ROI")}</li>
                       </ul>
                     </div>
