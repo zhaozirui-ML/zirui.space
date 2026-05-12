@@ -9,13 +9,8 @@ export default function LegacyCaseStudyPage({
   caseStudy,
   language = "zh",
 }) {
-  /** @type {import("react").CSSProperties & Record<string, string>} */
-  const heroStyle = {
-    "--legacy-case-study-accent": caseStudy.accentColor,
-  };
-
   return (
-    <article className={styles.page} style={heroStyle}>
+    <article className={styles.page}>
       <section className={styles.heroFullBleed}>
         <div className={styles.heroBackdrop} />
         <div className={styles.heroInner}>

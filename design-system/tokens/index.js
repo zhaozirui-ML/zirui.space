@@ -363,6 +363,7 @@ export const rootCssVariables = {
   "--ds-color-accent-sky": colors.accentSky,
   "--ds-color-accent-blush": colors.accentBlush,
   "--ds-color-accent-sand": colors.accentSand,
+  "--ds-color-gradient-blue-soft": colors.gradientBlueSoft,
   "--ds-space-2xs": spacing["2xs"],
   "--ds-space-xs": spacing.xs,
   "--ds-space-sm": spacing.sm,
