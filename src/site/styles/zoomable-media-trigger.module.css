@@ -1,0 +1,43 @@
+.trigger {
+  display: contents;
+}
+
+.trigger :global(img) {
+  cursor: zoom-in;
+}
+
+.overlay {
+  align-items: center;
+  background: rgba(12, 14, 18, 0.78);
+  backdrop-filter: blur(6px);
+  display: grid;
+  inset: 0;
+  justify-items: center;
+  padding: 2rem 1rem;
+  position: fixed;
+  z-index: 1200;
+}
+
+.surface {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  max-height: 100%;
+  max-width: calc(100vw - 4rem);
+  overflow: visible;
+}
+
+.image {
+  cursor: zoom-out;
+  display: block;
+  height: auto;
+  max-height: calc(100vh - 4rem);
+  max-width: 100%;
+  object-fit: contain;
+  width: auto;
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--portfolio-color-accent-blue, #5684ae);
+  outline-offset: 3px;
+}

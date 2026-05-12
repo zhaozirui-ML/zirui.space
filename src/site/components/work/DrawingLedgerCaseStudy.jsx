@@ -6,6 +6,7 @@ import {
   CaseStudyHeadingTwo,
 } from "../case-study/CaseStudyHeading";
 import CaseStudyToc from "../case-study/CaseStudyToc";
+import ZoomableMediaTrigger from "../case-study/ZoomableMediaTrigger";
 import { drawingLedgerAssets as assets } from "../../data/work-details/drawing-ledger-2-0";
 import styles from "../../styles/drawing-ledger-case-study.module.css";
 
@@ -298,61 +299,111 @@ function MediaFigure({
     imageFit === "contain" ? styles.mediaImageContain : styles.mediaImageCover;
   const videoClassNameForMedia =
     imageFit === "contain" ? styles.mediaVideoContain : styles.mediaVideoCover;
+  const resolvedAssetAlt = asset ? resolveAssetAlt(asset, language) : "";
+  const mediaFrame = (
+    <div
+      className={joinClassNames(
+        styles.mediaFrame,
+        frameTone === "surface" ? styles.mediaFrameSurface : styles.mediaFrameWarm
+      )}
+      style={frameStyles}
+    >
+      {backgroundAsset?.src ? (
+        <Image
+          alt={resolveAssetAlt(backgroundAsset, language)}
+          className={styles.mediaBackground}
+          fill
+          priority={priority}
+          sizes="(max-width: 900px) calc(100vw - 2rem), 832px"
+          src={backgroundAsset.src}
+          unoptimized={backgroundAsset.unoptimized}
+        />
+      ) : null}
+
+      {asset?.src ? (
+        <div className={joinClassNames(styles.mediaInner, imageClassName)}>
+          {asset.mediaType === "video" ? (
+            <video
+              aria-label={resolvedAssetAlt}
+              autoPlay
+              className={videoClassNameForMedia}
+              loop
+              muted
+              playsInline
+              preload="metadata"
+              src={asset.src}
+            />
+          ) : (
+            <Image
+              alt={resolvedAssetAlt}
+              className={imageClassNameForMedia}
+              fill
+              priority={priority}
+              sizes="(max-width: 900px) calc(100vw - 2rem), 832px"
+              src={asset.src}
+              unoptimized={asset.unoptimized}
+            />
+          )}
+        </div>
+      ) : null}
+
+      {!asset?.src && placeholder ? (
+        <div className={styles.mediaPlaceholder}>{placeholder}</div>
+      ) : null}
+    </div>
+  );
 
   return (
     <figure className={joinClassNames(styles.figure, className)}>
-      <div
-        className={joinClassNames(
-          styles.mediaFrame,
-          frameTone === "surface" ? styles.mediaFrameSurface : styles.mediaFrameWarm
-        )}
-        style={frameStyles}
-      >
-        {backgroundAsset?.src ? (
-          <Image
-            alt={resolveAssetAlt(backgroundAsset, language)}
-            className={styles.mediaBackground}
-            fill
-            priority={priority}
-            sizes="(max-width: 900px) calc(100vw - 2rem), 832px"
-            src={backgroundAsset.src}
-            unoptimized={backgroundAsset.unoptimized}
-          />
-        ) : null}
-
-        {asset?.src ? (
-          <div className={joinClassNames(styles.mediaInner, imageClassName)}>
-            {asset.mediaType === "video" ? (
-              <video
-                aria-label={resolveAssetAlt(asset, language)}
-                autoPlay
-                className={videoClassNameForMedia}
-                loop
-                muted
-                playsInline
-                preload="metadata"
-                src={asset.src}
-              />
-            ) : (
-              <Image
-                alt={resolveAssetAlt(asset, language)}
-                className={imageClassNameForMedia}
-                fill
-                priority={priority}
-                sizes="(max-width: 900px) calc(100vw - 2rem), 832px"
-                src={asset.src}
-                unoptimized={asset.unoptimized}
-              />
-            )}
-          </div>
-        ) : null}
-
-        {!asset?.src && placeholder ? (
-          <div className={styles.mediaPlaceholder}>{placeholder}</div>
-        ) : null}
-      </div>
+      {asset?.src && asset.mediaType !== "video" ? (
+        <ZoomableMediaTrigger alt={resolvedAssetAlt} fullSrc={asset.src}>
+          {mediaFrame}
+        </ZoomableMediaTrigger>
+      ) : (
+        mediaFrame
+      )}
       <figcaption className={styles.caption}>{caption}</figcaption>
     </figure>
+  );
+}
+
+function ZoomableFigureFrame({ asset, children, language = "zh" }) {
+  if (!asset?.src || asset.mediaType === "video") {
+    return children;
+  }
+
+  return (
+    <ZoomableMediaTrigger alt={resolveAssetAlt(asset, language)} fullSrc={asset.src}>
+      {children}
+    </ZoomableMediaTrigger>
+  );
+}
+
+function SingleMediaFigure({
+  asset,
+  height = 938,
+  language = "zh",
+  priority = false,
+  sizes = "(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 832px",
+  width = 1664,
+}) {
+  const alt = resolveAssetAlt(asset, language);
+
+  return (
+    <ZoomableMediaTrigger alt={alt} fullSrc={asset.src}>
+      <div className={styles.singleMediaFigure}>
+        <Image
+          alt={alt}
+          className={styles.singleMediaFigureImage}
+          height={height}
+          priority={priority}
+          sizes={sizes}
+          src={asset.src}
+          unoptimized={asset.unoptimized}
+          width={width}
+        />
+      </div>
+    </ZoomableMediaTrigger>
   );
 }
 
@@ -623,7 +674,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
         <div className={styles.heroInner}>
           <header className={styles.heroHeader}>
             <h1 className={styles.heroTitle}>{display("图纸台账 2.0", "Drawing Register 2.0")}</h1>
-            <p className={styles.heroSubtitle}>
+            <p className={styles.heroSubtitle} suppressHydrationWarning>
               {display(
                 "围绕角色任务与状态规则，重塑图纸生命周期流转体验",
                 "Reshaping the drawing lifecycle around role-specific tasks and state-transition logic",
@@ -731,17 +782,19 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     </div>
                   </CaseStudyHeadingTwo>
                   <figure className={styles.figure}>
-                    <div className={styles.taskTableFigure}>
-                      <Image
-                        alt={resolveAlt(assets.userTaskAnalysis)}
-                        className={styles.taskTableFigureImage}
-                        height={1018}
-                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 832px"
-                        src={assets.userTaskAnalysis.src}
-                        unoptimized={assets.userTaskAnalysis.unoptimized}
-                        width={1664}
-                      />
-                    </div>
+                    <ZoomableFigureFrame asset={assets.userTaskAnalysis} language={language}>
+                      <div className={styles.taskTableFigure}>
+                        <Image
+                          alt={resolveAlt(assets.userTaskAnalysis)}
+                          className={styles.taskTableFigureImage}
+                          height={1018}
+                          sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 832px"
+                          src={assets.userTaskAnalysis.src}
+                          unoptimized={assets.userTaskAnalysis.unoptimized}
+                          width={1664}
+                        />
+                      </div>
+                    </ZoomableFigureFrame>
                     <figcaption className={styles.caption}>
                       {display("用户任务梳理", "User task analysis")}
                     </figcaption>
@@ -765,17 +818,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     </div>
                   </CaseStudyHeadingTwo>
                   <figure className={styles.figure}>
-                    <div className={styles.singleMediaFigure}>
-                      <Image
-                        alt={resolveAlt(assets.webDesignAnalysis)}
-                        className={styles.singleMediaFigureImage}
-                        height={1089}
-                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 832px"
-                        src={assets.webDesignAnalysis.src}
-                        unoptimized={assets.webDesignAnalysis.unoptimized}
-                        width={1664}
-                      />
-                    </div>
+                    <SingleMediaFigure asset={assets.webDesignAnalysis} height={1089} language={language} />
                   </figure>
                 </div>
               </div>
@@ -821,17 +864,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     </div>
                   </CaseStudyHeadingTwo>
                   <figure className={styles.figure}>
-                    <div className={styles.singleMediaFigure}>
-                      <Image
-                        alt={resolveAlt(assets.webStrategyVisual)}
-                        className={styles.singleMediaFigureImage}
-                        height={960}
-                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 832px"
-                        src={assets.webStrategyVisual.src}
-                        unoptimized={assets.webStrategyVisual.unoptimized}
-                        width={1664}
-                      />
-                    </div>
+                    <SingleMediaFigure asset={assets.webStrategyVisual} height={960} language={language} />
                   </figure>
                 </div>
 
@@ -852,17 +885,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     </div>
                   </CaseStudyHeadingTwo>
                   <figure className={styles.figure}>
-                    <div className={styles.singleMediaFigure}>
-                      <Image
-                        alt={resolveAlt(assets.webStrategyRole)}
-                        className={styles.singleMediaFigureImage}
-                        height={960}
-                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 832px"
-                        src={assets.webStrategyRole.src}
-                        unoptimized={assets.webStrategyRole.unoptimized}
-                        width={1664}
-                      />
-                    </div>
+                    <SingleMediaFigure asset={assets.webStrategyRole} height={960} language={language} />
                   </figure>
                 </div>
 
@@ -883,17 +906,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     </div>
                   </CaseStudyHeadingTwo>
                   <figure className={styles.figure}>
-                    <div className={styles.singleMediaFigure}>
-                      <Image
-                        alt={resolveAlt(assets.webStrategyRules)}
-                        className={styles.singleMediaFigureImage}
-                        height={933}
-                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 832px"
-                        src={assets.webStrategyRules.src}
-                        unoptimized={assets.webStrategyRules.unoptimized}
-                        width={1664}
-                      />
-                    </div>
+                    <SingleMediaFigure asset={assets.webStrategyRules} height={933} language={language} />
                   </figure>
                 </div>
               </div>
@@ -1028,17 +1041,7 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                   ))}
                 </div>
                 <figure className={styles.figure}>
-                  <div className={styles.singleMediaFigure}>
-                    <Image
-                      alt={resolveAlt(assets.webResults)}
-                      className={styles.singleMediaFigureImage}
-                      height={1013}
-                      sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 832px"
-                      src={assets.webResults.src}
-                      unoptimized={assets.webResults.unoptimized}
-                      width={1664}
-                    />
-                  </div>
+                  <SingleMediaFigure asset={assets.webResults} height={1013} language={language} />
                 </figure>
               </div>
             </div>
@@ -1068,21 +1071,23 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                           "Version 1.0 of the drawing register had already been completed before I joined the team. At that stage, the core goal was to quickly build and launch the essential functionality, so the experience was not differentiated by role. As a result, the page was harder to understand, operation paths were longer, and drawing circulation efficiency was significantly affected."
                         )}
                       </p>
-                    </div>
+                  </div>
                   </CaseStudyHeadingOne>
 
                   <figure className={styles.figure}>
-                    <div className={styles.lifecycleFigure}>
-                      <Image
-                        alt={resolveAlt(assets.lifecycleFlow)}
-                        className={styles.lifecycleFigureImage}
-                        height={468}
-                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
-                        src={assets.lifecycleFlow.src}
-                        unoptimized={assets.lifecycleFlow.unoptimized}
-                        width={1664}
-                      />
-                    </div>
+                    <ZoomableFigureFrame asset={assets.lifecycleFlow} language={language}>
+                      <div className={styles.lifecycleFigure}>
+                        <Image
+                          alt={resolveAlt(assets.lifecycleFlow)}
+                          className={styles.lifecycleFigureImage}
+                          height={468}
+                          sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                          src={assets.lifecycleFlow.src}
+                          unoptimized={assets.lifecycleFlow.unoptimized}
+                          width={1664}
+                        />
+                      </div>
+                    </ZoomableFigureFrame>
                   </figure>
                 </div>
 
@@ -1102,17 +1107,19 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                   </CaseStudyHeadingOne>
 
                   <figure className={styles.figure}>
-                    <div className={styles.problemFigure}>
-                      <Image
-                        alt={resolveAlt(assets.problemLedgerV1)}
-                        className={styles.problemFigureImage}
-                        height={936}
-                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
-                        src={assets.problemLedgerV1.src}
-                        unoptimized={assets.problemLedgerV1.unoptimized}
-                        width={1664}
-                      />
-                    </div>
+                    <ZoomableFigureFrame asset={assets.problemLedgerV1} language={language}>
+                      <div className={styles.problemFigure}>
+                        <Image
+                          alt={resolveAlt(assets.problemLedgerV1)}
+                          className={styles.problemFigureImage}
+                          height={936}
+                          sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                          src={assets.problemLedgerV1.src}
+                          unoptimized={assets.problemLedgerV1.unoptimized}
+                          width={1664}
+                        />
+                      </div>
+                    </ZoomableFigureFrame>
                     <figcaption className={styles.caption}>{display("旧版图纸台账页", "Old register page")}</figcaption>
                   </figure>
                 </div>
@@ -1152,17 +1159,19 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                   </CaseStudyHeadingTwo>
 
                   <figure className={styles.figure}>
-                    <div className={styles.taskTableFigure}>
-                      <Image
-                        alt={resolveAlt(assets.userTaskAnalysis)}
-                        className={styles.taskTableFigureImage}
-                        height={1018}
-                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
-                        src={assets.userTaskAnalysis.src}
-                        unoptimized={assets.userTaskAnalysis.unoptimized}
-                        width={1664}
-                      />
-                    </div>
+                    <ZoomableFigureFrame asset={assets.userTaskAnalysis} language={language}>
+                      <div className={styles.taskTableFigure}>
+                        <Image
+                          alt={resolveAlt(assets.userTaskAnalysis)}
+                          className={styles.taskTableFigureImage}
+                          height={1018}
+                          sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                          src={assets.userTaskAnalysis.src}
+                          unoptimized={assets.userTaskAnalysis.unoptimized}
+                          width={1664}
+                        />
+                      </div>
+                    </ZoomableFigureFrame>
                     <figcaption className={styles.caption}>{display("用户任务梳理", "User task analysis")}</figcaption>
                   </figure>
                 </div>
@@ -1185,17 +1194,11 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                   </CaseStudyHeadingTwo>
 
                   <figure className={styles.figure}>
-                    <div className={styles.singleMediaFigure}>
-                      <Image
-                        alt={resolveAlt(assets.round1OptionA)}
-                        className={styles.singleMediaFigureImage}
-                        height={938}
-                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
-                        src={assets.round1OptionA.src}
-                        unoptimized={assets.round1OptionA.unoptimized}
-                        width={1664}
-                      />
-                    </div>
+                    <SingleMediaFigure
+                      asset={assets.round1OptionA}
+                      language={language}
+                      sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                    />
                     <figcaption className={styles.caption}>
                       {display("Option A：待处理和未处理模块上下布局，且支持展开收起", "Option A: pending and processed modules stacked vertically with expand/collapse")}
                     </figcaption>
@@ -1210,17 +1213,11 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                   />
 
                   <figure className={joinClassNames(styles.figure, styles.figureSectionBreak)}>
-                    <div className={styles.singleMediaFigure}>
-                      <Image
-                        alt={resolveAlt(assets.round1OptionB)}
-                        className={styles.singleMediaFigureImage}
-                        height={938}
-                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
-                        src={assets.round1OptionB.src}
-                        unoptimized={assets.round1OptionB.unoptimized}
-                        width={1664}
-                      />
-                    </div>
+                    <SingleMediaFigure
+                      asset={assets.round1OptionB}
+                      language={language}
+                      sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                    />
                     <figcaption className={styles.caption}>
                       {display("Option B：待处理和已处理模块左右布局，用 Tab 组件区分", "Option B: pending and processed modules laid out side by side and separated by tabs")}
                     </figcaption>
@@ -1235,17 +1232,11 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                   />
 
                   <figure className={joinClassNames(styles.figure, styles.figureSectionBreak)}>
-                    <div className={styles.singleMediaFigure}>
-                      <Image
-                        alt={resolveAlt(assets.round1Overview)}
-                        className={styles.singleMediaFigureImage}
-                        height={938}
-                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
-                        src={assets.round1Overview.src}
-                        unoptimized={assets.round1Overview.unoptimized}
-                        width={1664}
-                      />
-                    </div>
+                    <SingleMediaFigure
+                      asset={assets.round1Overview}
+                      language={language}
+                      sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                    />
                     <figcaption className={styles.caption}>
                       {display("探索方案概览 · 第一轮", "Exploration overview · Round 1")}
                     </figcaption>
@@ -1288,17 +1279,11 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                   </CaseStudyHeadingTwo>
 
                   <figure className={styles.figure}>
-                    <div className={styles.singleMediaFigure}>
-                      <Image
-                        alt={resolveAlt(assets.round2OptionC)}
-                        className={styles.singleMediaFigureImage}
-                        height={938}
-                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
-                        src={assets.round2OptionC.src}
-                        unoptimized={assets.round2OptionC.unoptimized}
-                        width={1664}
-                      />
-                    </div>
+                    <SingleMediaFigure
+                      asset={assets.round2OptionC}
+                      language={language}
+                      sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                    />
                     <figcaption className={styles.caption}>
                       {display("Option C：待办区 + 表格的融合视图", "Option C: a blended task area + table view")}
                     </figcaption>
@@ -1318,17 +1303,11 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                   </CaseStudyHeadingTwo>
 
                   <figure className={styles.figure}>
-                    <div className={styles.singleMediaFigure}>
-                      <Image
-                        alt={resolveAlt(assets.round2FinalVisual)}
-                        className={styles.singleMediaFigureImage}
-                        height={938}
-                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
-                        src={assets.round2FinalVisual.src}
-                        unoptimized={assets.round2FinalVisual.unoptimized}
-                        width={1664}
-                      />
-                    </div>
+                    <SingleMediaFigure
+                      asset={assets.round2FinalVisual}
+                      language={language}
+                      sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                    />
                     <figcaption className={styles.caption}>
                       {display("最终版视觉稿", "Final visual draft")}
                     </figcaption>
@@ -1645,17 +1624,12 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                         </CaseStudyHeadingThree>
 
                         <figure className={styles.figure}>
-                          <div className={styles.singleMediaFigure}>
-                            <Image
-                              alt={resolveAlt(assets.mobileReference)}
-                              className={styles.singleMediaFigureImage}
-                              height={720}
-                              sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
-                              src={assets.mobileReference.src}
-                              unoptimized={assets.mobileReference.unoptimized}
-                              width={1664}
-                            />
-                          </div>
+                          <SingleMediaFigure
+                            asset={assets.mobileReference}
+                            height={720}
+                            language={language}
+                            sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                          />
                           <figcaption className={styles.caption}>
                             {display("产品收集参考", "Reference collection")}
                           </figcaption>
@@ -1685,17 +1659,19 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                         </CaseStudyHeadingThree>
 
                         <figure className={styles.figure}>
-                          <div className={styles.explorationFigure}>
-                            <Image
-                              alt={resolveAlt(assets.mobileExploration)}
-                              className={styles.explorationFigureImage}
-                              height={840}
-                              sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
-                              src={assets.mobileExploration.src}
-                              unoptimized={assets.mobileExploration.unoptimized}
-                              width={1664}
-                            />
-                          </div>
+                          <ZoomableFigureFrame asset={assets.mobileExploration} language={language}>
+                            <div className={styles.explorationFigure}>
+                              <Image
+                                alt={resolveAlt(assets.mobileExploration)}
+                                className={styles.explorationFigureImage}
+                                height={840}
+                                sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                                src={assets.mobileExploration.src}
+                                unoptimized={assets.mobileExploration.unoptimized}
+                                width={1664}
+                              />
+                            </div>
+                          </ZoomableFigureFrame>
                           <figcaption className={styles.caption}>{display("初版方案探索", "Initial concept exploration")}</figcaption>
                         </figure>
                       </div>
@@ -1733,17 +1709,19 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                     </div>
                   </CaseStudyHeadingTwo>
 
-                  <div className={styles.iterationFigure}>
-                    <Image
-                      alt={resolveAlt(assets.mobileIteration)}
-                      className={styles.iterationFigureImage}
-                      height={936}
-                      sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
-                      src={assets.mobileIteration.src}
-                      unoptimized={assets.mobileIteration.unoptimized}
-                      width={1664}
-                    />
-                  </div>
+                  <ZoomableFigureFrame asset={assets.mobileIteration} language={language}>
+                    <div className={styles.iterationFigure}>
+                      <Image
+                        alt={resolveAlt(assets.mobileIteration)}
+                        className={styles.iterationFigureImage}
+                        height={936}
+                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                        src={assets.mobileIteration.src}
+                        unoptimized={assets.mobileIteration.unoptimized}
+                        width={1664}
+                      />
+                    </div>
+                  </ZoomableFigureFrame>
                   <p className={styles.caption}>{display("视觉设计迭代", "Visual design iteration")}</p>
                 </div>
 

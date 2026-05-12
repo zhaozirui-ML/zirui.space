@@ -5,6 +5,7 @@ import {
   CaseStudyHeadingTwo,
 } from "../components/case-study/CaseStudyHeading";
 import CaseStudyToc from "../components/case-study/CaseStudyToc";
+import ZoomableMediaTrigger from "../components/case-study/ZoomableMediaTrigger";
 import { axzoDesignSystemCaseStudy } from "../data/axzo-design-system-case-study";
 import { getLocalizedValue } from "../i18n/get-localized-value";
 import styles from "../styles/axzo-design-system-case-study.module.css";
@@ -121,42 +122,47 @@ function MediaPanel({
         "--axzo-media-crop-width": crop.width,
       }
     : { aspectRatio: ratio };
-
-  return (
-    <figure className={styles.mediaFigure}>
-      <div className={frameClassName} style={frameStyle}>
-        {crop ? (
-          <div className={styles.mediaCropViewport}>
+  const mediaFrame = (
+    <div className={frameClassName} style={frameStyle}>
+      {crop ? (
+        <div className={styles.mediaCropViewport}>
+          <Image
+            alt={alt}
+            className={styles.mediaImageCropped}
+            height={crop.intrinsicHeight}
+            priority={priority}
+            sizes="(max-width: 900px) calc(100vw - 2.5rem), 832px"
+            src={imageSrc}
+            unoptimized={shouldBypassNextImageOptimizer(imageSrc)}
+            width={crop.intrinsicWidth}
+          />
+        </div>
+      ) : (
+        <div className={tone === "soft" ? styles.mediaInset : styles.mediaFill}>
+          <div className={styles.mediaFill}>
             <Image
               alt={alt}
-              className={styles.mediaImageCropped}
-              height={crop.intrinsicHeight}
+              className={joinClassNames(
+                styles.mediaImage,
+                fit === "contain" ? styles.mediaImageContain : null,
+              )}
+              fill
               priority={priority}
               sizes="(max-width: 900px) calc(100vw - 2.5rem), 832px"
               src={imageSrc}
               unoptimized={shouldBypassNextImageOptimizer(imageSrc)}
-              width={crop.intrinsicWidth}
             />
           </div>
-        ) : (
-          <div className={tone === "soft" ? styles.mediaInset : styles.mediaFill}>
-            <div className={styles.mediaFill}>
-              <Image
-                alt={alt}
-                className={joinClassNames(
-                  styles.mediaImage,
-                  fit === "contain" ? styles.mediaImageContain : null,
-                )}
-                fill
-                priority={priority}
-                sizes="(max-width: 900px) calc(100vw - 2.5rem), 832px"
-                src={imageSrc}
-                unoptimized={shouldBypassNextImageOptimizer(imageSrc)}
-              />
-            </div>
-          </div>
-        )}
-      </div>
+        </div>
+      )}
+    </div>
+  );
+
+  return (
+    <figure className={styles.mediaFigure}>
+      <ZoomableMediaTrigger alt={alt} fullSrc={imageSrc}>
+        {mediaFrame}
+      </ZoomableMediaTrigger>
       {caption ? (
         <figcaption className={joinClassNames(styles.mediaCaption, captionClassName)}>
           {caption}

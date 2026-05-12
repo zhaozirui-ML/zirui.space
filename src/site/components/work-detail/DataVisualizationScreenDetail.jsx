@@ -5,6 +5,7 @@ import {
   CaseStudyHeadingTwo,
 } from "../case-study/CaseStudyHeading";
 import CaseStudyToc from "../case-study/CaseStudyToc";
+import ZoomableMediaTrigger from "../case-study/ZoomableMediaTrigger";
 import { dataVisualizationScreenDetail } from "../../data/data-visualization-screen-detail";
 import styles from "../../styles/data-visualization-screen-detail.module.css";
 
@@ -206,52 +207,62 @@ export default function DataVisualizationScreenDetail({
 
               <figure className={styles.figureBlock}>
                 <div className={styles.practiceGalleryFrame}>
-                  <div className={styles.practiceGalleryMain}>
-                    <Image
-                      alt={practice.visualLanguage.gallery.mainImageAlt}
-                      className={styles.figureImageStatic}
-                      height={563}
-                      sizes="(max-width: 900px) 100vw, 900px"
-                      src={practice.visualLanguage.gallery.mainImageSrc}
-                      style={{ height: "auto", width: "100%" }}
-                      unoptimized={shouldBypassNextImageOptimizer(
-                        practice.visualLanguage.gallery.mainImageSrc
-                      )}
-                      width={900}
-                    />
-                  </div>
+                  <ZoomableMediaTrigger
+                    alt={practice.visualLanguage.gallery.mainImageAlt}
+                    fullSrc={practice.visualLanguage.gallery.mainImageSrc}
+                  >
+                    <div className={styles.practiceGalleryMain}>
+                      <Image
+                        alt={practice.visualLanguage.gallery.mainImageAlt}
+                        className={styles.figureImageStatic}
+                        height={563}
+                        sizes="(max-width: 900px) 100vw, 900px"
+                        src={practice.visualLanguage.gallery.mainImageSrc}
+                        style={{ height: "auto", width: "100%" }}
+                        unoptimized={shouldBypassNextImageOptimizer(
+                          practice.visualLanguage.gallery.mainImageSrc
+                        )}
+                        width={900}
+                      />
+                    </div>
+                  </ZoomableMediaTrigger>
 
                   {practice.visualLanguage.gallery.thumbnails.map((thumbnail, index) => (
-                    <div
-                      className={`${styles.practiceGalleryThumb} ${styles[`practiceGalleryThumb${index + 1}`]}`}
+                    <ZoomableMediaTrigger
+                      alt={thumbnail.imageAlt}
+                      fullSrc={thumbnail.imageSrc}
                       key={thumbnail.imageSrc}
                     >
-                      {thumbnail.presentation === "wide-bleed" ? (
-                        <Image
-                          alt={thumbnail.imageAlt}
-                          className={styles.figureImageWideBleed}
-                          height={145}
-                          sizes="(max-width: 900px) 45vw, 436px"
-                          src={thumbnail.imageSrc}
-                          style={{ height: "100%", width: "103.05%" }}
-                          unoptimized={shouldBypassNextImageOptimizer(
-                            thumbnail.imageSrc
-                          )}
-                          width={449}
-                        />
-                      ) : (
-                        <Image
-                          alt={thumbnail.imageAlt}
-                          className={styles.figureImage}
-                          fill
-                          sizes="(max-width: 900px) 45vw, 420px"
-                          src={thumbnail.imageSrc}
-                          unoptimized={shouldBypassNextImageOptimizer(
-                            thumbnail.imageSrc
-                          )}
-                        />
-                      )}
-                    </div>
+                      <div
+                        className={`${styles.practiceGalleryThumb} ${styles[`practiceGalleryThumb${index + 1}`]}`}
+                      >
+                        {thumbnail.presentation === "wide-bleed" ? (
+                          <Image
+                            alt={thumbnail.imageAlt}
+                            className={styles.figureImageWideBleed}
+                            height={145}
+                            sizes="(max-width: 900px) 45vw, 436px"
+                            src={thumbnail.imageSrc}
+                            style={{ height: "100%", width: "103.05%" }}
+                            unoptimized={shouldBypassNextImageOptimizer(
+                              thumbnail.imageSrc
+                            )}
+                            width={449}
+                          />
+                        ) : (
+                          <Image
+                            alt={thumbnail.imageAlt}
+                            className={styles.figureImage}
+                            fill
+                            sizes="(max-width: 900px) 45vw, 420px"
+                            src={thumbnail.imageSrc}
+                            unoptimized={shouldBypassNextImageOptimizer(
+                              thumbnail.imageSrc
+                            )}
+                          />
+                        )}
+                      </div>
+                    </ZoomableMediaTrigger>
                   ))}
                 </div>
                 <figcaption className={styles.figureCaption}>
@@ -270,44 +281,59 @@ export default function DataVisualizationScreenDetail({
 
               <figure className={styles.figureBlock}>
                 <div className={styles.expansionGalleryFrame}>
-                  <div className={styles.expansionGalleryMain}>
-                    <Image
-                      alt={practice.visualExpansion.gallery.mainImageAlt}
-                      className={styles.figureImageExpansionMain}
-                      fill
-                      sizes="(max-width: 900px) 100vw, 872px"
-                      src={practice.visualExpansion.gallery.mainImageSrc}
-                      unoptimized={shouldBypassNextImageOptimizer(
-                        practice.visualExpansion.gallery.mainImageSrc
-                      )}
-                    />
-                  </div>
+                  <ZoomableMediaTrigger
+                    alt={practice.visualExpansion.gallery.mainImageAlt}
+                    fullSrc={practice.visualExpansion.gallery.mainImageSrc}
+                  >
+                    <div className={styles.expansionGalleryMain}>
+                      <Image
+                        alt={practice.visualExpansion.gallery.mainImageAlt}
+                        className={styles.figureImageExpansionMain}
+                        fill
+                        sizes="(max-width: 900px) 100vw, 872px"
+                        src={practice.visualExpansion.gallery.mainImageSrc}
+                        unoptimized={shouldBypassNextImageOptimizer(
+                          practice.visualExpansion.gallery.mainImageSrc
+                        )}
+                      />
+                    </div>
+                  </ZoomableMediaTrigger>
 
-                  <div className={styles.expansionGalleryThumbLeft}>
-                    <Image
-                      alt={practice.visualExpansion.gallery.leftImageAlt}
-                      className={styles.figureImage}
-                      fill
-                      sizes="(max-width: 900px) 100vw, 693px"
-                      src={practice.visualExpansion.gallery.leftImageSrc}
-                      unoptimized={shouldBypassNextImageOptimizer(
-                        practice.visualExpansion.gallery.leftImageSrc
-                      )}
-                    />
-                  </div>
+                  <ZoomableMediaTrigger
+                    alt={practice.visualExpansion.gallery.leftImageAlt}
+                    fullSrc={practice.visualExpansion.gallery.leftImageSrc}
+                  >
+                    <div className={styles.expansionGalleryThumbLeft}>
+                      <Image
+                        alt={practice.visualExpansion.gallery.leftImageAlt}
+                        className={styles.figureImage}
+                        fill
+                        sizes="(max-width: 900px) 100vw, 693px"
+                        src={practice.visualExpansion.gallery.leftImageSrc}
+                        unoptimized={shouldBypassNextImageOptimizer(
+                          practice.visualExpansion.gallery.leftImageSrc
+                        )}
+                      />
+                    </div>
+                  </ZoomableMediaTrigger>
 
-                  <div className={styles.expansionGalleryThumbRight}>
-                    <Image
-                      alt={practice.visualExpansion.gallery.rightImageAlt}
-                      className={`${styles.figureImage} ${styles.figureImageExpansionThumbRight}`}
-                      fill
-                      sizes="(max-width: 900px) 100vw, 621px"
-                      src={practice.visualExpansion.gallery.rightImageSrc}
-                      unoptimized={shouldBypassNextImageOptimizer(
-                        practice.visualExpansion.gallery.rightImageSrc
-                      )}
-                    />
-                  </div>
+                  <ZoomableMediaTrigger
+                    alt={practice.visualExpansion.gallery.rightImageAlt}
+                    fullSrc={practice.visualExpansion.gallery.rightImageSrc}
+                  >
+                    <div className={styles.expansionGalleryThumbRight}>
+                      <Image
+                        alt={practice.visualExpansion.gallery.rightImageAlt}
+                        className={`${styles.figureImage} ${styles.figureImageExpansionThumbRight}`}
+                        fill
+                        sizes="(max-width: 900px) 100vw, 621px"
+                        src={practice.visualExpansion.gallery.rightImageSrc}
+                        unoptimized={shouldBypassNextImageOptimizer(
+                          practice.visualExpansion.gallery.rightImageSrc
+                        )}
+                      />
+                    </div>
+                  </ZoomableMediaTrigger>
                 </div>
                 <figcaption className={styles.figureCaption}>
                   {practice.visualExpansion.gallery.caption}
@@ -372,18 +398,20 @@ export default function DataVisualizationScreenDetail({
 
             <figure className={styles.figureBlock}>
               <div className={styles.outcomesFrame}>
-                <div className={styles.outcomesInner}>
-                  <Image
-                    alt={outcomes.imageAlt}
-                    className={styles.figureImageStatic}
-                    height={514}
-                    sizes="(max-width: 900px) 100vw, 1000px"
-                    src={outcomes.imageSrc}
-                    style={{ height: "auto", width: "100%" }}
-                    unoptimized={shouldBypassNextImageOptimizer(outcomes.imageSrc)}
-                    width={1000}
-                  />
-                </div>
+                <ZoomableMediaTrigger alt={outcomes.imageAlt} fullSrc={outcomes.imageSrc}>
+                  <div className={styles.outcomesInner}>
+                    <Image
+                      alt={outcomes.imageAlt}
+                      className={styles.figureImageStatic}
+                      height={514}
+                      sizes="(max-width: 900px) 100vw, 1000px"
+                      src={outcomes.imageSrc}
+                      style={{ height: "auto", width: "100%" }}
+                      unoptimized={shouldBypassNextImageOptimizer(outcomes.imageSrc)}
+                      width={1000}
+                    />
+                  </div>
+                </ZoomableMediaTrigger>
               </div>
               <figcaption className={styles.figureCaption}>
                 {outcomes.caption}
