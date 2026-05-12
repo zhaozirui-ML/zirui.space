@@ -209,44 +209,44 @@ export const portfolioChatKnowledge = Object.freeze({
       ],
       oneLiner: drawingLedgerProject.summary,
       background: t(
-        "这是一个面向建筑业务的复杂图纸工作流项目，核心目标是重构从上传、解析、登记到协作的端到端流程。",
-        "This project focused on a complex drawing workflow for the construction domain, with the main goal of redesigning the end-to-end flow from upload and parsing to registration and collaboration.",
+        "这是一个面向建筑业务的图纸生命周期项目。图纸台账记录图纸从上传完成后到废弃的状态流转，主要涉及上传人、确认人、下发人和多权限管理员 4 类角色。",
+        "This was a drawing-lifecycle project for the construction domain. The register records how drawings move from upload completion to deprecation, involving four main roles: uploader, confirmer, releaser, and multi-permission administrator.",
       ),
       myRole: t(
-        "我负责 web 与 App 端绘图模块的端到端设计，覆盖流程重构、信息组织、关键交互决策和多角色协作体验。",
-        "I led the end-to-end design of the drawing module across web and app, covering workflow restructuring, information architecture, key interaction decisions, and collaboration across multiple roles.",
+        "我负责 Web 与 App 端图纸模块的端到端设计，重点覆盖问题定位、用户任务梳理、设计分析框架、核心设计策略、关键交互规则和跨端体验补全。",
+        "I led the end-to-end design of the drawing module across web and app, covering problem definition, user-task analysis, design-analysis framework, core design strategies, key interaction rules, and cross-platform experience completion.",
       ),
       problem: t(
-        "旧流程在解析、登记和多人协作上都比较割裂，用户很难在复杂状态流转里快速理解接下来该做什么。",
-        "The old flow was fragmented across parsing, registration, and multi-role collaboration, which made it hard for users to understand what to do next in a complex state transition system.",
+        "项目目标是构建基于角色的图纸管理体系，解决多角色交叉操作带来的效率瓶颈，并提升图纸流转效率。问题收敛到三点：核心任务缺乏视觉优先级、视图与角色错位、交互状态与操作边界模糊。",
+        "The goal was to build a role-based drawing-management system that reduced the efficiency bottlenecks caused by cross-role operations and improved drawing circulation. The problem converged into three points: core tasks lacked visual priority, views were misaligned with roles, and interaction states and operation boundaries were unclear.",
       ),
       process: t(
-        "我先梳理图纸生命周期、用户任务和角色分工，再进行了两轮方案探索，最后把待办逻辑、响应式展示和移动端入口一起落到可交付方案中。",
-        "I first mapped the drawing lifecycle, user tasks, and role responsibilities, then explored two rounds of solutions, and finally turned the to-do logic, responsive presentation, and mobile entry points into a shippable design.",
+        "我先从用户吐槽和系统现状切入：用户面对满屏数据不知道今天急需确认哪张图，系统底层校验松散、状态流转缺乏权限隔离。然后把问题收敛为三类设计策略：视觉层级重塑、场景化设计和统一交互规范。策略不是停留在概念层，而是分别落到任务代办区、表格视图、角色视图、状态机与权限映射、边界场景防错、状态驱动的操作限制上。",
+        "I started from user pain points and system conditions: users faced a screen full of data and could not quickly tell which drawing needed urgent confirmation, while the system had loose underlying validation and weak permission separation in state transitions. I then converged the problem into three design strategies: reshaping visual hierarchy, role-based scenario design, and unified interaction rules. These strategies were translated into concrete mechanisms such as the task area, table view, role-based views, state-machine and permission mapping, boundary-scenario prevention, and state-driven operation restrictions.",
       ),
       keyDecisions: t(
-        "关键决策包括重新组织待办区、把多角色状态流转讲清楚，以及让同一套逻辑在桌面端和移动端都能成立。",
-        "Key decisions included restructuring the to-do area, clarifying the multi-role state transitions, and making the same logic work across both desktop and mobile.",
+        "最关键的判断是把「角色、任务、状态」绑定在一起设计。视觉层级上，用任务代办区承载不同权限角色的高优先级待处理任务，用表格视图承载底图纸的全生命周期数据和高频筛选检索；场景化上，根据登录角色动态过滤冗余信息，让上传人关注解析中 / 待确认图纸、确认人关注待确认图纸、下发人关注待下发图纸、多权限管理员关注所有状态；规范上，用状态机与角色权限映射明确唯一责任人，并通过隐藏无权限操作、前置阻断、权限降维和按钮组合控制来减少越权修改和错误流转。",
+        "The key judgment was to design roles, tasks, and states together. In visual hierarchy, the task area carries high-priority pending work for different permission roles, while the table view carries the full drawing lifecycle and high-frequency filtering and retrieval. In role-based scenarios, redundant information is dynamically filtered by login role: uploaders focus on parsing / to-be-confirmed drawings, confirmers focus on to-be-confirmed drawings, releasers focus on to-be-released drawings, and multi-permission administrators can monitor all states. In interaction rules, the state machine and role-permission mapping define the sole responsible role, while hidden unauthorized actions, upfront blocking, permission downgrade, and button-combination control reduce unauthorized edits and incorrect transitions.",
       ),
       outcome: t(
-        "项目输出了完整的图纸台账 2.0 方案，重点提升了复杂业务流程的可理解性、协作效率和跨端一致性。",
-        "The project produced a full Drawing Register 2.0 solution that improved the clarity of a complex workflow, collaboration efficiency, and consistency across platforms.",
+        "落地方案覆盖了图纸台账的关键操作场景，包括角色化任务代办区、全生命周期表格检索、图纸收发记录、评论协作、下发范围选择、组织与人员选择，以及图纸在线查看等。最终验证结果也体现在线索识别和流转效率上：核心状态识别耗时降低 25%，待确认和待下发节点处理时长分别降低 15% 和 12%，任务流转效率提高 8%。",
+        "The shipped solution covered key drawing-register scenarios, including the role-based task area, full-lifecycle table retrieval, drawing send / receive records, comment collaboration, release-scope selection, organization and member selection, and online drawing viewing. Validation also showed improvements in state recognition and transition efficiency: core state-recognition time dropped by 25%, processing time for confirmation and release nodes dropped by 15% and 12%, and task-transition efficiency increased by 8%.",
       ),
       reflection: t(
-        "这个项目让我更确信，复杂企业级产品里最难的往往不是单个页面，而是状态流转和责任边界能不能被讲清楚。后来我再看这个项目，会更在意让关键协作关系尽早暴露出来，而不是等到界面层才补救。",
-        "This project reinforced my belief that the hardest part of enterprise work is rarely a single screen. It is whether the state transitions and ownership model are made understandable. Looking back, I would surface the collaboration model even earlier instead of waiting until the interface layer to resolve it.",
+        "这个项目让我更明确地意识到，复杂 B 端设计的关键不是把所有信息重新包装一遍，而是先建立清晰的分析框架，再把角色、任务和状态规则翻译成用户能直接理解、系统也能稳定约束的界面结构。现在回头看，我会继续强化这类分析框架在案例叙事里的表达，因为它比单纯展示最终页面更能说明设计判断。",
+        "This project made it clearer to me that the key in complex B2B design is not repackaging all information, but first building a clear analysis framework and then translating roles, tasks, and state rules into an interface structure that users can understand directly and the system can constrain reliably. Looking back, I would keep strengthening how that analysis framework is presented in the case study, because it explains the design judgment better than only showing final screens.",
       ),
       tools: ["Figma", "Prototype", "Web", "App"],
       tags: ["Workflow", "Enterprise", "Cross-platform"],
       relatedProjectSlugs: ["axzo-design-system", "data-visualization-screen"],
       relatedPages: ["/work/drawing-ledger-2-0", "/work"],
       continuePrompt: t(
-        "继续展开讲这个项目里最难的取舍和判断",
-        "Keep going on the hardest tradeoffs and decisions in this project"
+        "继续展开讲这个项目里的分析框架和关键策略",
+        "Keep going on the analysis framework and key strategies in this project"
       ),
       recommendedQuestions: [
         t("这个项目里最难的设计挑战到底是什么？", "What was the hardest design challenge in this project, really?"),
-        t("你当时做过哪些关键取舍？", "What were the key tradeoffs you made at the time?"),
+        t("你当时做过哪些关键设计判断？", "What were the key design judgments you made at the time?"),
         t("如果只讲一个最重要的结果，你会讲什么？", "If you had to highlight one outcome, what would it be?"),
         t("你现在回头看，会怎么重新做这个项目？", "Looking back, what would you do differently on this project now?"),
       ],
