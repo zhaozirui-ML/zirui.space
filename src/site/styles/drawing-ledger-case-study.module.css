@@ -327,7 +327,7 @@
   margin-top: 1.5rem;
 }
 
-.reflectionHeader {
+.anchoredHeader.reflectionHeader {
   margin-top: 6rem;
 }
 
@@ -1308,7 +1308,7 @@
 }
 
 @media (max-width: 900px) {
-  .reflectionHeader {
+  .anchoredHeader.reflectionHeader {
     margin-top: var(--drawing-ledger-stack-gap-lg);
   }
 
