@@ -152,7 +152,7 @@ const assetDefinitions = {
   },
   mobileLandedPages: {
     alt: "移动端全部核心页面展示图",
-    localSrc: "/site/work/drawing-ledger-2-0/mobile-landed-pages.png",
+    localSrc: "/site/work/drawing-ledger-2-0/mobile-landed-pages-v2.png",
   },
 };
 
