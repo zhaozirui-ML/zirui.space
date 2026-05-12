@@ -328,7 +328,7 @@
 }
 
 .reflectionHeader {
-  margin-top: var(--drawing-ledger-stack-gap-lg);
+  margin-top: 6rem;
 }
 
 .anchoredHeader {
@@ -1308,6 +1308,10 @@
 }
 
 @media (max-width: 900px) {
+  .reflectionHeader {
+    margin-top: var(--drawing-ledger-stack-gap-lg);
+  }
+
   .webCaseStack {
     gap: 6rem;
   }
