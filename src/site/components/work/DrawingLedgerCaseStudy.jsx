@@ -625,8 +625,8 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
             <h1 className={styles.heroTitle}>{display("图纸台账 2.0", "Drawing Register 2.0")}</h1>
             <p className={styles.heroSubtitle}>
               {display(
-                "从“信息坟墓”到“主动式协作中心”的设计重构",
-                "Redesigning the experience from an information graveyard to an active collaboration hub",
+                "围绕角色任务与状态规则，重塑图纸生命周期流转体验",
+                "Reshaping the drawing lifecycle around role-specific tasks and state-transition logic",
               )}
             </p>
           </header>

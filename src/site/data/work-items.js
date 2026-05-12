@@ -12,12 +12,12 @@ export const workItems = [
     homeIconName: "network",
     year: "2025",
     summary: t(
-      "重设计图纸登记、解析与协作的端到端流程",
-      "Redesigning the end to end workflow for drawing registration, parsing, and collaboration",
+      "围绕角色任务与状态规则，重塑图纸生命周期流转体验",
+      "Reshaping the drawing lifecycle around role-specific tasks and state-transition logic",
     ),
     homeSummary: t(
-      "重设计从上传、解析、登记到协作的复杂图纸工作流",
-      "Redesigned a complex drawing workflow across upload, parsing, registration, and collaboration",
+      "围绕角色任务与状态规则，重塑图纸生命周期流转体验",
+      "Reshaping the drawing lifecycle around role-specific tasks and state-transition logic",
     ),
     detailSummary: t(
       "后续会在这里接入完整案例，包括流程重构、解析逻辑和协作决策。",
