@@ -1028,8 +1028,8 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                   <div className={styles.richText}>
                     <p>
                       {display(
-                        "数据基于新旧流程对比、小样本任务走查与可用性测试，用于验证设计在状态识别、关键节点处理和任务流转效率上的优化效果。",
-                        "The data is based on old/new process comparison, small-sample task walkthroughs, and usability testing, used to validate improvements in state recognition, key-node handling, and task transition efficiency.",
+                        "通过数据埋点和外部真实用户的小样本测试，验证设计在状态识别、关键节点处理和任务流转效率上的优化效果。",
+                        "Data instrumentation and small-sample testing with external real users were used to validate improvements in state recognition, key-node handling, and task transition efficiency.",
                       )}
                     </p>
                   </div>
