@@ -33,7 +33,7 @@ const assetDefinitions = {
   },
   webStrategyRole: {
     alt: "图纸台账 Web 端场景化设计策略图",
-    localSrc: "/site/work/drawing-ledger-2-0/web-strategy-role.png",
+    localSrc: "/site/work/drawing-ledger-2-0/web-strategy-role-v2.png",
   },
   webStrategyRules: {
     alt: "图纸台账 Web 端统一交互规范策略图",
