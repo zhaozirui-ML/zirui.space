@@ -5,6 +5,8 @@ import {
   CaseStudyHeadingTwo,
 } from "../components/case-study/CaseStudyHeading";
 import CaseStudyToc from "../components/case-study/CaseStudyToc";
+import CommentableBlock from "../components/comments/CommentableBlock";
+import CommentHistoryProvider from "../components/comments/CommentHistoryProvider";
 import { axzoDesignSystemCaseStudy } from "../data/axzo-design-system-case-study";
 import { getLocalizedValue } from "../i18n/get-localized-value";
 import styles from "../styles/axzo-design-system-case-study.module.css";
@@ -272,6 +274,7 @@ export default function AxzoDesignSystemCaseStudyPage({
   work,
 }) {
   const content = axzoDesignSystemCaseStudy;
+  const workSlug = work.slug;
   const localizedContent = resolveLocalizedValue(content, language);
   const workTitle = getLocalizedValue(work.title, language);
   const localizedSections =
@@ -301,6 +304,7 @@ export default function AxzoDesignSystemCaseStudyPage({
   };
 
   return (
+    <CommentHistoryProvider workSlug={workSlug}>
     <article className={styles.caseStudy} style={pageThemeStyles}>
       {/* 封面视觉里已经有主标题了，这里补一个语义上的 h1，方便无障碍和 SEO。 */}
       <h1 className="sr-only">{workTitle}</h1>
@@ -339,34 +343,67 @@ export default function AxzoDesignSystemCaseStudyPage({
 
         <div className={styles.contentStack}>
           <section className={styles.section}>
-            <CaseStudyHeadingOne
-              className={styles.sectionHeader}
-              id="project-background"
-              descriptions={localizedContent.projectBackground.description}
-              title={localizedContent.projectBackground.title}
-            />
-            <MediaPanel
-              alt={localizedContent.projectBackground.imageAlt}
-              caption={localizedContent.projectBackground.caption}
-              captionClassName={styles.projectBackgroundCaption}
-              crop={localizedContent.projectBackground.imageCrop}
-              frameClassName={styles.projectBackgroundFrame}
-              imageSrc={localizedContent.projectBackground.imageSrc}
-              priority
-              ratio={localizedContent.projectBackground.ratio}
-            />
+            <CommentableBlock
+              language={language}
+              targetId="axzo-project-background-title"
+              targetLabel={localizedContent.projectBackground.title}
+              targetType="heading"
+              workSlug={workSlug}
+            >
+              <CaseStudyHeadingOne
+                className={styles.sectionHeader}
+                id="project-background"
+                descriptions={localizedContent.projectBackground.description}
+                title={localizedContent.projectBackground.title}
+              />
+            </CommentableBlock>
+            <CommentableBlock
+              language={language}
+              targetId="axzo-project-background-image"
+              targetLabel={localizedContent.projectBackground.caption}
+              targetType="figure"
+              workSlug={workSlug}
+            >
+              <MediaPanel
+                alt={localizedContent.projectBackground.imageAlt}
+                caption={localizedContent.projectBackground.caption}
+                captionClassName={styles.projectBackgroundCaption}
+                crop={localizedContent.projectBackground.imageCrop}
+                frameClassName={styles.projectBackgroundFrame}
+                imageSrc={localizedContent.projectBackground.imageSrc}
+                priority
+                ratio={localizedContent.projectBackground.ratio}
+              />
+            </CommentableBlock>
           </section>
 
           <section className={styles.section}>
-            <CaseStudyHeadingOne
-              className={styles.sectionHeader}
-              id="problem-definition"
-              descriptions={localizedContent.problemDefinition.description}
-              title={localizedContent.problemDefinition.title}
-            />
+            <CommentableBlock
+              language={language}
+              targetId="axzo-problem-definition-title"
+              targetLabel={localizedContent.problemDefinition.title}
+              targetType="heading"
+              workSlug={workSlug}
+            >
+              <CaseStudyHeadingOne
+                className={styles.sectionHeader}
+                id="problem-definition"
+                descriptions={localizedContent.problemDefinition.description}
+                title={localizedContent.problemDefinition.title}
+              />
+            </CommentableBlock>
             <div className={styles.problemGrid}>
-              {localizedContent.problemDefinition.items.map((item) => (
-                <article className={styles.problemCard} key={item.title}>
+              {localizedContent.problemDefinition.items.map((item, index) => (
+                <CommentableBlock
+                  as="article"
+                  className={styles.problemCard}
+                  key={item.title}
+                  language={language}
+                  targetId={`axzo-problem-definition-card-${index + 1}`}
+                  targetLabel={item.title}
+                  targetType="card"
+                  workSlug={workSlug}
+                >
                   <Image
                     alt={item.imageAlt}
                     className={styles.problemIcon}
@@ -376,76 +413,109 @@ export default function AxzoDesignSystemCaseStudyPage({
                     width={32}
                   />
                   <p className={styles.problemText}>{item.title}</p>
-                </article>
+                </CommentableBlock>
               ))}
             </div>
           </section>
 
           <section className={styles.section}>
-            <CaseStudyHeadingOne
-              className={styles.sectionHeader}
-              id="design-insight"
-              descriptions={localizedContent.insight.description}
-              title={localizedContent.insight.title}
-            />
-            <div className={styles.insightPanel}>
-              <div className={styles.insightCanvas}>
-                <div className={styles.insightTopGroup}>
-                  <div className={styles.insightTop}>
-                    <OrbitDiagram orbit={localizedContent.insight.leftOrbit} variant="left" />
-                    <div aria-hidden="true" className={styles.insightArrowHorizontal}>
-                      <ArrowRightSoftIcon className={styles.insightArrowIcon} />
-                    </div>
-                    <OrbitDiagram orbit={localizedContent.insight.rightOrbit} variant="right" />
-                  </div>
-
-                  <div className={styles.insightCaptionRow}>
-                    <p className={joinClassNames(styles.orbitCaption, styles.orbitCaptionLeft)}>
-                      {localizedContent.insight.leftOrbit.caption}
-                    </p>
-                    <div aria-hidden="true" className={styles.insightCaptionSpacer} />
-                    <p className={joinClassNames(styles.orbitCaption, styles.orbitCaptionRight)}>
-                      {localizedContent.insight.rightOrbit.caption}
-                    </p>
-                  </div>
-                </div>
-
-                <div className={styles.insightBottomArea}>
-                  <div aria-hidden="true" className={styles.insightArrowSplit}>
-                    <span className={styles.insightArrowDiagonalLeft}>
-                      <ArrowRightSoftIcon className={styles.insightArrowIcon} />
-                    </span>
-                    <span className={styles.insightArrowDiagonalRight}>
-                      <ArrowRightSoftIcon className={styles.insightArrowIcon} />
-                    </span>
-                  </div>
-
-                  <div className={styles.insightBottomFlow}>
-                    <div className={styles.insightMessage}>{localizedContent.insight.message}</div>
-
-                    <div aria-hidden="true" className={styles.insightArrowVertical}>
-                      <ArrowRightSoftIcon className={styles.insightArrowIcon} />
+            <CommentableBlock
+              language={language}
+              targetId="axzo-design-insight-title"
+              targetLabel={localizedContent.insight.title}
+              targetType="heading"
+              workSlug={workSlug}
+            >
+              <CaseStudyHeadingOne
+                className={styles.sectionHeader}
+                id="design-insight"
+                descriptions={localizedContent.insight.description}
+                title={localizedContent.insight.title}
+              />
+            </CommentableBlock>
+            <CommentableBlock
+              language={language}
+              targetId="axzo-design-insight-diagram"
+              targetLabel={localizedContent.insight.conclusion}
+              targetType="figure"
+              workSlug={workSlug}
+            >
+              <div className={styles.insightPanel}>
+                <div className={styles.insightCanvas}>
+                  <div className={styles.insightTopGroup}>
+                    <div className={styles.insightTop}>
+                      <OrbitDiagram orbit={localizedContent.insight.leftOrbit} variant="left" />
+                      <div aria-hidden="true" className={styles.insightArrowHorizontal}>
+                        <ArrowRightSoftIcon className={styles.insightArrowIcon} />
+                      </div>
+                      <OrbitDiagram orbit={localizedContent.insight.rightOrbit} variant="right" />
                     </div>
 
-                    <div className={styles.insightConclusion}>
-                      {localizedContent.insight.conclusion}
+                    <div className={styles.insightCaptionRow}>
+                      <p className={joinClassNames(styles.orbitCaption, styles.orbitCaptionLeft)}>
+                        {localizedContent.insight.leftOrbit.caption}
+                      </p>
+                      <div aria-hidden="true" className={styles.insightCaptionSpacer} />
+                      <p className={joinClassNames(styles.orbitCaption, styles.orbitCaptionRight)}>
+                        {localizedContent.insight.rightOrbit.caption}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className={styles.insightBottomArea}>
+                    <div aria-hidden="true" className={styles.insightArrowSplit}>
+                      <span className={styles.insightArrowDiagonalLeft}>
+                        <ArrowRightSoftIcon className={styles.insightArrowIcon} />
+                      </span>
+                      <span className={styles.insightArrowDiagonalRight}>
+                        <ArrowRightSoftIcon className={styles.insightArrowIcon} />
+                      </span>
+                    </div>
+
+                    <div className={styles.insightBottomFlow}>
+                      <div className={styles.insightMessage}>{localizedContent.insight.message}</div>
+
+                      <div aria-hidden="true" className={styles.insightArrowVertical}>
+                        <ArrowRightSoftIcon className={styles.insightArrowIcon} />
+                      </div>
+
+                      <div className={styles.insightConclusion}>
+                        {localizedContent.insight.conclusion}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </CommentableBlock>
           </section>
 
           <section className={styles.section}>
-            <CaseStudyHeadingOne
-              className={styles.sectionHeader}
-              id="portal-positioning"
-              descriptions={localizedContent.portalPositioning.description}
-              title={localizedContent.portalPositioning.title}
-            />
+            <CommentableBlock
+              language={language}
+              targetId="axzo-portal-positioning-title"
+              targetLabel={localizedContent.portalPositioning.title}
+              targetType="heading"
+              workSlug={workSlug}
+            >
+              <CaseStudyHeadingOne
+                className={styles.sectionHeader}
+                id="portal-positioning"
+                descriptions={localizedContent.portalPositioning.description}
+                title={localizedContent.portalPositioning.title}
+              />
+            </CommentableBlock>
             <div className={styles.roleGrid}>
-              {localizedContent.portalPositioning.cards.map((card) => (
-                <article className={styles.roleCard} key={card.title}>
+              {localizedContent.portalPositioning.cards.map((card, index) => (
+                <CommentableBlock
+                  as="article"
+                  className={styles.roleCard}
+                  key={card.title}
+                  language={language}
+                  targetId={`axzo-portal-positioning-card-${index + 1}`}
+                  targetLabel={card.title}
+                  targetType="card"
+                  workSlug={workSlug}
+                >
                   <div className={styles.roleBody}>
                     <h3 className={styles.roleTitle}>{card.title}</h3>
                     <p className={styles.roleDescription}>{card.description}</p>
@@ -460,120 +530,235 @@ export default function AxzoDesignSystemCaseStudyPage({
                       unoptimized={shouldBypassNextImageOptimizer(card.imageSrc)}
                     />
                   </div>
-                </article>
+                </CommentableBlock>
               ))}
             </div>
           </section>
 
           <section className={styles.section}>
-            <CaseStudyHeadingOne
-              className={styles.sectionHeader}
-              id="design-goal"
-              descriptions={localizedContent.designGoal.description}
-              title={localizedContent.designGoal.title}
-            />
+            <CommentableBlock
+              language={language}
+              targetId="axzo-design-goal-title"
+              targetLabel={localizedContent.designGoal.title}
+              targetType="heading"
+              workSlug={workSlug}
+            >
+              <CaseStudyHeadingOne
+                className={styles.sectionHeader}
+                id="design-goal"
+                descriptions={localizedContent.designGoal.description}
+                title={localizedContent.designGoal.title}
+              />
+            </CommentableBlock>
           </section>
 
           <section className={joinClassNames(styles.section, styles.explorationSection)}>
-            <CaseStudyHeadingOne
-              className={styles.sectionHeader}
-              id="design-exploration"
-              descriptions={localizedContent.exploration.description}
-              title={localizedContent.exploration.title}
-            />
+            <CommentableBlock
+              language={language}
+              targetId="axzo-design-exploration-title"
+              targetLabel={localizedContent.exploration.title}
+              targetType="heading"
+              workSlug={workSlug}
+            >
+              <CaseStudyHeadingOne
+                className={styles.sectionHeader}
+                id="design-exploration"
+                descriptions={localizedContent.exploration.description}
+                title={localizedContent.exploration.title}
+              />
+            </CommentableBlock>
 
             <article className={styles.storyBlock}>
-              <CaseStudyHeadingTwo
-                accentColor="var(--axzo-case-accent)"
-                className={styles.storyHeader}
-                id="exploration-consumption-journey"
-                descriptions={localizedContent.exploration.sections[0].paragraphs}
-                title={localizedContent.exploration.sections[0].theme}
-              />
+              <CommentableBlock
+                language={language}
+                targetId="axzo-exploration-consumption-journey-title"
+                targetLabel={localizedContent.exploration.sections[0].theme}
+                targetType="heading"
+                workSlug={workSlug}
+              >
+                <CaseStudyHeadingTwo
+                  accentColor="var(--axzo-case-accent)"
+                  className={styles.storyHeader}
+                  id="exploration-consumption-journey"
+                  descriptions={localizedContent.exploration.sections[0].paragraphs}
+                  title={localizedContent.exploration.sections[0].theme}
+                />
+              </CommentableBlock>
 
-              <MediaPanel
-                alt={localizedContent.exploration.sections[0].imageAlt}
-                fit="contain"
-                imageSrc={localizedContent.exploration.sections[0].imageSrc}
-                ratio={localizedContent.exploration.sections[0].ratio}
-                tone="soft"
-              />
+              <CommentableBlock
+                language={language}
+                targetId="axzo-exploration-consumption-journey-image"
+                targetLabel={localizedContent.exploration.sections[0].theme}
+                targetType="figure"
+                workSlug={workSlug}
+              >
+                <MediaPanel
+                  alt={localizedContent.exploration.sections[0].imageAlt}
+                  fit="contain"
+                  imageSrc={localizedContent.exploration.sections[0].imageSrc}
+                  ratio={localizedContent.exploration.sections[0].ratio}
+                  tone="soft"
+                />
+              </CommentableBlock>
             </article>
 
             <article className={styles.storyBlock}>
-              <CaseStudyHeadingTwo
-                accentColor="var(--axzo-case-accent)"
-                className={styles.storyHeader}
-                id="exploration-information-architecture"
-                descriptions={localizedContent.exploration.sections[1].paragraphs}
-                title={localizedContent.exploration.sections[1].theme}
-              />
+              <CommentableBlock
+                language={language}
+                targetId="axzo-exploration-information-architecture-title"
+                targetLabel={localizedContent.exploration.sections[1].theme}
+                targetType="heading"
+                workSlug={workSlug}
+              >
+                <CaseStudyHeadingTwo
+                  accentColor="var(--axzo-case-accent)"
+                  className={styles.storyHeader}
+                  id="exploration-information-architecture"
+                  descriptions={localizedContent.exploration.sections[1].paragraphs}
+                  title={localizedContent.exploration.sections[1].theme}
+                />
+              </CommentableBlock>
 
               <ol className={styles.decisionList}>
-                {localizedContent.exploration.sections[1].decisions.map((decision) => (
-                  <li className={styles.decisionItem} key={decision}>
+                {localizedContent.exploration.sections[1].decisions.map((decision, index) => (
+                  <CommentableBlock
+                    as="li"
+                    className={styles.decisionItem}
+                    key={decision}
+                    language={language}
+                    targetId={`axzo-exploration-information-architecture-decision-${index + 1}`}
+                    targetLabel={decision}
+                    targetType="list-item"
+                    workSlug={workSlug}
+                  >
                     {decision}
-                  </li>
+                  </CommentableBlock>
                 ))}
               </ol>
             </article>
           </section>
 
           <section className={joinClassNames(styles.section, styles.practiceSection)}>
-            <CaseStudyHeadingOne
-              className={styles.sectionHeader}
-              id="design-practice"
-              descriptions={localizedContent.practice.description}
-              title={localizedContent.practice.title}
-            />
+            <CommentableBlock
+              language={language}
+              targetId="axzo-design-practice-title"
+              targetLabel={localizedContent.practice.title}
+              targetType="heading"
+              workSlug={workSlug}
+            >
+              <CaseStudyHeadingOne
+                className={styles.sectionHeader}
+                id="design-practice"
+                descriptions={localizedContent.practice.description}
+                title={localizedContent.practice.title}
+              />
+            </CommentableBlock>
 
             <div className={styles.practiceStack}>
               {localizedContent.practice.pages.map((page, index) => (
                 <article className={styles.practiceBlock} key={page.theme}>
-                  <CaseStudyHeadingTwo
-                    accentColor="var(--axzo-case-accent)"
-                    className={styles.storyHeader}
-                    id={practiceSectionIds[index]}
-                    descriptions={page.description}
-                    title={page.theme}
-                  />
+                  <CommentableBlock
+                    language={language}
+                    targetId={`axzo-${practiceSectionIds[index]}-title`}
+                    targetLabel={page.theme}
+                    targetType="heading"
+                    workSlug={workSlug}
+                  >
+                    <CaseStudyHeadingTwo
+                      accentColor="var(--axzo-case-accent)"
+                      className={styles.storyHeader}
+                      id={practiceSectionIds[index]}
+                      descriptions={page.description}
+                      title={page.theme}
+                    />
+                  </CommentableBlock>
 
-                  <MediaPanel
-                    alt={page.imageAlt}
-                    imageSrc={page.imageSrc}
-                    ratio={page.ratio}
-                  />
+                  <CommentableBlock
+                    language={language}
+                    targetId={`axzo-${practiceSectionIds[index]}-image`}
+                    targetLabel={page.theme}
+                    targetType="figure"
+                    workSlug={workSlug}
+                  >
+                    <MediaPanel
+                      alt={page.imageAlt}
+                      imageSrc={page.imageSrc}
+                      ratio={page.ratio}
+                    />
+                  </CommentableBlock>
                 </article>
               ))}
             </div>
           </section>
 
           <section className={joinClassNames(styles.section, styles.reflectionSection)}>
-            <CaseStudyHeadingOne
-              className={styles.sectionHeader}
-              id="results-reflection"
-              title={localizedContent.reflection.title}
-            />
+            <CommentableBlock
+              language={language}
+              targetId="axzo-results-reflection-title"
+              targetLabel={localizedContent.reflection.title}
+              targetType="heading"
+              workSlug={workSlug}
+            >
+              <CaseStudyHeadingOne
+                className={styles.sectionHeader}
+                id="results-reflection"
+                title={localizedContent.reflection.title}
+              />
+            </CommentableBlock>
             <div className={styles.reflectionStack}>
-              <p className={styles.sectionDescription}>{localizedContent.reflection.intro}</p>
+              <CommentableBlock
+                language={language}
+                targetId="axzo-results-reflection-intro"
+                targetLabel={localizedContent.reflection.title}
+                targetType="text"
+                workSlug={workSlug}
+              >
+                <p className={styles.sectionDescription}>{localizedContent.reflection.intro}</p>
+              </CommentableBlock>
 
               <div className={styles.resultPanel}>
                 <ul className={styles.resultList}>
-                  {localizedContent.reflection.bullets.map((bullet) => (
-                    <li className={styles.resultItem} key={bullet}>
+                  {localizedContent.reflection.bullets.map((bullet, index) => (
+                    <CommentableBlock
+                      as="li"
+                      className={styles.resultItem}
+                      key={bullet}
+                      language={language}
+                      targetId={`axzo-results-reflection-result-${index + 1}`}
+                      targetLabel={bullet}
+                      targetType="list-item"
+                      workSlug={workSlug}
+                    >
                       {bullet}
-                    </li>
+                    </CommentableBlock>
                   ))}
                 </ul>
               </div>
 
-              <p className={styles.storyParagraph}>{localizedContent.reflection.conclusion}</p>
-              <p className={styles.quote}>{localizedContent.reflection.quote}</p>
+              <CommentableBlock
+                language={language}
+                targetId="axzo-results-reflection-conclusion"
+                targetLabel={localizedContent.reflection.title}
+                targetType="text"
+                workSlug={workSlug}
+              >
+                <p className={styles.storyParagraph}>{localizedContent.reflection.conclusion}</p>
+              </CommentableBlock>
+              <CommentableBlock
+                language={language}
+                targetId="axzo-results-reflection-quote"
+                targetLabel={localizedContent.reflection.quote}
+                targetType="quote"
+                workSlug={workSlug}
+              >
+                <p className={styles.quote}>{localizedContent.reflection.quote}</p>
+              </CommentableBlock>
             </div>
           </section>
         </div>
 
       </div>
     </article>
+    </CommentHistoryProvider>
   );
 }

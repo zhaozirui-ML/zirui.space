@@ -251,6 +251,16 @@
   gap: var(--drawing-ledger-stack-gap-sm);
 }
 
+.commentableTextBlock {
+  margin-top: calc(var(--drawing-ledger-stack-gap-sm) * -0.5);
+}
+
+.commentableList {
+  display: block;
+  margin: calc(var(--drawing-ledger-stack-gap-sm) * -0.5) 0 0;
+  padding-left: var(--portfolio-space-sm);
+}
+
 .mobileExplorationStack {
   display: grid;
   gap: var(--drawing-ledger-stack-gap-md);
@@ -730,6 +740,14 @@
   display: grid;
   gap: var(--portfolio-space-sm);
   grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr);
+}
+
+.resultMetricCommentBlock {
+  display: grid;
+}
+
+.mobileGoalCommentBlock {
+  display: grid;
 }
 
 .resultMetricCard {

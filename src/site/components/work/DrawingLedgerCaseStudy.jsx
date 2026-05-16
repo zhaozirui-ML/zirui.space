@@ -6,6 +6,8 @@ import {
   CaseStudyHeadingTwo,
 } from "../case-study/CaseStudyHeading";
 import CaseStudyToc from "../case-study/CaseStudyToc";
+import CommentableBlock from "../comments/CommentableBlock";
+import CommentHistoryProvider from "../comments/CommentHistoryProvider";
 import { drawingLedgerAssets as assets } from "../../data/work-details/drawing-ledger-2-0";
 import styles from "../../styles/drawing-ledger-case-study.module.css";
 
@@ -382,10 +384,12 @@ function OptionSummary({ cons, consLabel = "Cons", pros, prosLabel = "Pros", tit
 
 const resultMetrics = [
   {
+    id: "core-status-recognition",
     title: "核心状态识别耗时",
     values: [{ label: "", trend: "降低", value: "25%" }],
   },
   {
+    id: "key-node-handling",
     title: "关键节点处理时长",
     variant: "wide",
     values: [
@@ -394,6 +398,7 @@ const resultMetrics = [
     ],
   },
   {
+    id: "task-transition-efficiency",
     title: "任务流转效率",
     values: [{ label: "", trend: "提高", value: "8%" }],
   },
@@ -430,7 +435,22 @@ function ResultMetricCard({ metric }) {
   );
 }
 
+function getResultMetricTargetLabel(metric, language) {
+  if (language !== "en") {
+    return `落地成果指标：${metric.title}`;
+  }
+
+  const labelMap = {
+    任务流转效率: "Result metric: task transition efficiency",
+    关键节点处理时长: "Result metric: key-node handling time",
+    核心状态识别耗时: "Result metric: core status recognition time",
+  };
+
+  return labelMap[metric.title] ?? `Result metric: ${metric.title}`;
+}
+
 export default function DrawingLedgerCaseStudy({ backHref = "/work", language = "zh" }) {
+  const workSlug = "drawing-ledger-2-0";
   const display = (zh, en) => (language === "en" ? en : zh);
   const resolveAlt = (asset) => {
     const alt = resolveLocalizedValue(asset.alt, language);
@@ -606,7 +626,8 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
   };
 
   return (
-    <article className={styles.caseStudy}>
+    <CommentHistoryProvider workSlug={workSlug}>
+      <article className={styles.caseStudy}>
       <section className={styles.heroSection} id="case-hero">
         <div className={styles.heroBackdrop}>
           <Image
@@ -652,10 +673,26 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
           <div className={styles.sectionContent}>
             <div className={styles.webCaseStack}>
               <div className={styles.sectionCluster}>
-                <CaseStudyHeadingOne
-                  className={styles.anchoredHeader}
-                  id="case-overview"
-                  title={display("业务背景", "Business Background")}
+                <CommentableBlock
+                  language={language}
+                  targetId="case-overview-title"
+                  targetLabel={display("业务背景标题", "Business Background title")}
+                  targetType="heading"
+                  workSlug={workSlug}
+                >
+                  <CaseStudyHeadingOne
+                    className={styles.anchoredHeader}
+                    id="case-overview"
+                    title={display("业务背景", "Business Background")}
+                  />
+                </CommentableBlock>
+                <CommentableBlock
+                  className={styles.commentableTextBlock}
+                  language={language}
+                  targetId="case-overview-text-lifecycle"
+                  targetLabel={display("业务背景正文：生命周期", "Business Background text: lifecycle")}
+                  targetType="text"
+                  workSlug={workSlug}
                 >
                   <div className={styles.richText}>
                     <p>
@@ -668,6 +705,17 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                         "The drawing register records how drawings move through their lifecycle from upload completion to deprecation. The register mainly involves four user roles: uploader, confirmer, releaser, and multi-permission administrator.",
                       )}
                     </p>
+                  </div>
+                </CommentableBlock>
+                <CommentableBlock
+                  className={styles.commentableTextBlock}
+                  language={language}
+                  targetId="case-overview-text-v1-context"
+                  targetLabel={display("业务背景正文：1.0 背景", "Business Background text: 1.0 context")}
+                  targetType="text"
+                  workSlug={workSlug}
+                >
+                  <div className={styles.richText}>
                     <p>
                       {display(
                         "图纸台账 1.0 版本设计，在我加入设计团队前已经完成。因为 1.0 的核心目标是快速搭建图纸模块的核心功能，快速上线，所以当时并未针对不同用户角色进行差异化设计，导致不同用户在复杂的信息流中理解成本高、部分操作路径冗长，严重影响了图纸流转效率。",
@@ -675,51 +723,91 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                       )}
                     </p>
                   </div>
-                </CaseStudyHeadingOne>
+                </CommentableBlock>
 
-                <figure className={styles.figure}>
-                  <div className={styles.lifecycleFigure}>
-                    <Image
-                      alt={resolveAlt(assets.lifecycleFlow)}
-                      className={styles.lifecycleFigureImage}
-                      height={468}
-                      sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 832px"
-                      src={assets.lifecycleFlow.src}
-                      unoptimized={assets.lifecycleFlow.unoptimized}
-                      width={1664}
-                    />
-                  </div>
-                </figure>
+                <CommentableBlock
+                  language={language}
+                  targetId="case-overview-lifecycle-image"
+                  targetLabel={display("业务背景生命周期图", "Business Background lifecycle diagram")}
+                  targetType="figure"
+                  workSlug={workSlug}
+                >
+                  <figure className={styles.figure}>
+                    <div className={styles.lifecycleFigure}>
+                      <Image
+                        alt={resolveAlt(assets.lifecycleFlow)}
+                        className={styles.lifecycleFigureImage}
+                        height={468}
+                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 832px"
+                        src={assets.lifecycleFlow.src}
+                        unoptimized={assets.lifecycleFlow.unoptimized}
+                        width={1664}
+                      />
+                    </div>
+                  </figure>
+                </CommentableBlock>
               </div>
 
               <div className={joinClassNames(styles.sectionFlow, styles.problemSectionFlow)}>
-                <CaseStudyHeadingOne
-                  className={styles.anchoredHeader}
-                  id="case-problem"
-                  title={display("问题定位与分析", "Problem Definition and Analysis")}
-                />
+                <CommentableBlock
+                  language={language}
+                  targetId="case-problem-title"
+                  targetLabel={display("问题定位与分析标题", "Problem Definition and Analysis title")}
+                  targetType="heading"
+                  workSlug={workSlug}
+                >
+                  <CaseStudyHeadingOne
+                    className={styles.anchoredHeader}
+                    id="case-problem"
+                    title={display("问题定位与分析", "Problem Definition and Analysis")}
+                  />
+                </CommentableBlock>
 
-                <figure className={joinClassNames(styles.figure, styles.problemLeadFigure)}>
-                  <div className={styles.problemFigure}>
-                    <Image
-                      alt={resolveAlt(assets.problemLedgerV1)}
-                      className={styles.problemFigureImage}
-                      height={938}
-                      sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 832px"
-                      src={assets.problemLedgerV1.src}
-                      unoptimized={assets.problemLedgerV1.unoptimized}
-                      width={1664}
-                    />
-                  </div>
-                  <figcaption className={styles.caption}>{display("旧版图纸台账页", "Old register page")}</figcaption>
-                </figure>
+                <CommentableBlock
+                  language={language}
+                  targetId="case-problem-old-register-image"
+                  targetLabel={display("旧版图纸台账页截图", "Old register page screenshot")}
+                  targetType="figure"
+                  workSlug={workSlug}
+                >
+                  <figure className={joinClassNames(styles.figure, styles.problemLeadFigure)}>
+                    <div className={styles.problemFigure}>
+                      <Image
+                        alt={resolveAlt(assets.problemLedgerV1)}
+                        className={styles.problemFigureImage}
+                        height={938}
+                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 832px"
+                        src={assets.problemLedgerV1.src}
+                        unoptimized={assets.problemLedgerV1.unoptimized}
+                        width={1664}
+                      />
+                    </div>
+                    <figcaption className={styles.caption}>{display("旧版图纸台账页", "Old register page")}</figcaption>
+                  </figure>
+                </CommentableBlock>
 
                 <div className={styles.sectionCluster}>
-                  <CaseStudyHeadingTwo
-                    accentColor="var(--portfolio-color-accent-brand)"
-                    className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
-                    id="case-user-task"
-                    title={display("用户、场景与任务", "Users, Scenarios, and Tasks")}
+                  <CommentableBlock
+                    language={language}
+                    targetId="case-user-task-title"
+                    targetLabel={display("用户、场景与任务标题", "Users, Scenarios, and Tasks title")}
+                    targetType="heading"
+                    workSlug={workSlug}
+                  >
+                    <CaseStudyHeadingTwo
+                      accentColor="var(--portfolio-color-accent-brand)"
+                      className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                      id="case-user-task"
+                      title={display("用户、场景与任务", "Users, Scenarios, and Tasks")}
+                    />
+                  </CommentableBlock>
+                  <CommentableBlock
+                    className={styles.commentableTextBlock}
+                    language={language}
+                    targetId="case-user-task-text"
+                    targetLabel={display("用户、场景与任务说明文字", "Users, Scenarios, and Tasks text")}
+                    targetType="text"
+                    workSlug={workSlug}
                   >
                     <div className={styles.richText}>
                       <p>
@@ -729,31 +817,55 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                         )}
                       </p>
                     </div>
-                  </CaseStudyHeadingTwo>
-                  <figure className={styles.figure}>
-                    <div className={styles.taskTableFigure}>
-                      <Image
-                        alt={resolveAlt(assets.userTaskAnalysis)}
-                        className={styles.taskTableFigureImage}
-                        height={1018}
-                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 832px"
-                        src={assets.userTaskAnalysis.src}
-                        unoptimized={assets.userTaskAnalysis.unoptimized}
-                        width={1664}
-                      />
-                    </div>
-                    <figcaption className={styles.caption}>
-                      {display("用户任务梳理", "User task analysis")}
-                    </figcaption>
-                  </figure>
+                  </CommentableBlock>
+                  <CommentableBlock
+                    language={language}
+                    targetId="case-user-task-analysis-image"
+                    targetLabel={display("用户任务梳理图", "User task analysis diagram")}
+                    targetType="figure"
+                    workSlug={workSlug}
+                  >
+                    <figure className={styles.figure}>
+                      <div className={styles.taskTableFigure}>
+                        <Image
+                          alt={resolveAlt(assets.userTaskAnalysis)}
+                          className={styles.taskTableFigureImage}
+                          height={1018}
+                          sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 832px"
+                          src={assets.userTaskAnalysis.src}
+                          unoptimized={assets.userTaskAnalysis.unoptimized}
+                          width={1664}
+                        />
+                      </div>
+                      <figcaption className={styles.caption}>
+                        {display("用户任务梳理", "User task analysis")}
+                      </figcaption>
+                    </figure>
+                  </CommentableBlock>
                 </div>
 
                 <div className={styles.sectionCluster}>
-                  <CaseStudyHeadingTwo
-                    accentColor="var(--portfolio-color-accent-brand)"
-                    className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
-                    id="case-design-analysis"
-                    title={display("设计分析", "Design Analysis")}
+                  <CommentableBlock
+                    language={language}
+                    targetId="case-design-analysis-title"
+                    targetLabel={display("设计分析标题", "Design Analysis title")}
+                    targetType="heading"
+                    workSlug={workSlug}
+                  >
+                    <CaseStudyHeadingTwo
+                      accentColor="var(--portfolio-color-accent-brand)"
+                      className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                      id="case-design-analysis"
+                      title={display("设计分析", "Design Analysis")}
+                    />
+                  </CommentableBlock>
+                  <CommentableBlock
+                    className={styles.commentableTextBlock}
+                    language={language}
+                    targetId="case-design-analysis-text"
+                    targetLabel={display("设计分析说明文字", "Design Analysis text")}
+                    targetType="text"
+                    workSlug={workSlug}
                   >
                     <div className={styles.richText}>
                       <p>
@@ -763,36 +875,68 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                         )}
                       </p>
                     </div>
-                  </CaseStudyHeadingTwo>
-                  <figure className={styles.figure}>
-                    <div className={styles.singleMediaFigure}>
-                      <Image
-                        alt={resolveAlt(assets.webDesignAnalysis)}
-                        className={styles.singleMediaFigureImage}
-                        height={1089}
-                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 832px"
-                        src={assets.webDesignAnalysis.src}
-                        unoptimized={assets.webDesignAnalysis.unoptimized}
-                        width={1664}
-                      />
-                    </div>
-                  </figure>
+                  </CommentableBlock>
+                  <CommentableBlock
+                    language={language}
+                    targetId="case-design-analysis-image"
+                    targetLabel={display("设计分析图", "Design Analysis image")}
+                    targetType="figure"
+                    workSlug={workSlug}
+                  >
+                    <figure className={styles.figure}>
+                      <div className={styles.singleMediaFigure}>
+                        <Image
+                          alt={resolveAlt(assets.webDesignAnalysis)}
+                          className={styles.singleMediaFigureImage}
+                          height={1089}
+                          sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 832px"
+                          src={assets.webDesignAnalysis.src}
+                          unoptimized={assets.webDesignAnalysis.unoptimized}
+                          width={1664}
+                        />
+                      </div>
+                    </figure>
+                  </CommentableBlock>
                 </div>
               </div>
 
               <div className={styles.sectionFlow}>
-                <CaseStudyHeadingOne
-                  className={styles.anchoredHeader}
-                  id="case-solution"
-                  title={display("设计方案", "Design Solution")}
-                />
+                <CommentableBlock
+                  language={language}
+                  targetId="case-solution-title"
+                  targetLabel={display("设计方案标题", "Design Solution title")}
+                  targetType="heading"
+                  workSlug={workSlug}
+                >
+                  <CaseStudyHeadingOne
+                    className={styles.anchoredHeader}
+                    id="case-solution"
+                    title={display("设计方案", "Design Solution")}
+                  />
+                </CommentableBlock>
 
                 <div className={styles.sectionCluster}>
-                  <CaseStudyHeadingTwo
-                    accentColor="var(--portfolio-color-accent-brand)"
-                    className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
-                    id="case-strategy-visual"
-                    title={display("策略一：视觉层级重塑——强化高优待办的视觉层级与引导", "Strategy 1: Reshape visual hierarchy")}
+                  <CommentableBlock
+                    language={language}
+                    targetId="case-strategy-visual-title"
+                    targetLabel={display("策略一标题", "Strategy 1 title")}
+                    targetType="heading"
+                    workSlug={workSlug}
+                  >
+                    <CaseStudyHeadingTwo
+                      accentColor="var(--portfolio-color-accent-brand)"
+                      className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                      id="case-strategy-visual"
+                      title={display("策略一：视觉层级重塑——强化高优待办的视觉层级与引导", "Strategy 1: Reshape visual hierarchy")}
+                    />
+                  </CommentableBlock>
+                  <CommentableBlock
+                    className={styles.commentableTextBlock}
+                    language={language}
+                    targetId="case-strategy-visual-text"
+                    targetLabel={display("策略一说明文字", "Strategy 1 text")}
+                    targetType="text"
+                    workSlug={workSlug}
                   >
                     <div className={styles.richText}>
                       <p>
@@ -804,117 +948,223 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                           "A blended task-area + table view places the data table below and the task area above, improving information retrieval efficiency and attention management.",
                         )}
                       </p>
-                      <ul>
-                        <li>{display("保留表格： 保住了用户习惯和海量数据的检索效率", "Keep the table: preserve user habits and retrieval efficiency for large data sets")}</li>
-                        <li>
+                    </div>
+                  </CommentableBlock>
+                  <ul className={joinClassNames(styles.richText, styles.commentableList)}>
+                    <CommentableBlock
+                      as="li"
+                      language={language}
+                      targetId="case-strategy-visual-list-keep-table"
+                      targetLabel={display("策略一列表项：保留表格", "Strategy 1 list item: Keep the table")}
+                      targetType="list-item"
+                      workSlug={workSlug}
+                    >
+                      {display("保留表格： 保住了用户习惯和海量数据的检索效率", "Keep the table: preserve user habits and retrieval efficiency for large data sets")}
+                    </CommentableBlock>
+                    <CommentableBlock
+                      as="li"
+                      language={language}
+                      targetId="case-strategy-visual-list-add-task-area"
+                      targetLabel={display("策略一列表项：增加待办区", "Strategy 1 list item: Add a task area")}
+                      targetType="list-item"
+                      workSlug={workSlug}
+                    >
+                      {display(
+                        <>
+                          增加待办区：实现<strong>视觉层级重塑</strong>的核心策略，将不同角色当前最需要关注的内容展示在最显眼的位置
+                        </>,
+                        <>
+                          Add a task area: deliver the core strategy of <strong>visual hierarchy reshaping</strong> by placing what each role needs most in the most visible position
+                        </>,
+                      )}
+                    </CommentableBlock>
+                    <CommentableBlock
+                      as="li"
+                      language={language}
+                      targetId="case-strategy-visual-list-engineering-friendly"
+                      targetLabel={display("策略一列表项：研发友好", "Strategy 1 list item: Engineering-friendly")}
+                      targetType="list-item"
+                      workSlug={workSlug}
+                    >
+                      {display("研发友好：界面改动成本小，底层逻辑无需完全重写，ROI 极高", "Engineering-friendly: low interface change cost, no full rewrite of underlying logic, and high ROI")}
+                    </CommentableBlock>
+                  </ul>
+                  <CommentableBlock
+                    language={language}
+                    targetId="case-strategy-visual-image"
+                    targetLabel={display("策略一配图", "Strategy 1 image")}
+                    targetType="figure"
+                    workSlug={workSlug}
+                  >
+                    <figure className={styles.figure}>
+                      <div className={styles.singleMediaFigure}>
+                        <Image
+                          alt={resolveAlt(assets.webStrategyVisual)}
+                          className={styles.singleMediaFigureImage}
+                          height={960}
+                          sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 832px"
+                          src={assets.webStrategyVisual.src}
+                          unoptimized={assets.webStrategyVisual.unoptimized}
+                          width={1664}
+                        />
+                      </div>
+                    </figure>
+                  </CommentableBlock>
+                </div>
+
+                <div className={styles.sectionCluster}>
+                  <CommentableBlock
+                    language={language}
+                    targetId="case-strategy-role-title"
+                    targetLabel={display("策略二标题", "Strategy 2 title")}
+                    targetType="heading"
+                    workSlug={workSlug}
+                  >
+                    <CaseStudyHeadingTwo
+                      accentColor="var(--portfolio-color-accent-brand)"
+                      className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                      id="case-strategy-role"
+                      title={display("策略二：场景化设计——构建聚焦核心待办的角色视图", "Strategy 2: Role-based scenario design")}
+                    />
+                  </CommentableBlock>
+                  <CommentableBlock
+                    className={styles.commentableTextBlock}
+                    language={language}
+                    targetId="case-strategy-role-text"
+                    targetLabel={display("策略二说明文字", "Strategy 2 text")}
+                    targetType="text"
+                    workSlug={workSlug}
+                  >
+                      <div className={styles.richText}>
+                        <p>
                           {display(
-                            <>
-                              增加待办区：实现<strong>视觉层级重塑</strong>的核心策略，将不同角色当前最需要关注的内容展示在最显眼的位置
-                            </>,
-                            <>
-                              Add a task area: deliver the core strategy of <strong>visual hierarchy reshaping</strong> by placing what each role needs most in the most visible position
-                            </>,
+                            "从静态列表升级为动态任务驱动，基于角色权限提取「核心待办」，实现业务数据的按需分发。",
+                            "Upgrade from a static list to a dynamic task-driven view, extracting core tasks based on role permissions and distributing business data on demand.",
                           )}
-                        </li>
-                        <li>{display("研发友好：界面改动成本小，底层逻辑无需完全重写，ROI 极高", "Engineering-friendly: low interface change cost, no full rewrite of underlying logic, and high ROI")}</li>
-                      </ul>
-                    </div>
-                  </CaseStudyHeadingTwo>
-                  <figure className={styles.figure}>
-                    <div className={styles.singleMediaFigure}>
-                      <Image
-                        alt={resolveAlt(assets.webStrategyVisual)}
-                        className={styles.singleMediaFigureImage}
-                        height={960}
-                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 832px"
-                        src={assets.webStrategyVisual.src}
-                        unoptimized={assets.webStrategyVisual.unoptimized}
-                        width={1664}
-                      />
-                    </div>
-                  </figure>
+                        </p>
+                      </div>
+                  </CommentableBlock>
+                  <CommentableBlock
+                    language={language}
+                    targetId="case-strategy-role-image"
+                    targetLabel={display("策略二配图", "Strategy 2 image")}
+                    targetType="figure"
+                    workSlug={workSlug}
+                  >
+                    <figure className={styles.figure}>
+                      <div className={styles.singleMediaFigure}>
+                        <Image
+                          alt={resolveAlt(assets.webStrategyRole)}
+                          className={styles.singleMediaFigureImage}
+                          height={960}
+                          sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 832px"
+                          src={assets.webStrategyRole.src}
+                          unoptimized={assets.webStrategyRole.unoptimized}
+                          width={1664}
+                        />
+                      </div>
+                    </figure>
+                  </CommentableBlock>
                 </div>
 
                 <div className={styles.sectionCluster}>
-                  <CaseStudyHeadingTwo
-                    accentColor="var(--portfolio-color-accent-brand)"
-                    className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
-                    id="case-strategy-role"
-                    title={display("策略二：场景化设计——构建聚焦核心待办的角色视图", "Strategy 2: Role-based scenario design")}
+                  <CommentableBlock
+                    language={language}
+                    targetId="case-strategy-rules-title"
+                    targetLabel={display("策略三标题", "Strategy 3 title")}
+                    targetType="heading"
+                    workSlug={workSlug}
                   >
-                    <div className={styles.richText}>
-                      <p>
-                        {display(
-                          "从静态列表升级为动态任务驱动，基于角色权限提取「核心待办」，实现业务数据的按需分发。",
-                          "Upgrade from a static list to a dynamic task-driven view, extracting core tasks based on role permissions and distributing business data on demand.",
-                        )}
-                      </p>
-                    </div>
-                  </CaseStudyHeadingTwo>
-                  <figure className={styles.figure}>
-                    <div className={styles.singleMediaFigure}>
-                      <Image
-                        alt={resolveAlt(assets.webStrategyRole)}
-                        className={styles.singleMediaFigureImage}
-                        height={960}
-                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 832px"
-                        src={assets.webStrategyRole.src}
-                        unoptimized={assets.webStrategyRole.unoptimized}
-                        width={1664}
-                      />
-                    </div>
-                  </figure>
+                    <CaseStudyHeadingTwo
+                      accentColor="var(--portfolio-color-accent-brand)"
+                      className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                      id="case-strategy-rules"
+                      title={display("策略三：统一交互规范——建立严谨的状态反馈与防错机制", "Strategy 3: Unified interaction rules")}
+                    />
+                  </CommentableBlock>
+                  <CommentableBlock
+                    className={styles.commentableTextBlock}
+                    language={language}
+                    targetId="case-strategy-rules-text"
+                    targetLabel={display("策略三说明文字", "Strategy 3 text")}
+                    targetType="text"
+                    workSlug={workSlug}
+                  >
+                      <div className={styles.richText}>
+                        <p>
+                          {display(
+                            "将图纸的状态流转规则转化为前端的交互约束，通过定义组件的显隐与禁用规则，实现越权操作的前置拦截",
+                            "Translate drawing state transition rules into front-end interaction constraints, defining visibility and disabled states to intercept unauthorized operations before they happen.",
+                          )}
+                        </p>
+                      </div>
+                  </CommentableBlock>
+                  <CommentableBlock
+                    language={language}
+                    targetId="case-strategy-rules-image"
+                    targetLabel={display("策略三配图", "Strategy 3 image")}
+                    targetType="figure"
+                    workSlug={workSlug}
+                  >
+                    <figure className={styles.figure}>
+                      <div className={styles.singleMediaFigure}>
+                        <Image
+                          alt={resolveAlt(assets.webStrategyRules)}
+                          className={styles.singleMediaFigureImage}
+                          height={933}
+                          sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 832px"
+                          src={assets.webStrategyRules.src}
+                          unoptimized={assets.webStrategyRules.unoptimized}
+                          width={1664}
+                        />
+                      </div>
+                    </figure>
+                  </CommentableBlock>
                 </div>
 
-                <div className={styles.sectionCluster}>
-                  <CaseStudyHeadingTwo
-                    accentColor="var(--portfolio-color-accent-brand)"
-                    className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
-                    id="case-strategy-rules"
-                    title={display("策略三：统一交互规范——建立严谨的状态反馈与防错机制", "Strategy 3: Unified interaction rules")}
-                  >
-                    <div className={styles.richText}>
-                      <p>
-                        {display(
-                          "将图纸的状态流转规则转化为前端的交互约束，通过定义组件的显隐与禁用规则，实现越权操作的前置拦截",
-                          "Translate drawing state transition rules into front-end interaction constraints, defining visibility and disabled states to intercept unauthorized operations before they happen.",
-                        )}
-                      </p>
-                    </div>
-                  </CaseStudyHeadingTwo>
-                  <figure className={styles.figure}>
-                    <div className={styles.singleMediaFigure}>
-                      <Image
-                        alt={resolveAlt(assets.webStrategyRules)}
-                        className={styles.singleMediaFigureImage}
-                        height={933}
-                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 832px"
-                        src={assets.webStrategyRules.src}
-                        unoptimized={assets.webStrategyRules.unoptimized}
-                        width={1664}
-                      />
-                    </div>
-                  </figure>
-                </div>
               </div>
 
               <div className={styles.sectionFlow}>
-                <CaseStudyHeadingOne
-                  className={styles.anchoredHeader}
-                  id="case-detail"
-                  title={display("细节展开", "Details")}
+                <CommentableBlock
+                  language={language}
+                  targetId="case-detail-title"
+                  targetLabel={display("细节展开标题", "Details title")}
+                  targetType="heading"
+                  workSlug={workSlug}
                 >
-                  <div className={styles.richText}>
-                    <p>Design is all about detail</p>
-                  </div>
-                </CaseStudyHeadingOne>
+                  <CaseStudyHeadingOne
+                    className={styles.anchoredHeader}
+                    id="case-detail"
+                    title={display("细节展开", "Details")}
+                  >
+                    <div className={styles.richText}>
+                      <p>Design is all about detail</p>
+                    </div>
+                  </CaseStudyHeadingOne>
+                </CommentableBlock>
 
                 <div className={styles.sectionCluster}>
-                  <CaseStudyHeadingTwo
-                    accentColor="var(--portfolio-color-accent-brand)"
-                    className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
-                    id="case-workflow"
-                    title={display("代办区与表格的联动", "Task Area and Table Sync")}
+                  <CommentableBlock
+                    language={language}
+                    targetId="case-workflow-title"
+                    targetLabel={display("代办区与表格的联动标题", "Task Area and Table Sync title")}
+                    targetType="heading"
+                    workSlug={workSlug}
+                  >
+                    <CaseStudyHeadingTwo
+                      accentColor="var(--portfolio-color-accent-brand)"
+                      className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                      id="case-workflow"
+                      title={display("代办区与表格的联动", "Task Area and Table Sync")}
+                    />
+                  </CommentableBlock>
+                  <CommentableBlock
+                    className={styles.commentableTextBlock}
+                    language={language}
+                    targetId="case-workflow-text"
+                    targetLabel={display("代办区与表格的联动说明文字", "Task Area and Table Sync text")}
+                    targetType="text"
+                    workSlug={workSlug}
                   >
                     <div className={styles.richText}>
                       <p>
@@ -925,43 +1175,78 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                         )}
                       </p>
                     </div>
-                  </CaseStudyHeadingTwo>
+                  </CommentableBlock>
 
-                  <figure className={styles.figure}>
-                    <div className={styles.workflowDemoFrame}>
-                      <Image
-                        alt=""
-                        className={styles.workflowDemoBackground}
-                        fill
-                        sizes="(max-width: 900px) calc(100vw - 2rem), 832px"
-                        src={assets.detailsAssignmentsBackground.src}
-                        unoptimized={assets.detailsAssignmentsBackground.unoptimized}
-                      />
-                      <div className={styles.workflowDemoVideoWrap}>
-                        <video
-                          aria-label={resolveAssetAlt(assets.workflowDemo, language)}
-                          autoPlay
-                          className={styles.workflowDemoVideo}
-                          loop
-                          muted
-                          playsInline
-                          preload="metadata"
-                          src={assets.workflowDemo.src}
+                  <CommentableBlock
+                    language={language}
+                    targetId="case-workflow-demo"
+                    targetLabel={display("代办区与表格联动演示", "Task Area and Table Sync demo")}
+                    targetType="figure"
+                    workSlug={workSlug}
+                  >
+                    <figure className={styles.figure}>
+                      <div className={styles.workflowDemoFrame}>
+                        <Image
+                          alt=""
+                          className={styles.workflowDemoBackground}
+                          fill
+                          sizes="(max-width: 900px) calc(100vw - 2rem), 832px"
+                          src={assets.detailsAssignmentsBackground.src}
+                          unoptimized={assets.detailsAssignmentsBackground.unoptimized}
                         />
+                        <div className={styles.workflowDemoVideoWrap}>
+                          <video
+                            aria-label={resolveAssetAlt(assets.workflowDemo, language)}
+                            autoPlay
+                            className={styles.workflowDemoVideo}
+                            loop
+                            muted
+                            playsInline
+                            preload="metadata"
+                            src={assets.workflowDemo.src}
+                          />
+                        </div>
                       </div>
-                    </div>
-                  </figure>
+                    </figure>
+                  </CommentableBlock>
                 </div>
 
                 <div className={styles.sectionCluster}>
-                  <CaseStudyHeadingTwo
-                    accentColor="var(--portfolio-color-accent-brand)"
-                    className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
-                    id="case-responsive"
-                    title={display("响应式设计", "Responsive Design")}
+                  <CommentableBlock
+                    language={language}
+                    targetId="case-responsive-title"
+                    targetLabel={display("响应式设计标题", "Responsive Design title")}
+                    targetType="heading"
+                    workSlug={workSlug}
+                  >
+                    <CaseStudyHeadingTwo
+                      accentColor="var(--portfolio-color-accent-brand)"
+                      className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                      id="case-responsive"
+                      title={display("响应式设计", "Responsive Design")}
+                    />
+                  </CommentableBlock>
+                  <CommentableBlock
+                    className={styles.commentableTextBlock}
+                    language={language}
+                    targetId="case-responsive-text"
+                    targetLabel={display("响应式设计说明文字", "Responsive Design text")}
+                    targetType="text"
+                    workSlug={workSlug}
                   >
                     <div className={styles.richText}>
                       <p>{display("为了营造流畅的用户体验，我定义了代办区在不同屏幕尺寸下的展示效果", "To create a smooth user experience, I defined how the task area should be displayed across screen sizes.")}</p>
+                    </div>
+                  </CommentableBlock>
+                  <CommentableBlock
+                    className={styles.commentableTextBlock}
+                    language={language}
+                    targetId="case-responsive-rules"
+                    targetLabel={display("响应式设计规则列表", "Responsive Design rules")}
+                    targetType="list"
+                    workSlug={workSlug}
+                  >
+                    <div className={styles.richText}>
                       <div className={styles.responsiveRulesBlock}>
                         <p className={styles.responsiveRulesLabel}>{localizedResponsiveRules.intro}</p>
                         <ul className={styles.responsiveRulesList}>
@@ -977,40 +1262,64 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                         </ul>
                       </div>
                     </div>
-                  </CaseStudyHeadingTwo>
+                  </CommentableBlock>
 
-                  <figure className={styles.figure}>
-                    <div className={styles.responsiveDemoFrame}>
-                      <Image
-                        alt=""
-                        className={styles.responsiveDemoBackground}
-                        fill
-                        sizes="(max-width: 900px) calc(100vw - 2rem), 832px"
-                        src={assets.detailsResponsiveBackground.src}
-                        unoptimized={assets.detailsResponsiveBackground.unoptimized}
-                      />
-                      <div className={styles.responsiveDemoVideoWrap}>
-                        <video
-                          aria-label={resolveAssetAlt(assets.responsiveDemo, language)}
-                          autoPlay
-                          className={styles.responsiveDemoVideo}
-                          loop
-                          muted
-                          playsInline
-                          preload="metadata"
-                          src={assets.responsiveDemo.src}
+                  <CommentableBlock
+                    language={language}
+                    targetId="case-responsive-demo"
+                    targetLabel={display("响应式设计演示", "Responsive Design demo")}
+                    targetType="figure"
+                    workSlug={workSlug}
+                  >
+                    <figure className={styles.figure}>
+                      <div className={styles.responsiveDemoFrame}>
+                        <Image
+                          alt=""
+                          className={styles.responsiveDemoBackground}
+                          fill
+                          sizes="(max-width: 900px) calc(100vw - 2rem), 832px"
+                          src={assets.detailsResponsiveBackground.src}
+                          unoptimized={assets.detailsResponsiveBackground.unoptimized}
                         />
+                        <div className={styles.responsiveDemoVideoWrap}>
+                          <video
+                            aria-label={resolveAssetAlt(assets.responsiveDemo, language)}
+                            autoPlay
+                            className={styles.responsiveDemoVideo}
+                            loop
+                            muted
+                            playsInline
+                            preload="metadata"
+                            src={assets.responsiveDemo.src}
+                          />
+                        </div>
                       </div>
-                    </div>
-                  </figure>
+                    </figure>
+                  </CommentableBlock>
                 </div>
               </div>
 
               <div className={styles.sectionCluster}>
-                <CaseStudyHeadingOne
-                  className={styles.anchoredHeader}
-                  id="case-results"
-                  title={display("落地成果", "Results")}
+                <CommentableBlock
+                  language={language}
+                  targetId="case-results-title"
+                  targetLabel={display("落地成果标题", "Results title")}
+                  targetType="heading"
+                  workSlug={workSlug}
+                >
+                  <CaseStudyHeadingOne
+                    className={styles.anchoredHeader}
+                    id="case-results"
+                    title={display("落地成果", "Results")}
+                  />
+                </CommentableBlock>
+                <CommentableBlock
+                  className={styles.commentableTextBlock}
+                  language={language}
+                  targetId="case-results-text"
+                  targetLabel={display("落地成果说明文字", "Results text")}
+                  targetType="text"
+                  workSlug={workSlug}
                 >
                   <div className={styles.richText}>
                     <p>
@@ -1020,26 +1329,44 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                       )}
                     </p>
                   </div>
-                </CaseStudyHeadingOne>
+                </CommentableBlock>
 
                 <div className={styles.resultMetricsGrid}>
                   {resultMetrics.map((metric) => (
-                    <ResultMetricCard key={metric.title} metric={metric} />
+                    <CommentableBlock
+                      className={styles.resultMetricCommentBlock}
+                      key={metric.title}
+                      language={language}
+                      targetId={`case-results-metric-${metric.id}`}
+                      targetLabel={getResultMetricTargetLabel(metric, language)}
+                      targetType="metric"
+                      workSlug={workSlug}
+                    >
+                      <ResultMetricCard metric={metric} />
+                    </CommentableBlock>
                   ))}
                 </div>
-                <figure className={styles.figure}>
-                  <div className={styles.singleMediaFigure}>
-                    <Image
-                      alt={resolveAlt(assets.webResults)}
-                      className={styles.singleMediaFigureImage}
-                      height={1013}
-                      sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 832px"
-                      src={assets.webResults.src}
-                      unoptimized={assets.webResults.unoptimized}
-                      width={1664}
-                    />
-                  </div>
-                </figure>
+                <CommentableBlock
+                  language={language}
+                  targetId="case-results-image"
+                  targetLabel={display("落地成果配图", "Results image")}
+                  targetType="figure"
+                  workSlug={workSlug}
+                >
+                  <figure className={styles.figure}>
+                    <div className={styles.singleMediaFigure}>
+                      <Image
+                        alt={resolveAlt(assets.webResults)}
+                        className={styles.singleMediaFigureImage}
+                        height={1013}
+                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 832px"
+                        src={assets.webResults.src}
+                        unoptimized={assets.webResults.unoptimized}
+                        width={1664}
+                      />
+                    </div>
+                  </figure>
+                </CommentableBlock>
               </div>
             </div>
           </div>
@@ -1517,10 +1844,26 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
             <div className={styles.footerStack}>
               <div className={joinClassNames(styles.sectionFlow, styles.mobileSectionFlow)}>
                 <div className={styles.sectionCluster}>
-                  <CaseStudyHeadingOne
-                    className={styles.anchoredHeader}
-                    id="case-mobile"
-                    title={display("移动端设计", "Mobile design")}
+                  <CommentableBlock
+                    language={language}
+                    targetId="case-mobile-title"
+                    targetLabel={display("移动端设计标题", "Mobile design title")}
+                    targetType="heading"
+                    workSlug={workSlug}
+                  >
+                    <CaseStudyHeadingOne
+                      className={styles.anchoredHeader}
+                      id="case-mobile"
+                      title={display("移动端设计", "Mobile design")}
+                    />
+                  </CommentableBlock>
+                  <CommentableBlock
+                    className={styles.commentableTextBlock}
+                    language={language}
+                    targetId="case-mobile-intro-text"
+                    targetLabel={display("移动端设计说明文字", "Mobile design intro text")}
+                    targetType="text"
+                    workSlug={workSlug}
                   >
                     <div className={styles.richText}>
                       <p>
@@ -1530,92 +1873,142 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                         )}
                       </p>
                     </div>
-                  </CaseStudyHeadingOne>
+                  </CommentableBlock>
 
-                  <figure className={styles.figure}>
-                    <div className={styles.mobileCompareFigure}>
-                      <Image
-                        alt={resolveAlt(assets.mobileBeforeAfter)}
-                        className={styles.mobileCompareFigureImage}
-                        height={938}
-                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
-                        src={assets.mobileBeforeAfter.src}
-                        unoptimized={assets.mobileBeforeAfter.unoptimized}
-                        width={1664}
-                      />
-                    </div>
-                    <figcaption className={styles.caption}>{display("原版（左）VS 新版（右）", "Original (left) vs. redesigned (right)")}</figcaption>
-                  </figure>
+                  <CommentableBlock
+                    language={language}
+                    targetId="case-mobile-before-after-image"
+                    targetLabel={display("移动端改版前后对比图", "Mobile before-after image")}
+                    targetType="figure"
+                    workSlug={workSlug}
+                  >
+                    <figure className={styles.figure}>
+                      <div className={styles.mobileCompareFigure}>
+                        <Image
+                          alt={resolveAlt(assets.mobileBeforeAfter)}
+                          className={styles.mobileCompareFigureImage}
+                          height={938}
+                          sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                          src={assets.mobileBeforeAfter.src}
+                          unoptimized={assets.mobileBeforeAfter.unoptimized}
+                          width={1664}
+                        />
+                      </div>
+                      <figcaption className={styles.caption}>{display("原版（左）VS 新版（右）", "Original (left) vs. redesigned (right)")}</figcaption>
+                    </figure>
+                  </CommentableBlock>
                 </div>
 
                 <div className={styles.sectionCluster}>
-                  <CaseStudyHeadingTwo
-                    accentColor="var(--portfolio-color-accent-brand)"
-                    className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
-                    id="case-mobile-goals"
-                    title={display("设计目标", "Design goals")}
-                  />
+                  <CommentableBlock
+                    language={language}
+                    targetId="case-mobile-goals-title"
+                    targetLabel={display("移动端设计目标标题", "Mobile design goals title")}
+                    targetType="heading"
+                    workSlug={workSlug}
+                  >
+                    <CaseStudyHeadingTwo
+                      accentColor="var(--portfolio-color-accent-brand)"
+                      className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                      id="case-mobile-goals"
+                      title={display("设计目标", "Design goals")}
+                    />
+                  </CommentableBlock>
 
                   <div className={styles.mobileGoalsGrid}>
-                    <div className={styles.mobileGoalCard}>
-                      <div className={styles.mobileGoalBody}>
-                        <h4 className={styles.mobileGoalTitle}>
-                          {display("视觉体验升级", "Visual experience upgrade")}
-                        </h4>
-                        <p className={styles.mobileGoalDescription}>
-                          {display(
-                            "在保证效率的前提下，提升界面质感与图纸信息可读性",
-                            "Improve interface quality and drawing readability while preserving efficiency.",
-                          )}
-                        </p>
+                    <CommentableBlock
+                      className={styles.mobileGoalCommentBlock}
+                      language={language}
+                      targetId="case-mobile-goal-visual-upgrade"
+                      targetLabel={display("移动端目标：视觉体验升级", "Mobile goal: visual experience upgrade")}
+                      targetType="card"
+                      workSlug={workSlug}
+                    >
+                      <div className={styles.mobileGoalCard}>
+                        <div className={styles.mobileGoalBody}>
+                          <h4 className={styles.mobileGoalTitle}>
+                            {display("视觉体验升级", "Visual experience upgrade")}
+                          </h4>
+                          <p className={styles.mobileGoalDescription}>
+                            {display(
+                              "在保证效率的前提下，提升界面质感与图纸信息可读性",
+                              "Improve interface quality and drawing readability while preserving efficiency.",
+                            )}
+                          </p>
+                        </div>
+                        <div className={styles.mobileGoalVisual}>
+                          <Image
+                            alt={resolveAlt(assets.mobileGoalVisual)}
+                            className={styles.mobileGoalImage}
+                            height={120}
+                            sizes="120px"
+                            src={assets.mobileGoalVisual.src}
+                            unoptimized={assets.mobileGoalVisual.unoptimized}
+                            width={120}
+                          />
+                        </div>
                       </div>
-                      <div className={styles.mobileGoalVisual}>
-                        <Image
-                          alt={resolveAlt(assets.mobileGoalVisual)}
-                          className={styles.mobileGoalImage}
-                          height={120}
-                          sizes="120px"
-                          src={assets.mobileGoalVisual.src}
-                          unoptimized={assets.mobileGoalVisual.unoptimized}
-                          width={120}
-                        />
-                      </div>
-                    </div>
+                    </CommentableBlock>
 
-                    <div className={styles.mobileGoalCard}>
-                      <div className={styles.mobileGoalBody}>
-                        <h4 className={styles.mobileGoalTitle}>
-                          {display("移动能力补全", "Complete mobile capability")}
-                        </h4>
-                        <p className={styles.mobileGoalDescription}>
-                          {display(
-                            "支持移动端完成确认、下发、查看等关键任务",
-                            "Support key mobile tasks such as confirmation, release, and viewing.",
-                          )}
-                        </p>
+                    <CommentableBlock
+                      className={styles.mobileGoalCommentBlock}
+                      language={language}
+                      targetId="case-mobile-goal-capability"
+                      targetLabel={display("移动端目标：移动能力补全", "Mobile goal: complete mobile capability")}
+                      targetType="card"
+                      workSlug={workSlug}
+                    >
+                      <div className={styles.mobileGoalCard}>
+                        <div className={styles.mobileGoalBody}>
+                          <h4 className={styles.mobileGoalTitle}>
+                            {display("移动能力补全", "Complete mobile capability")}
+                          </h4>
+                          <p className={styles.mobileGoalDescription}>
+                            {display(
+                              "支持移动端完成确认、下发、查看等关键任务",
+                              "Support key mobile tasks such as confirmation, release, and viewing.",
+                            )}
+                          </p>
+                        </div>
+                        <div className={styles.mobileGoalVisual}>
+                          <Image
+                            alt={resolveAlt(assets.mobileGoalCapability)}
+                            className={styles.mobileGoalImage}
+                            height={120}
+                            sizes="120px"
+                            src={assets.mobileGoalCapability.src}
+                            unoptimized={assets.mobileGoalCapability.unoptimized}
+                            width={120}
+                          />
+                        </div>
                       </div>
-                      <div className={styles.mobileGoalVisual}>
-                        <Image
-                          alt={resolveAlt(assets.mobileGoalCapability)}
-                          className={styles.mobileGoalImage}
-                          height={120}
-                          sizes="120px"
-                          src={assets.mobileGoalCapability.src}
-                          unoptimized={assets.mobileGoalCapability.unoptimized}
-                          width={120}
-                        />
-                      </div>
-                    </div>
+                    </CommentableBlock>
                   </div>
                 </div>
 
                 <div className={styles.mobileDetailsStack}>
                   <div className={joinClassNames(styles.sectionCluster, styles.mobileExplorationCluster)}>
-                    <CaseStudyHeadingTwo
-                      accentColor="var(--portfolio-color-accent-brand)"
-                      className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
-                      id="case-mobile-exploration"
-                      title={display("设计探索", "Design exploration")}
+                    <CommentableBlock
+                      language={language}
+                      targetId="case-mobile-exploration-title"
+                      targetLabel={display("移动端设计探索标题", "Mobile design exploration title")}
+                      targetType="heading"
+                      workSlug={workSlug}
+                    >
+                      <CaseStudyHeadingTwo
+                        accentColor="var(--portfolio-color-accent-brand)"
+                        className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                        id="case-mobile-exploration"
+                        title={display("设计探索", "Design exploration")}
+                      />
+                    </CommentableBlock>
+                    <CommentableBlock
+                      className={styles.commentableTextBlock}
+                      language={language}
+                      targetId="case-mobile-exploration-text"
+                      targetLabel={display("移动端设计探索说明文字", "Mobile design exploration text")}
+                      targetType="text"
+                      workSlug={workSlug}
                     >
                       <div className={styles.richText}>
                         <p>
@@ -1625,14 +2018,30 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                           )}
                         </p>
                       </div>
-                    </CaseStudyHeadingTwo>
+                    </CommentableBlock>
 
                     <div className={styles.mobileExplorationStack}>
                       <div className={styles.sectionCluster}>
-                        <CaseStudyHeadingThree
-                          className={styles.caseSubheading}
-                          label={display("竞品分析", "Competitive analysis")}
-                          labelAs="h4"
+                        <CommentableBlock
+                          language={language}
+                          targetId="case-mobile-competitive-analysis-title"
+                          targetLabel={display("竞品分析标题", "Competitive analysis title")}
+                          targetType="heading"
+                          workSlug={workSlug}
+                        >
+                          <CaseStudyHeadingThree
+                            className={styles.caseSubheading}
+                            label={display("竞品分析", "Competitive analysis")}
+                            labelAs="h4"
+                          />
+                        </CommentableBlock>
+                        <CommentableBlock
+                          className={styles.commentableTextBlock}
+                          language={language}
+                          targetId="case-mobile-competitive-analysis-text"
+                          targetLabel={display("竞品分析说明文字", "Competitive analysis text")}
+                          targetType="text"
+                          workSlug={workSlug}
                         >
                           <div className={styles.richText}>
                             <p>{display("概念设计前，我收集了市面上主流 App 的功能入口设计做案例分析。主要呈现出 3 类典型表达：", "Before concept design, I collected mainstream app entry patterns as case studies. Three typical expressions stood out:")}</p>
@@ -1642,31 +2051,55 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                               <li>{display("产品实物图图标", "Product-photo icons")}</li>
                             </ul>
                           </div>
-                        </CaseStudyHeadingThree>
+                        </CommentableBlock>
 
-                        <figure className={styles.figure}>
-                          <div className={styles.singleMediaFigure}>
-                            <Image
-                              alt={resolveAlt(assets.mobileReference)}
-                              className={styles.singleMediaFigureImage}
-                              height={720}
-                              sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
-                              src={assets.mobileReference.src}
-                              unoptimized={assets.mobileReference.unoptimized}
-                              width={1664}
-                            />
-                          </div>
-                          <figcaption className={styles.caption}>
-                            {display("产品收集参考", "Reference collection")}
-                          </figcaption>
-                        </figure>
+                        <CommentableBlock
+                          language={language}
+                          targetId="case-mobile-reference-image"
+                          targetLabel={display("移动端产品收集参考图", "Mobile reference collection image")}
+                          targetType="figure"
+                          workSlug={workSlug}
+                        >
+                          <figure className={styles.figure}>
+                            <div className={styles.singleMediaFigure}>
+                              <Image
+                                alt={resolveAlt(assets.mobileReference)}
+                                className={styles.singleMediaFigureImage}
+                                height={720}
+                                sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                                src={assets.mobileReference.src}
+                                unoptimized={assets.mobileReference.unoptimized}
+                                width={1664}
+                              />
+                            </div>
+                            <figcaption className={styles.caption}>
+                              {display("产品收集参考", "Reference collection")}
+                            </figcaption>
+                          </figure>
+                        </CommentableBlock>
                       </div>
 
                       <div className={styles.sectionCluster}>
-                        <CaseStudyHeadingThree
-                          className={styles.caseSubheading}
-                          label={display("AI 辅助设计", "AI-assisted design")}
-                          labelAs="h4"
+                        <CommentableBlock
+                          language={language}
+                          targetId="case-mobile-ai-assisted-title"
+                          targetLabel={display("AI 辅助设计标题", "AI-assisted design title")}
+                          targetType="heading"
+                          workSlug={workSlug}
+                        >
+                          <CaseStudyHeadingThree
+                            className={styles.caseSubheading}
+                            label={display("AI 辅助设计", "AI-assisted design")}
+                            labelAs="h4"
+                          />
+                        </CommentableBlock>
+                        <CommentableBlock
+                          className={styles.commentableTextBlock}
+                          language={language}
+                          targetId="case-mobile-ai-assisted-text"
+                          targetLabel={display("AI 辅助设计说明文字", "AI-assisted design text")}
+                          targetType="text"
+                          workSlug={workSlug}
                         >
                           <div className={styles.richText}>
                             <p>
@@ -1682,33 +2115,57 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                               )}
                             </p>
                           </div>
-                        </CaseStudyHeadingThree>
+                        </CommentableBlock>
 
-                        <figure className={styles.figure}>
-                          <div className={styles.explorationFigure}>
-                            <Image
-                              alt={resolveAlt(assets.mobileExploration)}
-                              className={styles.explorationFigureImage}
-                              height={840}
-                              sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
-                              src={assets.mobileExploration.src}
-                              unoptimized={assets.mobileExploration.unoptimized}
-                              width={1664}
-                            />
-                          </div>
-                          <figcaption className={styles.caption}>{display("初版方案探索", "Initial concept exploration")}</figcaption>
-                        </figure>
+                        <CommentableBlock
+                          language={language}
+                          targetId="case-mobile-exploration-image"
+                          targetLabel={display("移动端初版方案探索图", "Mobile initial concept exploration image")}
+                          targetType="figure"
+                          workSlug={workSlug}
+                        >
+                          <figure className={styles.figure}>
+                            <div className={styles.explorationFigure}>
+                              <Image
+                                alt={resolveAlt(assets.mobileExploration)}
+                                className={styles.explorationFigureImage}
+                                height={840}
+                                sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                                src={assets.mobileExploration.src}
+                                unoptimized={assets.mobileExploration.unoptimized}
+                                width={1664}
+                              />
+                            </div>
+                            <figcaption className={styles.caption}>{display("初版方案探索", "Initial concept exploration")}</figcaption>
+                          </figure>
+                        </CommentableBlock>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <div className={styles.sectionCluster}>
-                  <CaseStudyHeadingTwo
-                    accentColor="var(--portfolio-color-accent-brand)"
-                    className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
-                    id="case-mobile-iteration"
-                    title={display("设计迭代", "Design iteration")}
+                  <CommentableBlock
+                    language={language}
+                    targetId="case-mobile-iteration-title"
+                    targetLabel={display("移动端设计迭代标题", "Mobile design iteration title")}
+                    targetType="heading"
+                    workSlug={workSlug}
+                  >
+                    <CaseStudyHeadingTwo
+                      accentColor="var(--portfolio-color-accent-brand)"
+                      className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                      id="case-mobile-iteration"
+                      title={display("设计迭代", "Design iteration")}
+                    />
+                  </CommentableBlock>
+                  <CommentableBlock
+                    className={styles.commentableTextBlock}
+                    language={language}
+                    targetId="case-mobile-iteration-text"
+                    targetLabel={display("移动端设计迭代说明文字", "Mobile design iteration text")}
+                    targetType="text"
+                    workSlug={workSlug}
                   >
                     <div className={styles.richText}>
                       <p>
@@ -1731,105 +2188,180 @@ export default function DrawingLedgerCaseStudy({ backHref = "/work", language = 
                       </p>
                       <p>{display("第一版视觉上线后，有用户反馈选中效果在室外强光环境下看得不是很清楚，因此继续迭代了第二版视觉方案。", "After the first visual version launched, users reported that the selected state was still not very clear under bright outdoor light, so I iterated on a second version.")}</p>
                     </div>
-                  </CaseStudyHeadingTwo>
+                  </CommentableBlock>
 
-                  <div className={styles.iterationFigure}>
-                    <Image
-                      alt={resolveAlt(assets.mobileIteration)}
-                      className={styles.iterationFigureImage}
-                      height={936}
-                      sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
-                      src={assets.mobileIteration.src}
-                      unoptimized={assets.mobileIteration.unoptimized}
-                      width={1664}
-                    />
-                  </div>
-                  <p className={styles.caption}>{display("视觉设计迭代", "Visual design iteration")}</p>
+                  <CommentableBlock
+                    language={language}
+                    targetId="case-mobile-iteration-image"
+                    targetLabel={display("移动端视觉设计迭代图", "Mobile visual design iteration image")}
+                    targetType="figure"
+                    workSlug={workSlug}
+                  >
+                    <div className={styles.iterationFigure}>
+                      <Image
+                        alt={resolveAlt(assets.mobileIteration)}
+                        className={styles.iterationFigureImage}
+                        height={936}
+                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                        src={assets.mobileIteration.src}
+                        unoptimized={assets.mobileIteration.unoptimized}
+                        width={1664}
+                      />
+                    </div>
+                    <p className={styles.caption}>{display("视觉设计迭代", "Visual design iteration")}</p>
+                  </CommentableBlock>
                 </div>
 
                 <div className={styles.sectionCluster}>
-                  <CaseStudyHeadingTwo
-                    accentColor="var(--portfolio-color-accent-brand)"
-                    className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
-                    id="case-mobile-interaction"
-                    title={display("上滑交互", "Swipe-up interaction")}
+                  <CommentableBlock
+                    language={language}
+                    targetId="case-mobile-interaction-title"
+                    targetLabel={display("移动端上滑交互标题", "Mobile swipe-up interaction title")}
+                    targetType="heading"
+                    workSlug={workSlug}
+                  >
+                    <CaseStudyHeadingTwo
+                      accentColor="var(--portfolio-color-accent-brand)"
+                      className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                      id="case-mobile-interaction"
+                      title={display("上滑交互", "Swipe-up interaction")}
+                    />
+                  </CommentableBlock>
+                  <CommentableBlock
+                    className={styles.commentableTextBlock}
+                    language={language}
+                    targetId="case-mobile-interaction-text"
+                    targetLabel={display("移动端上滑交互说明文字", "Mobile swipe-up interaction text")}
+                    targetType="text"
+                    workSlug={workSlug}
                   >
                     <div className={styles.richText}>
                       <p>
                         {display(
                           "默认情况下，视觉化的 Tab 样式会影响到下面的内容展示。为了提升每个功能模块首页内容展示的屏效比，我设计了顶部 Tab 展开收起的交互：当监测到卡片列表向上滚动后，顶部 Tab 和代办区进入收起状态；向下滑动时，顶部 Tab 会再次展开。",
                           "By default, the visual tab style affects the content shown below. To improve content efficiency on each module homepage, I designed a top-tab expand/collapse interaction: when the card list scrolls upward, the top tab and task area collapse; when the user scrolls downward, the top tab expands again.",
-                          )}
+                        )}
                       </p>
                     </div>
-                  </CaseStudyHeadingTwo>
+                  </CommentableBlock>
 
-                  <figure className={styles.figure}>
-                    <div className={styles.singleMediaFigure}>
-                      <video
-                        aria-label={resolveAssetAlt(assets.mobileTabInteraction, language)}
-                        autoPlay
-                        className={styles.singleMediaFigureVideo}
-                        loop
-                        muted
-                        playsInline
-                        preload="metadata"
-                        src={assets.mobileTabInteraction.src}
-                      />
-                    </div>
-                    <figcaption className={styles.caption}>
-                      {display("Tab Bar 展开收起交互", "Tab bar expand/collapse interaction")}
-                    </figcaption>
-                  </figure>
+                  <CommentableBlock
+                    language={language}
+                    targetId="case-mobile-interaction-video"
+                    targetLabel={display("移动端 Tab 展开收起交互视频", "Mobile tab expand-collapse interaction video")}
+                    targetType="figure"
+                    workSlug={workSlug}
+                  >
+                    <figure className={styles.figure}>
+                      <div className={styles.singleMediaFigure}>
+                        <video
+                          aria-label={resolveAssetAlt(assets.mobileTabInteraction, language)}
+                          autoPlay
+                          className={styles.singleMediaFigureVideo}
+                          loop
+                          muted
+                          playsInline
+                          preload="metadata"
+                          src={assets.mobileTabInteraction.src}
+                        />
+                      </div>
+                      <figcaption className={styles.caption}>
+                        {display("Tab Bar 展开收起交互", "Tab bar expand/collapse interaction")}
+                      </figcaption>
+                    </figure>
+                  </CommentableBlock>
                 </div>
 
                 <div className={styles.sectionCluster}>
-                  <CaseStudyHeadingTwo
-                    accentColor="var(--portfolio-color-accent-brand)"
-                    className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
-                    id="case-mobile-landed"
-                    title={display("落地效果", "Final delivery")}
+                  <CommentableBlock
+                    language={language}
+                    targetId="case-mobile-landed-title"
+                    targetLabel={display("移动端落地效果标题", "Mobile final delivery title")}
+                    targetType="heading"
+                    workSlug={workSlug}
+                  >
+                    <CaseStudyHeadingTwo
+                      accentColor="var(--portfolio-color-accent-brand)"
+                      className={joinClassNames(styles.anchoredHeader, styles.caseSubheading)}
+                      id="case-mobile-landed"
+                      title={display("落地效果", "Final delivery")}
+                    />
+                  </CommentableBlock>
+                  <CommentableBlock
+                    className={styles.commentableTextBlock}
+                    language={language}
+                    targetId="case-mobile-landed-text"
+                    targetLabel={display("移动端落地效果说明文字", "Mobile final delivery text")}
+                    targetType="text"
+                    workSlug={workSlug}
                   >
                     <div className={styles.richText}>
                       <p>{display("图纸模块 App 端核心页面", "Core app pages of the drawing module")}</p>
                     </div>
-                  </CaseStudyHeadingTwo>
+                  </CommentableBlock>
 
-                  <figure className={styles.figure}>
-                    <div className={styles.mobileLandingFigure}>
-                      <Image
-                        alt={resolveAlt(assets.mobileLandedPages)}
-                        className={styles.mobileLandingFigureImage}
-                        height={938}
-                        sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
-                        src={assets.mobileLandedPages.src}
-                        unoptimized={assets.mobileLandedPages.unoptimized}
-                        width={1664}
-                      />
-                    </div>
-                    <figcaption className={styles.caption}>{display("全部核心页面", "All core pages")}</figcaption>
-                  </figure>
+                  <CommentableBlock
+                    language={language}
+                    targetId="case-mobile-landed-image"
+                    targetLabel={display("移动端全部核心页面展示图", "Mobile all core pages image")}
+                    targetType="figure"
+                    workSlug={workSlug}
+                  >
+                    <figure className={styles.figure}>
+                      <div className={styles.mobileLandingFigure}>
+                        <Image
+                          alt={resolveAlt(assets.mobileLandedPages)}
+                          className={styles.mobileLandingFigureImage}
+                          height={938}
+                          sizes="(max-width: 680px) calc(100vw - 2.5rem), (max-width: 900px) calc(100vw - 3rem), 880px"
+                          src={assets.mobileLandedPages.src}
+                          unoptimized={assets.mobileLandedPages.unoptimized}
+                          width={1664}
+                        />
+                      </div>
+                      <figcaption className={styles.caption}>{display("全部核心页面", "All core pages")}</figcaption>
+                    </figure>
+                  </CommentableBlock>
                 </div>
                 </div>
               </div>
 
-              <CaseStudyHeadingOne
-                className={joinClassNames(styles.anchoredHeader, styles.reflectionHeader)}
-                id="case-reflection"
-                title={display("复盘与反思", "Reflection")}
-              >
-                <div className={styles.richText}>
-                  <p>
-                    {display(
-                      "好的 B 端设计不一定是颠覆性的重构。这个项目让我深刻体会到，如何在不打破用户原有心智模型的前提下，通过巧妙的「外挂式」设计解决复杂痛点，并为研发团队省下宝贵的开发资源。",
-                      "Good B2B design is not necessarily a disruptive rewrite. This project showed me how to solve complex pain points through clever add-on design without breaking users' existing mental models, while also saving valuable engineering resources.",
-                    )}
-                  </p>
-                </div>
-              </CaseStudyHeadingOne>
+              <div className={styles.sectionCluster}>
+                <CommentableBlock
+                  language={language}
+                  targetId="case-reflection-title"
+                  targetLabel={display("复盘与反思标题", "Reflection title")}
+                  targetType="heading"
+                  workSlug={workSlug}
+                >
+                  <CaseStudyHeadingOne
+                    className={joinClassNames(styles.anchoredHeader, styles.reflectionHeader)}
+                    id="case-reflection"
+                    title={display("复盘与反思", "Reflection")}
+                  />
+                </CommentableBlock>
+                <CommentableBlock
+                  className={styles.commentableTextBlock}
+                  language={language}
+                  targetId="case-reflection-text"
+                  targetLabel={display("复盘与反思正文", "Reflection text")}
+                  targetType="text"
+                  workSlug={workSlug}
+                >
+                  <div className={styles.richText}>
+                    <p>
+                      {display(
+                        "好的 B 端设计不一定是颠覆性的重构。这个项目让我深刻体会到，如何在不打破用户原有心智模型的前提下，通过巧妙的「外挂式」设计解决复杂痛点，并为研发团队省下宝贵的开发资源。",
+                        "Good B2B design is not necessarily a disruptive rewrite. This project showed me how to solve complex pain points through clever add-on design without breaking users' existing mental models, while also saving valuable engineering resources.",
+                      )}
+                    </p>
+                  </div>
+                </CommentableBlock>
+              </div>
             </div>
         </section>
       </div>
-    </article>
+      </article>
+    </CommentHistoryProvider>
   );
 }
