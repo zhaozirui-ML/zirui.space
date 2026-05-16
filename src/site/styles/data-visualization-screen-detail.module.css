@@ -251,6 +251,23 @@
     var(--data-vis-content-stack-padding-block-end);
 }
 
+.page :global([data-comment-target-type="heading"]),
+.page :global([data-comment-target-type="text"]) {
+  justify-self: center;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: var(--portfolio-layout-content-width);
+  width: 100%;
+}
+
+.page :global([data-comment-target-type="figure"]) {
+  justify-self: center;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 75rem;
+  width: 100%;
+}
+
 .sectionGroup {
   display: grid;
   gap: var(--data-vis-section-group-gap);
@@ -282,6 +299,11 @@
 .bodyGroup {
   display: grid;
   gap: var(--data-vis-body-group-gap);
+  justify-self: center;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: var(--portfolio-layout-content-width);
+  width: 100%;
 }
 
 .bulletList {
