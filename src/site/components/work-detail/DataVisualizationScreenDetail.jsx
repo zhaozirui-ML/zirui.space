@@ -130,46 +130,48 @@ export default function DataVisualizationScreenDetail({
         <CaseStudyToc items={tocItems} {...tocTheme} />
 
         <div className={styles.contentStack}>
-          <CommentableBlock
-            language={language}
-            targetId="data-vis-project-background-title"
-            targetLabel={background.title}
-            targetType="heading"
-            workSlug={workSlug}
-          >
-            <CaseStudyHeadingOne
-              id="project-background"
-              title={background.title}
-              descriptions={background.paragraphs}
-            />
-          </CommentableBlock>
-
-          <div className={styles.bodyGroup}>
+          <section className={styles.sectionGroup}>
             <CommentableBlock
               language={language}
-              targetId="data-vis-project-background-lead"
-              targetLabel={background.leadIn}
-              targetType="text"
+              targetId="data-vis-project-background-title"
+              targetLabel={background.title}
+              targetType="heading"
               workSlug={workSlug}
             >
-              <p className={styles.bodyText}>{background.leadIn}</p>
+              <CaseStudyHeadingOne
+                id="project-background"
+                title={background.title}
+                descriptions={background.paragraphs}
+              />
             </CommentableBlock>
-            <ul className={styles.bulletList}>
-              {background.bullets.map((bullet, index) => (
-                <CommentableBlock
-                  as="li"
-                  key={bullet}
-                  language={language}
-                  targetId={`data-vis-project-background-bullet-${index + 1}`}
-                  targetLabel={bullet}
-                  targetType="list-item"
-                  workSlug={workSlug}
-                >
-                  {bullet}
-                </CommentableBlock>
-              ))}
-            </ul>
-          </div>
+
+            <div className={styles.bodyGroup}>
+              <CommentableBlock
+                language={language}
+                targetId="data-vis-project-background-lead"
+                targetLabel={background.leadIn}
+                targetType="text"
+                workSlug={workSlug}
+              >
+                <p className={styles.bodyText}>{background.leadIn}</p>
+              </CommentableBlock>
+              <ul className={styles.bulletList}>
+                {background.bullets.map((bullet, index) => (
+                  <CommentableBlock
+                    as="li"
+                    key={bullet}
+                    language={language}
+                    targetId={`data-vis-project-background-bullet-${index + 1}`}
+                    targetLabel={bullet}
+                    targetType="list-item"
+                    workSlug={workSlug}
+                  >
+                    {bullet}
+                  </CommentableBlock>
+                ))}
+              </ul>
+            </div>
+          </section>
 
           <section className={styles.sectionGroup}>
             <CommentableBlock
