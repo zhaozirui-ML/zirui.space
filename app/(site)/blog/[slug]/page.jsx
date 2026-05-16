@@ -5,8 +5,17 @@ import {
   getBlogBySlug,
 } from "../../../../src/site/lib/get-blog-by-slug";
 import { getReturnPath } from "../../../../src/site/lib/get-return-path";
-import { getPageMetadata } from "../../../../src/site/i18n/dictionary";
+import StructuredData from "../../../../src/site/components/StructuredData";
+import {
+  blogIndexDictionary,
+  getPageMetadata,
+} from "../../../../src/site/i18n/dictionary";
+import { getLocalizedValue } from "../../../../src/site/i18n/get-localized-value";
 import { getServerLanguage } from "../../../../src/site/i18n/server";
+import {
+  getBlogPostingStructuredData,
+  getBreadcrumbStructuredData,
+} from "../../../../src/site/lib/structured-data";
 import BlogDetailPage from "../../../../src/site/pages/BlogDetailPage";
 
 export function generateStaticParams() {
@@ -41,6 +50,27 @@ export default async function BlogDetailRoutePage({ params, searchParams }) {
   }
 
   const returnHref = getReturnPath(resolvedSearchParams?.from, "/blog");
+  const title = getLocalizedValue(post.title, language);
+  const breadcrumbData = getBreadcrumbStructuredData({
+    items: [
+      {
+        name: getLocalizedValue(blogIndexDictionary.metadataTitle, language),
+        pathname: "/blog",
+      },
+      {
+        name: title,
+        pathname: `/blog/${resolvedParams.slug}`,
+      },
+    ],
+    language,
+  });
+  const articleData = getBlogPostingStructuredData({ language, post });
 
-  return <BlogDetailPage language={language} returnHref={returnHref} slug={resolvedParams.slug} />;
+  return (
+    <>
+      <BlogDetailPage language={language} returnHref={returnHref} slug={resolvedParams.slug} />
+      <StructuredData data={breadcrumbData} />
+      <StructuredData data={articleData} />
+    </>
+  );
 }

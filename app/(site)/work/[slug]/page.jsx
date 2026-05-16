@@ -5,8 +5,17 @@ import {
   getWorkBySlug,
 } from "../../../../src/site/lib/get-work-by-slug";
 import { getReturnPath } from "../../../../src/site/lib/get-return-path";
-import { getPageMetadata } from "../../../../src/site/i18n/dictionary";
+import StructuredData from "../../../../src/site/components/StructuredData";
+import {
+  getPageMetadata,
+  workIndexDictionary,
+} from "../../../../src/site/i18n/dictionary";
+import { getLocalizedValue } from "../../../../src/site/i18n/get-localized-value";
 import { getServerLanguage } from "../../../../src/site/i18n/server";
+import {
+  getBreadcrumbStructuredData,
+  getCreativeWorkStructuredData,
+} from "../../../../src/site/lib/structured-data";
 import WorkDetailPage from "../../../../src/site/pages/WorkDetailPage";
 
 export function generateStaticParams() {
@@ -41,6 +50,27 @@ export default async function WorkDetailRoutePage({ params, searchParams }) {
   }
 
   const returnHref = getReturnPath(resolvedSearchParams?.from, "/work");
+  const title = getLocalizedValue(work.title, language);
+  const breadcrumbData = getBreadcrumbStructuredData({
+    items: [
+      {
+        name: getLocalizedValue(workIndexDictionary.pageTitle, language),
+        pathname: "/work",
+      },
+      {
+        name: title,
+        pathname: `/work/${resolvedParams.slug}`,
+      },
+    ],
+    language,
+  });
+  const workData = getCreativeWorkStructuredData({ language, work });
 
-  return <WorkDetailPage language={language} returnHref={returnHref} slug={resolvedParams.slug} />;
+  return (
+    <>
+      <WorkDetailPage language={language} returnHref={returnHref} slug={resolvedParams.slug} />
+      <StructuredData data={breadcrumbData} />
+      <StructuredData data={workData} />
+    </>
+  );
 }
