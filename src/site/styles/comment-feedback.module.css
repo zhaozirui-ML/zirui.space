@@ -2,8 +2,8 @@
   position: relative;
 }
 
-.commentableBlock:hover :global([data-comment-feedback]),
-.commentableBlock:focus-within :global([data-comment-feedback]) {
+.commentableBlock:hover > :global([data-comment-feedback]),
+.commentableBlock:focus-within > :global([data-comment-feedback]) {
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0);

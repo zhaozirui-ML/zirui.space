@@ -141,35 +141,35 @@ export default function DataVisualizationScreenDetail({
               id="project-background"
               title={background.title}
               descriptions={background.paragraphs}
+            />
+          </CommentableBlock>
+
+          <div className={styles.bodyGroup}>
+            <CommentableBlock
+              language={language}
+              targetId="data-vis-project-background-lead"
+              targetLabel={background.leadIn}
+              targetType="text"
+              workSlug={workSlug}
             >
-              <div className={styles.bodyGroup}>
+              <p className={styles.bodyText}>{background.leadIn}</p>
+            </CommentableBlock>
+            <ul className={styles.bulletList}>
+              {background.bullets.map((bullet, index) => (
                 <CommentableBlock
+                  as="li"
+                  key={bullet}
                   language={language}
-                  targetId="data-vis-project-background-lead"
-                  targetLabel={background.leadIn}
-                  targetType="text"
+                  targetId={`data-vis-project-background-bullet-${index + 1}`}
+                  targetLabel={bullet}
+                  targetType="list-item"
                   workSlug={workSlug}
                 >
-                  <p className={styles.bodyText}>{background.leadIn}</p>
+                  {bullet}
                 </CommentableBlock>
-                <ul className={styles.bulletList}>
-                  {background.bullets.map((bullet, index) => (
-                    <CommentableBlock
-                      as="li"
-                      key={bullet}
-                      language={language}
-                      targetId={`data-vis-project-background-bullet-${index + 1}`}
-                      targetLabel={bullet}
-                      targetType="list-item"
-                      workSlug={workSlug}
-                    >
-                      {bullet}
-                    </CommentableBlock>
-                  ))}
-                </ul>
-              </div>
-            </CaseStudyHeadingOne>
-          </CommentableBlock>
+              ))}
+            </ul>
+          </div>
 
           <section className={styles.sectionGroup}>
             <CommentableBlock
