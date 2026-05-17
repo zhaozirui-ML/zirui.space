@@ -17,6 +17,7 @@ import {
 } from "../fonts/site-fonts";
 import { LanguageProvider, useLanguage } from "../i18n/LanguageProvider";
 import { isModuleHomePath } from "../lib/is-module-home-path";
+import CommentsOwnerEntry from "./comments/CommentsOwnerEntry";
 import PortfolioChatbot from "./PortfolioChatbot";
 import SiteChromeFrame from "./SiteChromeFrame";
 import SiteMoonlightBackground from "./SiteMoonlightBackground";
@@ -97,6 +98,7 @@ function SiteLayoutFrame({
       <SiteChromeFrame colorTheme={colorTheme} onThemeToggle={onThemeToggle}>
         {children}
       </SiteChromeFrame>
+      <CommentsOwnerEntry language={language} />
       <PortfolioChatbot />
     </div>
   );

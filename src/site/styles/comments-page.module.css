@@ -16,6 +16,30 @@
   gap: var(--portfolio-space-xs);
 }
 
+.ownerModeButton,
+.groupLink {
+  align-items: center;
+  appearance: none;
+  background: var(--portfolio-color-bg-pure);
+  border: 1px solid var(--portfolio-color-border-light);
+  border-radius: var(--ds-radius-pill);
+  color: var(--portfolio-semantic-body-color);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: var(--portfolio-font-label);
+  font-size: var(--portfolio-type-caption-size);
+  font-weight: 600;
+  line-height: var(--portfolio-type-caption-line);
+  padding: 0.45rem 0.8rem;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.ownerModeButton:hover,
+.groupLink:hover {
+  border-color: var(--portfolio-color-border-strong);
+}
+
 .eyebrow {
   color: var(--portfolio-semantic-eyebrow-color);
   font-family: var(--portfolio-font-label);
@@ -60,6 +84,19 @@
   padding: var(--portfolio-space-sm);
 }
 
+.stateText,
+.stateHint {
+  margin: 0;
+}
+
+.stateHint {
+  color: var(--portfolio-color-text-muted);
+  font-family: var(--portfolio-font-label);
+  font-size: var(--portfolio-type-caption-size);
+  line-height: var(--portfolio-type-caption-line);
+  margin-top: 0.5rem;
+}
+
 .groups {
   display: grid;
   gap: var(--portfolio-space-sm);
@@ -72,9 +109,11 @@
 }
 
 .groupHeader {
+  align-items: flex-start;
   border-bottom: 1px solid var(--portfolio-color-border-light);
-  display: grid;
+  display: flex;
   gap: 0.25rem;
+  justify-content: space-between;
   padding-bottom: var(--portfolio-space-xs);
 }
 

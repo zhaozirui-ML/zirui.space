@@ -20,7 +20,13 @@ const labels = {
   },
 };
 
-export default function CommentAdminActions({ accessToken, commentId, language = "zh", status }) {
+export default function CommentAdminActions({
+  accessToken,
+  commentId,
+  language = "zh",
+  onActionComplete,
+  status,
+}) {
   const copy = labels[language] || labels.zh;
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -59,6 +65,10 @@ export default function CommentAdminActions({ accessToken, commentId, language =
 
       if (!response.ok || data?.ok !== true) {
         throw new Error(data?.error || copy.actionError);
+      }
+
+      if (typeof onActionComplete === "function") {
+        await onActionComplete();
       }
 
       startTransition(() => {
