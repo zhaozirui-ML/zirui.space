@@ -64,6 +64,27 @@ export default function CommentHistoryProvider({ children, workSlug }) {
     getCommentsForTarget(targetId) {
       return comments.filter((comment) => comment.sectionId === targetId);
     },
+    removeComment(commentId) {
+      setComments((currentComments) =>
+        currentComments.filter((comment) => comment.id !== commentId),
+      );
+    },
+    updateComment(nextComment) {
+      if (!nextComment?.id) {
+        return;
+      }
+
+      setComments((currentComments) => {
+        if (nextComment.status !== "open") {
+          return currentComments.filter((comment) => comment.id !== nextComment.id);
+        }
+
+        return mergeComments(
+          currentComments.filter((comment) => comment.id !== nextComment.id),
+          [nextComment],
+        );
+      });
+    },
   };
 
   return <CommentHistoryContext.Provider value={value}>{children}</CommentHistoryContext.Provider>;

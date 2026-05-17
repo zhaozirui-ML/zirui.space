@@ -6,36 +6,10 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 import {
-  COMMENTS_OWNER_ACCESS_STORAGE_KEY,
   getStoredCommentsAccessToken,
+  subscribeCommentsOwnerMode,
 } from "../../lib/comments/comment-owner-client";
 import styles from "../../styles/site-shell.module.css";
-
-function subscribeOwnerMode(onChange) {
-  if (typeof window === "undefined") {
-    return () => {};
-  }
-
-  const handleStorage = (event) => {
-    if (
-      event instanceof StorageEvent &&
-      event.key !== null &&
-      event.key !== COMMENTS_OWNER_ACCESS_STORAGE_KEY
-    ) {
-      return;
-    }
-
-    onChange();
-  };
-
-  window.addEventListener("storage", handleStorage);
-  window.addEventListener("portfolio-comments-owner-change", onChange);
-
-  return () => {
-    window.removeEventListener("storage", handleStorage);
-    window.removeEventListener("portfolio-comments-owner-change", onChange);
-  };
-}
 
 export default function CommentsOwnerEntry({ language = "zh" }) {
   const pathname = usePathname();
@@ -47,7 +21,7 @@ export default function CommentsOwnerEntry({ language = "zh" }) {
     };
 
     syncOwnerMode();
-    return subscribeOwnerMode(syncOwnerMode);
+    return subscribeCommentsOwnerMode(syncOwnerMode);
   }, []);
 
   if (!isOwnerMode || pathname === "/comments") {

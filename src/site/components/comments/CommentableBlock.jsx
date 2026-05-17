@@ -2,9 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import CommentAdminActions from "./CommentAdminActions";
 import CommentForm from "./CommentForm";
 import CommentTrigger from "./CommentTrigger";
 import { useCommentHistory } from "./CommentHistoryProvider";
+import {
+  getStoredCommentsAccessToken,
+  subscribeCommentsOwnerMode,
+} from "../../lib/comments/comment-owner-client";
 import styles from "../../styles/comment-feedback.module.css";
 
 const LONG_PRESS_DELAY_MS = 520;
@@ -16,6 +21,20 @@ function joinClassNames(...values) {
 
 function getCommentCountLabel(count) {
   return `${count} ${count === 1 ? "comment" : "comments"}`;
+}
+
+function mergeSubmittedComments(currentComments, incomingComments) {
+  const commentsById = new Map();
+
+  [...incomingComments, ...currentComments].forEach((comment) => {
+    if (comment?.id) {
+      commentsById.set(comment.id, comment);
+    }
+  });
+
+  return Array.from(commentsById.values()).sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  );
 }
 
 function getCommentAuthor(comment, language) {
@@ -123,6 +142,7 @@ export default function CommentableBlock({
   const [isThreadOpen, setIsThreadOpen] = useState(false);
   const [isThreadDragging, setIsThreadDragging] = useState(false);
   const [isMobileActionVisible, setIsMobileActionVisible] = useState(false);
+  const [ownerAccessToken, setOwnerAccessToken] = useState("");
   const [threadOffset, setThreadOffset] = useState({ x: 0, y: 0 });
   const dragStateRef = useRef(null);
   const longPressTimerRef = useRef(null);
@@ -282,10 +302,54 @@ export default function CommentableBlock({
   }, [isThreadDragging]);
 
   useEffect(() => {
+    const syncOwnerMode = () => {
+      setOwnerAccessToken(getStoredCommentsAccessToken());
+    };
+
+    syncOwnerMode();
+    return subscribeCommentsOwnerMode(syncOwnerMode);
+  }, []);
+
+  useEffect(() => {
     return () => {
       clearLongPressTimer();
     };
   }, []);
+
+  function handleOwnerActionComplete(result) {
+    if (!result) {
+      return;
+    }
+
+    if (result.action === "delete") {
+      if (commentHistory) {
+        commentHistory.removeComment(result.commentId);
+      } else {
+        setSubmittedComments((current) =>
+          current.filter((comment) => comment.id !== result.commentId),
+        );
+      }
+
+      return;
+    }
+
+    if (result.comment) {
+      if (commentHistory) {
+        commentHistory.updateComment(result.comment);
+      } else if (result.comment.status !== "open") {
+        setSubmittedComments((current) =>
+          current.filter((comment) => comment.id !== result.commentId),
+        );
+      } else {
+        setSubmittedComments((current) =>
+          mergeSubmittedComments(
+            current.filter((comment) => comment.id !== result.commentId),
+            [result.comment],
+          ),
+        );
+      }
+    }
+  }
 
   return (
     <Wrapper
@@ -389,6 +453,17 @@ export default function CommentableBlock({
                           </span>
                         </p>
                         <p className={styles.threadText}>{comment.comment}</p>
+                        {ownerAccessToken ? (
+                          <div className={styles.threadActions}>
+                            <CommentAdminActions
+                              accessToken={ownerAccessToken}
+                              commentId={comment.id}
+                              language={language}
+                              onActionComplete={handleOwnerActionComplete}
+                              status={comment.status}
+                            />
+                          </div>
+                        ) : null}
                       </div>
                     </article>
                   );

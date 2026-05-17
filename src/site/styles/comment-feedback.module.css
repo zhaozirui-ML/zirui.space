@@ -243,6 +243,10 @@
   margin-top: 0.25rem;
 }
 
+.threadActions {
+  margin-top: 0.625rem;
+}
+
 .threadComposer {
   background: color-mix(in srgb, var(--portfolio-color-canvas) 78%, var(--portfolio-color-bg-pure));
   border-top: 0;

@@ -68,7 +68,12 @@ export default function CommentAdminActions({
       }
 
       if (typeof onActionComplete === "function") {
-        await onActionComplete();
+        await onActionComplete({
+          action,
+          comment: data?.comment || null,
+          commentId,
+          nextStatus,
+        });
       }
 
       startTransition(() => {
