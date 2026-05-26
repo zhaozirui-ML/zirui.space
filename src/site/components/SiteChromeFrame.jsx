@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 
+import SiteFooter from "./SiteFooter";
 import SiteHeader from "./SiteHeader";
 import styles from "../styles/site-shell.module.css";
 
@@ -37,6 +38,7 @@ export default function SiteChromeFrame({ children, colorTheme, onThemeToggle })
       <main className={mainClassName}>
         <div className={shellClassName}>{children}</div>
       </main>
+      <SiteFooter isFullBleed={isFullBleedCaseStudy} />
     </>
   );
 }

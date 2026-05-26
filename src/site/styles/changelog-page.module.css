@@ -1,0 +1,32 @@
+.changelogPage {
+  padding-bottom: clamp(4rem, 8vw, 5.5rem);
+}
+
+.pageIntro {
+  gap: 0.875rem;
+}
+
+.statusLabel {
+  color: var(--portfolio-color-accent-brand);
+  font-family: var(--portfolio-font-label);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.intro {
+  color: var(--portfolio-color-text-muted);
+  font-size: 1rem;
+  line-height: 1.75;
+  margin: 0;
+  max-width: 42rem;
+}
+
+@media (max-width: 640px) {
+  .pageIntro {
+    gap: 0.75rem;
+  }
+}

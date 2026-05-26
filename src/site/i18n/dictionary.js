@@ -17,6 +17,14 @@ export const siteShellDictionary = {
     zh: "返回首页",
     en: "Back to home",
   },
+  footerChangeLogLabel: {
+    zh: "Change Log",
+    en: "Change Log",
+  },
+  footerColophonLabel: {
+    zh: "Colophon",
+    en: "Colophon",
+  },
   languageSwitchToChineseLabel: {
     zh: "切换到中文",
     en: "Switch to Chinese",
@@ -52,6 +60,25 @@ export const siteShellDictionary = {
   navigationAriaLabel: {
     zh: "主导航",
     en: "Primary navigation",
+  },
+};
+
+export const changelogPageDictionary = {
+  intro: {
+    zh: "这个页面会按时间记录作品集的重要更新。当前先把入口接进站点层，后续再补完整内容。",
+    en: "This page will track notable portfolio updates over time. For now, the route is live so the new footer entry does not lead to a dead end.",
+  },
+  metadataDescription: {
+    zh: "查看这个作品集在不同时期的主要更新记录。",
+    en: "Review notable updates made to this portfolio over time.",
+  },
+  pageTitle: {
+    zh: "Change Log",
+    en: "Change Log",
+  },
+  statusLabel: {
+    zh: "首版内容整理中",
+    en: "First pass in progress",
   },
 };
 
