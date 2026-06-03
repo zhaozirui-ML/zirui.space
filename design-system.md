@@ -91,6 +91,7 @@
 - `textMuted`: `#6d7378`
 - `textSubtle`: `#9fa3a7`
 - `border`: `#e3e5e8`
+- `gradientBlueSoft`: `radial-gradient(circle at 15% 20%, color-mix(in srgb, #5684ae 18%, transparent), transparent 42%)`
 
 ### 3.2 Spacing
 

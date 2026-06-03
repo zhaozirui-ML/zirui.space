@@ -11,7 +11,7 @@
 
 .heroBackdrop {
   background:
-    radial-gradient(circle at 15% 20%, color-mix(in srgb, var(--legacy-case-study-accent) 18%, transparent), transparent 42%),
+    var(--ds-color-gradient-blue-soft),
     radial-gradient(
       circle at 80% 10%,
       color-mix(in srgb, var(--portfolio-color-bg-pure) 88%, transparent),

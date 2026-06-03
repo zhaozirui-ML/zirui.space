@@ -1,0 +1,152 @@
+.page {
+  width: min(1120px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: clamp(48px, 8vw, 96px) 0 clamp(72px, 10vw, 120px);
+  color: var(--portfolio-color-text-primary, #171717);
+}
+
+.hero {
+  display: grid;
+  gap: 16px;
+  padding: clamp(28px, 4vw, 40px);
+  border: 1px solid color-mix(in srgb, var(--portfolio-color-border-strong, #1f1f1f) 18%, transparent);
+  border-radius: 28px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--portfolio-color-surface-elevated, #f8f4ec) 92%, white) 0%, color-mix(in srgb, var(--portfolio-color-surface, #f6efe3) 92%, white) 100%);
+  box-shadow: 0 20px 60px color-mix(in srgb, var(--portfolio-color-shadow, rgba(0, 0, 0, 0.14)) 28%, transparent);
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--portfolio-color-text-secondary, #655c52);
+}
+
+.pageTitle {
+  margin: 0;
+  font-family: var(--portfolio-font-title-serif);
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.pageDescription,
+.metaNote {
+  max-width: 720px;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--portfolio-color-text-secondary, #655c52);
+}
+
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.metricCard,
+.breakdownPanel {
+  padding: 24px;
+  border: 1px solid color-mix(in srgb, var(--portfolio-color-border-strong, #1f1f1f) 14%, transparent);
+  border-radius: 24px;
+  background: color-mix(in srgb, var(--portfolio-color-surface-elevated, #faf7f0) 94%, white);
+}
+
+.metricTitle,
+.metricDescription,
+.metricValue,
+.panelTitle,
+.tableLabel,
+.tableValue,
+.emptyState {
+  margin: 0;
+}
+
+.metricTitle {
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--portfolio-color-text-secondary, #655c52);
+}
+
+.metricValue {
+  margin-top: 12px;
+  font-family: var(--portfolio-font-title-serif);
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  line-height: 0.95;
+}
+
+.metricDescription {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--portfolio-color-text-secondary, #655c52);
+}
+
+.breakdownGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.panelHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 14px;
+  border-bottom: 1px solid color-mix(in srgb, var(--portfolio-color-border-strong, #1f1f1f) 10%, transparent);
+}
+
+.panelTitle {
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.table {
+  display: grid;
+  margin-top: 8px;
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--portfolio-color-border-strong, #1f1f1f) 8%, transparent);
+}
+
+.tableRow:last-child {
+  border-bottom: 0;
+}
+
+.tableLabel,
+.tableValue,
+.emptyState {
+  font-size: 0.96rem;
+  line-height: 1.6;
+}
+
+.tableValue {
+  font-variant-numeric: tabular-nums;
+}
+
+.emptyState {
+  margin-top: 16px;
+  color: var(--portfolio-color-text-secondary, #655c52);
+}
+
+@media (max-width: 820px) {
+  .metricsGrid,
+  .breakdownGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .page {
+    width: min(100% - 24px, 1120px);
+  }
+}

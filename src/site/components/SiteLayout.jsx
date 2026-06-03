@@ -21,6 +21,8 @@ import PortfolioChatbot from "./PortfolioChatbot";
 import SiteChromeFrame from "./SiteChromeFrame";
 import SiteMoonlightBackground from "./SiteMoonlightBackground";
 import SiteSunnyBackground from "./SiteSunnyBackground";
+import VisitorAnalyticsTracker from "./VisitorAnalyticsTracker";
+import VisitorStatsAccessBootstrap from "./VisitorStatsAccessBootstrap";
 import styles from "../styles/site-shell.module.css";
 
 function subscribeThemePreference(onStoreChange) {
@@ -98,6 +100,8 @@ function SiteLayoutFrame({
         {children}
       </SiteChromeFrame>
       <PortfolioChatbot />
+      <VisitorAnalyticsTracker />
+      <VisitorStatsAccessBootstrap />
     </div>
   );
 }

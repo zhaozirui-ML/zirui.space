@@ -15,4 +15,6 @@ export const colors = Object.freeze({
   accentSky: "#dff1f3",
   accentBlush: "#fdecea",
   accentSand: "#efe9e0",
+  gradientBlueSoft:
+    "radial-gradient(circle at 15% 20%, color-mix(in srgb, #5684ae 18%, transparent), transparent 42%)",
 });

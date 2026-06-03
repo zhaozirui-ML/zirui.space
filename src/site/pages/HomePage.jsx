@@ -1,6 +1,7 @@
 import HomeBlogsSection from "../components/home/HomeBlogsSection";
 import HomeHeroAvatar from "../components/home/HomeHeroAvatar";
 import HomeSkillsSection from "../components/home/HomeSkillsSection";
+import HomeVisitorBadge from "../components/home/HomeVisitorBadge";
 import HomeWorksSection from "../components/home/HomeWorksSection";
 import { homeIntro, homeSectionVisibility } from "../data/home-content";
 import { getLocalizedValue } from "../i18n/get-localized-value";
@@ -14,6 +15,8 @@ import styles from "../styles/home-page.module.css";
 export default function HomePage({ language }) {
   return (
     <div className={styles.homePage}>
+      <HomeVisitorBadge language={language} />
+
       <div className={styles.homeTopMode}>
         <section className={styles.heroSection}>
           <HomeHeroAvatar
