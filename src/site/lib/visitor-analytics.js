@@ -3,6 +3,7 @@ import { getSiteUrl } from "./get-site-url";
 export const VISITOR_ID_STORAGE_KEY = "portfolio_visitor_id";
 export const VISITOR_STATS_ACCESS_PARAM = "access";
 export const VISITOR_ANALYTICS_TIME_ZONE = "Asia/Shanghai";
+export const VISITOR_STATS_OWNER_STORAGE_KEY = "portfolio_visitor_stats_access";
 
 const GLOBAL_SITE_STATS_KEY = "global";
 const EMPTY_BREAKDOWN = Object.freeze([]);
@@ -406,6 +407,32 @@ export async function getVisitorAnalyticsSummary() {
       : null;
 
   return buildVisitorAnalyticsSummary(visitorRows, totalFromStats);
+}
+
+export async function getPublicVisitorAnalyticsSummary() {
+  const { enabled } = getVisitorAnalyticsConfig();
+
+  if (!enabled) {
+    return {
+      enabled: false,
+      totalUniqueVisitors: 0,
+    };
+  }
+
+  const siteStatsRows = await requestSupabase(
+    `/rest/v1/site_stats?select=total_unique_visitors&key=eq.${GLOBAL_SITE_STATS_KEY}&limit=1`
+  );
+  const totalUniqueVisitors =
+    Array.isArray(siteStatsRows) &&
+    siteStatsRows[0] &&
+    typeof siteStatsRows[0].total_unique_visitors === "number"
+      ? siteStatsRows[0].total_unique_visitors
+      : 0;
+
+  return {
+    enabled: true,
+    totalUniqueVisitors,
+  };
 }
 
 /**

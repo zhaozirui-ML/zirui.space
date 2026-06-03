@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 
+import VisitorStatsAccessBootstrap from "../../../src/site/components/VisitorStatsAccessBootstrap";
 import VisitorStatsPage from "../../../src/site/pages/VisitorStatsPage";
 import { getPageMetadata } from "../../../src/site/i18n/dictionary";
 import { getServerLanguage } from "../../../src/site/i18n/server";
@@ -62,7 +63,7 @@ export default async function VisitorStatsRoutePage({ searchParams }) {
   const hasConfiguredAccessKey = config.accessKey.length > 0;
   const isDevelopment = process.env.NODE_ENV !== "production";
 
-  if (hasConfiguredAccessKey && providedAccessKey !== config.accessKey) {
+  if (!isDevelopment && hasConfiguredAccessKey && providedAccessKey !== config.accessKey) {
     notFound();
   }
 
@@ -72,5 +73,10 @@ export default async function VisitorStatsRoutePage({ searchParams }) {
 
   const summary = await getVisitorAnalyticsSummary();
 
-  return <VisitorStatsPage summary={summary} />;
+  return (
+    <>
+      <VisitorStatsAccessBootstrap accessKey={providedAccessKey} />
+      <VisitorStatsPage summary={summary} />
+    </>
+  );
 }
