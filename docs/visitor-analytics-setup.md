@@ -24,6 +24,7 @@ VISITOR_STATS_ACCESS_KEY=choose_a_long_random_string
 
 说明：
 
+- 如果你已经配置了 `NEXT_PUBLIC_SUPABASE_STORAGE_BASE_URL`，现在统计逻辑会自动从里面推导出 `SUPABASE_URL`，所以这个值通常可以和 Storage 共享同一个项目地址
 - `SUPABASE_SERVICE_ROLE_KEY` 只能放在服务端，不能暴露到前端
 - `VISITOR_STATS_ACCESS_KEY` 用来保护私有统计页
 
@@ -41,6 +42,7 @@ VISITOR_STATS_ACCESS_KEY=choose_a_long_random_string
 - 今日新增访客
 - 来源渠道分布
 - 首次落地页分布
+- 统计开始时间：第一条访客记录的 `first_seen_at`
 
 ## 4. 当前口径说明
 

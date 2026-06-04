@@ -56,6 +56,7 @@ export default function VisitorStatsPage({
   summary,
 }) {
   const lastUpdatedAt = formatTimestamp(summary.lastUpdatedAt);
+  const startedAt = formatTimestamp(summary.startedAt);
 
   if (!summary.enabled) {
     return (
@@ -81,6 +82,7 @@ export default function VisitorStatsPage({
         </p>
         <p className={styles.metaNote}>
           统计口径：匿名首次访客。今日口径按 {VISITOR_ANALYTICS_TIME_ZONE} 计算。
+          {startedAt ? ` 统计开始时间：${startedAt}` : ""}
           {lastUpdatedAt ? ` 最近一次刷新：${lastUpdatedAt}` : ""}
         </p>
       </header>

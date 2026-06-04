@@ -13,6 +13,7 @@ export async function GET() {
     return Response.json(
       {
         enabled: false,
+        startedAt: null,
         totalUniqueVisitors: 0,
       },
       { status: 200 }

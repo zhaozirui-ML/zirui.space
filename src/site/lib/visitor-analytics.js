@@ -21,6 +21,7 @@ const EMPTY_BREAKDOWN = Object.freeze([]);
  *   enabled: boolean,
  *   landingBreakdown: VisitorBreakdownItem[],
  *   lastUpdatedAt: string | null,
+ *   startedAt: string | null,
  *   referrerBreakdown: VisitorBreakdownItem[],
  *   todayUniqueVisitors: number,
  *   totalUniqueVisitors: number,
@@ -33,6 +34,24 @@ function normalizeSupabaseUrl(rawValue) {
   }
 
   return rawValue.trim().replace(/\/+$/, "");
+}
+
+function deriveSupabaseProjectUrl(rawValue) {
+  const normalizedValue = normalizeSupabaseUrl(rawValue);
+
+  if (normalizedValue.length > 0) {
+    return normalizedValue;
+  }
+
+  const storageBaseUrl = normalizeSupabaseUrl(
+    process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BASE_URL
+  );
+
+  if (storageBaseUrl.length === 0) {
+    return "";
+  }
+
+  return storageBaseUrl.replace(/\/storage\/v1\/object\/public\/.*$/, "");
 }
 
 function buildSupabaseHeaders(serviceRoleKey, additionalHeaders = {}) {
@@ -281,7 +300,7 @@ export function normalizeReferrerSource(rawReferrer) {
  * }}
  */
 export function getVisitorAnalyticsConfig() {
-  const supabaseUrl = normalizeSupabaseUrl(
+  const supabaseUrl = deriveSupabaseProjectUrl(
     process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL
   );
   const serviceRoleKey = typeof process.env.SUPABASE_SERVICE_ROLE_KEY === "string"
@@ -307,6 +326,7 @@ export function createEmptyVisitorAnalyticsSummary() {
     enabled: false,
     landingBreakdown: EMPTY_BREAKDOWN.slice(),
     lastUpdatedAt: null,
+    startedAt: null,
     referrerBreakdown: EMPTY_BREAKDOWN.slice(),
     todayUniqueVisitors: 0,
     totalUniqueVisitors: 0,
@@ -355,6 +375,7 @@ export function buildVisitorAnalyticsSummary(rows, totalFromStats) {
   const todayToken = getTodayToken();
   const normalizedRows = Array.isArray(rows) ? rows : [];
   let todayUniqueVisitors = 0;
+  let startedAt = null;
 
   normalizedRows.forEach((row) => {
     const landingPath = normalizeLandingPath(row?.landing_path);
@@ -362,9 +383,17 @@ export function buildVisitorAnalyticsSummary(rows, totalFromStats) {
       typeof row?.referrer_source === "string" && row.referrer_source.trim().length > 0
         ? row.referrer_source.trim()
         : "unknown";
+    const firstSeenAt = typeof row?.first_seen_at === "string" ? row.first_seen_at : null;
 
     incrementBreakdown(landingBreakdownMap, landingPath, formatPathLabel(landingPath));
     incrementBreakdown(referrerBreakdownMap, referrerSource, getReferrerLabel(referrerSource));
+
+    if (
+      firstSeenAt &&
+      (startedAt === null || new Date(firstSeenAt).getTime() < new Date(startedAt).getTime())
+    ) {
+      startedAt = firstSeenAt;
+    }
 
     if (getDateToken(row?.first_seen_at ?? null) === todayToken) {
       todayUniqueVisitors += 1;
@@ -375,6 +404,7 @@ export function buildVisitorAnalyticsSummary(rows, totalFromStats) {
     enabled: true,
     landingBreakdown: sortBreakdown(landingBreakdownMap),
     lastUpdatedAt: new Date().toISOString(),
+    startedAt,
     referrerBreakdown: sortBreakdown(referrerBreakdownMap),
     todayUniqueVisitors,
     totalUniqueVisitors:
@@ -415,22 +445,35 @@ export async function getPublicVisitorAnalyticsSummary() {
   if (!enabled) {
     return {
       enabled: false,
+      startedAt: null,
       totalUniqueVisitors: 0,
     };
   }
 
-  const siteStatsRows = await requestSupabase(
-    `/rest/v1/site_stats?select=total_unique_visitors&key=eq.${GLOBAL_SITE_STATS_KEY}&limit=1`
-  );
+  const [siteStatsRows, visitorRows] = await Promise.all([
+    requestSupabase(
+      `/rest/v1/site_stats?select=total_unique_visitors&key=eq.${GLOBAL_SITE_STATS_KEY}&limit=1`
+    ),
+    requestSupabase(
+      "/rest/v1/visitors?select=first_seen_at&order=first_seen_at.asc&limit=1"
+    ),
+  ]);
   const totalUniqueVisitors =
     Array.isArray(siteStatsRows) &&
     siteStatsRows[0] &&
     typeof siteStatsRows[0].total_unique_visitors === "number"
       ? siteStatsRows[0].total_unique_visitors
       : 0;
+  const startedAt =
+    Array.isArray(visitorRows) &&
+    visitorRows[0] &&
+    typeof visitorRows[0].first_seen_at === "string"
+      ? visitorRows[0].first_seen_at
+      : null;
 
   return {
     enabled: true,
+    startedAt,
     totalUniqueVisitors,
   };
 }
